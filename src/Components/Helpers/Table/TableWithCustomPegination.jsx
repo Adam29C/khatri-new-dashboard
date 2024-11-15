@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 
 const PaginatedTable = ({
   data,
@@ -12,14 +12,15 @@ const PaginatedTable = ({
   const [filteredData, setFilteredData] = useState(data);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const columns =
-    data.length > 0
-      ? Object.keys(data[0]).map((key) => ({
-          header: key.charAt(0).toUpperCase() + key.slice(1), // Capitalize the header
-          field: key, // Field name is same as the key
-          visible: visibleFields.includes(key), // Check if the column should be visible
-        }))
-      : [];
+  const columns = useMemo(()=>{
+    return data.length > 0
+    ? Object.keys(data[0]).map((key) => ({
+        header: key.charAt(0).toUpperCase() + key.slice(1), // Capitalize the header
+        field: key, // Field name is same as the key
+        visible: visibleFields.includes(key), // Check if the column should be visible
+      }))
+    : [];
+  },[data, visibleFields])
 
       
   // Update filtered data based on search query

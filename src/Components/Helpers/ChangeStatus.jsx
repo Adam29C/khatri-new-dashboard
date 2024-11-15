@@ -7,17 +7,30 @@ const ChangeStatus = ({ rowData, apiRoute, checkboxStatus, req }) => {
 
   const [isChecked, setIsChecked] = useState(checkboxStatus);
 
-  useEffect(() => {
-    setIsChecked(checkboxStatus);
-  }, [checkboxStatus]);
+  // useEffect(() => {
+  //   setIsChecked(checkboxStatus);
+  // }, [checkboxStatus]);
 
   const updateStatus = async () => {
-    setIsChecked(!isChecked);
-    const res = await apiRoute({ adminId: userId, ...req, isBlock: !isChecked });
-    if(res.status === 200){
-      PagesIndex.toast.success(res.message)
-    }else{
-      PagesIndex.toast.error(res.response.data.message)
+    // setIsChecked(!isChecked);
+    const newStatus = !isChecked;
+    setIsChecked(newStatus); 
+
+    try {
+      const res = await apiRoute({
+        adminId: userId,
+        ...req,
+        isBlock: newStatus,
+      });
+
+      if (res.status === 200) {
+        PagesIndex.toast.success(res.message);
+      } else {
+        throw new Error(res.response.data.message);
+      }
+    } catch (error) {
+      setIsChecked(!newStatus); 
+      PagesIndex.toast.error(error.message || "An error occurred");
     }
   };
 

@@ -5,13 +5,21 @@ const ChangeStatus = ({ rowData, apiRoute, checkboxStatus, req }) => {
   
   const [isChecked, setIsChecked] = useState(checkboxStatus);
 
+  
+
   useEffect(() => {
     setIsChecked(checkboxStatus);
   }, [checkboxStatus]);
 
   const updateStatus = async () => {
     setIsChecked(!isChecked);
-    await apiRoute({ adminId: userId, ...req, isBlock: !isChecked });
+
+    try {
+      await apiRoute({ adminId: userId, ...req, isBlock: !isChecked });
+
+    } catch (error) {
+      
+    }
   };
 
   return (

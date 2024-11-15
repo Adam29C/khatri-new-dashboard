@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 const Toggle = ({ check , updateStatusApi }) => {
   const [isChecked, setIsChecked] = useState(check);
 
+  
   useEffect(() => {
     const checkbox = document.getElementById("employee-switch");
     if (checkbox) {
