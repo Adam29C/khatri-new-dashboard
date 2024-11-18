@@ -6,24 +6,24 @@ const GameProviderAdd = () => {
   const navigate = PagesIndex.useNavigate();
   const location = PagesIndex.useLocation();
 
-  
+  // console.log(location)
   const formik = PagesIndex.useFormik({
     initialValues: {
-      providerName: location?.state ? location?.state?.providerName : "",
-      providerResult: location?.state ? location?.state?.providerResult : "",
-      resultStatus: 0,
+      gamename: location?.state ? location?.state?.providerName : "",
+      result: location?.state ? location?.state?.providerResult : "",
+      // resultStatus: 0,
       mobile: location?.state ? location?.state?.mobile : "",
       activeStatus: location?.state ? location?.state?.activeStatus : null,
     },
     validate: (values) => {
       const errors = {};
 
-      if (!values.providerName) {
-        errors.providerName = PagesIndex.valid_err.PROVIDER_NAME_ERROR;
+      if (!values.gamename) {
+        errors.gamename = PagesIndex.valid_err.PROVIDER_NAME_ERROR;
       }
 
-      if (!values.providerResult) {
-        errors.providerResult = PagesIndex.valid_err.PROVIDER_RESULT_ERROR;
+      if (!values.result) {
+        errors.result = PagesIndex.valid_err.PROVIDER_RESULT_ERROR;
       }
 
       if (!values.mobile) {
@@ -35,20 +35,28 @@ const GameProviderAdd = () => {
 
     onSubmit: async (values) => {
       try {
+        //         let data = {
+        //           adminId: userId,
+        //           gameType: "MainGame",
+        //           providerName: values.providerName,
+        //           providerResult: values.providerResult,
+        //  activeStatus: values.activeStatus,
+        //           mobile: values.mobile.toString(),
+        //           activeStatus: values.activeStatus,
+        //           ...(location?.state?._id ? { providerId: location?.state?._id } : ""),
+        //         };
+        //         if (!location?.state?._id) {
+        //           data.resultStatus = values.resultStatus;
+        //         }
+
         let data = {
-          adminId: userId,
-          gameType: "MainGame",
-          providerName: values.providerName,
-          providerResult: values.providerResult,
- activeStatus: values.activeStatus,
+          gamename: values.gamename,
+          result: values.result,
           mobile: values.mobile.toString(),
           activeStatus: values.activeStatus,
-          ...(location?.state?._id ? { providerId: location?.state?._id } : ""),
         };
-        if (!location?.state?._id) {
-          data.resultStatus = values.resultStatus;
-        }
 
+        console.log(data);
         const res = location?.state?._id
           ? await PagesIndex.admin_services.GAME_PROVIDER_UPDATE_API(data)
           : await PagesIndex.admin_services.GAME_PROVIDER_ADD_API(data);
@@ -69,15 +77,15 @@ const GameProviderAdd = () => {
 
   const fields = [
     {
-      name: "providerName",
-      label: "Provider Name",
+      name: "gamename",
+      label: "Game Name",
       type: "text",
       label_size: 6,
       col_size: 6,
     },
     {
-      name: "providerResult",
-      label: "Provider Result",
+      name: "result",
+      label: "Result",
       type: "text",
       label_size: 6,
       col_size: 6,
