@@ -7,7 +7,6 @@ const WalletContact = () => {
   //all states
   const [loading, setLoading] = PagesIndex.useState(true);
   const [walletData, setWalletData] = PagesIndex.useState();
-  
 
   //get wallet api
   const getWalletData = async () => {
@@ -33,10 +32,9 @@ const WalletContact = () => {
   }, [walletData]);
 
   //contact number validation regex
-const contactRegex = (numbervalue) => {
-  return  PagesIndex.Mobile_regex(numbervalue);
+  const contactRegex = (numbervalue) => {
+    return PagesIndex.Mobile_regex(numbervalue);
   };
-
 
   //formik form submit
   const formik = PagesIndex.useFormik({
@@ -48,13 +46,13 @@ const contactRegex = (numbervalue) => {
 
     validate: (values) => {
       const errors = {};
-      if (!values.number  && formik.touched.number ) {
+      if (!values.number && formik.touched.number) {
         errors.number = PagesIndex.valid_err.CONTACT_ERROR;
-      }  else if (!contactRegex(values.number) && formik.touched.number ) {
+      } else if (!contactRegex(values.number) && formik.touched.number) {
         errors.number = PagesIndex.valid_err.INVALID_CONTACT_ERROR;
       }
 
-      if (!values.upiId && formik.touched.upiId ) {
+      if (!values.upiId && formik.touched.upiId) {
         errors.upiId = PagesIndex.valid_err.EMPTY_UPI_ERROR;
       }
 
@@ -64,7 +62,6 @@ const contactRegex = (numbervalue) => {
       return errors;
     },
     onSubmit: async (values) => {
-      
       const apidata = {
         adminId: userId,
         walledId: walletData?._id,
@@ -72,12 +69,11 @@ const contactRegex = (numbervalue) => {
         headline: values.headline,
         upiId: values.upiId,
       };
- 
 
       const res = await PagesIndex.admin_services.UPDATE_WALLET_CONTACT_API(
         apidata
       );
-     
+
       if (res.status === 200) {
         PagesIndex.toast.success(res.message);
         getWalletData();
@@ -118,7 +114,6 @@ const contactRegex = (numbervalue) => {
           fieldtype={fields.filter((field) => !field.showWhen)}
           formik={formik}
           show_submit={true}
-        
           btn_name="Submit"
         />
       )}

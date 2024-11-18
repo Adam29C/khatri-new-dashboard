@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from "react";
 
-const Toggle = ({ check , updateStatusApi }) => {
+const Toggle = ({ check, updateStatusApi }) => {
   const [isChecked, setIsChecked] = useState(check);
 
-  
-  useEffect(() => {
+  const abdesx = () => {
     const checkbox = document.getElementById("employee-switch");
     if (checkbox) {
       checkbox.checked = check;
     }
+  };
+  useEffect(() => {
+    abdesx();
   }, [check]);
 
   const updateStatus = (e) => {
     setIsChecked(e.target.checked);
-    updateStatusApi()
+    updateStatusApi();
     // alert("")
   };
 

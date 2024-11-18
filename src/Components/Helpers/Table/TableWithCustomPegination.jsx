@@ -1,29 +1,30 @@
-import React, { useState, useEffect, useMemo } from "react";
-
+import React, { useState, useEffect } from "react";
+import { useMemo } from "react";
+import { Link } from "react-router-dom";
 const PaginatedTable = ({
   data,
   initialRowsPerPage = 5,
   SearchInTable,
   visibleFields,
   additional,
+  UserFullButtonList,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(initialRowsPerPage);
   const [filteredData, setFilteredData] = useState(data);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const columns = useMemo(()=>{
-    return data.length > 0
-    ? Object.keys(data[0]).map((key) => ({
-        header: key.charAt(0).toUpperCase() + key.slice(1), // Capitalize the header
-        field: key, // Field name is same as the key
-        visible: visibleFields.includes(key), // Check if the column should be visible
-      }))
-    : [];
-  },[data, visibleFields])
 
-      
-  // Update filtered data based on search query
+  const columns = useMemo(() => {
+    if (data.length > 0) {
+      return Object.keys(data[0]).map((key) => ({
+        header: key.charAt(0).toUpperCase() + key.slice(1),
+        field: key,
+        visible: visibleFields.includes(key),
+      }));
+    }
+    return [];
+  }, [data, visibleFields]);
 
   const ddd = () => {
     const filtered = data.filter((row) =>
@@ -37,6 +38,7 @@ const PaginatedTable = ({
     setFilteredData(filtered);
     setCurrentPage(1);
   };
+
   useEffect(() => {
     ddd();
   }, [searchQuery, data, columns]);
@@ -53,7 +55,7 @@ const PaginatedTable = ({
   // Handle rows per page change
   const handleRowsPerPageChange = (event) => {
     setRowsPerPage(Number(event.target.value));
-    setCurrentPage(1); // Reset to first page whenever rows per page changes
+    setCurrentPage(1);
   };
 
   // Render pagination items
@@ -108,31 +110,73 @@ const PaginatedTable = ({
       <table className="table table-striped table-bordered">
         <thead className="text-center table-header-backeground">
           <tr>
+            <th>ID</th>
+
             {columns.map(
-              (column) =>
-                column.visible && <th key={column.field}>{column.header}</th>
+              (column, id) =>
+                column.visible && (
+                  <>
+                    <th key={column.field}>{column.header}</th>
+                  </>
+                )
             )}
+
+            {UserFullButtonList.map((items) => {
+              return (
+                <>
+                  <th>{items.buttonName}</th>
+                </>
+              );
+            })}
           </tr>
         </thead>
         <tbody className="text-center">
-          {currentData.map((row, index) => (
-            <tr key={index}>
-              {columns.map((column) =>
-                column.visible ? (
-                  <td key={column.field}>{row[column.field]}</td>
-                ) : null
-              )}
+          {currentData.length > 0 ? (
+            <>
+              {currentData.map((row, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  {columns.map((column) =>
+                    column.visible ? (
+                      <td key={column.field}>{row[column.field]}</td>
+                    ) : (
+                      ""
+                    )
+                  )}
+
+                  {UserFullButtonList.map((items) => {
+                    return (
+                      <>
+                        {/* {console.log("items" ,items)                     } */}
+                        <td>
+                          <Link
+                            to={items.route}
+                            className={`btn btn-${items.buttonColor} btn-sm me-2`}
+                          >
+                            {items.buttonName}
+                          </Link>
+                        </td>
+                      </>
+                    );
+                  })}
+                </tr>
+              ))}
+            </>
+          ) : (
+            <span>No Data Available</span>
+          )}
+
+          {additional && (
+            <tr>
+              <td colSpan={3}>{additional}</td>
             </tr>
-          ))}
-          <tr>
-            <td colSpan={3}>{additional}</td>
-          </tr>
+          )}
         </tbody>
       </table>
 
       {/* Pagination */}
       <nav>
-        <ul className="pagination justify-content-center">
+        <ul className="pagination justify-content-end">
           <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
             <button
               className="page-link"

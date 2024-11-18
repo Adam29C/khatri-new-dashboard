@@ -23,16 +23,21 @@ const NoticeBoard = () => {
     getNoticeData();
   }, []);
 
-  PagesIndex.useEffect(() => {
+
+  const abcde = ()=>{
     if (noticeData) {
-        formik.setFieldValue("title1", noticeData?.title1);
-        formik.setFieldValue("contect", noticeData?.contact);
-        formik.setFieldValue("description1", noticeData?.description1);
-        formik.setFieldValue("title2", noticeData?.title2);
-        formik.setFieldValue("description2", noticeData?.description2);
-        formik.setFieldValue("title3", noticeData?.title3);
-        formik.setFieldValue("description3", noticeData?.description3);
-    }
+      formik.setFieldValue("title1", noticeData?.title1);
+      formik.setFieldValue("contect", noticeData?.contact);
+      formik.setFieldValue("description1", noticeData?.description1);
+      formik.setFieldValue("title2", noticeData?.title2);
+      formik.setFieldValue("description2", noticeData?.description2);
+      formik.setFieldValue("title3", noticeData?.title3);
+      formik.setFieldValue("description3", noticeData?.description3);
+  }
+  }
+
+  PagesIndex.useEffect(() => {
+    abcde()
   }, [noticeData]);
 
   //contact number validation regex

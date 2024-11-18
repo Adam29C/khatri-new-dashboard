@@ -1,23 +1,6 @@
 import { Api } from "../Config/Api";
 import dataservice from "../Config/DataService";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export const ADMIN_PROFILE_GET_API = async (id) => {
   try {
     const res = await dataservice.get(`${Api.ADMIN_PROFILE_GET}?adminId=${id}`);
@@ -65,7 +48,6 @@ export const EMPLOYEE_GET_LIST_API = async (id) => {
 };
 
 export const BLOCK_EMPLOYEE_API = async (data) => {
- 
   try {
     const res = await dataservice.patch(Api.BLOCK_EMPLOYEE, data);
     return res?.data;
@@ -143,8 +125,10 @@ export const GAME_PROVIDER_UPDATE_API = async (data) => {
 //GAME RATES API
 export const GAME_RATES_GET_LIST_API = async (data) => {
   try {
-    let {gameType,userId}=data
-    const res = await dataservice.get(`${Api.ADMIN_GAME_RATES}?adminId=${userId}&gameType=${gameType}`);
+    let { gameType, userId } = data;
+    const res = await dataservice.get(
+      `${Api.ADMIN_GAME_RATES}?adminId=${userId}&gameType=${gameType}`
+    );
     return res?.data;
   } catch (error) {
     return error;
@@ -192,8 +176,9 @@ export const GAME_RATES_DELETE_API = async (data) => {
 
 export const GAME_SEETING_LIST_API = async (data) => {
   try {
-    const {userId,gameType}=data
-    const res = await dataservice.get( `${Api.ADMIN_GAME_SETTING}?adminId=${userId}&gameType=${gameType}`
+    const { userId, gameType } = data;
+    const res = await dataservice.get(
+      `${Api.ADMIN_GAME_SETTING}?adminId=${userId}&gameType=${gameType}`
     );
     return res.data;
   } catch (error) {
@@ -210,7 +195,6 @@ export const GAME_SETTING_ADD = async (data) => {
   }
 };
 
-
 export const GAME_SETTING_UPDATE_API = async (data) => {
   try {
     const res = await dataservice.put(Api.ADMIN_GAME_SETTING, data);
@@ -222,11 +206,9 @@ export const GAME_SETTING_UPDATE_API = async (data) => {
 
 // --------------------------   GAME SETTING CRUD ------------------------
 
-
 // --------------------------   GAME RESULT CRUD ------------------------
 
 // --------------------------   GAME SETTING CRUD ------------------------
-
 
 export const GAME_RESULT = async (id) => {
   try {
@@ -237,9 +219,7 @@ export const GAME_RESULT = async (id) => {
   }
 };
 
-
 export const ADD_GAME_RESULT = async (data) => {
-
   try {
     const res = await dataservice.post(`${Api.ADMIN_GAME_RESULT}`, data);
     return res?.data;
@@ -254,9 +234,16 @@ export const ADD_GAME_RESULT = async (data) => {
 
 // --------------------------   USERS CRUD ------------------------
 
-export const USERS_LIST = async (id) => {
+export const USERS_LIST = async (request, token) => {
+
+  
   try {
-    const res = await dataservice.get(`${Api.USERS_LIST}/${id}`);
+    const res = await dataservice.post(`${Api.USERS_LIST}`, request, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return res?.data;
   } catch (error) {
     return error;
@@ -272,7 +259,6 @@ export const BLOCK_USER = async (ID) => {
   }
 };
 export const DELETE_USER = async (ID) => {
-
   let apiData = {
     adminId: ID.adminId,
     userId: ID.deleteId,
@@ -304,8 +290,6 @@ export const GET_USERS_IDEAS = async (id) => {
 };
 // --------------------------   USERS CRUD ------------------------
 
-
-
 // -------------------------- DASHBOARD_COUNT ------------------------
 
 // GET_DASHBOARD_COUNT
@@ -313,24 +297,22 @@ export const GET_USERS_IDEAS = async (id) => {
 export const GET_DASHBOARD_COUNT_API = async (id) => {
   try {
     const res = await dataservice.get(`${Api.GET_DASHBOARD_COUNT}`);
-    return res?.data
+    return res?.data;
   } catch (error) {
-    return error
+    return error;
   }
 };
-
 
 export const GET_DASHBOARD_COUNT_UPI_PAYMENT_API = async (id) => {
   try {
     const res = await dataservice.get(`${Api.GET_DASHBOARD_COUNT_UPI_PAYMENT}`);
-    return res?.data
+    return res?.data;
   } catch (error) {
-    return error
+    return error;
   }
 };
 
 // -------------------------- DASHBOARD_COUNT ------------------------
-
 
 // -------------------------- APP_SETTINGS ------------------------
 
@@ -338,40 +320,42 @@ export const GET_DASHBOARD_COUNT_UPI_PAYMENT_API = async (id) => {
 export const GET_VERSION_API = async (id) => {
   try {
     const res = await dataservice.get(`${Api.GET_VERSION}?adminId=${id}`);
-    return res?.data
+    return res?.data;
   } catch (error) {
-    return error
+    return error;
   }
 };
 
-export const UPDATE_VERSION_API = async(data)=>{
+export const UPDATE_VERSION_API = async (data) => {
   try {
-    const res = await dataservice.put(Api.UPDATE_VERSION,data);
-    return res?.data
+    const res = await dataservice.put(Api.UPDATE_VERSION, data);
+    return res?.data;
   } catch (error) {
-    return error
+    return error;
   }
-}
+};
 //VERSION CONTROL API END
 
 //WALLET CONTACT API START
 export const GET_WALLET_CONTACT_API = async (id) => {
   try {
-    const res = await dataservice.get(`${Api.WALLET_CONTACT_LIST}?adminId=${id}`);
-    return res?.data
+    const res = await dataservice.get(
+      `${Api.WALLET_CONTACT_LIST}?adminId=${id}`
+    );
+    return res?.data;
   } catch (error) {
-    return error
+    return error;
   }
 };
 
-export const UPDATE_WALLET_CONTACT_API = async(data)=>{
+export const UPDATE_WALLET_CONTACT_API = async (data) => {
   try {
-    const res = await dataservice.put(Api.UPDATE_WALLET_CONTACT,data);
-    return res?.data
+    const res = await dataservice.put(Api.UPDATE_WALLET_CONTACT, data);
+    return res?.data;
   } catch (error) {
-    return error
+    return error;
   }
-}
+};
 
 //WALLET CONTACT API END
 
@@ -379,106 +363,109 @@ export const UPDATE_WALLET_CONTACT_API = async(data)=>{
 export const GET_NOTICE_BOARD_API = async (id) => {
   try {
     const res = await dataservice.get(`${Api.NOTICE_BOARD_LIST}?adminId=${id}`);
-    return res?.data
+    return res?.data;
   } catch (error) {
-    return error
+    return error;
   }
 };
 
-export const UPDATE_NOTICE_BOARD_API = async(data)=>{
+export const UPDATE_NOTICE_BOARD_API = async (data) => {
   try {
-    const res = await dataservice.put(Api.UPDATE_NOTICE_BOARD,data);
-    return res?.data
+    const res = await dataservice.put(Api.UPDATE_NOTICE_BOARD, data);
+    return res?.data;
   } catch (error) {
-    return error
+    return error;
   }
-}
+};
 //NOTICE BOARD API END
 
 //APP WITHDRAW API START
 export const GET_APP_WITHDRAW_API = async (id) => {
   try {
-    const res = await dataservice.get(`${Api.GET_WITHDRAW_SCREEN}?adminId=${id}`);
-    return res?.data
+    const res = await dataservice.get(
+      `${Api.GET_WITHDRAW_SCREEN}?adminId=${id}`
+    );
+    return res?.data;
   } catch (error) {
-    return error
+    return error;
   }
 };
 
-export const UPDATE_APP_WITHDRAW_API = async(data)=>{
+export const UPDATE_APP_WITHDRAW_API = async (data) => {
   try {
-    const res = await dataservice.put(Api.UPDATE_WITHDRAW_SCREEN,data);
-    return res?.data
+    const res = await dataservice.put(Api.UPDATE_WITHDRAW_SCREEN, data);
+    return res?.data;
   } catch (error) {
-    return error
+    return error;
   }
-}
+};
 //APP WITHDRAW API END
 
-
 // -------------------------- APP_SETTINGS ------------------------
-
 
 // -------------------------- MASTERS ------------------------
 //UPI LIST START
 export const GET_UPI_LIST_API = async (id) => {
   try {
     const res = await dataservice.get(`${Api.GET_UPI_LIST}?adminId=${id}`);
-    return res?.data
+    return res?.data;
   } catch (error) {
-    return error
+    return error;
   }
 };
 
-export const UPDATE_UPI_LIST_API= async(data)=>{
+export const UPDATE_UPI_LIST_API = async (data) => {
   try {
-    const res = await dataservice.put(Api.UPDATE_UPI_LIST,data);
-    return res?.data
+    const res = await dataservice.put(Api.UPDATE_UPI_LIST, data);
+    return res?.data;
   } catch (error) {
-    return error
+    return error;
   }
-}
-export const ADD_UPI_LIST_API= async(data)=>{
+};
+export const ADD_UPI_LIST_API = async (data) => {
   try {
-    const res = await dataservice.post(Api.ADD_UPI_LIST,data);
-    return res?.data
+    const res = await dataservice.post(Api.ADD_UPI_LIST, data);
+    return res?.data;
   } catch (error) {
-    return error
+    return error;
   }
-}
-export const DELETE_UPI_LIST_API= async(data)=>{
-
+};
+export const DELETE_UPI_LIST_API = async (data) => {
   let apiData = {
     adminId: data.adminId,
     upiId: data.deleteId,
   };
   try {
-    const res = await dataservice.delete(Api.DELETE_UPI_LIST,{data:apiData});
-    return res?.data
+    const res = await dataservice.delete(Api.DELETE_UPI_LIST, {
+      data: apiData,
+    });
+    return res?.data;
   } catch (error) {
-    return error
+    return error;
   }
-}
+};
 //UPI LIST END
 
 //HTP LIST START
 export const GET_HTP_LIST_API = async (id) => {
   try {
-    const res = await dataservice.get(`${Api.HOW_TO_PLAY_GET_LIST}?adminId=${id}`);
-    return res?.data
+    const res = await dataservice.get(
+      `${Api.HOW_TO_PLAY_GET_LIST}?adminId=${id}`
+    );
+    return res?.data;
   } catch (error) {
-    return error
+    return error;
   }
 };
 
-export const UPDATE_HTP_API= async(data)=>{
+export const UPDATE_HTP_API = async (data) => {
   try {
-    const res = await dataservice.put(Api.UPDATE_HTP,data);
-    return res?.data
+    const res = await dataservice.put(Api.UPDATE_HTP, data);
+    return res?.data;
   } catch (error) {
-    return error
+    return error;
   }
-}
+};
 
 //HTP LIST END
 
