@@ -12,6 +12,11 @@ const Api = {
   GET_DASHBOARD_COUNT_UPI_PAYMENT: "/dashboard/getBriefDeposit",
   GET_DASHBOARD_REGISTRED_USERS: "dashboard/getRegisteredUser",
 
+
+    //USERS
+    USERS_LIST: "/allUser/getAllUsers",
+
+    DELETED_USERS: "/admin/getDeleteUser",
   
 
   
@@ -45,10 +50,8 @@ const Api = {
   // GAME RESULT
   ADMIN_GAME_RESULT: "/admin/game/gameResult",
 
-  //GAME SETTING
-  //users
-  USERS_LIST: "/admin/users",
-  DELETED_USERS: "/admin/getDeleteUser",
+  
+
   USERS_IDEAS: "/admin/UserIdea",
   GET_VERSION: "/admin/appSetting/listVersionSetting",
   UPDATE_VERSION: "/admin/appSetting/updateVersionSetting",

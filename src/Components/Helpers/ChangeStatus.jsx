@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import PagesIndex from "../Pages/PagesIndex";
 
@@ -7,17 +6,24 @@ const ChangeStatus = ({ rowData, apiRoute, checkboxStatus, req }) => {
 
   const [isChecked, setIsChecked] = useState(checkboxStatus);
 
-  useEffect(() => {
+  const abdesx = () => {
     setIsChecked(checkboxStatus);
+  };
+  useEffect(() => {
+    abdesx();
   }, [checkboxStatus]);
 
   const updateStatus = async () => {
     setIsChecked(!isChecked);
-    const res = await apiRoute({ adminId: userId, ...req, isBlock: !isChecked });
-    if(res.status === 200){
-      PagesIndex.toast.success(res.message)
-    }else{
-      PagesIndex.toast.error(res.response.data.message)
+    const res = await apiRoute({
+      adminId: userId,
+      ...req,
+      isBlock: !isChecked,
+    });
+    if (res.status === 200) {
+      PagesIndex.toast.success(res.message);
+    } else {
+      PagesIndex.toast.error(res.response.data.message);
     }
   };
 

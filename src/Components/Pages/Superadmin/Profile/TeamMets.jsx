@@ -9,8 +9,11 @@ const TeamMets = () => {
   const dispatch = PagesIndex.useDispatch();
   const userId = localStorage.getItem("userId");
 
-  PagesIndex.useEffect(() => {
+  const abcd = () => {
     dispatch(PagesIndex.getEmployeeList(userId));
+  };
+  PagesIndex.useEffect(() => {
+    abcd();
   }, []);
 
   const handleBlockEmployee = async (id, isBlock) => {

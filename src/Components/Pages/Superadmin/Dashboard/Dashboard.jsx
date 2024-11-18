@@ -7,12 +7,12 @@ import TableWitCustomPegination from "../../../Helpers/Table/TableWithCustomPegi
 const Dashboard_Component = () => {
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
-  console.log();
-
   const [DashboardData, setDashboardData] = PagesIndex.useState([]);
   const [TodayDesposite, setTodayDesposite] = PagesIndex.useState([]);
   const [ModalState, setModalState] = PagesIndex.useState(false);
   const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
+  const [userFundArr, setuserFundArr] = PagesIndex.useState({});
+  const [Request, setRequest] = PagesIndex.useState("");
 
   const [TableData, setTableData] = PagesIndex.useState([]);
 
@@ -39,8 +39,6 @@ const Dashboard_Component = () => {
     totalManualAmount += items.totalAmount - data.total_deposit_amount;
   };
 
-  var TodayRegistedUserBalance = 0;
-
   const GetTableData = async (request) => {
     const payload = {
       reqType: request,
@@ -49,26 +47,44 @@ const Dashboard_Component = () => {
       searchQuery: SearchInTable,
     };
 
-    const res1 = await PagesIndex.common_services.GET_DASHBOARD_REGISTRED_USERS(
-      payload,
-      token
-    );
+    try {
+      const res1 =
+        await PagesIndex.common_services.GET_DASHBOARD_REGISTRED_USERS(
+          payload,
+          token
+        );
 
-    console.log("res1" ,res1);
-    
+      setRequest(request);
 
-
-
-    
-
-    setTableData(res1.data.todayRegistered);
+      if (request === 1) {
+        setTableData(res1.data.todayRegistered || []);
+      } else if (request === 2) {
+        setuserFundArr(res1.data.userFundArr || []);
+      }
+      setTableData(res1.data.todayRegistered || []);
+    } catch (error) {
+      console.error("Error fetching table data:", error);
+    }
   };
 
-  const visibleFields = ["id", "name", "mobile", "wallet_balance"];
+  const TodayRegistedUserBalancefun = () => {
+    let totalBalance = 0;
 
-  const TodayRegistedUserBalanceFun = (items) => {
+    if (Request === 2 && userFundArr) {
+      totalBalance = Object.values(userFundArr).reduce(
+        (sum, value) => sum + (value || 0),
+        0
+      );
+    } else if (Request === 1 && TableData) {
+      TableData.forEach((item) => {
+        totalBalance += item.wallet_balance || 0;
+      });
+    }
+
+    return totalBalance;
   };
-  
+
+  const visibleFields = ["Id", "name", "mobile", "wallet_balance"];
 
   return (
     <div>
@@ -207,7 +223,7 @@ const Dashboard_Component = () => {
           </div>
 
           <div className="row">
-            {/* <div className="col-xl-6 col-md-12">
+            <div className="col-xl-6 col-md-12">
               <div className="card-box">
                 <div className="table-responsive">
                   <table className="table mb-0 text-center">
@@ -255,8 +271,8 @@ const Dashboard_Component = () => {
                   </table>
                 </div>
               </div>
-            </div> */}
-            {/* <div className="col-xl-6 col-md-12">
+            </div>
+            <div className="col-xl-6 col-md-12">
               <div className="card-box">
                 <div className="table-responsive">
                   <table className="table mb-0 table-bordered text-center">
@@ -291,25 +307,7 @@ const Dashboard_Component = () => {
                   </table>
                 </div>
               </div>
-            </div> */}
-
-            {/* <div>
-              <TableWitCustomPegination
-                data={data1221}
-                columns={columns}
-                initialRowsPerPage={5}
-                SearchInTable={SearchInTable}
-                searchInput={
-                  <input
-                    type="text"
-                    placeholder="Search..."
-                      value={SearchInTable}
-                      onChange={(e) => setSearchInTable(e.target.value)}
-                    className="form-control ms-auto"
-                  />
-                }
-              />
-            </div> */}
+            </div>
 
             <ReusableModal
               ModalTitle={"title"}
@@ -321,7 +319,7 @@ const Dashboard_Component = () => {
                     initialRowsPerPage={5}
                     SearchInTable={SearchInTable}
                     visibleFields={visibleFields}
-                    additional={`Total Registered Balance : ${TodayRegistedUserBalanceFun()}`}
+                    additional={`Total Registered Balance : ${TodayRegistedUserBalancefun()}`}
                     searchInput={
                       <input
                         type="text"

@@ -183,10 +183,14 @@ function AddEmployee() {
     return makePermissions;
   }
 
-  useEffect(() => {
+  const abcde = () => {
     if (location?.state?.permission) {
       updateCheckedStatus([location.state.permission], makePermissions);
     }
+  };
+
+  useEffect(() => {
+    abcde()
   }, [location]);
 
   const fields1 = [
@@ -202,24 +206,19 @@ function AddEmployee() {
   ];
 
   const handleComplete = async () => {
-    
     let updatedABC = {};
     for (let key in formik1.values) {
       updatedABC["is" + key.replace(/\s+/g, "")] = formik1.values[key];
     }
 
- 
     var combinedObject;
     if (location?.state) {
       const combineObjects = (obj1, obj2) => {
-
         const result = {};
         for (const key in obj1) {
-      
           if (obj1[key] === true) {
             result[key] = true;
           } else {
-         
             result[key] = obj2[key] !== undefined ? obj2[key] : obj1[key];
           }
         }
@@ -239,8 +238,6 @@ function AddEmployee() {
       ...(location?.state ? { empId: location?.state?._id } : {}),
     };
 
-   
-    
     // return;
     const res = location?.state
       ? await PagesIndex.admin_services.UPDATE_EMPLOYEE(req)
