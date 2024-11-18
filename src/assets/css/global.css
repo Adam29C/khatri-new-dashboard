@@ -49,7 +49,7 @@
   margin-right: 10px;
 }
 .buttons-con .action-link-wrap a:hover {
-  background: #478767b0;
+  background: var(--bhau-color);
   color: #fff;
 }
 

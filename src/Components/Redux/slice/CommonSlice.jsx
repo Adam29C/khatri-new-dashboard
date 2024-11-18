@@ -17,10 +17,10 @@ export const getGenerateToken = createAsyncThunk(
 
 export const Games_Provider_List = createAsyncThunk(
   "common/Games_Provider_List",
-  async (data) => {
+  async () => {
     try {
-      const res = await admin_service.GAME_PROVIDER_GET_LIST_API(data);
-
+      const res = await admin_service.GAME_PROVIDER_GET_LIST_API();
+console.log(res)
       return await res;
     } catch (err) {
       return err;
@@ -96,7 +96,7 @@ const CommonSlice = createSlice({
       .addCase(Games_Provider_List.fulfilled, (state, action) => {
         return {
           ...state,
-          gameProviders: action.payload.data.details,
+          gameProviders: action.payload.data,
           isLoading: false,
         };
       })

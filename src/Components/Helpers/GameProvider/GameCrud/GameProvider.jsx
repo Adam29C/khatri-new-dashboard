@@ -7,6 +7,7 @@ import { GAME_PROVIDER_DELETE_API } from "../../../Services/SuperAdminServices";
 import DeleteSweetAlert from "../../DeleteSweetAlert";
 import { Games_Provider_List } from "../../../Redux/slice/CommonSlice";
 const GameProvider = ({ data, path, title, gametype }) => {
+
   const userId = localStorage.getItem("userId");
   const navigate = PagesIndex.useNavigate();
 
@@ -15,13 +16,13 @@ const GameProvider = ({ data, path, title, gametype }) => {
   const { gameProviders } = PagesIndex.useSelector(
     (state) => state.CommonSlice
   );
-
+console.log(gameProviders,"gameProviders")
   const getGameProviderList = () => {
     let apiData = {
       userId: userId,
       gameType: gametype,
     };
-    dispatch(Games_Provider_List(apiData));
+    dispatch(Games_Provider_List());
   };
 
   PagesIndex.useEffect(() => {
@@ -49,8 +50,8 @@ const GameProvider = ({ data, path, title, gametype }) => {
     },
     {
       name: "Created At",
-      selector: (row) => Get_Year_Only(row.createdAt),
-      // selector: (row) => row?.modifiedAt,
+      selector: (row) => Get_Year_Only(row.modifiedAt),
+      
     },
     {
       name: "Actions",

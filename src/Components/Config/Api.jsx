@@ -12,15 +12,13 @@ const Api = {
   GET_DASHBOARD_COUNT_UPI_PAYMENT: "/dashboard/getBriefDeposit",
   GET_DASHBOARD_REGISTRED_USERS: "dashboard/getRegisteredUser",
 
+  //USERS
+  USERS_LIST: "/allUser/getAllUsers",
+  DELETED_USERS: "/admin/getDeleteUser",
 
-    //USERS
-    USERS_LIST: "/allUser/getAllUsers",
 
-    DELETED_USERS: "/admin/getDeleteUser",
+
   
-
-  
-
 
   ADMIN_CHANGE_PASSWORD: "admin/changePassword",
 
@@ -38,8 +36,9 @@ const Api = {
   BLOCK_EMPLOYEE: "admin/blockEmployee",
   DELETE_EMPLOYEE: "admin/deleteEmployee",
 
-  //GAME PROVIDER
-  ADMIN_GAME_PROVIDER: "admin/game/gameProvider",
+  //MAIN GAME API'S 
+  MAIN_GAME: "/mainGames",
+  MAIN_GAME_ADD:"/mainGames/insertGame",
 
   //GAME RATES
   ADMIN_GAME_RATES: "admin/game/gameRate",

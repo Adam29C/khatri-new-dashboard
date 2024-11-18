@@ -74,12 +74,9 @@ export const DELETE_EMPLOYEE = async (ID) => {
 
 // --------------------------  game provider api ------------------------
 
-export const GAME_PROVIDER_GET_LIST_API = async (data) => {
+export const GAME_PROVIDER_GET_LIST_API = async () => {
   try {
-    const { userId, gameType } = data;
-    const res = await dataservice.get(
-      `${Api.ADMIN_GAME_PROVIDER}?adminId=${userId}&gameType=${gameType}`
-    );
+    const res = await dataservice.get(Api.MAIN_GAME);
     return res?.data;
   } catch (error) {
     return error;
@@ -88,7 +85,7 @@ export const GAME_PROVIDER_GET_LIST_API = async (data) => {
 
 export const GAME_PROVIDER_ADD_API = async (data) => {
   try {
-    const res = await dataservice.post(Api.ADMIN_GAME_PROVIDER, data);
+    const res = await dataservice.post(Api.MAIN_GAME_ADD, data);
     return res?.data;
   } catch (error) {
     return error;
@@ -233,8 +230,6 @@ export const ADD_GAME_RESULT = async (data) => {
 // --------------------------   USERS CRUD ------------------------
 
 export const USERS_LIST = async (request, token) => {
-
-  
   try {
     const res = await dataservice.post(`${Api.USERS_LIST}`, request, {
       headers: {
