@@ -6,7 +6,6 @@ const GameProviderAdd = () => {
   const navigate = PagesIndex.useNavigate();
   const location = PagesIndex.useLocation();
 
-  // console.log(location)
   const formik = PagesIndex.useFormik({
     initialValues: {
       gamename: location?.state ? location?.state?.providerName : "",
@@ -35,19 +34,7 @@ const GameProviderAdd = () => {
 
     onSubmit: async (values) => {
       try {
-        //         let data = {
-        //           adminId: userId,
-        //           gameType: "MainGame",
-        //           providerName: values.providerName,
-        //           providerResult: values.providerResult,
-        //  activeStatus: values.activeStatus,
-        //           mobile: values.mobile.toString(),
-        //           activeStatus: values.activeStatus,
-        //           ...(location?.state?._id ? { providerId: location?.state?._id } : ""),
-        //         };
-        //         if (!location?.state?._id) {
-        //           data.resultStatus = values.resultStatus;
-        //         }
+ 
 
         let data = {
           gamename: values.gamename,
@@ -56,7 +43,7 @@ const GameProviderAdd = () => {
           activeStatus: values.activeStatus,
         };
 
-        console.log(data);
+     
         const res = location?.state?._id
           ? await PagesIndex.admin_services.GAME_PROVIDER_UPDATE_API(data)
           : await PagesIndex.admin_services.GAME_PROVIDER_ADD_API(data);

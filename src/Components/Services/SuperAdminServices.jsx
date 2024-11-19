@@ -97,14 +97,14 @@ export const GAME_PROVIDER_ADD_API = async (data) => {
   }
 };
 
-export const GAME_PROVIDER_DELETE_API = async (data) => {
+export const GAME_PROVIDER_DELETE_API = async (id) => {
   try {
     let apiData = {
-      adminId: data.adminId,
-      gameProviderId: data.deleteId,
+      gameId: id,
+    
     };
 
-    const res = await dataservice.delete(Api.ADMIN_GAME_PROVIDER, {
+    const res = await dataservice.delete(Api.MAIN_GAME, {
       data: apiData,
     });
     return res?.data;
@@ -115,7 +115,7 @@ export const GAME_PROVIDER_DELETE_API = async (data) => {
 
 export const GAME_PROVIDER_UPDATE_API = async (data) => {
   try {
-    const res = await dataservice.put(Api.ADMIN_GAME_PROVIDER, data);
+    const res = await dataservice.patch(Api.MAIN_GAME, data);
     return res?.data;
   } catch (error) {
     return error;
@@ -123,12 +123,10 @@ export const GAME_PROVIDER_UPDATE_API = async (data) => {
 };
 
 //GAME RATES API
-export const GAME_RATES_GET_LIST_API = async (data) => {
+export const GAME_RATES_GET_LIST_API = async () => {
   try {
-    let { gameType, userId } = data;
-    const res = await dataservice.get(
-      `${Api.ADMIN_GAME_RATES}?adminId=${userId}&gameType=${gameType}`
-    );
+
+    const res = await dataservice.get(Api.ADMIN_GAME_RATES);
     return res?.data;
   } catch (error) {
     return error;
@@ -137,7 +135,7 @@ export const GAME_RATES_GET_LIST_API = async (data) => {
 
 export const GAME_RATES_ADD_API = async (data) => {
   try {
-    const res = await dataservice.post(Api.ADMIN_GAME_RATES, data);
+    const res = await dataservice.post(`${Api.ADMIN_GAME_RATES}/insertGame`, data);
     return res?.data;
   } catch (error) {
     return error;
@@ -146,18 +144,18 @@ export const GAME_RATES_ADD_API = async (data) => {
 
 export const GAME_RATES_UPDATE_API = async (data) => {
   try {
-    const res = await dataservice.put(Api.ADMIN_GAME_RATES, data);
+    const res = await dataservice.patch(Api.ADMIN_GAME_RATES, data);
     return res?.data;
   } catch (error) {
     return error;
   }
 };
 
-export const GAME_RATES_DELETE_API = async (data) => {
+export const GAME_RATES_DELETE_API = async (id) => {
   try {
     let apiData = {
-      adminId: data.adminId,
-      gameRateId: data.deleteId,
+      userId: id,
+   
     };
 
     const res = await dataservice.delete(Api.ADMIN_GAME_RATES, {
@@ -177,9 +175,10 @@ export const GAME_RATES_DELETE_API = async (data) => {
 export const GAME_SEETING_LIST_API = async (data) => {
   try {
     const { userId, gameType } = data;
-    const res = await dataservice.get(
-      `${Api.ADMIN_GAME_SETTING}?adminId=${userId}&gameType=${gameType}`
-    );
+    // const res = await dataservice.get(
+    //   `${Api.ADMIN_GAME_SETTING}?adminId=${userId}&gameType=${gameType}`
+    // );
+    const res = await dataservice.get(Api.ADMIN_GAME_SETTING);
     return res.data;
   } catch (error) {
     return error;

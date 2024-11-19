@@ -39,14 +39,18 @@ const Api = {
   DELETE_EMPLOYEE: "admin/deleteEmployee",
 
   //MAIN GAME API'S 
-  MAIN_GAME: "/mainGames",
-  MAIN_GAME_ADD:"/mainGames/insertGame",
+  MAIN_GAME: "mainGames",
+  MAIN_GAME_ADD:"mainGames/insertGame",
 
   //GAME RATES
-  ADMIN_GAME_RATES: "admin/game/gameRate",
+  // ADMIN_GAME_RATES: "admin/game/gameRate",
+  ADMIN_GAME_RATES: "mainGameRate",
+
 
   //GAME SETTING
-  ADMIN_GAME_SETTING: "/admin/game/gameSetting",
+  // ADMIN_GAME_SETTING: "/admin/game/gameSetting",
+  ADMIN_GAME_SETTING: "mainGameSetting",
+ 
 
   // GAME RESULT
   ADMIN_GAME_RESULT: "/admin/game/gameResult",

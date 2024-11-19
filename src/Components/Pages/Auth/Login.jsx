@@ -53,7 +53,6 @@ const Users = () => {
 
         const res = await PagesIndex.LOGIN_API(req, getGenrateTokenState);
 
-        console.log("res", res?.user);
 
         if (res?.success) {
           PagesIndex.toast.success(res?.message);

@@ -4,15 +4,9 @@ import PagesIndex from "../../Pages/PagesIndex";
 
 const ModalComponent = ({visible,setVisible,fields,form_title,formik}) => {
 
-
-
   const closeModal = () => {
     setVisible(false);
   };
-
-
- 
-
 
   return (
     <section>

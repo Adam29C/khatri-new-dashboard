@@ -4,7 +4,6 @@ import dataservice, { BASE_URL } from "../Config/DataService";
 
 export const GET_DASHBOARD_REGISTRED_USERS = async (request, token) => {
 
-  console.log("token" ,token);
   
   try {
     const res = await axios.post(

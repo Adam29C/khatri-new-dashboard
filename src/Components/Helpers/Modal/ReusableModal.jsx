@@ -6,7 +6,7 @@ const App = ({ ModalBody, ModalTitle, setModalState, ModalState }) => {
     <>
       <Modal
         open={ModalState}
-        onClose={() =>setModalState() }
+        onClose={() =>setModalState(false) }
         center
         // classNames={{
         //   overlayAnimationIn: 'customEnterOverlayAnimation',

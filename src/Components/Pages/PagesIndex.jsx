@@ -39,8 +39,8 @@ import CuttingGroupMain from "../Helpers/CuttingGroup/CuttingGroup";
 import MultiTabs from "../Helpers/MultiTabs";
 import WalletMain from "../Helpers/Wallet/WalletMain";
 import ChangeStatus from "../Helpers/ChangeStatus";
-
-
+import TableWitCustomPegination from "../Helpers/Table/TableWithCustomPegination"
+import ModalComponent from "../Helpers/Modal/ModalComponent";
 const PagesIndex = {
   useDispatch,
   useState,
@@ -82,7 +82,9 @@ const PagesIndex = {
   ChangeStatus,
   validApkFile,
   Mobile_regex,
-  common_services
+  common_services,
+  TableWitCustomPegination,
+  ModalComponent
 };
 
 export default PagesIndex;

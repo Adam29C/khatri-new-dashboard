@@ -14,7 +14,6 @@ const PaginatedTable = ({
   const [filteredData, setFilteredData] = useState(data);
   const [searchQuery, setSearchQuery] = useState("");
 
-
   const columns = useMemo(() => {
     if (data.length > 0) {
       return Object.keys(data[0]).map((key) => ({
@@ -138,7 +137,14 @@ const PaginatedTable = ({
                   <td>{index + 1}</td>
                   {columns.map((column) =>
                     column.visible ? (
-                      <td key={column.field}>{row[column.field]}</td>
+                      <td key={column.field}>
+                        {" "}
+                        {column.field === "activeStatus"
+                          ? row.activeStatus
+                            ? "Market Is Active"
+                            : "Market Is Inactive"
+                          : row[column.field]}
+                      </td>
                     ) : (
                       ""
                     )
@@ -147,14 +153,31 @@ const PaginatedTable = ({
                   {UserFullButtonList.map((items) => {
                     return (
                       <>
-                        {/* {console.log("items" ,items)                     } */}
+                     
                         <td>
-                          <Link
-                            to={items.route}
-                            className={`btn btn-${items.buttonColor} btn-sm me-2`}
-                          >
-                            {items.buttonName}
-                          </Link>
+                          {items.type === "link" ? (
+                            <Link
+                              to={items.route}
+                              className={`btn btn-${items.buttonColor} btn-sm me-2`}
+                            >
+                              {items.buttonName}
+                            </Link>
+                          ) :
+                           (
+                            <button
+                              type="button"
+                              className={`btn btn-${items.buttonColor} btn-sm me-2`}
+                              onClick={() => {
+                                if (items.buttonName === "Delete") {
+                                  items.onClick(row._id);
+                                }  else if (items.buttonName === "Edit") {
+                                  items.onClick(row); 
+                                }
+                              }}
+                            >
+                              {items.buttonName}
+                            </button>
+                          )}{" "}
                         </td>
                       </>
                     );
