@@ -166,7 +166,8 @@ const PaginatedTable = ({
                            (
                             <button
                               type="button"
-                              className={`btn btn-${items.buttonColor} btn-sm me-2`}
+                              className={`btn ${items.buttonColor ? `btn-${items.buttonColor}` : "unblock-btn"} btn-sm me-2`}
+                              
                               onClick={() => {
                                 if (items.buttonName === "Delete") {
                                   items.onClick(row._id);
