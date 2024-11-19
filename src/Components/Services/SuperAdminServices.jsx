@@ -204,7 +204,100 @@ export const GAME_SETTING_UPDATE_API = async (data) => {
 };
 
 // --------------------------   GAME SETTING CRUD ------------------------
+// --------------------------   AB GAME PROVIDER CRUD ------------------------
 
+// --------------------------   AB GAME PROVIDER CRUD ------------------------
+
+//get ab game list
+export const GET_AB_GAME = async()=>{
+  try {
+    const res = await dataservice.get(Api.AB_GAME_PROVIDER)
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+}
+
+//add ab game 
+export const AB_GAME_ADD_API = async (data) => {
+  try {
+    const res = await dataservice.post(`${Api.AB_GAME_PROVIDER}/insertGame`, data);
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+//update ab game
+export const AB_GAME_UPDATE_API = async (data) => {
+  try {
+    const res = await dataservice.patch(Api.AB_GAME_PROVIDER, data);
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+//delete ab game
+export const AB_GAME_DELETE_API = async (id) => {
+  try {
+    let apiData = {
+      providerId: id,
+   
+    };
+
+    const res = await dataservice.delete(Api.AB_GAME_PROVIDER, {
+      data: apiData,
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// --------------------------   AB GAME PROVIDER CRUD ------------------------
+// --------------------------   AB_GAME_RATE PROVIDER CRUD ------------------------
+
+export const GET_AB_GAME_RATE = async()=>{
+  try {
+    const res = await dataservice.get(Api.AB_GAME_RATE)
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+}
+
+//add ab game 
+export const AB_GAME_RATE_ADD_API = async (data) => {
+  try {
+    const res = await dataservice.post(`${Api.AB_GAME_RATE}/insertGame`, data);
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+//update ab game
+export const AB_GAME_RATE_UPDATE_API = async (data) => {
+  try {
+    const res = await dataservice.post(`${Api.AB_GAME_RATE}/update`, data);
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+//delete ab game
+export const AB_GAME_RATE_DELETE_API = async (id) => {
+  try {
+ 
+    const res = await dataservice.delete(`${Api.AB_GAME_RATE}?gameRateId=${id}`);
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+// --------------------------  AB_GAME_RATE PROVIDER CRUD ------------------------
 // --------------------------   GAME RESULT CRUD ------------------------
 
 // --------------------------   GAME SETTING CRUD ------------------------

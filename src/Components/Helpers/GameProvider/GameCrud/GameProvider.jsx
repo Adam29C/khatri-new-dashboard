@@ -47,6 +47,14 @@ console.log(error)
     const handleEdit = (row) => {
       setModalType("Edit");
       setSelectedRow(row);
+      formik.resetForm({
+        values: {
+          gamename: row.providerName,
+          result: row.providerResult,
+          mobile: row.mobile,
+          activeStatus:row.activeStatus
+        },
+      });
       setVisible(true);
     };
   
@@ -54,6 +62,14 @@ console.log(error)
     const handleAdd = () => {
       setModalType("Add");
       setSelectedRow(null);
+      formik.resetForm({
+        values: {
+          gamename:"",
+          result: "",
+          mobile: "",
+          activeStatus:""
+        },
+      });
       setVisible(true);
     };
 

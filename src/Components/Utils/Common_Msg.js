@@ -69,3 +69,4 @@ export const PROVIDER_NAME_REQUIRED = "Provider Name is required";
  export const CLOSE_BID_TIME_IS_REQUIRED = "Close Bid Time is required";
  export const OPEN_BID_RESULT_TIME_IS_REQUIRED = "Open Bid Result Time is required";
   export const CLOSE_BID_RESULT_TIME_IS_REQUIRED = "Close Bid Result Time is required";
+  export const EMPTY_GAME_RATE_ERROR = "Please Enter Game Rate";

@@ -77,6 +77,11 @@ const Api = {
   //HOW TO PLAY
   HOW_TO_PLAY_GET_LIST: "/admin/appSetting/htpList",
   UPDATE_HTP: "/admin/appSetting/updateHtp",
+
+//AB GAME AND AB RATE CRUD
+  AB_GAME_PROVIDER:"/abGameProvider",
+  AB_GAME_RATE:"/abGameRate"
+
 };
 
 export { Api };

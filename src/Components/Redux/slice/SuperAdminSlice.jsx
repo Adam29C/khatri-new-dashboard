@@ -14,10 +14,15 @@ export const getEmployeeList = createAsyncThunk(
   }
 );
 
-const CommonSlice = createSlice({
+
+
+
+
+const SuperAdminSlice = createSlice({
   name: "SuperAdminSlice",
   initialState: {
     getEmployeeListState: [],
+  
     isLoading: false,
   },
   reducers: {},
@@ -44,8 +49,10 @@ const CommonSlice = createSlice({
           getEmployeeListState: [],
           isLoading: false,
         };
-      });
+        
+      })
+    
   },
 });
 
-export default CommonSlice;
+export default SuperAdminSlice;

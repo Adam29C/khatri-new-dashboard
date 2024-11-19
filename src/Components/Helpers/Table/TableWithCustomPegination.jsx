@@ -15,8 +15,8 @@ const PaginatedTable = ({
   const [searchQuery, setSearchQuery] = useState("");
 
   const columns = useMemo(() => {
-    if (data.length > 0) {
-      return Object.keys(data[0]).map((key) => ({
+    if (data?.length > 0) {
+      return Object.keys(data[0])?.map((key) => ({
         header: key.charAt(0).toUpperCase() + key.slice(1),
         field: key,
         visible: visibleFields.includes(key),
