@@ -34,7 +34,7 @@ const ExamplePage = () => {
   const formik = PagesIndex.useFormik({
     initialValues: {
       winningDigit: "",
-      resultDate: actual_date_formet,
+      resultDate: actual_date_formet || "",
       session: "",
       providerId: "",
     },
@@ -236,8 +236,8 @@ const ExamplePage = () => {
     {
       size: 3,
       body: (
-        <div>
-          <div>
+        <div >
+          <div >
             <PagesIndex.Formikform
               fieldtype={fields1.filter((field) => !field.showWhen)}
               formik={formik1}

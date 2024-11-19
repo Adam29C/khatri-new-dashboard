@@ -119,7 +119,7 @@ console.log(error)
     {
       id: 0,
       buttonName: "Edit",
-      buttonColor: "",
+      buttonColor: "sucess",
       route: "edit",
       Conditions: "",
       Visiblity: false,
