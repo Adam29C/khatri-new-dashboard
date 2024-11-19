@@ -20,9 +20,9 @@ const Users = () => {
     // $("#favicon").attr("href", favIcon);
   };
 
-  PagesIndex.useEffect(() => {
-    generateToken();
-  }, []);
+  // PagesIndex.useEffect(() => {
+  //   generateToken();
+  // }, []);
 
   const formik = PagesIndex.useFormik({
     initialValues: {
@@ -52,7 +52,6 @@ const Users = () => {
 
         const res = await PagesIndex.LOGIN_API(req, getGenrateTokenState);
 
-        console.log("res", res?.user);
 
         if (res?.success) {
           PagesIndex.toast.success(res?.message);

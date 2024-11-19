@@ -27,9 +27,9 @@ const Header = () => {
     // $("#sidebar-logo-short").html(shortIcon);
   };
 
-  PagesIndex.useEffect(() => {
-    generateToken();
-  }, []);
+  // PagesIndex.useEffect(() => {
+  //   generateToken();
+  // }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");

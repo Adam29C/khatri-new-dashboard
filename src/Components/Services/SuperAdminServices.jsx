@@ -125,6 +125,7 @@ export const GAME_PROVIDER_GET_LIST_API = async () => {
     const res = await axios.get(Api.MAIN_GAME, {
       headers: header(token),
     });
+
     return res?.data;
   } catch (error) {
     return error;
@@ -142,14 +143,16 @@ export const GAME_PROVIDER_ADD_API = async (data) => {
   }
 };
 
-export const GAME_PROVIDER_DELETE_API = async (data) => {
+export const GAME_PROVIDER_DELETE_API = async (id) => {
   try {
     let apiData = {
-      adminId: data.adminId,
-      gameProviderId: data.deleteId,
+      gameId: id,
+    
     };
 
+
     const res = await axios.delete(Api.ADMIN_GAME_PROVIDER, {
+
       data: apiData,
       headers: header(token),
     });
@@ -161,9 +164,11 @@ export const GAME_PROVIDER_DELETE_API = async (data) => {
 
 export const GAME_PROVIDER_UPDATE_API = async (data) => {
   try {
+
     const res = await axios.put(Api.ADMIN_GAME_PROVIDER, data, {
       headers: header(token),
     });
+
     return res?.data;
   } catch (error) {
     return error;
@@ -171,7 +176,7 @@ export const GAME_PROVIDER_UPDATE_API = async (data) => {
 };
 
 //GAME RATES API
-export const GAME_RATES_GET_LIST_API = async (data) => {
+export const GAME_RATES_GET_LIST_API = async () => {
   try {
     let { gameType, userId } = data;
     const res = await axios.get(
@@ -208,11 +213,11 @@ export const GAME_RATES_UPDATE_API = async (data) => {
   }
 };
 
-export const GAME_RATES_DELETE_API = async (data) => {
+export const GAME_RATES_DELETE_API = async (id) => {
   try {
     let apiData = {
-      adminId: data.adminId,
-      gameRateId: data.deleteId,
+      userId: id,
+   
     };
 
     const res = await axios.delete(Api.ADMIN_GAME_RATES, {

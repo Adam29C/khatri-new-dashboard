@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
-import PagesIndex from "../../Pages/PagesIndex";
+
 const PaginatedTable = ({
   data,
   initialRowsPerPage = 5,
@@ -14,7 +14,7 @@ const PaginatedTable = ({
   const [rowsPerPage, setRowsPerPage] = useState(initialRowsPerPage);
   const [filteredData, setFilteredData] = useState(data);
   const [searchQuery, setSearchQuery] = useState("");
-  //
+
   const columns = useMemo(() => {
     if (data?.length > 0) {
       return Object.keys(data[0]).map((key) => ({
@@ -140,93 +140,23 @@ const PaginatedTable = ({
                   <td>{index + 1}</td>
                   {columns.map((column) =>
                     column.visible ? (
-                      <>
-                        <td key={column.field}>{row[column.field]}</td>
-
-                        {UserFullButtonList.length - 1 &&
-                          UserFullButtonList.map((items) => {
-                            return (
-                              <>
-                                <td>
-                                  {items.type === "link" ? (
-                                    <Link
-                                      to={items.route}
-                                      className={`btn btn-${items.buttonColor} btn-sm me-2`}
-                                    >
-                                      {items.buttonName}
-                                    </Link>
-                                  ) : items.type === "button" ? (
-                                    <button
-                                      className={`btn btn-${items.buttonColor} btn-sm me-2`}
-                                      onClick={() => items.Conditions(row)}
-                                    >
-                                      {items.buttonName}
-                                    </button>
-                                  ) : (
-                                    ""
-                                  )}
-                                </td>
-                              </>
-                            );
-                          })}
-                      </>
+                      <td key={column.field}>{row[column.field]}</td>
                     ) : (
                       ""
                     )
                   )}
-                </tr>
-              ))}
-            </>
-          ) : (
-            <span>No Data Available</span>
-          )} */}
 
-          {/* {additional && (
-            <tr>
-              <td colSpan={3}>{additional}</td>
-            </tr>
-          )} */}
-
-          {currentData?.length > 0 ? (
-            <>
-              {currentData?.map((row, index) => (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  {columns.map((column) =>
-                    column.visible ? (
-                      <td key={column.field}>{row[column.field]}</td>
-                    ) : null
-                  )}
-
-                  {/* Render buttons only in the last column */}
-                  {UserFullButtonList?.length > 0 &&
-                    UserFullButtonList?.map((items) => {
-                      return (
+                  {UserFullButtonList.map((items) => {
+                    return (
+                      <>
+                        {/* {console.log("items" ,items)                     } */}
                         <td>
-                          <span key={items.buttonName}>
-                            {items.type === "link" ? (
-                              <Link
-                                to={items.route}
-                                className={`btn btn-${items.buttonColor} btn-sm me-2`}
-                              >
-                                {items.buttonName}
-                              </Link>
-                            ) : items.type === "button" ? (
-                              <button
-                                className={`btn btn-${items.buttonColor} btn-sm me-2`}
-                                onClick={() => items.Conditions(row)}
-                              >
-                                {items.buttonName}
-                              </button>
-                            ) : items.type === "check" ? (
-                              <PagesIndex.ChangeStatus
-                                apiRoute={""}
-                                req={""}
-                                checkboxStatus={""}
-                                rowData={""}
-                              />
-                            ) : null}
-                          </span>
+                          <Link
+                            to={items.route}
+                            className={`btn btn-${items.buttonColor} btn-sm me-2`}
+                          >
+                            {items.buttonName}
+                          </Link>
                         </td>
                       );
                     })}

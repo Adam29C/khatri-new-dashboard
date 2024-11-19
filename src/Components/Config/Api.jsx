@@ -45,13 +45,17 @@ const Api = {
   MAIN_GAME_ADD: "/mainGames/insertGame",
 
   //GAME RATES
-  ADMIN_GAME_RATES: "admin/game/gameRate",
+  // ADMIN_GAME_RATES: "admin/game/gameRate",
+  ADMIN_GAME_RATES: "mainGameRate",
+
 
   //GAME SETTING
-  ADMIN_GAME_SETTING: "/admin/game/gameSetting",
+  // ADMIN_GAME_SETTING: "/admin/game/gameSetting",
+  ADMIN_GAME_SETTING: "mainGameSetting",
+ 
 
   // GAME RESULT
-  ADMIN_GAME_RESULT: "/admin/game/gameResult",
+  ADMIN_GAME_RESULT: "mainGameResult",
 
   USERS_IDEAS: "/admin/UserIdea",
   GET_VERSION: "/admin/appSetting/listVersionSetting",

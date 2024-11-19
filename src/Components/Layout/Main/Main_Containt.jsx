@@ -9,9 +9,10 @@ const Main_Containt = ({
   col_size,
   btnTitle,
   route,
- children,
- btn_modal,
- setVisible
+  children,
+  btn_modal,
+  setVisible,
+  handleAdd
 }) => {
   return (
     <div className="content-body">
@@ -20,16 +21,21 @@ const Main_Containt = ({
           <div className={`card`}>
             <div className="d-flex align-items-center justify-content-between">
               <h4 className="m-0 p-3">{title}</h4>
-              {btn_modal ? ( (
-                    <button onClick={()=>setVisible(true)} className="submitBtn btn" >
-                      <Icon
-                        icon="line-md:plus"
-                        className="fw-bold"
-                        style={{ fontSize: "20px" }}
-                      />
-                      &nbsp; Add
-                      </button>
-                  )):""}
+              {btn_modal ? (
+                <button
+                  onClick={handleAdd}
+                  className="submitBtn btn"
+                >
+                  <Icon
+                    icon="line-md:plus"
+                    className="fw-bold"
+                    style={{ fontSize: "20px" }}
+                  />
+                  &nbsp; Add
+                </button>
+              ) : (
+                ""
+              )}
               {add_button ? (
                 <Link className="submitBtn btn" to={route}>
                   {btnTitle === "Add" ? (
