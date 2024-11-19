@@ -10,6 +10,8 @@ export const ADMIN_PROFILE_GET_API = async (id) => {
   }
 };
 
+
+
 export const ADMIN_CHANGE_PASSWORD_API = async (data) => {
   try {
     const res = await dataservice.post(Api.ADMIN_CHANGE_PASSWORD, data);
@@ -18,6 +20,15 @@ export const ADMIN_CHANGE_PASSWORD_API = async (data) => {
     return error;
   }
 };
+
+
+
+
+
+
+
+
+
 
 // --------------------------   Employee Crud ------------------------
 

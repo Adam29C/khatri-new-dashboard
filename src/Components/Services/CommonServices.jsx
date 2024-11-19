@@ -3,9 +3,8 @@ import { Api } from "../Config/Api";
 import dataservice, { BASE_URL } from "../Config/DataService";
 
 export const GET_DASHBOARD_REGISTRED_USERS = async (request, token) => {
+  console.log("token", token);
 
-  console.log("token" ,token);
-  
   try {
     const res = await axios.post(
       `${BASE_URL}${Api.GET_DASHBOARD_REGISTRED_USERS}`,
@@ -13,9 +12,10 @@ export const GET_DASHBOARD_REGISTRED_USERS = async (request, token) => {
       {
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
-      });
+      }
+    );
     return res?.data;
   } catch (error) {
     return error;
@@ -68,6 +68,29 @@ export const PERMISSION_GET_API = async (id) => {
   try {
     const res = await dataservice.get(`${Api.PERMISSION_API}?userId=${id}`);
     return res.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const PROFILE_GET_API = async (id) => {
+  try {
+    const res = await dataservice.get(`${Api.USER_PROFILE_GET}?id=${id}`);
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const BLOCK_USER_API = async (request, token) => {
+  try {
+    const res = await dataservice.post(`${Api.BLOCK_USER}`, request, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res?.data;
   } catch (error) {
     return error;
   }
