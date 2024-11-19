@@ -53,7 +53,7 @@ const Api = {
  
 
   // GAME RESULT
-  ADMIN_GAME_RESULT: "/admin/game/gameResult",
+  ADMIN_GAME_RESULT: "mainGameResult",
 
   
 

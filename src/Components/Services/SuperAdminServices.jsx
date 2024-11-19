@@ -211,7 +211,8 @@ export const GAME_SETTING_UPDATE_API = async (data) => {
 
 export const GAME_RESULT = async (id) => {
   try {
-    const res = await dataservice.get(`${Api.ADMIN_GAME_RESULT}?date=${id}`);
+    // const res = await dataservice.get(`${Api.ADMIN_GAME_RESULT}?date=${id}`);
+    const res = await dataservice.get(Api.ADMIN_GAME_RESULT);
     return res?.data;
   } catch (error) {
     return error;
