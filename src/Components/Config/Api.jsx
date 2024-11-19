@@ -50,6 +50,7 @@ const Api = {
   //GAME SETTING
   // ADMIN_GAME_SETTING: "/admin/game/gameSetting",
   ADMIN_GAME_SETTING: "mainGameSetting",
+  ADMIN_GAME_SETTING_ADD: "mainGameSetting/insertSettings",
  
 
   // GAME RESULT

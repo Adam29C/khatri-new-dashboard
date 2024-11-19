@@ -15,6 +15,7 @@ const GameProvider = ({ path, title, gameType }) => {
   const dispatch = PagesIndex.useDispatch();
 
   const { gameSettings } = PagesIndex.useSelector((state) => state.CommonSlice);
+
   const getStarLineSettingList = () => {
     let apiData = {
       userId: userId,
@@ -28,11 +29,18 @@ const GameProvider = ({ path, title, gameType }) => {
     getStarLineSettingList();
   }, []);
 
+
+
+ console.log("gameSettingsgameSettingsgameSettings" ,gameSettings);
+ 
+  
+
+
   const columns = [
     {
       name: "Game Name",
       selector: (row, cell) => {
-        const rowData = row.gameSatingInfo && row.gameSatingInfo[0];
+        const rowData = row.gameDetails && row.gameDetails[0];
         return (
           <div className="">
             <div className="break-text">{row.providerName}</div>
@@ -50,7 +58,7 @@ const GameProvider = ({ path, title, gameType }) => {
     {
       name: "Monday",
       selector: (row) => {
-        const rowData = row.gameSatingInfo && row.gameSatingInfo[0];
+        const rowData = row.gameDetails && row.gameDetails[0];
         return (
           <div className="py-2">
             {rowData ? (
@@ -101,7 +109,7 @@ const GameProvider = ({ path, title, gameType }) => {
     {
       name: "Tuesday",
       selector: (row) => {
-        const rowData = row.gameSatingInfo && row.gameSatingInfo[1];
+        const rowData = row.gameDetails && row.gameDetails[1];
         return (
           <div className="py-2">
             <div className="py-2">
@@ -154,7 +162,7 @@ const GameProvider = ({ path, title, gameType }) => {
     {
       name: "Wednesday",
       selector: (row) => {
-        const rowData = row.gameSatingInfo && row.gameSatingInfo[2];
+        const rowData = row.gameDetails && row.gameDetails[2];
         return (
           <div className="py-2">
             <div className="py-2">
@@ -208,7 +216,7 @@ const GameProvider = ({ path, title, gameType }) => {
     {
       name: "Thursday",
       selector: (row) => {
-        const rowData = row.gameSatingInfo && row.gameSatingInfo[3];
+        const rowData = row.gameDetails && row.gameDetails[3];
         return (
           <div className="py-2">
             <div className="py-2">
@@ -262,7 +270,7 @@ const GameProvider = ({ path, title, gameType }) => {
     {
       name: "Friday",
       selector: (row) => {
-        const rowData = row.gameSatingInfo && row.gameSatingInfo[4];
+        const rowData = row.gameDetails && row.gameDetails[4];
         return (
           <div className="py-2">
             <div className="py-2">
@@ -315,7 +323,7 @@ const GameProvider = ({ path, title, gameType }) => {
     {
       name: "Saturday",
       selector: (row) => {
-        const rowData = row.gameSatingInfo && row.gameSatingInfo[5];
+        const rowData = row.gameDetails && row.gameDetails[5];
         return (
           <div className="py-2">
             <div className="py-2">
@@ -369,7 +377,7 @@ const GameProvider = ({ path, title, gameType }) => {
     {
       name: "Sunday",
       selector: (row) => {
-        const rowData = row.gameSatingInfo && row.gameSatingInfo[6];
+        const rowData = row.gameDetails && row.gameDetails[6];
         return (
           <div className="py-2">
             <div className="py-2">

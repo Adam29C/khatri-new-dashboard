@@ -23,9 +23,13 @@ const GameProviderAdd = () => {
     getGameProviderList();
   }, []);
 
+
+  console.log("location?.state?" ,location?.state);
+  
+
   const formik = PagesIndex.useFormik({
     initialValues: {
-      providerId: location?.state?.row ? location?.state?.row.providerId : "",
+      providerId: location?.state?.row ? location?.state?.row._id : "",
       gameDay:
         location?.state?.edit === "single"
           ? location?.state?.rowData.gameDay
@@ -40,35 +44,34 @@ const GameProviderAdd = () => {
     },
     validate: (values) => {
       const errors = {};
-      if(!values.providerId && formik.touched.providerId ){
-        errors.providerId= PagesIndex.valid_err.PROVIDER_NAME_REQUIRED
+      if (!values.providerId && formik.touched.providerId) {
+        errors.providerId = PagesIndex.valid_err.PROVIDER_NAME_REQUIRED;
       }
-      if(!values.OBT && formik.touched.OBT ){
-        errors.OBT= PagesIndex.valid_err.OPEN_BID_TIME_IS_REQUIRED
+      if (!values.OBT && formik.touched.OBT) {
+        errors.OBT = PagesIndex.valid_err.OPEN_BID_TIME_IS_REQUIRED;
       }
-      if(!values.CBT && formik.touched.CBT ){
-        errors.CBT= PagesIndex.valid_err.CLOSE_BID_TIME_IS_REQUIRED
+      if (!values.CBT && formik.touched.CBT) {
+        errors.CBT = PagesIndex.valid_err.CLOSE_BID_TIME_IS_REQUIRED;
       }
-      if(!values.OBRT && formik.touched.OBRT ){
-        errors.OBRT= PagesIndex.valid_err.OPEN_BID_RESULT_TIME_IS_REQUIRED
+      if (!values.OBRT && formik.touched.OBRT) {
+        errors.OBRT = PagesIndex.valid_err.OPEN_BID_RESULT_TIME_IS_REQUIRED;
       }
-      if(!values.CBRT && formik.touched.CBRT ){
-        errors.CBRT= PagesIndex.valid_err.CLOSE_BID_RESULT_TIME_IS_REQUIRED
+      if (!values.CBRT && formik.touched.CBRT) {
+        errors.CBRT = PagesIndex.valid_err.CLOSE_BID_RESULT_TIME_IS_REQUIRED;
       }
-  
+
       return errors;
     },
 
     onSubmit: async (values) => {
       let data = {
-        adminId: userId,
-        providerId: values.providerId,
-        OBT: values.OBT,
-        CBT: values.CBT,
-        OBRT: values.OBRT,
-        CBRT: values.CBRT,
-        isClosed: values.isClosed.toString(),
-        gameType: "MainGame",
+        gameid: values.providerId,
+        gameDay: values.gameDay,
+        game1: values.OBT,
+        game2: values.CBT,
+        game3: values.OBRT,
+        game4: values.CBRT,
+        status: values.isClosed.toString(),
       };
 
       if (location?.state?.rowData?._id) {
@@ -85,7 +88,7 @@ const GameProviderAdd = () => {
         ? await PagesIndex.admin_services.GAME_SETTING_UPDATE_API(data)
         : await PagesIndex.admin_services.GAME_SETTING_ADD(data);
 
-      if (res?.status === 200) {
+      if (res?.status ) {
         PagesIndex.toast.success(res?.message);
         setTimeout(() => {
           navigate("/admin/game/settings");

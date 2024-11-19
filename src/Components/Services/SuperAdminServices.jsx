@@ -187,7 +187,7 @@ export const GAME_SEETING_LIST_API = async (data) => {
 
 export const GAME_SETTING_ADD = async (data) => {
   try {
-    const res = await dataservice.post(`${Api.ADMIN_GAME_SETTING}`, data);
+    const res = await dataservice.post(`${Api.ADMIN_GAME_SETTING_ADD}`, data);
     return res?.data;
   } catch (error) {
     return error;
