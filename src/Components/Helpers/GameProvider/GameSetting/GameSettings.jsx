@@ -10,6 +10,7 @@ import { convertTo12HourFormat } from "../../../Utils/Valid_Rejex";
 
 const GameProvider = ({ path, title, gameType }) => {
   const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
   const navigate = PagesIndex.useNavigate();
 
   const dispatch = PagesIndex.useDispatch();
@@ -22,7 +23,10 @@ const GameProvider = ({ path, title, gameType }) => {
       gameType: gameType,
     };
 
-    dispatch(Games_Settings_List(apiData));
+    console.log("tokentokentoken" ,token); 
+    
+
+    dispatch(Games_Settings_List({data : apiData , token :token}));
   };
 
   PagesIndex.useEffect(() => {
@@ -31,7 +35,7 @@ const GameProvider = ({ path, title, gameType }) => {
 
 
 
- console.log("gameSettingsgameSettingsgameSettings" ,gameSettings);
+
  
   
 

@@ -41,8 +41,8 @@ const Api = {
   DELETE_EMPLOYEE: "admin/deleteEmployee",
 
   //MAIN GAME API'S
-  MAIN_GAME: "/mainGames",
-  MAIN_GAME_ADD: "/mainGames/insertGame",
+  MAIN_GAME: "mainGames",
+  MAIN_GAME_ADD: "mainGames/insertGame",
 
   //GAME RATES
   // ADMIN_GAME_RATES: "admin/game/gameRate",

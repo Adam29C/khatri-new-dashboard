@@ -3,6 +3,7 @@ import PagesIndex from "../../../Pages/PagesIndex";
 
 const GameProviderAdd = () => {
   const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
   const navigate = PagesIndex.useNavigate();
   const location = PagesIndex.useLocation();
   const dispatch = PagesIndex.useDispatch();
@@ -16,16 +17,17 @@ const GameProviderAdd = () => {
       userId: userId,
       gameType: "MainGame",
     };
-    dispatch(PagesIndex.commonSlice.Games_Provider_List(providerapidata));
+    dispatch(
+      PagesIndex.commonSlice.Games_Provider_List({
+        data: providerapidata,
+        token: token,
+      })
+    );
   };
 
   PagesIndex.useEffect(() => {
     getGameProviderList();
   }, []);
-
-
-  console.log("location?.state?" ,location?.state);
-  
 
   const formik = PagesIndex.useFormik({
     initialValues: {
@@ -84,11 +86,17 @@ const GameProviderAdd = () => {
         data.providerId = values.providerId;
         data.gameDay = values.gameDay;
       }
-      const res = location?.state?.rowData?._id
-        ? await PagesIndex.admin_services.GAME_SETTING_UPDATE_API(data)
-        : await PagesIndex.admin_services.GAME_SETTING_ADD(data);
 
-      if (res?.status ) {
+      console.log("location?.state" ,data);
+      
+      const res = location?.state?.rowData?._id
+        ? await PagesIndex.admin_services.GAME_SETTING_UPDATE_API(data, token)
+        : await PagesIndex.admin_services.GAME_SETTING_ADD(data, token);
+
+
+        console.log("res" ,res);
+        
+      if (res?.status) {
         PagesIndex.toast.success(res?.message);
         setTimeout(() => {
           navigate("/admin/game/settings");

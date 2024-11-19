@@ -2,13 +2,12 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as Common_service from "../../Services/CommonServices";
 import * as admin_service from "../../Services/SuperAdminServices";
 
-
-
 export const Games_Provider_List = createAsyncThunk(
   "common/Games_Provider_List",
-  async () => {
+  async (data) => {
     try {
-      const res = await admin_service.GAME_PROVIDER_GET_LIST_API();
+      const res = await admin_service.GAME_PROVIDER_GET_LIST_API(data);
+      console.log("data123" ,res);
 
       return await res;
     } catch (err) {
@@ -19,11 +18,12 @@ export const Games_Provider_List = createAsyncThunk(
 
 // GAME_RATES_GET_LIST_API
 
-export const Games_Settings_List = createAsyncThunk(
-  "common/Games_Settings_List",
-  async (data) => {
+export const Games_Settings_List = createAsyncThunk("common/Games_Settings_List",async (data, token) => {
+    
     try {
-      const res = await admin_service.GAME_SEETING_LIST_API(data);
+      const res = await admin_service.GAME_SEETING_LIST_API(data.data, data.token);
+      console.log("resres", res);
+
       return await res;
     } catch (err) {
       return err;
@@ -107,7 +107,6 @@ const CommonSlice = createSlice({
         };
       })
       .addCase(Get_permissions.fulfilled, (state, action) => {
-      
         return {
           ...state,
           getPermissions: action.payload?.data,

@@ -120,21 +120,23 @@ export const GET_USERS_IDEAS = async (id) => {
 
 // --------------------------  game provider api ------------------------
 
-export const GAME_PROVIDER_GET_LIST_API = async () => {
+export const GAME_PROVIDER_GET_LIST_API = async (token) => {
   try {
-    const res = await axios.get(Api.MAIN_GAME, {
+    const res = await axios.get(`${BASE_URL}${Api.MAIN_GAME}`, {
       headers: header(token),
     });
 
+    console.log("resres" ,res);
+    
     return res?.data;
   } catch (error) {
     return error;
   }
 };
 
-export const GAME_PROVIDER_ADD_API = async (data) => {
+export const GAME_PROVIDER_ADD_API = async (data , token) => {
   try {
-    const res = await axios.post(Api.MAIN_GAME_ADD, data, {
+    const res = await axios.post(`${BASE_URL}${Api.MAIN_GAME_ADD}`, data, {
       headers: header(token),
     });
     return res?.data;
@@ -147,12 +149,9 @@ export const GAME_PROVIDER_DELETE_API = async (id) => {
   try {
     let apiData = {
       gameId: id,
-    
     };
 
-
     const res = await axios.delete(Api.ADMIN_GAME_PROVIDER, {
-
       data: apiData,
       headers: header(token),
     });
@@ -164,7 +163,6 @@ export const GAME_PROVIDER_DELETE_API = async (id) => {
 
 export const GAME_PROVIDER_UPDATE_API = async (data) => {
   try {
-
     const res = await axios.put(Api.ADMIN_GAME_PROVIDER, data, {
       headers: header(token),
     });
@@ -217,7 +215,6 @@ export const GAME_RATES_DELETE_API = async (id) => {
   try {
     let apiData = {
       userId: id,
-   
     };
 
     const res = await axios.delete(Api.ADMIN_GAME_RATES, {
@@ -235,33 +232,38 @@ export const GAME_RATES_DELETE_API = async (id) => {
 
 // --------------------------   GAME SETTING CRUD ------------------------
 
-export const GAME_SEETING_LIST_API = async (data) => {
+export const GAME_SEETING_LIST_API = async (data, token) => {
+  console.log("token", data);
+
   try {
     const { userId, gameType } = data;
-    const res = await axios.get(
-      `${Api.ADMIN_GAME_SETTING}?adminId=${userId}&gameType=${gameType}`,
-      {
-        headers: header(token),
-      }
-    );
+    const res = await axios.get(`${BASE_URL}${Api.ADMIN_GAME_SETTING}`, {
+      headers: header(token),
+    });
     return res.data;
   } catch (error) {
     return error;
   }
 };
 
-export const GAME_SETTING_ADD = async (data) => {
+export const GAME_SETTING_ADD = async (data , token) => {
   try {
-    const res = await dataservice.post(`${Api.ADMIN_GAME_SETTING_ADD}`, data);
+    const res = await axios.post(
+      `${BASE_URL}${Api.ADMIN_GAME_SETTING_ADD}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     return error;
   }
 };
 
-export const GAME_SETTING_UPDATE_API = async (data) => {
+export const GAME_SETTING_UPDATE_API = async (data ,token) => {
   try {
-    const res = await axios.put(Api.ADMIN_GAME_SETTING, data, {
+    const res = await axios.patch(`${BASE_URL}${Api.ADMIN_GAME_SETTING}`, data, {
       headers: header(token),
     });
     return res?.data;
