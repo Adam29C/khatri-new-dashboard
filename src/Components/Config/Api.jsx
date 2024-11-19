@@ -1,5 +1,5 @@
 const Api = {
-  COMMON_GENERATE_TOKEN: "common/generate-token",
+  COMMON_GENERATE_TOKEN: "common/generate-token",  
 
   // AUTH MODULE
   LOGIN: "adminLogin/loginDashboard",
@@ -7,18 +7,22 @@ const Api = {
   //PERMISSION API
   PERMISSION_API: "/adminLogin/getPermission",
 
-  //DASHBOARD COUNT 
-  GET_DASHBOARD_COUNT: "/dashboard/dashboardCount",
+  //DASHBOARD COUNT
+  GET_DASHBOARD_COUNT: "dashboard/dashboardCount",
   GET_DASHBOARD_COUNT_UPI_PAYMENT: "/dashboard/getBriefDeposit",
   GET_DASHBOARD_REGISTRED_USERS: "dashboard/getRegisteredUser",
 
-  //USERS
-  USERS_LIST: "/allUser/getAllUsers",
-  DELETED_USERS: "/admin/getDeleteUser",
-
-
 
   
+  //USERS
+  USERS_LIST: "allUser/getAllUsers",
+  DELETED_USERS: "/allUser/deleteUserByAdmin",
+  USER_PROFILE_GET: "/allUser/getProfile",
+  BLOCK_USER: "/allUser/blockUser",
+
+
+
+
 
   ADMIN_CHANGE_PASSWORD: "admin/changePassword",
 
@@ -36,9 +40,9 @@ const Api = {
   BLOCK_EMPLOYEE: "admin/blockEmployee",
   DELETE_EMPLOYEE: "admin/deleteEmployee",
 
-  //MAIN GAME API'S 
+  //MAIN GAME API'S
   MAIN_GAME: "/mainGames",
-  MAIN_GAME_ADD:"/mainGames/insertGame",
+  MAIN_GAME_ADD: "/mainGames/insertGame",
 
   //GAME RATES
   ADMIN_GAME_RATES: "admin/game/gameRate",
@@ -48,8 +52,6 @@ const Api = {
 
   // GAME RESULT
   ADMIN_GAME_RESULT: "/admin/game/gameResult",
-
-  
 
   USERS_IDEAS: "/admin/UserIdea",
   GET_VERSION: "/admin/appSetting/listVersionSetting",

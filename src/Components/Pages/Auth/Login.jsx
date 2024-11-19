@@ -10,15 +10,14 @@ const Users = () => {
 
   const generateToken = async () => {
     const val = PagesIndex.Remove_Special_Character(PagesIndex.v4());
-    const res = await dispatch(PagesIndex.getGenerateToken(val)).unwrap();
-    const res1 = await PagesIndex.LIST_SYSTEM_INFO_API(res?.data?.token);
-    let image = res1?.data?.details?.[0]?.backgroundImage;
-    let logo = res1?.data?.details?.[0]?.logo;
-    let favIcon = res1?.data?.details?.[0]?.favIcon;
+    // const res1 = await PagesIndex.LIST_SYSTEM_INFO_API(res?.data?.token);
+    // let image = res1?.data?.details?.[0]?.backgroundImage;
+    // let logo = res1?.data?.details?.[0]?.logo;
+    // let favIcon = res1?.data?.details?.[0]?.favIcon;
 
-    $("#dynamic-background").css("background-image", `url(${image && image})`);
-    $("#company-logo").attr("src", logo);
-    $("#favicon").attr("href", favIcon);
+    // $("#dynamic-background").css("background-image", `url(${image && image})`);
+    // $("#company-logo").attr("src", logo);
+    // $("#favicon").attr("href", favIcon);
   };
 
   PagesIndex.useEffect(() => {
@@ -59,8 +58,7 @@ const Users = () => {
           PagesIndex.toast.success(res?.message);
           localStorage.setItem("token", res?.token);
           localStorage.setItem("userdetails", JSON.stringify(res?.user));
-          // JSON.stringify(localStorage.setItem("token", res?.token));
-          // JSON.stringify(localStorage.setItem("userdetails", res?.user));
+
           setTimeout(() => {
             navigate("/admin/dashboard");
           }, 2000);
