@@ -2,10 +2,11 @@ import React, { Children, useState } from "react";
 import Modal from "react-awesome-modal";
 import PagesIndex from "../../Pages/PagesIndex";
 
-const ModalComponent = ({visible,setVisible,fields,form_title,formik}) => {
+const ModalComponent = ({visible,setVisible,fields,form_title,formik,setSelectedRow}) => {
 
   const closeModal = () => {
     setVisible(false);
+    
   };
 
   return (
