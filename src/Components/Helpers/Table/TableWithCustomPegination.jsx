@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-
+import { useMemo } from "react";
+import { Link } from "react-router-dom";
 const PaginatedTable = ({
   data,
   initialRowsPerPage = 5,
@@ -12,18 +13,17 @@ const PaginatedTable = ({
   const [rowsPerPage, setRowsPerPage] = useState(initialRowsPerPage);
   const [filteredData, setFilteredData] = useState(data);
   const [searchQuery, setSearchQuery] = useState("");
-
-  const columns =
-    data.length > 0
-      ? Object.keys(data[0]).map((key) => ({
-          header: key.charAt(0).toUpperCase() + key.slice(1), // Capitalize the header
-          field: key, // Field name is same as the key
-          visible: visibleFields.includes(key), // Check if the column should be visible
-        }))
-      : [];
-
-      
-  // Update filtered data based on search query
+// 
+  const columns = useMemo(() => {
+    if (data.length > 0) {
+      return Object.keys(data[0]).map((key) => ({
+        header: key.charAt(0).toUpperCase() + key.slice(1),
+        field: key,
+        visible: visibleFields.includes(key),
+      }));
+    }
+    return [];
+  }, [data, visibleFields]);
 
   const ddd = () => {
     const filtered = data.filter((row) =>
