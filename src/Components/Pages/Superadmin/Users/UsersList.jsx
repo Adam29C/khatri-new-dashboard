@@ -243,8 +243,6 @@
 //         />
 //         {/* <PagesIndex.Toast /> */}
 
-
-
 // {/* -  MODAL FOR BLOCK USERS */}
 //         <ReusableModal
 //           ModalTitle={`User Profile : ${
@@ -334,12 +332,6 @@
 
 // export default UsersList;
 
-
-
-
-
-
-
 import PagesIndex from "../../PagesIndex";
 import DeleteSweetAlert from "../../../Helpers/DeleteSweetAlert";
 import TableWitCustomPegination from "../../../Helpers/Table/TableWithCustomPegination";
@@ -348,127 +340,6 @@ import Formikform from "../../../Helpers/FormikForm/Form";
 import ReusableModal from "../../../Helpers/Modal/ReusableModal";
 import { PROFILE_GET_API } from "../../../Services/CommonServices";
 import { useFormik } from "formik";
-
-// const UsersList = () => {
-//   const [loading, setLoading] = PagesIndex.useState(false);
-//   const [data, setData] = PagesIndex.useState([]);
-
-//   const userId = localStorage.getItem("userId");
-//   let userDeleteReason = true;
-//   const getList = async () => {
-//     setLoading(true);
-//     try {
-//       const res = await PagesIndex.admin_services.USERS_LIST(userId);
-
-//       setData(res?.data);
-//     } catch (error) {
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   PagesIndex.useEffect(() => {
-//     getList();
-//   }, []);
-
-//   const columns = [
-//     {
-//       name: "Name",
-//       selector: (row) => row?.name,
-//     },
-//     {
-//       name: "User Name",
-//       selector: (row) => row?.username,
-//     },
-//     {
-//       name: "Mobile No.",
-//       selector: (row) => row?.mobile,
-//     },
-//     {
-//       name: "Device",
-//       selector: (row) => row?.deviceName,
-//     },
-//     {
-//       name: "Is Active",
-//       selector: (row) => (
-//         <span
-//           className={`badge fw-bold ${
-//             row.isActive ? "bg-primary" : "bg-danger"
-//           }`}
-//         >
-//           {row.isActive ? "Active" : "In-Active"}
-//         </span>
-//       ),
-//     },
-//     {
-//       name: "Is Block",
-//       selector: (row) => (
-//         <PagesIndex.ChangeStatus
-//           apiRoute={PagesIndex.admin_services.BLOCK_USER}
-//           req={{ userId: row?._id, isBlock: row?.isBlock }}
-//           checkboxStatus={row?.isBlock}
-//           rowData={row}
-//         />
-//       ),
-//     },
-//     {
-//       name: "Is Login",
-//       selector: (row) => (
-//         <span
-//           className={`badge fw-bold ${
-//             row.isLogin ? "bg-primary" : "bg-danger"
-//           }`}
-//         >
-//           {row.isLogin ? "Login" : "Log-Out"}
-//         </span>
-//       ),
-//     },
-//     {
-//       name: "Actions",
-//       selector: (cell, row) => (
-//         <div style={{ width: "120px" }}>
-//           <div>
-//             <PagesIndex.Link
-//               className="delete-icon"
-//               href="#"
-//               onClick={() =>
-//                 DeleteSweetAlert(
-//                   PagesIndex.admin_services.DELETE_USER,
-//                   cell?._id,
-//                   getList,
-//                   userDeleteReason
-//                 )
-//               }
-//             >
-//               <span data-toggle="tooltip" data-placement="top" title="Delete">
-//                 <i class="ti-trash fs-5 mx-1 "></i>
-//               </span>
-//             </PagesIndex.Link>
-//           </div>
-//         </div>
-//       ),
-//     },
-//   ];
-
-//   return (
-//     <PagesIndex.Main_Containt
-//       add_button={false}
-//       route="/admin/user/add"
-//       title="All Users"
-//     >
-//       <PagesIndex.Data_Table
-//         isLoading={loading}
-//         columns={columns}
-//         data={data}
-//       />
-
-//       {/* <TableWitCustomPegination /> */}
-//       <PagesIndex.Toast />
-//     </PagesIndex.Main_Containt>
-//   );
-// };
-
-// export default UsersList;
 
 const UsersList = () => {
   const token = localStorage.getItem("token");
@@ -479,7 +350,9 @@ const UsersList = () => {
 
   const [ModalStateUserProfile, setModalStateUserProfile] =
     PagesIndex.useState(false);
-  const [GetRowId, setGetRowId] = PagesIndex.useState("");
+  const [GetRowData, setGetRowData] = PagesIndex.useState("");
+  const [GetBannedData, setGetBannedData] = PagesIndex.useState("");
+  const [Refresh, setRefresh] = PagesIndex.useState(false);
 
   const [ModalStateForRemoveAndBlock, setModalStateForRemoveAndBlock] =
     PagesIndex.useState(false);
@@ -500,8 +373,6 @@ const UsersList = () => {
     "Delete",
   ];
 
-  // let userDeleteReason = true;
-
   const getList = async () => {
     const payload = {
       page: 1,
@@ -509,14 +380,14 @@ const UsersList = () => {
       searchQuery: SearchInTable,
     };
 
-    const res = await PagesIndex.admin_services.USERS_LIST(payload, token);
+    const res = await PagesIndex.admin_services.USERS_LIST_API(payload, token);
 
     setTableData(res?.data);
   };
 
   PagesIndex.useEffect(() => {
     getList();
-  }, []);
+  }, [Refresh]);
 
   // USER PROFILE
   const getProfile = async (row) => {
@@ -532,34 +403,17 @@ const UsersList = () => {
   };
 
   const BlockUserAndRemoveUser = async (row, buttonStatus) => {
-    setGetRowId(row.id);
-    // const payload = {
-    //   id: row.id,
-    //   blockStatus: ManageModalStatus,
-    //   blockReason: "testing",
-    // };
+    setGetRowData(row);
 
     if (buttonStatus === 1) {
       setManageModalStatus(buttonStatus);
       setModalStateForRemoveAndBlock(!ModalStateForRemoveAndBlock);
     } else if (buttonStatus === 2) {
       setManageModalStatus(buttonStatus);
-
       setModalStateForRemoveAndBlock(!ModalStateForRemoveAndBlock);
     } else {
       return "";
     }
-
-    // const res = await PagesIndex.common_services.PROFILE_GET_API(row.id, token);
-    // console.log("resres", res);
-
-    // if (res.status) {
-    //   setModalStateUserProfile(true);
-    //   seGetUserProfile(res.userData);
-    // } else {
-    //   setModalStateUserProfile(false);
-    //   PagesIndex.toast.error(res.response.data.message);
-    // }
   };
 
   const UserFullButtonList = [
@@ -569,9 +423,8 @@ const UsersList = () => {
       buttonColor: "danger",
       route: "",
       Conditions: (row) => {
+        setGetBannedData(row.banned);
         BlockUserAndRemoveUser(row, 1);
-
-        // setModalforBlockUser(true);
       },
       Visiblity: true,
       type: "button",
@@ -593,13 +446,29 @@ const UsersList = () => {
       buttonColor: "danger",
       Conditions: (row) => {
         BlockUserAndRemoveUser(row, 2);
-        // setModalStateUserProfile(true);
       },
 
       Visiblity: false,
       type: "button",
     },
   ];
+
+  const getListfilter = () => {
+    if (TableData) {
+      // Update the buttonName dynamically based on the `banned` status
+      TableData.forEach((item) => {
+        const button = UserFullButtonList.find((btn) => btn.id === 0);
+        if (button) {
+          button.buttonName = item.banned ? "Un-Block" : "Block";
+        }
+      });
+    }
+  };
+  console.log("Updated UserFullButtonList:", UserFullButtonList);
+
+  PagesIndex.useEffect(() => {
+    getListfilter();
+  }, [TableData]);
 
   // USER PROFILE
 
@@ -613,24 +482,39 @@ const UsersList = () => {
       return errors;
     },
     onSubmit: async (values) => {
-      const req = {
-        id: GetRowId,
-        blockStatus: ManageModalStatus,
-        blockReason: values.blockReason,
-      };
-
-      console.log("reqreq", req);
-
       if (ManageModalStatus === 1) {
-        const res = await PagesIndex.common_services.BLOCK_USER_API(req, token);
+        const req = {
+          id: GetRowData.id,
+          blockStatus: GetRowData.banned ? true : false,
+          blockReason: values.blockReason,
+        };
 
-        console.log("resres" ,res);
-        
+        const res = await PagesIndex.common_services.BLOCK_USER_API(req, token);
       } else if (ManageModalStatus === 2) {
-        const res = await PagesIndex.common_services.PROFILE_GET_API(
+        const req = {
+          id: GetRowData.id,
+          blockReason: values.blockReason,
+        };
+
+        const res = await PagesIndex.common_services.DELETED_USERS_API(
           req,
           token
         );
+
+        if (res.status) {
+          setRefresh(!Refresh);
+          PagesIndex.toast.success(res.message);
+          setModalStateForRemoveAndBlock(!ModalStateForRemoveAndBlock);
+        } else {
+          setModalStateForRemoveAndBlock(!ModalStateForRemoveAndBlock);
+          setRefresh(!Refresh);
+          PagesIndex.toast.error(res.response.data.message);
+        }
+
+        console.log("res1231", res);
+
+        // PagesIndex.toast.error(res.response.data.message);
+        // if()
       } else {
         return "";
       }
@@ -749,10 +633,10 @@ const UsersList = () => {
         <ReusableModal
           ModalTitle={
             <h5 class="modal-title" id="mySmallModalLabel">
-              Reason For{" "}
+              Reason For
               {ManageModalStatus && ManageModalStatus === 1
                 ? "Block"
-                : "Delete"}{" "}
+                : "Delete"}
               The User
             </h5>
           }

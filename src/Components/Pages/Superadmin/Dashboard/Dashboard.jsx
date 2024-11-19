@@ -16,10 +16,17 @@ const Dashboard_Component = () => {
 
   const [TableData, setTableData] = PagesIndex.useState([]);
 
-  const { countDlt, data, yesTerday } = DashboardData && DashboardData;
+
+  console.log("DashboardData && DashboardData" ,DashboardData && DashboardData);
+  
+  const { countDlt, data, yesTerday } = (DashboardData && DashboardData) || [];
 
   const getDashboardCount = async () => {
-    const res = await PagesIndex.admin_services.GET_DASHBOARD_COUNT_API(userId);
+    console.log("testtt");
+    
+    const res = await PagesIndex.admin_services.GET_DASHBOARD_COUNT_API(userId , token);
+    console.log("testtt1231" , res);
+
     const res1 =
       await PagesIndex.admin_services.GET_DASHBOARD_COUNT_UPI_PAYMENT_API(
         userId,
@@ -261,7 +268,7 @@ const Dashboard_Component = () => {
                       </tr>
                       <tr>
                         <td>Deleted Users</td>
-                        <th>{countDlt}</th>
+                        {/* <th>{countDlt && countDlt}</th> */}
                       </tr>
                       <tr className="bg-warning text-white">
                         <td>Total Active Users</td>
@@ -319,7 +326,7 @@ const Dashboard_Component = () => {
                     initialRowsPerPage={5}
                     SearchInTable={SearchInTable}
                     visibleFields={visibleFields}
-                    additional={`Total Registered Balance : ${TodayRegistedUserBalancefun()}`}
+                    additional={`Total Registered Balance123 : ${TodayRegistedUserBalancefun()}`}
                     searchInput={
                       <input
                         type="text"

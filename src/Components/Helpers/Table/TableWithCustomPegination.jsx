@@ -16,7 +16,7 @@ const PaginatedTable = ({
   const [searchQuery, setSearchQuery] = useState("");
   //
   const columns = useMemo(() => {
-    if (data.length > 0) {
+    if (data?.length > 0) {
       return Object.keys(data[0]).map((key) => ({
         header: key.charAt(0).toUpperCase() + key.slice(1),
         field: key,
@@ -27,7 +27,7 @@ const PaginatedTable = ({
   }, [data, visibleFields]);
 
   const ddd = () => {
-    const filtered = data.filter((row) =>
+    const filtered = data?.filter((row) =>
       columns.some((column) =>
         row[column.field]
           ?.toString()
@@ -44,10 +44,10 @@ const PaginatedTable = ({
   }, [searchQuery, data, columns]);
 
   // Calculate total pages
-  const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+  const totalPages = Math.ceil(filteredData?.length / rowsPerPage);
 
   // Get current page data
-  const currentData = filteredData.slice(
+  const currentData = filteredData?.slice(
     (currentPage - 1) * rowsPerPage,
     currentPage * rowsPerPage
   );
@@ -109,31 +109,33 @@ const PaginatedTable = ({
       {/* Table */}
       <table className="table table-striped table-bordered table-responsive">
         <thead className="text-center table-header-backeground">
-          <tr>
-            <th>ID</th>
+          {data && data?.length > 0 && (
+            <tr>
+              <th>ID</th>
 
-            {columns.map(
-              (column, id) =>
-                column.visible && (
+              {columns.map(
+                (column, id) =>
+                  column.visible && (
+                    <>
+                      <th key={column.field}>{column.header}</th>
+                    </>
+                  )
+              )}
+
+              {UserFullButtonList && UserFullButtonList?.map((items) => {
+                return (
                   <>
-                    <th key={column.field}>{column.header}</th>
+                    <th>{items.buttonName}</th>
                   </>
-                )
-            )}
-
-            {UserFullButtonList.map((items) => {
-              return (
-                <>
-                  <th>{items.buttonName}</th>
-                </>
-              );
-            })}
-          </tr>
+                );
+              })}
+            </tr>
+          )}
         </thead>
         <tbody className="text-center">
-          {/* {currentData.length > 0 ? (
+          {/* {currentData?.length > 0 ? (
             <>
-              {currentData.map((row, index) => (
+              {currentData?.map((row, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   {columns.map((column) =>
@@ -177,17 +179,17 @@ const PaginatedTable = ({
             </>
           ) : (
             <span>No Data Available</span>
-          )}
+          )} */}
 
-          {additional && (
+          {/* {additional && (
             <tr>
               <td colSpan={3}>{additional}</td>
             </tr>
           )} */}
 
-          {currentData.length > 0 ? (
+          {currentData?.length > 0 ? (
             <>
-              {currentData.map((row, index) => (
+              {currentData?.map((row, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   {columns.map((column) =>
@@ -197,8 +199,8 @@ const PaginatedTable = ({
                   )}
 
                   {/* Render buttons only in the last column */}
-                  {UserFullButtonList.length > 0 &&
-                    UserFullButtonList.map((items) => {
+                  {UserFullButtonList?.length > 0 &&
+                    UserFullButtonList?.map((items) => {
                       return (
                         <td>
                           <span key={items.buttonName}>
@@ -232,7 +234,7 @@ const PaginatedTable = ({
               ))}
             </>
           ) : (
-            <span>No Data Available</span>
+            <h4 className="text-center">No Data Available</h4>
           )}
 
           {additional && (

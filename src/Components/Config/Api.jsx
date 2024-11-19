@@ -1,5 +1,5 @@
 const Api = {
-  COMMON_GENERATE_TOKEN: "common/generate-token",
+  COMMON_GENERATE_TOKEN: "common/generate-token",  
 
   // AUTH MODULE
   LOGIN: "adminLogin/loginDashboard",
@@ -8,15 +8,21 @@ const Api = {
   PERMISSION_API: "/adminLogin/getPermission",
 
   //DASHBOARD COUNT
-  GET_DASHBOARD_COUNT: "/dashboard/dashboardCount",
+  GET_DASHBOARD_COUNT: "dashboard/dashboardCount",
   GET_DASHBOARD_COUNT_UPI_PAYMENT: "/dashboard/getBriefDeposit",
   GET_DASHBOARD_REGISTRED_USERS: "dashboard/getRegisteredUser",
 
+
+  
   //USERS
-  USERS_LIST: "/allUser/getAllUsers",
-  DELETED_USERS: "/admin/getDeleteUser",
+  USERS_LIST: "allUser/getAllUsers",
+  DELETED_USERS: "/allUser/deleteUserByAdmin",
   USER_PROFILE_GET: "/allUser/getProfile",
   BLOCK_USER: "/allUser/blockUser",
+
+
+
+
 
   ADMIN_CHANGE_PASSWORD: "admin/changePassword",
 
