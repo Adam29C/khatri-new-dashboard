@@ -5,7 +5,10 @@ const ChangeStatus = ({ rowData, apiRoute, checkboxStatus, req }) => {
   
   const [isChecked, setIsChecked] = useState(checkboxStatus);
 
+
   const abcde = ()=>{
+  
+
     setIsChecked(checkboxStatus);
 
   }
