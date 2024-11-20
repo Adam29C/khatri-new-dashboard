@@ -19,6 +19,8 @@ import { Link } from "react-router-dom";
 import * as valid_err from "../Utils/Common_Msg";
 import * as admin_services from "../Services/SuperAdminServices";
 import * as common_services from "../Services/CommonServices";
+import * as game_service from "../Services/GameSectionService";
+
 import {
   ADD_SYSTEM_INFO_API,
   LIST_SYSTEM_INFO_API,
@@ -83,7 +85,8 @@ const PagesIndex = {
   Mobile_regex,
   common_services,
   TableWitCustomPegination,
-  ModalComponent
+  ModalComponent,
+  game_service
 };
 
 export default PagesIndex;

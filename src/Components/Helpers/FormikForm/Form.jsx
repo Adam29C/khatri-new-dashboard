@@ -4,10 +4,19 @@ import Loader from "../Loader";
 // import Loader from "./Loader";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { today, getActualDateFormate } from "../../Utils/Common_Date";
+import {
+  today,
+  getActualDateFormate,
+  convertTo12HourFormat,
+} from "../../Utils/Common_Date";
 import CustomDatePicker from "./DatePickers";
 import { useFormik, FieldArray, FormikProvider } from "formik";
 // col-form-label this class for input alignment apply on label
+
+import moment from "moment";
+import "rc-time-picker/assets/index.css";
+import TimePicker from "rc-time-picker";
+
 const ReusableForm = ({
   fromDate,
   fieldtype,
@@ -35,6 +44,8 @@ const ReusableForm = ({
 
   const [previews, setPreviews] = useState([]);
 
+  const [dateTimeStates, setDateTimeStates] = useState({});
+
   const handleFileChange = (event, index, name) => {
     const file = event.target.files[0];
     if (file) {
@@ -61,6 +72,27 @@ const ReusableForm = ({
     }));
     formik.setFieldValue(name, formattedTime);
   };
+
+  const format = "h:mm a";
+
+  const now = moment().hour(0).minute(0);
+
+  function onChange(value) {
+    console.log(value && value.format(format));
+  }
+
+  const handleDateTimeChange = (date, name) => {
+    const formatted = date ? moment(date).format("h:mm") : "";
+    setDateTimeStates((prev) => ({ ...prev, [name]: formatted }));
+    
+    setDateTimeStates((prevStates) => ({
+      ...prevStates,
+      [name]: formatted,
+    }));
+    formik.setFieldValue(name, formatted);
+    // formik.setFieldValue(name, formattedTime);
+  };
+  // console.log("formik", formik.values);
 
   return (
     <>
@@ -127,13 +159,13 @@ const ReusableForm = ({
                           key={option.id}
                         >
                           <label
-                          className={`custom-label col-lg-12`}
-                          htmlFor={option.labelName}
-                        >
-                          {/* {field.label} */}
-                          {option.labelName}
-                          <span className="text-danger">*</span>
-                        </label>
+                            className={`custom-label col-lg-12`}
+                            htmlFor={option.labelName}
+                          >
+                            {/* {field.label} */}
+                            {option.labelName}
+                            <span className="text-danger">*</span>
+                          </label>
                           <div className="form-check custom-checkbox mb-2 ">
                             <input
                               type={field.type}
@@ -342,7 +374,48 @@ const ReusableForm = ({
                         )}
                       </div>
                     </div> */}
+
                     <div className={`col-lg-${field.col_size} mb-3`}>
+                      <label
+                        className={`custom-label col-lg-${field.label_size}`}
+                        htmlFor={field.name}
+                      >
+                        {field.label}
+                        <span className="text-danger">*</span>
+                      </label>
+
+                      {console.log("dateTimeStates[field.name]")}
+
+                      <TimePicker
+                        use12Hours
+                        showSecond={false}
+                        className="xxx"
+                        format="h:mm"
+                        name={field.name}
+                        // defaultValue={dateTimeStates && dateTimeStates[field.name]}
+                        // value={dateTimeStates && dateTimeStates[field.name]}
+                        onChange={(value) =>
+                          handleDateTimeChange(value, field.name)
+                        }
+                        // defaultValue={}
+                        // {...formik.getFieldProps(field.name)}
+                        inputReadOnly
+                      />
+
+                      {/* <TimePicker
+                        name="time"
+                        use12Hours
+                        showSecond={false}
+                        format="h:mm a"
+                        value={formik.values.time} // Pass the Formik value
+                        onChange={
+                          (value) => formik.setFieldValue("time", value) // Update Formik's value
+                        }
+                        inputReadOnly
+                      /> */}
+                    </div>
+
+                    {/* <div className={`col-lg-${field.col_size} mb-3`}>
                       <label
                         className={`custom-label col-lg-${field.label_size}`}
                         htmlFor={field.name}
@@ -360,7 +433,7 @@ const ReusableForm = ({
                         min={field.min && field.min.actual_date_formet}
                         max={field.max && field.max.actual_date_formet}
                       />
-                    </div>
+                    </div> */}
                   </>
                 ) : field.type === "msgbox" ? (
                   <>
@@ -409,7 +482,7 @@ const ReusableForm = ({
                               {field.label}
                               <span className="text-danger">*</span>
                             </label>
-                            
+
                             <input
                               type="file"
                               id={field.name}

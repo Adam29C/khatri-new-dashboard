@@ -1,5 +1,6 @@
 import React from "react";
 import PagesIndex from "../../../Pages/PagesIndex";
+import { convertTo12HourFormat } from "../../../Utils/Common_Date";
 
 const GameProviderAdd = () => {
   const userId = localStorage.getItem("userId");
@@ -23,8 +24,6 @@ const GameProviderAdd = () => {
   PagesIndex.useEffect(() => {
     getGameProviderList();
   }, []);
-
-  // console.log("location?.state" ,location?.state.rowData.OBT  );
 
   const formik = PagesIndex.useFormik({
     initialValues: {
@@ -64,38 +63,37 @@ const GameProviderAdd = () => {
 
     onSubmit: async (values) => {
       let data = {
-        gameid: values.providerId,
         gameDay: values.gameDay,
-        game1: values.OBT,
-        game2: values.CBT,
-        game3: values.OBRT,
-        game4: values.CBRT,
+        game1: convertTo12HourFormat(values.OBT),
+        game2: convertTo12HourFormat(values.CBT),
+        game3: convertTo12HourFormat(values.OBRT),
+        game4: convertTo12HourFormat(values.CBRT),
         status: values.isClosed.toString(),
       };
 
-      if (location?.state?.rowData?._id) {
-        data.gameSettingId = location?.state?.rowData?._id;
-      }
-
-      if (location?.state?.edit === "multiple") {
-        data.providerId = values.providerId;
-      } else {
-        data.providerId = values.providerId;
-        data.gameDay = values.gameDay;
-      }
-
+      if (location?.state?.edit === "single") {
       
-      const res = location?.state?.rowData?._id
-        ? await PagesIndex.admin_services.GAME_SETTING_UPDATE_API(data, token)
-        : location?.state?.edit === "multiple"
-        ? await PagesIndex.admin_services.GAME_SETTING_UPDATEALL_API(
-            data,
-            token
-          )
-        : await PagesIndex.admin_services.GAME_SETTING_ADD(data, token);
 
+        data.gameid = location?.state?.rowData?._id;
+      } else if (location?.state?.edit === "multiple") {
+        // data.providerId = values.providerId;
+        data.gameid = values.providerId;
+      } else {
+        // data.providerId = values.providerId;
+        data.gameDay = values.gameDay;
+        data.gameid = values.providerId;
+      }
 
-        
+      const res =
+        location?.state?.edit === "single"
+          ? await PagesIndex.admin_services.GAME_SETTING_UPDATE_API(data, token)
+          : location?.state?.edit === "multiple"
+          ? await PagesIndex.admin_services.GAME_SETTING_UPDATEALL_API(
+              data,
+              token
+            )
+          : await PagesIndex.admin_services.GAME_SETTING_ADD(data, token);
+
       if (res?.status) {
         PagesIndex.toast.success(res?.message);
         setTimeout(() => {
@@ -103,6 +101,9 @@ const GameProviderAdd = () => {
         }, 1000);
       } else {
         PagesIndex.toast.error(res.response.data.message);
+        setTimeout(() => {
+          navigate("/admin/game/settings");
+        }, 1000);
       }
     },
   });
@@ -185,7 +186,13 @@ const GameProviderAdd = () => {
     <PagesIndex.Main_Containt
       add_button={true}
       route="/admin/game/settings"
-      title="Game Setting Add"
+      title={`Game Setting ${
+        location?.state?.edit === "single"
+          ? "Update"
+          : location?.state?.edit == "multiple"
+          ? "Update All "
+          : "Add"
+      }`}
     >
       <PagesIndex.Formikform
         fieldtype={fields.filter((field) => !field.showWhen)}

@@ -144,21 +144,14 @@ export const GAME_PROVIDER_ADD_API = async (data, token) => {
 };
 
 export const GAME_PROVIDER_DELETE_API = async (id, token) => {
-
-
-
   try {
     let apiData = {
       gameId: id,
     };
-    const res = await axios.delete(
-      `${BASE_URL}${Api.MAIN_GAME}`,
-      {
-        headers: header(token),
-        data: apiData,
-      }
-    );
-
+    const res = await axios.delete(`${BASE_URL}${Api.MAIN_GAME}`, {
+      headers: header(token),
+      data: apiData,
+    });
 
     return res?.data;
   } catch (error) {
@@ -166,16 +159,17 @@ export const GAME_PROVIDER_DELETE_API = async (id, token) => {
   }
 };
 
-export const GAME_PROVIDER_UPDATE_API = async (data,token) => {
-  console.log(data)
-  console.log(token)
+export const GAME_PROVIDER_UPDATE_API = async (data, token) => {
+  console.log(data);
+  console.log(token);
   try {
     // const res = await axios.patch(Api.MAIN_GAME, data, {
     //   headers: header(token),
     // });
 
-    const res = await axios.patch(`${BASE_URL}${Api.MAIN_GAME}`,data,{headers:header(token)})
-
+    const res = await axios.patch(`${BASE_URL}${Api.MAIN_GAME}`, data, {
+      headers: header(token),
+    });
 
     return res?.data;
   } catch (error) {
@@ -243,7 +237,6 @@ export const GAME_RATES_DELETE_API = async (id) => {
 // --------------------------   GAME SETTING CRUD ------------------------
 
 export const GAME_SEETING_LIST_API = async (data, token) => {
-
   try {
     const { userId, gameType } = data;
     const res = await axios.get(`${BASE_URL}${Api.ADMIN_GAME_SETTING}`, {
@@ -272,20 +265,28 @@ export const GAME_SETTING_ADD = async (data, token) => {
 
 export const GAME_SETTING_UPDATE_API = async (data, token) => {
   try {
-    const res = await axios.patch(`${BASE_URL}${Api.ADMIN_GAME_SETTING}`, data, {
-      headers: header(token),
-    });
+    const res = await axios.patch(
+      `${BASE_URL}${Api.ADMIN_GAME_SETTING}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     return error;
   }
 };
 
-export const GAME_SETTING_UPDATEALL_API = async (data ,token) => {
+export const GAME_SETTING_UPDATEALL_API = async (data, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.ADMIN_GAME_SETTING_UPDATEALL}`, data, {
-      headers: header(token),
-    });
+    const res = await axios.post(
+      `${BASE_URL}${Api.ADMIN_GAME_SETTING_UPDATEALL}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     return error;
@@ -293,6 +294,7 @@ export const GAME_SETTING_UPDATEALL_API = async (data ,token) => {
 };
 
 // --------------------------   GAME SETTING CRUD ------------------------
+
 
 // --------------------------   GAME RESULT CRUD ------------------------
 

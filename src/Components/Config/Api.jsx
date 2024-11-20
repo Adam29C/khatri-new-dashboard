@@ -1,5 +1,5 @@
 const Api = {
-  COMMON_GENERATE_TOKEN: "common/generate-token",  
+  COMMON_GENERATE_TOKEN: "common/generate-token",
 
   // AUTH MODULE
   LOGIN: "adminLogin/loginDashboard",
@@ -12,17 +12,43 @@ const Api = {
   GET_DASHBOARD_COUNT_UPI_PAYMENT: "/dashboard/getBriefDeposit",
   GET_DASHBOARD_REGISTRED_USERS: "dashboard/getRegisteredUser",
 
-
-  
   //USERS
   USERS_LIST: "allUser/getAllUsers",
   DELETED_USERS: "/allUser/deleteUserByAdmin",
   USER_PROFILE_GET: "/allUser/getProfile",
   BLOCK_USER: "/allUser/blockUser",
 
+  //MAIN GAME API'S
+  MAIN_GAME: "mainGames",
+  MAIN_GAME_ADD: "mainGames/insertGame",
 
+  //GAME RATES
+  // ADMIN_GAME_RATES: "admin/game/gameRate",
+  ADMIN_GAME_RATES: "mainGameRate",
 
+  //GAME SETTING
+  // ADMIN_GAME_SETTING: "/admin/game/gameSetting",
+  ADMIN_GAME_SETTING: "mainGameSetting",
+  ADMIN_GAME_SETTING_ADD: "mainGameSetting/insertSettings",
+  ADMIN_GAME_SETTING_UPDATEALL: "mainGameSetting/updateAll",
 
+  // STARLINE GAME SETTING CRUD
+
+  STARLINE_GAME_PROVIDERS: "starGameSetting/addSetting",
+  STARLINE_GAME_SETTING_LIST: "starGameSetting",
+  STARLINE_GAME_SETTING_ADD: "starGameSetting/insertSettings",
+  STARLINE_GAME_SETTING_UPDATE_ALL: "starGameSetting/updateProviderSettings",
+  STARLINE_GAME_SETTING_UPDATE_ONE: "starGameSetting",
+
+  // JACKPOT GAME SETTING CRUD
+
+  JACKPOT_GAME_PROVIDERS: "abGameSetting/addSetting",
+  JACKPOT_GAME_SETTING_LIST: "abGameSetting",
+  JACKPOT_GAME_SETTING_ADD: "abGameSetting/insertSettings",
+
+  //   ADMIN_GAME_SETTING_ADD: "mainGameSetting/insertSettings",
+  //   ADMIN_GAME_SETTING_UPDATEALL: "mainGameSetting/updateAll"
+  // starGameSetting
 
   ADMIN_CHANGE_PASSWORD: "admin/changePassword",
 
@@ -43,20 +69,6 @@ const Api = {
   //MAIN GAME API'S
   MAIN_GAME: "mainGames",
   MAIN_GAME_ADD: "mainGames/insertGame",
-
-
-
-  //GAME RATES
-  // ADMIN_GAME_RATES: "admin/game/gameRate",
-  ADMIN_GAME_RATES: "mainGameRate",
-
-
-  //GAME SETTING
-  // ADMIN_GAME_SETTING: "/admin/game/gameSetting",
-  ADMIN_GAME_SETTING: "mainGameSetting",
-  ADMIN_GAME_SETTING_ADD: "mainGameSetting/insertSettings",
-  ADMIN_GAME_SETTING_UPDATEALL: "mainGameSetting/updateAll",
- 
 
   // GAME RESULT
   ADMIN_GAME_RESULT: "mainGameResult",
