@@ -281,6 +281,17 @@ export const GAME_SETTING_UPDATE_API = async (data, token) => {
   }
 };
 
+export const GAME_SETTING_UPDATEALL_API = async (data ,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.ADMIN_GAME_SETTING_UPDATEALL}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 // --------------------------   GAME SETTING CRUD ------------------------
 
 // --------------------------   GAME RESULT CRUD ------------------------

@@ -17,17 +17,14 @@ const GameProviderAdd = () => {
       userId: userId,
       gameType: "MainGame",
     };
-    dispatch(
-      PagesIndex.commonSlice.Games_Provider_List({
-        data: providerapidata,
-        token: token,
-      })
-    );
+    dispatch(PagesIndex.commonSlice.Games_Provider_List(token));
   };
 
   PagesIndex.useEffect(() => {
     getGameProviderList();
   }, []);
+
+  // console.log("location?.state" ,location?.state.rowData.OBT  );
 
   const formik = PagesIndex.useFormik({
     initialValues: {
@@ -90,6 +87,11 @@ const GameProviderAdd = () => {
       
       const res = location?.state?.rowData?._id
         ? await PagesIndex.admin_services.GAME_SETTING_UPDATE_API(data, token)
+        : location?.state?.edit === "multiple"
+        ? await PagesIndex.admin_services.GAME_SETTING_UPDATEALL_API(
+            data,
+            token
+          )
         : await PagesIndex.admin_services.GAME_SETTING_ADD(data, token);
 
 
