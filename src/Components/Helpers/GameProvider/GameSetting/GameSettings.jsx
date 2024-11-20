@@ -23,28 +23,19 @@ const GameProvider = ({ path, title, gameType }) => {
       gameType: gameType,
     };
 
-    console.log("tokentokentoken" ,token); 
-    
-
-    dispatch(Games_Settings_List({data : apiData , token :token}));
+    dispatch(Games_Settings_List({ data: apiData, token: token }));
   };
 
   PagesIndex.useEffect(() => {
     getStarLineSettingList();
   }, []);
 
-
-
-
- 
-  
-
-
   const columns = [
     {
       name: "Game Name",
       selector: (row, cell) => {
         const rowData = row.gameDetails && row.gameDetails[0];
+
         return (
           <div className="">
             <div className="break-text">{row.providerName}</div>
@@ -82,7 +73,7 @@ const GameProvider = ({ path, title, gameType }) => {
                 {gameType === "MainGame" ? (
                   <p className="game-setting-font">
                     <span className="fw-bold"> CBRT</span> :
-                    {rowData ? convertTo12HourFormat(rowData.CBRT): "N/A"}
+                    {rowData ? convertTo12HourFormat(rowData.CBRT) : "N/A"}
                   </p>
                 ) : (
                   ""
@@ -282,7 +273,7 @@ const GameProvider = ({ path, title, gameType }) => {
                 <>
                   <p className="game-setting-font">
                     <span className="fw-bold"> OBT</span> :
-                    {rowData ? convertTo12HourFormat(rowData.OBT): "N/A"}
+                    {rowData ? convertTo12HourFormat(rowData.OBT) : "N/A"}
                   </p>
                   <p className="game-setting-font">
                     <span className="fw-bold"> CBT</span> :
@@ -339,7 +330,7 @@ const GameProvider = ({ path, title, gameType }) => {
                   </p>
                   <p className="game-setting-font">
                     <span className="fw-bold"> CBT</span> :
-                    {rowData ?convertTo12HourFormat(rowData.CBT) : "N/A"}
+                    {rowData ? convertTo12HourFormat(rowData.CBT) : "N/A"}
                   </p>
                   <p className="game-setting-font">
                     <span className="fw-bold"> OBRT</span> :
@@ -368,7 +359,6 @@ const GameProvider = ({ path, title, gameType }) => {
                   >
                     update
                   </PagesIndex.Link>
-     
                 </>
               ) : (
                 " No Record"
@@ -399,12 +389,12 @@ const GameProvider = ({ path, title, gameType }) => {
                     <span className="fw-bold"> OBRT</span> :
                     {rowData ? convertTo12HourFormat(rowData.OBRT) : "N/A"}
                   </p>
-             
+
                   {gameType === "MainGame" ? (
-                     <p className="game-setting-font">
-                     <span className="fw-bold"> CBRT</span> :
-                     {rowData ? convertTo12HourFormat(rowData.CBRT) : "N/A"}
-                   </p>
+                    <p className="game-setting-font">
+                      <span className="fw-bold"> CBRT</span> :
+                      {rowData ? convertTo12HourFormat(rowData.CBRT) : "N/A"}
+                    </p>
                   ) : (
                     ""
                   )}

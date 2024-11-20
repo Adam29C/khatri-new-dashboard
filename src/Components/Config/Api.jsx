@@ -44,6 +44,8 @@ const Api = {
   MAIN_GAME: "mainGames",
   MAIN_GAME_ADD: "mainGames/insertGame",
 
+
+
   //GAME RATES
   // ADMIN_GAME_RATES: "admin/game/gameRate",
   ADMIN_GAME_RATES: "mainGameRate",
@@ -53,6 +55,7 @@ const Api = {
   // ADMIN_GAME_SETTING: "/admin/game/gameSetting",
   ADMIN_GAME_SETTING: "mainGameSetting",
   ADMIN_GAME_SETTING_ADD: "mainGameSetting/insertSettings",
+  ADMIN_GAME_SETTING_UPDATEALL: "mainGameSetting/updateAll",
  
 
   // GAME RESULT

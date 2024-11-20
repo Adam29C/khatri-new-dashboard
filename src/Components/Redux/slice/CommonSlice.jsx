@@ -7,7 +7,7 @@ export const Games_Provider_List = createAsyncThunk(
   async (data) => {
     try {
       const res = await admin_service.GAME_PROVIDER_GET_LIST_API(data);
-      console.log("data123" ,res);
+      // console.log("data123" ,res);
 
       return await res;
     } catch (err) {
