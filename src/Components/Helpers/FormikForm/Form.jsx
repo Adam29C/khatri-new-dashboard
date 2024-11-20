@@ -196,7 +196,7 @@ const ReusableForm = ({
                               >
                                 <div className="row d-flex">
                                   <div className={`col-lg-${field.col_size}`}>
-                                    <div class="form-check custom-checkbox mb-2">
+                                    <div className="form-check custom-checkbox mb-2">
                                       <input
                                         type={field.type}
                                         className="form-check-input"
@@ -251,7 +251,7 @@ const ReusableForm = ({
                             className={` form-control`}
                           />
                           <i
-                            class={`fa-solid ${
+                            className={`fa-solid ${
                               !passwordVisible[field.name]
                                 ? "fa-eye-slash"
                                 : "fa-eye"
@@ -369,7 +369,7 @@ const ReusableForm = ({
                         <div
                         // className={`col-lg-${field.col_size}`}
                         >
-                          <div class="mb-3">
+                          <div className="mb-3">
                             <label
                               className={`custom-label col-lg-${field.label_size}`}
                               for={field.name}
@@ -377,7 +377,7 @@ const ReusableForm = ({
                               {field.label}
                             </label>
                             <textarea
-                              class="form-control"
+                              className="form-control"
                               rows={field.row_size}
                               id={field.name}
                               name={field.name}
@@ -553,7 +553,7 @@ const ReusableForm = ({
                         <div className={`d-flex`}>
                           <input
                             type="text"
-                            autocomplete="off"
+                            autoComplete="off"
                             className="form-control"
                             style={{
                               background: field.disable ? "#eeeeee" : "",

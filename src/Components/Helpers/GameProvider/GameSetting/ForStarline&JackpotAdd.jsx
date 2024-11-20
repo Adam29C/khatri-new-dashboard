@@ -1,7 +1,7 @@
 import React from "react";
 import PagesIndex from "../../../Pages/PagesIndex";
 
-const ForStarlineJackpotAdd = ({ gameType, path }) => {
+const ForStarlineJackpotAdd = ({ gameType,        }) => {
   const userId = localStorage.getItem("userId");
   const navigate = PagesIndex.useNavigate();
   const location = PagesIndex.useLocation();
@@ -23,18 +23,15 @@ const ForStarlineJackpotAdd = ({ gameType, path }) => {
     getGameProviderList();
   }, []);
 
-
-  
   const formik = PagesIndex.useFormik({
-   
     initialValues: {
       providerId: location?.state?.row ? location?.state?.row.providerId : "",
       gameDay:
         location?.state?.edit === "single"
           ? location?.state?.rowData.gameDay
           : "all",
-      OBT: location?.state?.rowData ?location?.state?.rowData.OBT : "",
-      CBT: location?.state?.rowData ?location?.state?.rowData.CBT : "",
+      OBT: location?.state?.rowData ? location?.state?.rowData.OBT : "",
+      CBT: location?.state?.rowData ? location?.state?.rowData.CBT : "",
       OBRT: location?.state?.rowData ? location?.state?.rowData.OBRT : "",
       // CBRT: location?.state?.rowData ? location?.state?.rowData.CBRT : "",
       CBRT: "null",
@@ -44,24 +41,22 @@ const ForStarlineJackpotAdd = ({ gameType, path }) => {
     },
     validate: (values) => {
       const errors = {};
-      if(!values.providerId && formik.touched.providerId ){
-        errors.providerId= PagesIndex.valid_err.PROVIDER_NAME_REQUIRED
+      if (!values.providerId && formik.touched.providerId) {
+        errors.providerId = PagesIndex.valid_err.PROVIDER_NAME_REQUIRED;
       }
-      if(!values.OBT && formik.touched.OBT ){
-        errors.OBT= PagesIndex.valid_err.OPEN_BID_TIME_IS_REQUIRED
+      if (!values.OBT && formik.touched.OBT) {
+        errors.OBT = PagesIndex.valid_err.OPEN_BID_TIME_IS_REQUIRED;
       }
-      if(!values.CBT && formik.touched.CBT ){
-        errors.CBT= PagesIndex.valid_err.CLOSE_BID_TIME_IS_REQUIRED
+      if (!values.CBT && formik.touched.CBT) {
+        errors.CBT = PagesIndex.valid_err.CLOSE_BID_TIME_IS_REQUIRED;
       }
-      if(!values.OBRT && formik.touched.OBRT ){
-        errors.OBRT= PagesIndex.valid_err.OPEN_BID_RESULT_TIME_IS_REQUIRED
+      if (!values.OBRT && formik.touched.OBRT) {
+        errors.OBRT = PagesIndex.valid_err.OPEN_BID_RESULT_TIME_IS_REQUIRED;
       }
-    
       return errors;
     },
 
     onSubmit: async (values) => {
-      
       let data = {
         adminId: userId,
         gameType: gameType,
@@ -70,7 +65,7 @@ const ForStarlineJackpotAdd = ({ gameType, path }) => {
         CBT: values.CBT,
         OBRT: values.OBRT,
         CBRT: "null",
-        isClosed:values.isClosed.toString(),
+        isClosed: values.isClosed.toString(),
       };
 
       if (location?.state?.rowData?._id) {
