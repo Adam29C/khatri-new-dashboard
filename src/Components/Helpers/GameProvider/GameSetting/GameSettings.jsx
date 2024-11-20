@@ -23,7 +23,6 @@ const GameProvider = ({ path, title, gameType }) => {
       gameType: gameType,
     };
 
-    console.log("tokentokentoken" ,token); 
     
 
     dispatch(Games_Settings_List({data : apiData , token :token}));

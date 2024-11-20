@@ -7,7 +7,6 @@ import { useState } from "react";
 
 const GameRatesProvider = ({ gameType, path, title }) => {
   const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
-  const [TableData, setTableData] = PagesIndex.useState([]);
   const [modalType, setModalType] = useState(""); // Tracks if Add or Edit
   const [selectedRow, setSelectedRow] = useState(null); // For Edit functionality
   const [visible, setVisible] = useState(false);
@@ -15,7 +14,6 @@ const GameRatesProvider = ({ gameType, path, title }) => {
 
   //get game list start
   const getGameRatesList = async () => {
-
     const res = await PagesIndex.admin_services.GAME_RATES_GET_LIST_API();
 
     getData(res?.data);
@@ -28,26 +26,25 @@ const GameRatesProvider = ({ gameType, path, title }) => {
 
   //delete game list start
   const handleDelete = async (id) => {
-
-    const confirmDelete = window.confirm("Are you sure you want to delete this game rate?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this game rate?"
+    );
     if (!confirmDelete) return;
 
     try {
-     const res =  await   PagesIndex.admin_services.GAME_RATES_DELETE_API(id)
-console.log(res)
-     if(res.status){
-      getGameRatesList
-      alert(res?.message);
-     }
-   
-    getGameRatesList();
+      const res = await PagesIndex.admin_services.GAME_RATES_DELETE_API(id);
+      if (res.status) {
+        getGameRatesList;
+        alert(res?.message);
+      }
+
+      getGameRatesList();
     } catch (error) {
-console.log(error)  
-  }
+      console.log(error);
+    }
   };
 
-//delete game list end
-
+  //delete game list end
 
   // Handle Edit Button
   const handleEdit = (row) => {
@@ -63,7 +60,6 @@ console.log(error)
     setVisible(true);
   };
 
-
   // Formik Configuration
   const formik = PagesIndex.useFormik({
     enableReinitialize: true,
@@ -73,8 +69,10 @@ console.log(error)
     },
     validate: (values) => {
       const errors = {};
-      if (!values.gameName) errors.gameName = PagesIndex.valid_err.GAME_NAME_ERROR;
-      if (!values.gamePrice) errors.gamePrice = PagesIndex.valid_err.GAME_PRICE_ERROR;
+      if (!values.gameName)
+        errors.gameName = PagesIndex.valid_err.GAME_NAME_ERROR;
+      if (!values.gamePrice)
+        errors.gamePrice = PagesIndex.valid_err.GAME_PRICE_ERROR;
       return errors;
     },
     onSubmit: async (values) => {
@@ -96,26 +94,21 @@ console.log(error)
           getGameRatesList();
           setVisible(false); // Close modal
         } else {
-          PagesIndex.toast.error(res?.response?.data?.message || "Failed to save!");
+          PagesIndex.toast.error(
+            res?.response?.data?.message || "Failed to save!"
+          );
         }
       } catch (error) {
-        PagesIndex.toast.error(error?.response?.data?.message || "Error occurred!");
+        PagesIndex.toast.error(
+          error?.response?.data?.message || "Error occurred!"
+        );
       }
     },
   });
 
-
-  
-  const visibleFields = [
-    "id",
-    "gameName",
-    "gamePrice",
- 
-  ];
-
+  const visibleFields = ["id", "gameName", "gamePrice"];
 
   const UserFullButtonList = [
-
     {
       id: 0,
       buttonName: "Edit",
@@ -138,7 +131,6 @@ console.log(error)
     },
   ];
 
-
   const fields = [
     {
       name: "gameName",
@@ -159,14 +151,13 @@ console.log(error)
   return (
     <div>
       <PagesIndex.Main_Containt
-      setVisible={setVisible}
-      add_button={false}
-      btn_modal={true}
-      handleAdd={handleAdd}  
-      title={title}
-      btnTitle="Add"
+        setVisible={setVisible}
+        add_button={false}
+        btn_modal={true}
+        handleAdd={handleAdd}
+        title={title}
+        btnTitle="Add"
       >
-       
         <PagesIndex.TableWitCustomPegination
           data={data}
           initialRowsPerPage={5}
@@ -183,17 +174,16 @@ console.log(error)
             />
           }
         />
-            <PagesIndex.ModalComponent
-        visible={visible}
-        setVisible={setVisible}
-        fields={fields}
-        form_title={modalType === "Add" ? "Add Game Rate" : "Edit Game Rate"}
-        formik={formik}
-      />
+        <PagesIndex.ModalComponent
+          visible={visible}
+          setVisible={setVisible}
+          fields={fields}
+          form_title={modalType === "Add" ? "Add Game Rate" : "Edit Game Rate"}
+          formik={formik}
+        />
         <PagesIndex.Toast />
       </PagesIndex.Main_Containt>
-  
-          </div>
+    </div>
   );
 };
 

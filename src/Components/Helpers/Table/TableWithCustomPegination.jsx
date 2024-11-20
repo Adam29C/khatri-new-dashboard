@@ -194,7 +194,13 @@ const PaginatedTable = ({
                   <td>{index + 1}</td>
                   {columns.map((column) =>
                     column.visible ? (
-                      <td key={column.field}>{row[column.field]}</td>
+                      <td key={column.field}>
+                       {
+                        column.field === "activeStatus" ? row.activeStatus  ? "Market Is Active"
+                        : "Market Is Inactive"
+                      : row[column.field]}
+                       
+                      </td>
                     ) : null
                   )}
 

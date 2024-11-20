@@ -1,7 +1,4 @@
 import PagesIndex from "../../../Pages/PagesIndex";
-import { Get_Year_Only } from "../../../Utils/Common_Date";
-import Toggle from "../../Toggle";
-import DeleteSweetAlert from "../../DeleteSweetAlert";
 import { Games_Provider_List } from "../../../Redux/slice/CommonSlice";
 import { useState } from "react";
 
@@ -9,7 +6,6 @@ const GameProvider = ({ data, path, title, gametype }) => {
   const token = localStorage.getItem("token");
 
   const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
-  const [TableData, setTableData] = PagesIndex.useState([]);
   const [modalType, setModalType] = useState(""); // Tracks if Add or Edit
   const [selectedRow, setSelectedRow] = useState(null); // For Edit functionality
   const [visible, setVisible] = useState(false);
@@ -34,36 +30,57 @@ const GameProvider = ({ data, path, title, gametype }) => {
     if (!confirmDelete) return;
 
     try {
-      const res = await PagesIndex.admin_services.GAME_PROVIDER_DELETE_API(id);
+      const res = await PagesIndex.admin_services.GAME_PROVIDER_DELETE_API(id,token);
       if (res.statusCode === 200) {
         alert(res?.message);
         getGameProviderList();
       }
 
-      dispatch(Games_Provider_List());
     } catch (error) {
       console.log(error);
     }
   };
 
-  // Handle Edit Button
-  const handleEdit = (row) => {
-    setModalType("Edit");
-    setSelectedRow(row);
-    setVisible(true);
-  };
 
   // Handle Add Button
   const handleAdd = () => {
     setModalType("Add");
     setSelectedRow(null);
+    formik.resetForm({
+      values: {
+        gamename: "",
+        result: "",
+        mobile: "",
+        activeStatus:""
+      },
+    });
+
     setVisible(true);
   };
 
+  const handleActionBtn = (row, buttonStatus)=>{
+    if (buttonStatus === 1) {
+      setModalType("Edit");
+    setSelectedRow(row);
+    formik.resetForm({
+      values: {
+        gamename: row.providerName,
+        result: row.providerResult,
+        mobile: row.mobile,
+        activeStatus:row.activeStatus
+      },
+    });
+
+    setVisible(true);
+    } else if (buttonStatus === 2) {
+      handleDelete(row?._id)
+    } else {
+      return "";
+    }
+  }
   // Formik Configuration
   const formik = PagesIndex.useFormik({
     enableReinitialize: true,
-
     initialValues: {
       gamename: selectedRow ? selectedRow.providerName : "",
       result: selectedRow ? selectedRow.providerResult : "",
@@ -89,6 +106,7 @@ const GameProvider = ({ data, path, title, gametype }) => {
     },
 
     onSubmit: async (values) => {
+
       try {
         const payload = {
           gamename: values.gamename,
@@ -98,11 +116,10 @@ const GameProvider = ({ data, path, title, gametype }) => {
           ...(modalType === "Edit" && { gameId: selectedRow._id }),
         };
 
-        const res =
-          modalType === "Edit"
+        const res = modalType === "Edit"
             ? await PagesIndex.admin_services.GAME_PROVIDER_UPDATE_API(payload , token)
             : await PagesIndex.admin_services.GAME_PROVIDER_ADD_API(payload ,token);
-        console.log(res, "100");
+ 
         if (res.status) {
           PagesIndex.toast.success(res?.message);
           getGameProviderList();
@@ -172,20 +189,26 @@ const GameProvider = ({ data, path, title, gametype }) => {
       buttonName: "Edit",
       buttonColor: "",
       route: "",
-      Conditions: "",
+      Conditions: (row) => {
+
+        handleActionBtn(row, 1);
+      },
       Visiblity: true,
       type: "button",
-      onClick: handleEdit,
+      
     },
     {
       id: 1,
       buttonName: "Delete",
       buttonColor: "danger",
       route: "",
-      Conditions: "",
+      Conditions: (row) => {
+        
+        handleActionBtn(row, 2);
+      },
       Visiblity: true,
       type: "button",
-      onClick: handleDelete,
+      
     },
   ];
 

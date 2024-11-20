@@ -87,14 +87,12 @@ const GameProviderAdd = () => {
         data.gameDay = values.gameDay;
       }
 
-      console.log("location?.state" ,data);
       
       const res = location?.state?.rowData?._id
         ? await PagesIndex.admin_services.GAME_SETTING_UPDATE_API(data, token)
         : await PagesIndex.admin_services.GAME_SETTING_ADD(data, token);
 
 
-        console.log("res" ,res);
         
       if (res?.status) {
         PagesIndex.toast.success(res?.message);
