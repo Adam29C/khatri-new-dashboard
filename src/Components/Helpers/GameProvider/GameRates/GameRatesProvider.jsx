@@ -1,16 +1,12 @@
 import PagesIndex from "../../../Pages/PagesIndex";
-import { Link } from "react-router-dom";
-import { Get_Year_Only } from "../../../Utils/Common_Date";
-import DeleteSweetAlert from "../../DeleteSweetAlert";
-import App from "../../Modal/ReusableModal";
-import { useState } from "react";
 
-const GameRatesProvider = ({ gameType, path, title }) => {
+
+const GameRatesProvider = ({title}) => {
   const token = localStorage.getItem("token");
   const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
-  const [modalType, setModalType] = useState(""); // Tracks if Add or Edit
-  const [selectedRow, setSelectedRow] = useState(null); // For Edit functionality
-  const [visible, setVisible] = useState(false);
+  const [modalType, setModalType] = PagesIndex.useState(""); 
+  const [selectedRow, setSelectedRow] = PagesIndex.useState(null); 
+  const [visible, setVisible] = PagesIndex.useState(false);
   const [data, getData] = PagesIndex.useState([]);
 
   //get game list start

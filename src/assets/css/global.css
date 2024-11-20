@@ -301,3 +301,8 @@ color: var(--khatri-color);
 }
 
 /* set background image favicon css end */
+
+
+.hideFieldCss{
+  display: none;
+}

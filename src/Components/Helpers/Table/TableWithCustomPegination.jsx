@@ -107,8 +107,8 @@ const PaginatedTable = ({
       </div>
 
       {/* Table */}
-      <table className="table table-striped table-bordered table-responsive">
-        <thead className="text-center table-header-backeground">
+      <table className="table table-striped table-bordered table-responsive"  >
+        <thead className="text-center table-header-backeground" >
           {data && data?.length > 0 && (
             <tr>
               <th>ID</th>
@@ -197,7 +197,7 @@ const PaginatedTable = ({
                       <td key={column.field}>
                        {
                         column.field === "activeStatus" ? row.activeStatus  ? "Market Is Active"
-                        : "Market Is Inactive"
+                        : "Market Is Inactive" 
                       : row[column.field]}
                        
                       </td>

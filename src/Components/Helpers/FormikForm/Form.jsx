@@ -26,6 +26,7 @@ const ReusableForm = ({
   show_submit,
   label_size,
   show_preview,
+
 }) => {
   const location = useLocation();
 
@@ -51,16 +52,7 @@ const ReusableForm = ({
     }
   };
 
-  const handleDateChange = (date, name) => {
-    const formattedTime = date
-      ? date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
-      : "";
-    setDateStates((prevStates) => ({
-      ...prevStates,
-      [name]: formattedTime,
-    }));
-    formik.setFieldValue(name, formattedTime);
-  };
+
 
   return (
     <>
@@ -77,7 +69,8 @@ const ReusableForm = ({
               <>
                 {field.type === "select" ? (
                   <>
-                    <div className={`col-lg-${field.col_size}`}>
+               
+                    <div className={`col-lg-${field.col_size} ${field.hideField ? "hideFieldCss":""}`}>
                       <div className="mb-1 row">
                         <label
                           className={`custom-label col-lg-${field.label_size}`}
@@ -94,6 +87,10 @@ const ReusableForm = ({
                             id={field.name}
                             {...formik.getFieldProps(field.name)}
                             disabled={field.disable}
+                            onChange={(e) => {
+                              formik.handleChange(e); // Handle Formik's default change
+                              if (field.onChange) field.onChange(e); // Custom onChange logic
+                            }}
                           >
                             <option
                               value=""

@@ -59,7 +59,8 @@ const Api = {
 
   // GAME RESULT
   ADMIN_GAME_RESULT: "mainGameResult",
-
+  ADMIN_GAME_RESULT_DELETE:"mainGameResult/delete",
+GET_GAME_RESULT_WITH_DATE:"mainGameResult/pastResult",
   USERS_IDEAS: "/admin/UserIdea",
   GET_VERSION: "/admin/appSetting/listVersionSetting",
   UPDATE_VERSION: "/admin/appSetting/updateVersionSetting",

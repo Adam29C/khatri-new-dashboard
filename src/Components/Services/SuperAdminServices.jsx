@@ -295,11 +295,10 @@ export const GAME_SETTING_UPDATEALL_API = async (data ,token) => {
 
 // --------------------------   GAME RESULT CRUD ------------------------
 
-// --------------------------   GAME SETTING CRUD ------------------------
 
-export const GAME_RESULT = async (id) => {
+export const GAME_RESULT = async (token) => {
   try {
-    const res = await axios.get(`${Api.ADMIN_GAME_RESULT}?date=${id}`, {
+    const res = await axios.get(`${BASE_URL}${Api.ADMIN_GAME_RESULT}`, {
       headers: header(token),
     });
     return res?.data;
@@ -308,9 +307,9 @@ export const GAME_RESULT = async (id) => {
   }
 };
 
-export const ADD_GAME_RESULT = async (data) => {
+export const ADD_GAME_RESULT = async (data,token) => {
   try {
-    const res = await axios.post(`${Api.ADMIN_GAME_RESULT}`, data, {
+    const res = await axios.post(`${BASE_URL}${Api.ADMIN_GAME_RESULT}`, data, {
       headers: header(token),
     });
     return res?.data;
@@ -318,6 +317,33 @@ export const ADD_GAME_RESULT = async (data) => {
     return error;
   }
 };
+
+export const GAME_RESULT_DELETE = async (data,token) => {
+  console.log(token,"check game result")
+  console.log(data)
+  try {
+    const res = await axios.delete(`${BASE_URL}${Api.ADMIN_GAME_RESULT_DELETE}`, {
+      data:data,
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+export const GAME_RESULT_DATEWISE = async (req,token) => {
+  try {
+    const res = await axios.get(`${BASE_URL}${Api.GET_GAME_RESULT_WITH_DATE}?date=${req}`,{
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 
 // --------------------------   GAME RESULT CRUD ------------------------
 
