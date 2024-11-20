@@ -186,11 +186,10 @@ const GameProvider = ({ data, path, title, gametype }) => {
   const UserFullButtonList = [
     {
       id: 0,
-      buttonName: "Edit",
+      buttonName: "Update",
       buttonColor: "",
       route: "",
       Conditions: (row) => {
-
         handleActionBtn(row, 1);
       },
       Visiblity: true,
@@ -203,7 +202,6 @@ const GameProvider = ({ data, path, title, gametype }) => {
       buttonColor: "danger",
       route: "",
       Conditions: (row) => {
-        
         handleActionBtn(row, 2);
       },
       Visiblity: true,

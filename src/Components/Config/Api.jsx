@@ -47,9 +47,8 @@ const Api = {
 
 
   //GAME RATES
-  // ADMIN_GAME_RATES: "admin/game/gameRate",
   ADMIN_GAME_RATES: "mainGameRate",
-
+  ADMIN_GAME_RATES_ADD:"mainGameRate/insertGame",
 
   //GAME SETTING
   // ADMIN_GAME_SETTING: "/admin/game/gameSetting",

@@ -167,8 +167,7 @@ export const GAME_PROVIDER_DELETE_API = async (id, token) => {
 };
 
 export const GAME_PROVIDER_UPDATE_API = async (data,token) => {
-  console.log(data)
-  console.log(token)
+
   try {
     // const res = await axios.patch(Api.MAIN_GAME, data, {
     //   headers: header(token),
@@ -184,11 +183,10 @@ export const GAME_PROVIDER_UPDATE_API = async (data,token) => {
 };
 
 //GAME RATES API
-export const GAME_RATES_GET_LIST_API = async () => {
+export const GAME_RATES_GET_LIST_API = async (token) => {
   try {
-    let { gameType, userId } = data;
-    const res = await axios.get(
-      `${Api.ADMIN_GAME_RATES}?adminId=${userId}&gameType=${gameType}`,
+
+    const res = await axios.get(`${BASE_URL}${Api.ADMIN_GAME_RATES}`,
       {
         headers: header(token),
       }
@@ -199,9 +197,9 @@ export const GAME_RATES_GET_LIST_API = async () => {
   }
 };
 
-export const GAME_RATES_ADD_API = async (data) => {
+export const GAME_RATES_ADD_API = async (data,token) => {
   try {
-    const res = await axios.post(Api.ADMIN_GAME_RATES, data, {
+    const res = await axios.post(`${BASE_URL}${Api.ADMIN_GAME_RATES_ADD}`, data, {
       headers: header(token),
     });
     return res?.data;
@@ -210,9 +208,9 @@ export const GAME_RATES_ADD_API = async (data) => {
   }
 };
 
-export const GAME_RATES_UPDATE_API = async (data) => {
+export const GAME_RATES_UPDATE_API = async (data,token) => {
   try {
-    const res = await axios.put(Api.ADMIN_GAME_RATES, data, {
+    const res = await axios.patch(`${BASE_URL}${Api.ADMIN_GAME_RATES}`, data, {
       headers: header(token),
     });
     return res?.data;
@@ -221,13 +219,14 @@ export const GAME_RATES_UPDATE_API = async (data) => {
   }
 };
 
-export const GAME_RATES_DELETE_API = async (id) => {
+export const GAME_RATES_DELETE_API = async (id,token) => {
+
   try {
     let apiData = {
       userId: id,
     };
 
-    const res = await axios.delete(Api.ADMIN_GAME_RATES, {
+    const res = await axios.delete(`${BASE_URL}${Api.ADMIN_GAME_RATES}`, {
       data: apiData,
       headers: header(token),
     });
