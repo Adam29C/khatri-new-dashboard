@@ -503,13 +503,13 @@ export const admin_Sidebar = [
         route: "appSettings/noticeBoard",
         permission: "noticeBoard",
       },
+ 
       {
         id: 4,
         title: "Profile Note",
-        route: "appSettings/noticeBoard",
-        permission: "noticeBoard",
+        route: "appSettings/profileNote",
+        permission: "profileNote",
       },
-
       {
         id: 5,
         title: "Wallet Contact",

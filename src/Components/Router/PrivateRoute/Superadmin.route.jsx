@@ -54,6 +54,7 @@ import JackPotAddEdit from "../../Pages/Superadmin/Games/Jackpot/JackPotSettings
 import WithdrawScreen from "../../Pages/Superadmin/AppSettings/WithdrawScreen";
 import HowToPlay from "../../Pages/Superadmin/AppSettings/HowToPlay";
 import UpiIdList from "../../Pages/Superadmin/Masters/UpiIdList";
+import ProfileNote from "../../Pages/Superadmin/AppSettings/ProfileNote";
 
 
 // Mock authentication status
@@ -290,6 +291,10 @@ const adminRoutes = [
       {
         path: "appSettings/howToPlay",
         element: <PrivateRoute element={HowToPlay} />,
+      },
+      {
+        path: "appSettings/profileNote",
+        element: <PrivateRoute element={ProfileNote} />,
       },
      
       {
