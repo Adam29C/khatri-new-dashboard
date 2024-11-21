@@ -60,6 +60,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import PagesIndex from "../../Pages/PagesIndex";
 
 const Split_Main_Containt = ({
   add_button,
@@ -110,6 +111,7 @@ const Split_Main_Containt = ({
           ))}
         </div>
       </div>
+      <PagesIndex.Toast />
     </div>
   );
 };

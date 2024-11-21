@@ -345,6 +345,17 @@ export const GAME_RESULT_DATEWISE = async (req,token) => {
 };
 
 
+export const GAME_REMAINING_WINNER_LIST_API = async(data,token)=>{
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.GET_REMAINING_WINNER_LIST}`,data,{
+      headers:header(token)
+    })
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+}
+
 // --------------------------   GAME RESULT CRUD ------------------------
 
 // --------------------------   GAME SETTING CRUD ------------------------

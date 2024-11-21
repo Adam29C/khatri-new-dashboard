@@ -1,5 +1,5 @@
 const Api = {
-  COMMON_GENERATE_TOKEN: "common/generate-token",  
+  COMMON_GENERATE_TOKEN: "common/generate-token",
 
   // AUTH MODULE
   LOGIN: "adminLogin/loginDashboard",
@@ -12,17 +12,11 @@ const Api = {
   GET_DASHBOARD_COUNT_UPI_PAYMENT: "/dashboard/getBriefDeposit",
   GET_DASHBOARD_REGISTRED_USERS: "dashboard/getRegisteredUser",
 
-
-  
   //USERS
   USERS_LIST: "allUser/getAllUsers",
   DELETED_USERS: "/allUser/deleteUserByAdmin",
   USER_PROFILE_GET: "/allUser/getProfile",
   BLOCK_USER: "/allUser/blockUser",
-
-
-
-
 
   ADMIN_CHANGE_PASSWORD: "admin/changePassword",
 
@@ -44,23 +38,22 @@ const Api = {
   MAIN_GAME: "mainGames",
   MAIN_GAME_ADD: "mainGames/insertGame",
 
-
-
   //GAME RATES
   ADMIN_GAME_RATES: "mainGameRate",
-  ADMIN_GAME_RATES_ADD:"mainGameRate/insertGame",
+  ADMIN_GAME_RATES_ADD: "mainGameRate/insertGame",
 
   //GAME SETTING
   // ADMIN_GAME_SETTING: "/admin/game/gameSetting",
   ADMIN_GAME_SETTING: "mainGameSetting",
   ADMIN_GAME_SETTING_ADD: "mainGameSetting/insertSettings",
   ADMIN_GAME_SETTING_UPDATEALL: "mainGameSetting/updateAll",
- 
 
   // GAME RESULT
   ADMIN_GAME_RESULT: "mainGameResult",
-  ADMIN_GAME_RESULT_DELETE:"mainGameResult/delete",
-GET_GAME_RESULT_WITH_DATE:"mainGameResult/pastResult",
+  ADMIN_GAME_RESULT_DELETE: "mainGameResult/delete",
+  GET_GAME_RESULT_WITH_DATE: "mainGameResult/pastResult",
+  GET_REMAINING_WINNER_LIST: "winnerList/remaningWinnerList",
+
   USERS_IDEAS: "/admin/UserIdea",
   GET_VERSION: "/admin/appSetting/listVersionSetting",
   UPDATE_VERSION: "/admin/appSetting/updateVersionSetting",

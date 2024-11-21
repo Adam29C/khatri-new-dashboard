@@ -7,33 +7,48 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Games_Provider_List } from "../../../../Redux/slice/CommonSlice";
 
 const ExamplePage = () => {
-  const userId = localStorage.getItem("userId");
+  //get token in local storage
   const token = localStorage.getItem("token")
+  //set actual date
   const actual_date_formet = getActualDateFormate(new Date());
-const [check,setCheck]=useState("")
-const[getGameResult,setGetGameResult]=useState([])
-  const [Data, setData] = PagesIndex.useState([]);
-  const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
+  //dispatch
   const dispatch = PagesIndex.useDispatch();
+
+  //all state
+const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
+const [tableData, setTableData] = useState([]);
+
+//get data in redux 
   const data = PagesIndex.useSelector((state) => {
     return state.CommonSlice.gameProviders;
   });
 
 
+  //get game result function
   const getGameResultApi = async()=>{
     const res = await PagesIndex.admin_services.GAME_RESULT(token)
-    setGetGameResult(res?.data?.result)
+
+    if(res.status){
+      setTableData(res?.data?.result)
+    }
+
+
   }
-  const getGameRatesList =  () => {
+
+//get game provider data 
+  const getGameProvidersList =  () => {
   dispatch(Games_Provider_List(token));
   };
 
+
+  //get apis functions call in useEffect
   PagesIndex.useEffect(() => {
-    getGameRatesList();
+    getGameProvidersList();
     getGameResultApi()
   }, []);
 
 
+  //set id and provider name in form functions
   const handleProviderChange = (e) => {
    const selectedProviderId = e.target.value;
     const selectedProviderName = data.find(
@@ -44,6 +59,8 @@ const[getGameResult,setGetGameResult]=useState([])
     formik.setFieldValue("providerId", selectedProviderId);
     formik.setFieldValue("providerName", selectedProviderName);
   };
+
+  //formik form 
   const formik = PagesIndex.useFormik({
     initialValues: {
       winningDigit: "",
@@ -84,22 +101,26 @@ const[getGameResult,setGetGameResult]=useState([])
         providerName:values.providerName
       };
 
-
-      // return
  try {
   const res = await PagesIndex.admin_services.ADD_GAME_RESULT(req,token);
+  console.log(res)
   if(res.status){
-    PagesIndex.toast.success(res.data.message)
+    PagesIndex.toast.success(res?.data?.message || res?.message)
   }
 
  } catch (error) {
-  PagesIndex.toast.error(res.data.message || error)
+ console.log(error)
+  const errorMessage = error.response?.data?.message || "Something went wrong. Please try again.";
+  PagesIndex.toast.error(errorMessage);
+  
  }
 
 
     },
   });
 
+
+  //formik form for only result date 
   const formik1 = PagesIndex.useFormik({
     initialValues: {
       date: getActualDateFormate(new Date()),
@@ -112,10 +133,18 @@ const[getGameResult,setGetGameResult]=useState([])
     onSubmit: async (values) => {
       
 const apidata = values.date
-      const res = await PagesIndex.admin_services.GAME_RESULT_DATEWISE(apidata,token);
-      if (res.status === 200) {
-        setData(res.data);
-      }
+   try {
+    const res = await PagesIndex.admin_services.GAME_RESULT_DATEWISE(apidata,token);
+
+    if (res.status) {
+PagesIndex.toast.success(res.message)
+      setTableData(res.data.results)
+    }else{
+      PagesIndex.toast.error(res.message)
+    }
+   } catch (error) {
+    PagesIndex.toast.error(error.response.data.message )
+   }
     },
   });
 
@@ -176,7 +205,7 @@ const apidata = values.date
     },
   ];
 
-
+//game result delete 
   const handleDelete = async (row) => {
     const apidata = {
       resultId:row?._id,
@@ -193,17 +222,36 @@ const apidata = values.date
       const res = await PagesIndex.admin_services.GAME_RESULT_DELETE(apidata,token);
       if (res.statusCode === 200) {
         alert(res?.message);
-        getGameResult();
+        getGameResultApi
       }
 
     } catch (error) {
       console.log(error);
     }
   };
+//get remainning winner list api call function
 
+const getRemainingWinner = async(rowdata)=>{
+
+
+  const apidata = {
+    providerId:rowdata.providerId,
+    date:rowdata.resultDate,
+    session:rowdata.session
+  }
+  console.log("check row data",apidata)
+  try {
+    const res = await PagesIndex.admin_services.GAME_REMAINING_WINNER_LIST_API(apidata,token)
+    console.log(res)
+  } catch (error) {
+    
+  }
+}
+  //handle actions button function 
   const handleActionBtn = (row, buttonStatus)=>{
 
     if (buttonStatus === 1) {
+      getRemainingWinner(row)
     } else if (buttonStatus === 2) {
       handleDelete(row)
     } else {
@@ -255,7 +303,7 @@ const apidata = values.date
             fieldtype={fields.filter((field) => !field.showWhen)}
             show_submit={true}
             formik={formik}
-            btn_name="Add Game Result"
+            btn_name="Submit"
            
           />
         </div>
@@ -283,7 +331,7 @@ const apidata = values.date
         <div>
 
             <PagesIndex.TableWitCustomPegination
-          data={getGameResult}
+          data={tableData}
           initialRowsPerPage={5}
           SearchInTable={SearchInTable}
           visibleFields={visibleFields}
@@ -314,6 +362,7 @@ const apidata = values.date
         cardLayouts={cardLayouts}
 
       />
+      
     </>
   );
 };
