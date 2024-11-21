@@ -4,44 +4,26 @@ import { Formik, FieldArray, ErrorMessage, useFormik } from "formik";
 
 import { toast } from "react-toastify";
 
-const data = [
-  {
-    _id:1,
-    title: "Introduction to React",
-    videoUrl: "https://www.example.com/videos/react-intro.mp4",
-    description: "A beginner-friendly introduction to React.js, covering its basic concepts and usage."
-  },
-  {
-    _id:15,
-    title: "Advanced JavaScript",
-    videoUrl: "https://www.example.com/videos/advanced-js.mp4",
-    description: "Deep dive into JavaScript advanced topics like closures, promises, and async/await."
-  },
-  {
-    _id:13,
-    title: "CSS Grid Layout",
-    videoUrl: "https://www.example.com/videos/css-grid.mp4",
-    description: "Learn how to use CSS Grid to create modern, responsive web layouts efficiently."
-  }
-]
+
 
 const HowToPlay = () => {
   const userId = localStorage.getItem("userId");
-  // const [htpData, setHtpData] = useState([]);
-  const [htpData, setHtpData] = useState(data);
+  const token = localStorage.getItem("token")
+  const [htpData, setHtpData] = useState([]);
+  // const [htpData, setHtpData] = useState(data);
   const [loading, setLoading] = PagesIndex.useState(true);
-  // Fetch data from API
-  // const getHtpeData = async () => {
-  //   const res = await PagesIndex.admin_services.GET_HTP_LIST_API(userId);
-  //   if (res?.status === 200) {
-  //     setHtpData(res?.data);
-  //     setLoading(false);
-  //   }
-  // };
 
-  // useEffect(() => {
-  //   getHtpeData();
-  // }, []);
+  const getHtpeData = async () => {
+    const res = await PagesIndex.admin_services.GET_HTP_LIST_API(token);
+    if (res?.status) {
+      setHtpData(res?.data);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getHtpeData();
+  }, []);
 console.log(htpData)
   const initialValues = {
     howtoplay: [],
@@ -65,27 +47,27 @@ console.log(htpData)
 
   return (
     <PagesIndex.Main_Containt title="Update How To Play" col_size={12}>
-         {/* {loading ? (
+         {loading ? (
         <PagesIndex.Loader lodersize={20} />
-      ) : ( */}
+      ) : (
       <Formik
         initialValues={initialValues}
         validate={(values) => {
           const errors = {};
-          // values.howtoplay.forEach((item, index) => {
-          //   if (!item.title) {
-          //     if (!errors.howtoplay) errors.howtoplay = [];
-          //     errors.howtoplay[index] = { title: 'Title is required' };
-          //   }
-          //   if (!item.videoUrl) {
-          //     if (!errors.howtoplay) errors.howtoplay = [];
-          //     errors.howtoplay[index] = { ...errors.howtoplay[index], videoUrl: 'Video URL is required' };
-          //   }
-          //   if (!item.description) {
-          //     if (!errors.howtoplay) errors.howtoplay = [];
-          //     errors.howtoplay[index] = { ...errors.howtoplay[index], description: 'Description is required' };
-          //   }
-          // });
+          values.howtoplay.forEach((item, index) => {
+            if (!item.title) {
+              if (!errors.howtoplay) errors.howtoplay = [];
+              errors.howtoplay[index] = { title: 'Title is required' };
+            }
+            if (!item.videoUrl) {
+              if (!errors.howtoplay) errors.howtoplay = [];
+              errors.howtoplay[index] = { ...errors.howtoplay[index], videoUrl: 'Video URL is required' };
+            }
+            if (!item.description) {
+              if (!errors.howtoplay) errors.howtoplay = [];
+              errors.howtoplay[index] = { ...errors.howtoplay[index], description: 'Description is required' };
+            }
+          });
           return errors;
         }}
         onSubmit={handleFormSubmit}
@@ -250,7 +232,7 @@ console.log(htpData)
           );
         }}
       </Formik>
-            {/* )} */}
+             )} 
       <PagesIndex.Toast />
     </PagesIndex.Main_Containt>
   );

@@ -72,7 +72,7 @@ const Api = {
   DELETE_UPI_LIST: "/admin/master/deleteUpi",
 
   //HOW TO PLAY
-  HOW_TO_PLAY_GET_LIST: "/admin/appSetting/htpList",
+  HOW_TO_PLAY_GET_LIST: "appSetting/htp",
   UPDATE_HTP: "/admin/appSetting/updateHtp",
 };
 

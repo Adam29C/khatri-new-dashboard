@@ -512,9 +512,9 @@ export const DELETE_UPI_LIST_API = async (data) => {
 //UPI LIST END
 
 //HTP LIST START
-export const GET_HTP_LIST_API = async (id) => {
+export const GET_HTP_LIST_API = async (token) => {
   try {
-    const res = await axios.get(`${Api.HOW_TO_PLAY_GET_LIST}?adminId=${id}`, {
+    const res = await axios.get(`${BASE_URL}${Api.HOW_TO_PLAY_GET_LIST}`, {
       headers: header(token),
     });
     return res?.data;
