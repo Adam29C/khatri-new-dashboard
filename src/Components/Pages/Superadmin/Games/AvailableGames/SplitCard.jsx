@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Split_Main_Containt from "../../../../Layout/Main/Split_Main_Content";
 import PagesIndex from "../../../PagesIndex";
 import { getActualDateFormate, today } from "../../../../Utils/Common_Date";
@@ -14,9 +14,12 @@ const ExamplePage = () => {
   //dispatch
   const dispatch = PagesIndex.useDispatch();
 
+  //navigate
+  const navigate = PagesIndex.useNavigate()
   //all state
 const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
 const [tableData, setTableData] = useState([]);
+
 
 //get data in redux 
   const data = PagesIndex.useSelector((state) => {
@@ -213,6 +216,7 @@ PagesIndex.toast.success(res.message)
       session:row?.session 
       
     }
+
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this game?"
     );
@@ -220,6 +224,7 @@ PagesIndex.toast.success(res.message)
 
     try {
       const res = await PagesIndex.admin_services.GAME_RESULT_DELETE(apidata,token);
+      
       if (res.statusCode === 200) {
         alert(res?.message);
         getGameResultApi
@@ -231,27 +236,20 @@ PagesIndex.toast.success(res.message)
   };
 //get remainning winner list api call function
 
-const getRemainingWinner = async(rowdata)=>{
+//navigate page on winnerlistpage function
 
-
-  const apidata = {
-    providerId:rowdata.providerId,
-    date:rowdata.resultDate,
-    session:rowdata.session
-  }
-  console.log("check row data",apidata)
-  try {
-    const res = await PagesIndex.admin_services.GAME_REMAINING_WINNER_LIST_API(apidata,token)
-    console.log(res)
-  } catch (error) {
-    
-  }
+const winnerList=(rowdata)=>{
+  navigate(`winners?providerId=${rowdata.providerId}`, {
+    state: { rowdata }, 
+  });
 }
+
   //handle actions button function 
   const handleActionBtn = (row, buttonStatus)=>{
 
     if (buttonStatus === 1) {
-      getRemainingWinner(row)
+      winnerList(row)
+    
     } else if (buttonStatus === 2) {
       handleDelete(row)
     } else {
