@@ -38,6 +38,12 @@ const ForStarlineJackpotAdd = ({
     getGameProviderList();
   }, []);
 
+
+  console.log("location?.state?.row" ,location?.state?.row);
+  
+
+// let id = location?.state?.row ?location?.state?.edit === "single"   :
+
   const formik = PagesIndex.useFormik({
     initialValues: {
       providerId: location?.state?.row ? location?.state?.row.providerId : "",
