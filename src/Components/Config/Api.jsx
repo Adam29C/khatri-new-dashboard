@@ -62,7 +62,7 @@ const Api = {
 
   //NOTICE BOARD
   NOTICE_BOARD_LIST: "noticeBoard",
-  UPDATE_NOTICE_BOARD: "/admin/appSetting/updateNoticeBoard",
+  UPDATE_NOTICE_BOARD: "noticeBoard/updateNotice",
   GET_WITHDRAW_SCREEN: "withdraw",
   UPDATE_WITHDRAW_SCREEN: "withdraw/updateWithdraw",
   //UPI LIST

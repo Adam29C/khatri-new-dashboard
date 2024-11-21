@@ -412,7 +412,7 @@ export const UPDATE_WALLET_CONTACT_API = async (data) => {
 //WALLET CONTACT API END
 
 //NOTICE BOARD API START
-export const GET_NOTICE_BOARD_API = async (id) => {
+export const GET_NOTICE_BOARD_API = async (token) => {
   try {
     const res = await axios.get(`${BASE_URL}${Api.NOTICE_BOARD_LIST}`, {
       headers: header(token),
@@ -423,14 +423,15 @@ export const GET_NOTICE_BOARD_API = async (id) => {
   }
 };
 
-export const UPDATE_NOTICE_BOARD_API = async (data) => {
+export const UPDATE_NOTICE_BOARD_API = async (data,token) => {
   try {
-    const res = await axios.put(Api.UPDATE_NOTICE_BOARD, data, {
+    const res = await axios.post(`${BASE_URL}${Api.UPDATE_NOTICE_BOARD}`, data, {
       headers: header(token),
     });
     return res?.data;
   } catch (error) {
-    return error;
+    // console.log(error.response)
+    return error.response;
   }
 };
 //NOTICE BOARD API END
@@ -513,6 +514,7 @@ export const DELETE_UPI_LIST_API = async (data) => {
 
 //HTP LIST START
 export const GET_HTP_LIST_API = async (token) => {
+  console.log(token)
   try {
     const res = await axios.get(`${BASE_URL}${Api.HOW_TO_PLAY_GET_LIST}`, {
       headers: header(token),

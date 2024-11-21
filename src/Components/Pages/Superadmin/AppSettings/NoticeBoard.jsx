@@ -2,18 +2,19 @@ import React from "react";
 import PagesIndex from "../../PagesIndex";
 
 const NoticeBoard = () => {
-  const userId = localStorage.getItem("userId");
+ 
 const token = localStorage.getItem("token")
+
   //all states
   const [loading, setLoading] = PagesIndex.useState(true);
   const [noticeData, setNoticeData] = PagesIndex.useState();
-  console.log(noticeData)
+
   //get wallet api
   const getNoticeData = async () => {
     const res = await PagesIndex.admin_services.GET_NOTICE_BOARD_API(token);
 
     if (res?.status) {
-    setNoticeData(res?.data);
+    setNoticeData(res?.data?.[0]);
     setLoading(false);
     }
   };
@@ -92,28 +93,34 @@ const contactRegex = (numbervalue) => {
       return errors;
     },
     onSubmit: async (values) => {
-      const apidata = {
+console.log(values)
    
-        adminId: userId,
-        noticeId: noticeData?._id,
+      const apidata = {
+        id: noticeData?._id,
         title1:values.title1,
         title2: values.title2,
         title3: values.title3,
-        description1:values.description1,
-        description2: values.description2,
-        description3: values.description3,
+        desc1:values.description1,
+        desc2: values.description2,
+        desc3: values.description3,
         contact: values.contect,
       };
  
 
-      const res = await PagesIndex.admin_services.UPDATE_NOTICE_BOARD_API(
-        apidata
-      );
-     
-      if (res.status === 200) {
-        PagesIndex.toast.success(res.message);
-        getNoticeData();
+
+      const res = await PagesIndex.admin_services.UPDATE_NOTICE_BOARD_API(apidata,token);
+      console.log(res)
+       if (res.status) {
+         PagesIndex.toast.success(res.message);
+         getNoticeData();
+       }else{
+         PagesIndex.toast.error(res.message);
+         console.log("dfdfdfdf")
+       }
+      if(res?.status === 404){
+        PagesIndex.toast.error(res?.data?.message);
       }
+  
     },
   });
 
