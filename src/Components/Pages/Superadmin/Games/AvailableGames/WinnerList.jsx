@@ -1,18 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PagesIndex from "../../../PagesIndex";
 import Split_Main_Containt from "../../../../Layout/Main/Split_Main_Content";
+import ReusableModal from "../../../../Helpers/Modal/ReusableModal";
 
 const WinnerList = () => {
+  //get token in localstorage
   const token = localStorage.getItem("token")
+  //get previous page single game result data
   const location = PagesIndex.useLocation();
+  //data destructure
   const data = location.state?.rowdata
+
+  //all state
   const [remainingWinnerData, setRemainingWinnerData] = PagesIndex.useState([]);
   const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
+ const [mainWinnerData, setMainWinnerData] = PagesIndex.useState([]);
+ const [ModalState,setModalState]= useState(false)
 
-const [mainWinnerData, setMainWinnerData] = PagesIndex.useState([]);
-  console.log(data,"data");
-  console.log(mainWinnerData,10);
-
+//get game winner list api 
   const getGameWinnerListApi = async () => {
     
     const apidata = {
@@ -151,7 +156,7 @@ const [mainWinnerData, setMainWinnerData] = PagesIndex.useState([]);
       size: 12,
       body: (
         <div>
-          <div class="d-flex justify-content-end mb-3"><button className="btn btn-dark">Confirm Payment</button></div>
+          <div class="d-flex justify-content-end mb-3"><button onClick={()=>setModalState(true)} className="btn btn-dark">Confirm Payment</button></div>
 
             <PagesIndex.TableWitCustomPegination
           data={remainingWinnerData}
@@ -174,13 +179,32 @@ const [mainWinnerData, setMainWinnerData] = PagesIndex.useState([]);
     },
   ];
   return (
-    <Split_Main_Containt
+    <>
+       <Split_Main_Containt
     title="Game Winners"
     add_button={false}
  
     cardLayouts={cardLayouts}
 
   />
+        <ReusableModal
+          // ModalTitle="ghghu"
+          ModalState={ModalState}
+          setModalState={setModalState}
+          ModalBody={
+         <div className="">
+          <h1 className="confirm-payment-text">Are You Sure Want To Confirm Payment?</h1>
+          <div className="d-flex justify-content-end">
+            <button className="btn btn-dark  mx-2">Confirm</button>
+            <button onClick={()=>setModalState(false)} className="btn btn-dark  mx-2">Close</button>
+          </div>
+         </div>
+          }
+    
+        />
+        </>
+ 
+  
   );
 };
 
