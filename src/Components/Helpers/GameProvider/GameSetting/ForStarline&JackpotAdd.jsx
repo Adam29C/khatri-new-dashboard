@@ -53,7 +53,9 @@ const ForStarlineJackpotAdd = ({
 
   const formik = PagesIndex.useFormik({
     initialValues: {
-      providerId: location?.state?.row ? location?.state?.row.providerId : "",
+      providerId: location?.state?.row
+        ? location?.state?.rowData.providerId
+        : "",
       gameDay:
         location?.state?.edit === "single"
           ? location?.state?.rowData.gameDay
@@ -128,8 +130,6 @@ const ForStarlineJackpotAdd = ({
         data.gameid = values.providerId;
       }
 
-
-
       const res =
         location?.state?.edit === "single"
           ? await PagesIndex.game_service.FOR_STARLINE_AND_JACPOT_UPDATE_ONE_GAME_SETTING_API(
@@ -149,7 +149,7 @@ const ForStarlineJackpotAdd = ({
               token
             );
 
-      if (res?.status) {
+      if (res?.success || res?.status) {
         PagesIndex.toast.success(res?.message);
         setTimeout(() => {
           navigate(path);
@@ -160,25 +160,6 @@ const ForStarlineJackpotAdd = ({
           navigate(path);
         }, 1000);
       }
-
-      // await PagesIndex.game_service.FOR_STARLINE_AND_JACPOT_ADD_API(
-      //   api_Route,
-      //   apiData,
-      //   token
-      // );
-
-      // const res = location?.state?.rowData?._id
-      //   ? await PagesIndex.admin_services.GAME_SETTING_UPDATE_API(data)
-      //   : await PagesIndex.admin_services.GAME_SETTING_ADD(data);
-
-      // if (res?.status === 200) {
-      //   PagesIndex.toast.success(res?.message);
-      //   setTimeout(() => {
-      //     navigate(path);
-      //   }, 1000);
-      // } else {
-      //   PagesIndex.toast.error(res.response.data.message);
-      // }
     },
   });
 
