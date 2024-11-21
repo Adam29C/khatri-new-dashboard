@@ -7,12 +7,10 @@ import { toast } from "react-toastify";
 
 
 const HowToPlay = () => {
-  const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token")
   const [htpData, setHtpData] = useState([]);
-  // const [htpData, setHtpData] = useState(data);
   const [loading, setLoading] = PagesIndex.useState(true);
-
+console.log(htpData,100)
   const getHtpeData = async () => {
     const res = await PagesIndex.admin_services.GET_HTP_LIST_API(token);
     if (res?.status) {
@@ -24,25 +22,27 @@ const HowToPlay = () => {
   useEffect(() => {
     getHtpeData();
   }, []);
-console.log(htpData)
+
+
   const initialValues = {
     howtoplay: [],
   };
 
   const handleFormSubmit = async (values) => {
+  
     let apidata = {
-      adminId: userId,
       htpId: htpData[0]?._id,
       howtoplay: values.howtoplay,
     };
 
-    // const res = await PagesIndex.admin_services.UPDATE_HTP_API(apidata);
-    // if (res.status === 200) {
-    //   toast.success(res.message);
-    //   getHtpeData();
-    // } else {
-    //   toast.error(res.response.data.message);
-    // }
+    const res = await PagesIndex.admin_services.UPDATE_HTP_API(apidata,token);
+  
+    if (res.status === 200) {
+      toast.success(res.message);
+      getHtpeData();
+    } else {
+      toast.error(res.response.data.message);
+    }
   };
 
   return (

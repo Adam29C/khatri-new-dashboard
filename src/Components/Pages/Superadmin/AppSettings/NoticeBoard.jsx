@@ -3,18 +3,18 @@ import PagesIndex from "../../PagesIndex";
 
 const NoticeBoard = () => {
   const userId = localStorage.getItem("userId");
-
+const token = localStorage.getItem("token")
   //all states
   const [loading, setLoading] = PagesIndex.useState(true);
   const [noticeData, setNoticeData] = PagesIndex.useState();
-  
+  console.log(noticeData)
   //get wallet api
   const getNoticeData = async () => {
-    const res = await PagesIndex.admin_services.GET_NOTICE_BOARD_API(userId);
+    const res = await PagesIndex.admin_services.GET_NOTICE_BOARD_API(token);
 
-    if (res?.status === 200) {
-        setNoticeData(res?.data?.[0]);
-      setLoading(false);
+    if (res?.status) {
+    setNoticeData(res?.data);
+    setLoading(false);
     }
   };
 
@@ -172,9 +172,9 @@ const contactRegex = (numbervalue) => {
 
   return (
     <PagesIndex.Main_Containt title="Update Notice Board" col_size={12}>
-      {loading ? (
+      {/* {loading ? (
         <PagesIndex.Loader lodersize={20} />
-      ) : (
+      ) : ( */}
         <PagesIndex.Formikform
           fieldtype={fields.filter((field) => !field.showWhen)}
           formik={formik}
@@ -182,7 +182,7 @@ const contactRegex = (numbervalue) => {
         
           btn_name="Submit"
         />
-      )}
+      {/* )} */}
       <PagesIndex.Toast />
     </PagesIndex.Main_Containt>
   );

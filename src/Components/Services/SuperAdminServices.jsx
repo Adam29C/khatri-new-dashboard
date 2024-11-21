@@ -414,7 +414,7 @@ export const UPDATE_WALLET_CONTACT_API = async (data) => {
 //NOTICE BOARD API START
 export const GET_NOTICE_BOARD_API = async (id) => {
   try {
-    const res = await axios.get(`${Api.NOTICE_BOARD_LIST}?adminId=${id}`, {
+    const res = await axios.get(`${BASE_URL}${Api.NOTICE_BOARD_LIST}`, {
       headers: header(token),
     });
     return res?.data;
@@ -436,9 +436,9 @@ export const UPDATE_NOTICE_BOARD_API = async (data) => {
 //NOTICE BOARD API END
 
 //APP WITHDRAW API START
-export const GET_APP_WITHDRAW_API = async (id) => {
+export const GET_APP_WITHDRAW_API = async (token) => {
   try {
-    const res = await axios.get(`${Api.GET_WITHDRAW_SCREEN}?adminId=${id}`, {
+    const res = await axios.get(`${BASE_URL}${Api.GET_WITHDRAW_SCREEN}`, {
       headers: header(token),
     });
     return res?.data;
@@ -447,9 +447,9 @@ export const GET_APP_WITHDRAW_API = async (id) => {
   }
 };
 
-export const UPDATE_APP_WITHDRAW_API = async (data) => {
+export const UPDATE_APP_WITHDRAW_API = async (data,token) => {
   try {
-    const res = await axios.put(Api.UPDATE_WITHDRAW_SCREEN, data, {
+    const res = await axios.post(`${BASE_URL}${Api.UPDATE_WITHDRAW_SCREEN}`, data, {
       headers: header(token),
     });
     return res?.data;
@@ -523,9 +523,9 @@ export const GET_HTP_LIST_API = async (token) => {
   }
 };
 
-export const UPDATE_HTP_API = async (data) => {
+export const UPDATE_HTP_API = async (data,token) => {
   try {
-    const res = await axios.put(Api.UPDATE_HTP, data, {
+    const res = await axios.post(`${BASE_URL}${Api.UPDATE_HTP}`, data, {
       headers: header(token),
     });
     return res?.data;

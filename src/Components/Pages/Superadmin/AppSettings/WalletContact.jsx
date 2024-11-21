@@ -107,16 +107,16 @@ const WalletContact = () => {
 
   return (
     <PagesIndex.Main_Containt title="Update Wallet related query" col_size={12}>
-      {loading ? (
+      {/* {loading ? (
         <PagesIndex.Loader lodersize={20} />
-      ) : (
+      ) : ( */}
         <PagesIndex.Formikform
           fieldtype={fields.filter((field) => !field.showWhen)}
           formik={formik}
           show_submit={true}
           btn_name="Submit"
         />
-      )}
+      {/* )} */}
       <PagesIndex.Toast />
     </PagesIndex.Main_Containt>
   );

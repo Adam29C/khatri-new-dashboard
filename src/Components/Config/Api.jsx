@@ -61,10 +61,10 @@ const Api = {
   UPDATE_WALLET_CONTACT: "/admin/appSetting/updateWalledContest",
 
   //NOTICE BOARD
-  NOTICE_BOARD_LIST: "/admin/appSetting/noticeBoardList",
+  NOTICE_BOARD_LIST: "noticeBoard",
   UPDATE_NOTICE_BOARD: "/admin/appSetting/updateNoticeBoard",
-  GET_WITHDRAW_SCREEN: "/admin/appSetting/withdrawMessageList",
-  UPDATE_WITHDRAW_SCREEN: "/admin/appSetting/updateWithdrawMessage",
+  GET_WITHDRAW_SCREEN: "withdraw",
+  UPDATE_WITHDRAW_SCREEN: "withdraw/updateWithdraw",
   //UPI LIST
   GET_UPI_LIST: "/admin/master/upiList",
   ADD_UPI_LIST: "/admin/master/addUpi",
@@ -73,7 +73,7 @@ const Api = {
 
   //HOW TO PLAY
   HOW_TO_PLAY_GET_LIST: "appSetting/htp",
-  UPDATE_HTP: "/admin/appSetting/updateHtp",
+  UPDATE_HTP: "appSetting/updateHtp",
 };
 
 export { Api };
