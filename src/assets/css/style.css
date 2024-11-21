@@ -21808,7 +21808,7 @@ a:hover {
 .border-bottom-text {
   border-bottom: 1px solid #ced4da;
   padding-bottom: 10px;
-  width: 92%;
+  /* width: 92%; */
 }
 
 .modal-container {

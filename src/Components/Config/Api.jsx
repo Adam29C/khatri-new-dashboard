@@ -32,6 +32,21 @@ const Api = {
   ADMIN_GAME_SETTING_ADD: "mainGameSetting/insertSettings",
   ADMIN_GAME_SETTING_UPDATEALL: "mainGameSetting/updateAll",
 
+
+
+
+
+
+  STARLINE_GAME_PROVIDERS_LIST: "starlineProvider/getStarlineProvider",
+  STARLINE_GAME_PROVIDER_ADD : "starlineProvider/insertStarLineProvider",
+  STARLINE_GAME_PROVIDER_UPDATE: "starlineProvider/updateStarLineProvider",
+  STARLINE_GAME_PROVIDERS_DELETE: "starlineProvider/deleteStarLineProvider",
+  STARLINE_GAME_PROVIDERS_GET_BY_ID: "starlineProvider/starLineProviderById",
+
+
+
+
+
   // STARLINE GAME SETTING CRUD
 
   STARLINE_GAME_PROVIDERS: "starGameSetting/addSetting",

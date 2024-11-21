@@ -87,9 +87,7 @@ const PaginatedTable = ({
 
   useEffect(() => {
     toggleResponsiveTable();
-
     window.addEventListener("resize", toggleResponsiveTable);
-
     return () => {
       window.removeEventListener("resize", toggleResponsiveTable);
     };
@@ -130,7 +128,6 @@ const PaginatedTable = ({
           {data && data?.length > 0 && (
             <tr>
               <th>ID</th>
-
               {columns.map(
                 (column, id) =>
                   column.visible && (
