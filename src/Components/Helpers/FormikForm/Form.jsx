@@ -104,7 +104,7 @@ const ReusableForm = ({
             overflowY: `${title === "addgroup" ? "scroll" : ""}`,
           }}
         >
-          <div className={`row`}>
+          {/* <div > */}
             {fieldtype.map((field, index) => (
               <>
                 {field.type === "select" ? (
@@ -695,7 +695,7 @@ const ReusableForm = ({
               )}
             </div>
           </div>
-        </div>
+        {/* </div> */}
       </form>
       <div className="row">{after_submit_button}</div>
     </>

@@ -76,6 +76,24 @@ const PaginatedTable = ({
     return pages;
   };
 
+  const toggleResponsiveTable = () => {
+    const table = document.getElementById("myTable");
+    if (window.innerWidth <= 425) {
+      table?.classList.add("table-responsive");
+    } else {
+      table?.classList.remove("table-responsive");
+    }
+  };
+
+  useEffect(() => {
+    toggleResponsiveTable();
+
+    window.addEventListener("resize", toggleResponsiveTable);
+
+    return () => {
+      window.removeEventListener("resize", toggleResponsiveTable);
+    };
+  }, []);
   return (
     <div className="container">
       <div className="d-flex justify-content-between align-items-center mb-3">
@@ -107,7 +125,7 @@ const PaginatedTable = ({
       </div>
 
       {/* Table */}
-      <table className="table table-striped table-bordered table-responsive">
+      <table id="myTable" className="table table-striped table-bordered ">
         <thead className="text-center table-header-backeground">
           {data && data?.length > 0 && (
             <tr>
@@ -122,13 +140,14 @@ const PaginatedTable = ({
                   )
               )}
 
-              {UserFullButtonList && UserFullButtonList?.map((items) => {
-                return (
-                  <>
-                    <th>{items.buttonName}</th>
-                  </>
-                );
-              })}
+              {UserFullButtonList &&
+                UserFullButtonList?.map((items) => {
+                  return (
+                    <>
+                      <th>{items.buttonName}</th>
+                    </>
+                  );
+                })}
             </tr>
           )}
         </thead>
@@ -195,11 +214,11 @@ const PaginatedTable = ({
                   {columns.map((column) =>
                     column.visible ? (
                       <td key={column.field}>
-                       {
-                        column.field === "activeStatus" ? row.activeStatus  ? "Market Is Active"
-                        : "Market Is Inactive"
-                      : row[column.field]}
-                       
+                        {column.field === "activeStatus"
+                          ? row.activeStatus
+                            ? "Market Is Active"
+                            : "Market Is Inactive"
+                          : row[column.field]}
                       </td>
                     ) : null
                   )}
