@@ -45,7 +45,7 @@ const Api = {
   JACKPOT_GAME_PROVIDERS: "abGameSetting/addSetting",
   JACKPOT_GAME_SETTING_LIST: "abGameSetting",
   JACKPOT_GAME_SETTING_ADD: "abGameSetting/insertSettings",
-  JACKPOT_GAME_SETTING_UPDATE_ALL: "/abGameSetting/updateProviderSettings",
+  JACKPOT_GAME_SETTING_UPDATE_ALL: "abGameSetting/updateProviderSettings",
   JACKPOT_GAME_SETTING_UPDATE_ONE: "abGameSetting",
 
   //   ADMIN_GAME_SETTING_ADD: "mainGameSetting/insertSettings",

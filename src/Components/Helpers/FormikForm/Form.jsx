@@ -82,7 +82,7 @@ const ReusableForm = ({
   }
 
   const handleDateTimeChange = (date, name) => {
-    const formatted = date ? moment(date).format("h:mm") : "";
+    const formatted = date ? moment(date).format("h:mm a") : "";
     setDateTimeStates((prev) => ({ ...prev, [name]: formatted }));
     
     setDateTimeStates((prevStates) => ({
@@ -390,7 +390,7 @@ const ReusableForm = ({
                         use12Hours
                         showSecond={false}
                         className="xxx"
-                        format="h:mm"
+                        format="h:mm a"
                         name={field.name}
                         // defaultValue={dateTimeStates && dateTimeStates[field.name]}
                         // value={dateTimeStates && dateTimeStates[field.name]}

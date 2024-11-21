@@ -130,6 +130,8 @@ const ForStarlineJackpotAdd = ({
         data.gameid = values.providerId;
       }
 
+
+
       const res =
         location?.state?.edit === "single"
           ? await PagesIndex.game_service.FOR_STARLINE_AND_JACPOT_UPDATE_ONE_GAME_SETTING_API(
@@ -181,6 +183,7 @@ const ForStarlineJackpotAdd = ({
       // }
     },
   });
+
   const fields = [
     {
       name: "providerId",
@@ -188,7 +191,7 @@ const ForStarlineJackpotAdd = ({
       type: "select",
       options:
         (Data &&
-          Data.map((item) => ({
+          Data?.map((item) => ({
             label: item.providerName,
             value: item._id,
           }))) ||

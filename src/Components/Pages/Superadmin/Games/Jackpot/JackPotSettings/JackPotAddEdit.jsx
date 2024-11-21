@@ -10,8 +10,8 @@ const JackPotAddEdit = () => {
       path="/admin/games/jackpotGameSetting"
       api_Route={Api.JACKPOT_GAME_SETTING_ADD}
       api_Route2={Api.JACKPOT_GAME_PROVIDERS}
-      updateAll={Api.STARLINE_GAME_SETTING_UPDATE_ALL}
-      updateOne={Api.STARLINE_GAME_SETTING_UPDATE_ONE}
+      updateAll={Api.JACKPOT_GAME_SETTING_UPDATE_ALL}
+      updateOne={Api.JACKPOT_GAME_SETTING_UPDATE_ONE}
     />
   );
 };
