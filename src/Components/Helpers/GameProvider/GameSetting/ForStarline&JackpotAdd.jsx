@@ -8,7 +8,7 @@ const ForStarlineJackpotAdd = ({
   api_Route,
   api_Route2,
   updateAll,
-  updateOne
+  updateOne,
 }) => {
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
@@ -18,12 +18,16 @@ const ForStarlineJackpotAdd = ({
 
   const [Data, setData] = PagesIndex.useState([]);
 
+  console.log("api_Route2", api_Route2);
+  console.log("Data", Data);
+
   const getGameProviderList = async () => {
     let providerapidata = {
       userId: userId,
       gameType: gameType,
     };
 
+    // if (gameType === "StarLine") {
     const res =
       await PagesIndex.game_service.FOR_STARLINE_AND_JACPOT_PROVIDER_LIST_API(
         api_Route2,
@@ -32,17 +36,20 @@ const ForStarlineJackpotAdd = ({
     if (res.status) {
       setData(res.data);
     }
+    // }else{
+    //   const res =
+    //   await PagesIndex.game_service.FOR_STARLINE_AND_JACPOT_PROVIDER_LIST_API(
+    //     api_Route2,
+    //     token
+    //   );
+    // if (res.status) {
+    //   setData(res.data);
+    // }
   };
 
   PagesIndex.useEffect(() => {
     getGameProviderList();
   }, []);
-
-
-  console.log("location?.state?.row" ,location?.state?.row);
-  
-
-// let id = location?.state?.row ?location?.state?.edit === "single"   :
 
   const formik = PagesIndex.useFormik({
     initialValues: {
@@ -121,10 +128,12 @@ const ForStarlineJackpotAdd = ({
         data.gameid = values.providerId;
       }
 
+
+
       const res =
         location?.state?.edit === "single"
           ? await PagesIndex.game_service.FOR_STARLINE_AND_JACPOT_UPDATE_ONE_GAME_SETTING_API(
-            updateOne,
+              updateOne,
               data,
               token
             )
@@ -172,6 +181,7 @@ const ForStarlineJackpotAdd = ({
       // }
     },
   });
+
   const fields = [
     {
       name: "providerId",
