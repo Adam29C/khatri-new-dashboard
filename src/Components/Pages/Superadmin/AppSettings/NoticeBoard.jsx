@@ -106,8 +106,6 @@ console.log(values)
         contact: values.contect,
       };
  
-
-
       const res = await PagesIndex.admin_services.UPDATE_NOTICE_BOARD_API(apidata,token);
       console.log(res)
        if (res.status) {
