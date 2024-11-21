@@ -24,7 +24,7 @@ const Api = {
 
   //GAME RATES
   // ADMIN_GAME_RATES: "admin/game/gameRate",
-  ADMIN_GAME_RATES: "mainGameRate",
+
 
   //GAME SETTING
   // ADMIN_GAME_SETTING: "/admin/game/gameSetting",
@@ -35,6 +35,7 @@ const Api = {
 
 
 
+  // GAME PROVIDER
 
 
   STARLINE_GAME_PROVIDERS_LIST: "starlineProvider/getStarlineProvider",
@@ -43,6 +44,13 @@ const Api = {
   STARLINE_GAME_PROVIDERS_DELETE: "starlineProvider/deleteStarLineProvider",
   STARLINE_GAME_PROVIDERS_GET_BY_ID: "starlineProvider/starLineProviderById",
 
+
+  // GAME RATE
+
+  STARLINE_GAME_RATE_LIST: "starGameRate",
+  STARLINE_GAME_RATE_ADD: "/starGameRate/insertGame",
+  STARLINE_GAME_RATE_UPDATE: "/starGameRate/update",
+  STARLINE_GAME_RATE_REMOVE: " /starGameRate/",
 
 
 

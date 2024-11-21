@@ -5,18 +5,34 @@ import DeleteSweetAlert from "../../DeleteSweetAlert";
 import App from "../../Modal/ReusableModal";
 import { useState } from "react";
 
-const GameRatesProvider = ({ gameType, path, title }) => {
+const GameRatesProvider = ({ gameType, path, title, GameRate_list }) => {
+  const token = localStorage.getItem("token");
+
   const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
   const [modalType, setModalType] = useState(""); // Tracks if Add or Edit
   const [selectedRow, setSelectedRow] = useState(null); // For Edit functionality
   const [visible, setVisible] = useState(false);
   const [data, getData] = PagesIndex.useState([]);
+  const [getGameRateList, setgetGameRateList] = PagesIndex.useState([]);
+
+  console.log("data", data);
 
   //get game list start
   const getGameRatesList = async () => {
-    const res = await PagesIndex.admin_services.GAME_RATES_GET_LIST_API();
+    if (gameType === "StarLine" || gameType === "StarLine") {
+      const res =
+        await PagesIndex.game_service.STARLINE_AND_JACKPOT_GAME_RATE_LIST_API(
+          GameRate_list,
+          token
+        );
+      setgetGameRateList(res.data);
+    } else {
+      const res = await PagesIndex.admin_services.GAME_RATES_GET_LIST_API();
 
-    getData(res?.data);
+      console.log("res", res);
+
+      getData(res?.data);
+    }
   };
 
   PagesIndex.useEffect(() => {
@@ -48,6 +64,7 @@ const GameRatesProvider = ({ gameType, path, title }) => {
 
   // Handle Edit Button
   const handleEdit = (row) => {
+    console.log("Fdfsdf");
     setModalType("Edit");
     setSelectedRow(row);
     setVisible(true);
@@ -114,20 +131,24 @@ const GameRatesProvider = ({ gameType, path, title }) => {
       buttonName: "Edit",
       buttonColor: "sucess",
       route: "edit",
-      Conditions: "",
+      Conditions: (row) => {
+        handleEdit(row);
+      },
       Visiblity: false,
       type: "button",
-      onClick: handleEdit,
+      // onClick: handleEdit,
     },
     {
       id: 1,
       buttonName: "Delete",
       buttonColor: "danger",
       route: "users/deleted",
-      Conditions: "",
+      Conditions: (row) => {
+        handleDelete(row);
+      },
       Visiblity: false,
       type: "button",
-      onClick: handleDelete,
+      // onClick: handleDelete,
     },
   ];
 
@@ -148,6 +169,11 @@ const GameRatesProvider = ({ gameType, path, title }) => {
     },
   ];
 
+  var GAME_RATE_DATA =
+    gameType === "StarLine" || gameType === "JackPot"
+      ? getGameRateList && getGameRateList
+      : data;
+
   return (
     <div>
       <PagesIndex.Main_Containt
@@ -159,7 +185,7 @@ const GameRatesProvider = ({ gameType, path, title }) => {
         btnTitle="Add"
       >
         <PagesIndex.TableWitCustomPegination
-          data={data}
+          data={GAME_RATE_DATA}
           initialRowsPerPage={5}
           SearchInTable={SearchInTable}
           visibleFields={visibleFields}

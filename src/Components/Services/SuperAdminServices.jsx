@@ -177,10 +177,12 @@ export const GAME_PROVIDER_UPDATE_API = async (data, token) => {
   }
 };
 
+
+
 //GAME RATES API
 export const GAME_RATES_GET_LIST_API = async () => {
   try {
-    let { gameType, userId } = data;
+    // let { gameType, userId } = data;
     const res = await axios.get(
       `${Api.ADMIN_GAME_RATES}?adminId=${userId}&gameType=${gameType}`,
       {
