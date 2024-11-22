@@ -197,7 +197,7 @@ const PaginatedTable = ({
                       <td key={column.field}>
                        {
                         column.field === "activeStatus" ? row.activeStatus  ? "Market Is Active"
-                        : "Market Is Inactive" 
+                        : "Market Is Inactive" : column.field === "is_Active" ? row.is_Active ? "Active" : "Disabled" 
                       : row[column.field]}
                        
                       </td>

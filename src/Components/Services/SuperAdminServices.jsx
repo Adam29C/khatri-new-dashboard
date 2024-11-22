@@ -531,9 +531,9 @@ export const UPDATE_PROFILE_NOTE_API =async(data,token)=>{
 
 // -------------------------- MASTERS ------------------------
 //UPI LIST START
-export const GET_UPI_LIST_API = async (id) => {
+export const GET_UPI_LIST_API = async (token) => {
   try {
-    const res = await axios.get(`${Api.GET_UPI_LIST}?adminId=${id}`, {
+    const res = await axios.get(`${BASE_URL}${Api.GET_UPI_LIST}`, {
       headers: header(token),
     });
     return res?.data;
@@ -552,9 +552,9 @@ export const UPDATE_UPI_LIST_API = async (data) => {
     return error;
   }
 };
-export const ADD_UPI_LIST_API = async (data) => {
+export const ADD_UPI_LIST_API = async (data,token) => {
   try {
-    const res = await axios.post(Api.ADD_UPI_LIST, data, {
+    const res = await axios.post(`${BASE_URL}${Api.ADD_UPI_LIST}`, data, {
       headers: header(token),
     });
     return res?.data;

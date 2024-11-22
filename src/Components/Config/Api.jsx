@@ -86,8 +86,8 @@ const Api = {
   UPDATE_HTP: "appSetting/updateHtp",
 
   //UPI LIST
-  GET_UPI_LIST: "/admin/master/upiList",
-  ADD_UPI_LIST: "/admin/master/addUpi",
+  GET_UPI_LIST: "upiId",
+  ADD_UPI_LIST: "upiId/upiAdd",
   UPDATE_UPI_LIST: "/admin/master/updateUpiStatus",
   DELETE_UPI_LIST: "/admin/master/deleteUpi",
 };
