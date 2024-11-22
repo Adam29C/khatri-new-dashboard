@@ -29,8 +29,10 @@ const GameRatesProvider = ({ gameType, path, title, GameRate_list }) => {
     } else {
       const res = await PagesIndex.admin_services.GAME_RATES_GET_LIST_API();
 
-      console.log("res", res);
 
+
+      console.log("res" ,res);
+      
       getData(res?.data);
     }
   };

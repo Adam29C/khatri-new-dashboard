@@ -163,10 +163,6 @@ export const GAME_PROVIDER_UPDATE_API = async (data, token) => {
   console.log(data);
   console.log(token);
   try {
-    // const res = await axios.patch(Api.MAIN_GAME, data, {
-    //   headers: header(token),
-    // });
-
     const res = await axios.patch(`${BASE_URL}${Api.MAIN_GAME}`, data, {
       headers: header(token),
     });
