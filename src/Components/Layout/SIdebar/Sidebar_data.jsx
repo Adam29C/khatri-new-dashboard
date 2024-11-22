@@ -521,7 +521,7 @@ export const admin_Sidebar = [
         id: 6,
         title: "App Version",
         route: "appSettings/versionSetting",
-        permission: "walletContact",
+        permission: "appVersion",
       },
     ],
   },
