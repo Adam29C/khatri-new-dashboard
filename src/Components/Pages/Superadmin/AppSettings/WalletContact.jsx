@@ -1,35 +1,59 @@
 import React from "react";
 import PagesIndex from "../../PagesIndex";
+import Split_Main_Containt from "../../../Layout/Main/Split_Main_Content";
 
 const WalletContact = () => {
-  const userId = localStorage.getItem("userId");
+  //get token in localstorage
+  const token = localStorage.getItem("token");
 
   //all states
-  const [loading, setLoading] = PagesIndex.useState(true);
-  const [walletData, setWalletData] = PagesIndex.useState();
+  const [walletContactData, setWalletContactData] = PagesIndex.useState("");
+  const [walletHeadlineData, setWalletHeadlineData] = PagesIndex.useState("");
+  const [walletUpiData, setWalletUpiData] = PagesIndex.useState("");
 
-  //get wallet api
-  const getWalletData = async () => {
-    const res = await PagesIndex.admin_services.GET_WALLET_CONTACT_API(userId);
+  //get wallet contact api
+  const getWalletContactData = async () => {
+    const res = await PagesIndex.admin_services.GET_WALLET_CONTACT_API(token);
+    if (res?.status) {
+      setWalletContactData(res?.data?.[0]);
+    }
+  };
 
-    if (res?.status === 200) {
-      setWalletData(res?.data?.[0]);
-      setLoading(false);
+  //get wallet Headline api
+  const getWalletHeadlineData = async () => {
+    const res = await PagesIndex.admin_services.GET_WALLET_HEADLINE_API(token);
+    if (res?.status) {
+      setWalletHeadlineData(res?.data?.[0]);
+    }
+  };
+
+  //get wallet upi api
+  const getWalletUpiData = async () => {
+    const res = await PagesIndex.admin_services.GET_WALLET_UPI_API(token);
+    if (res?.status) {
+      setWalletUpiData(res?.data?.[0]);
     }
   };
 
   //function call with useeffect
   PagesIndex.useEffect(() => {
-    getWalletData();
+    getWalletContactData();
+    getWalletHeadlineData();
+    getWalletUpiData();
   }, []);
 
-  PagesIndex.useEffect(() => {
-    if (walletData) {
-      formik.setFieldValue("number", walletData?.number);
-      formik.setFieldValue("headline", walletData?.headline);
-      formik.setFieldValue("upiId", walletData?.upiId);
+  //set initial value in formik fields
+  const walletValueSet = () => {
+    if (walletContactData && walletHeadlineData && walletUpiData) {
+      formik.setFieldValue("number", walletContactData?.number);
+      formik1.setFieldValue("headline", walletHeadlineData?.headline);
+      formik2.setFieldValue("upi", walletUpiData?.upiId);
     }
-  }, [walletData]);
+  };
+
+  PagesIndex.useEffect(() => {
+    walletValueSet();
+  }, [walletContactData, walletHeadlineData, walletUpiData]);
 
   //contact number validation regex
   const contactRegex = (numbervalue) => {
@@ -39,44 +63,106 @@ const WalletContact = () => {
   //formik form submit
   const formik = PagesIndex.useFormik({
     initialValues: {
-      number: walletData && walletData?.number,
-      headline: walletData && walletData?.headline,
-      upiId: walletData && walletData?.upiId,
+      number: "",
     },
 
     validate: (values) => {
       const errors = {};
+
       if (!values.number && formik.touched.number) {
         errors.number = PagesIndex.valid_err.CONTACT_ERROR;
       } else if (!contactRegex(values.number) && formik.touched.number) {
         errors.number = PagesIndex.valid_err.INVALID_CONTACT_ERROR;
       }
+      return errors;
+    },
+    onSubmit: async (values) => {
+      const apidata = {
+        id: walletContactData?._id,
+        number: +values.number,
+      };
 
-      if (!values.upiId && formik.touched.upiId) {
-        errors.upiId = PagesIndex.valid_err.EMPTY_UPI_ERROR;
+      const res = await PagesIndex.admin_services.UPDATE_WALLET_CONTACT_API(
+        apidata,
+        token
+      );
+
+      if (res.status) {
+        PagesIndex.toast.success(res.message);
+        getWalletContactData();
+      } else {
+        PagesIndex.toast.error(res.message);
+      }
+      if (res?.status === 404) {
+        PagesIndex.toast.error(res?.data?.message);
+      }
+    },
+  });
+  const formik1 = PagesIndex.useFormik({
+    initialValues: {
+      headline: "",
+    },
+
+    validate: (values) => {
+      const errors = {};
+      if (!values.headline) {
+        errors.headline = PagesIndex.valid_err.PLEASER_ENTER_HEADLINE;
       }
 
-      if (!values.headline && formik.touched.headline) {
-        errors.headline = PagesIndex.valid_err.PLEASER_ENTER_HEADLINE;
+      return errors;
+    },
+    onSubmit: async (values) => {
+      const apidata = {
+        id: walletHeadlineData?._id,
+        headline: values.headline,
+      };
+      const res = await PagesIndex.admin_services.UPDATE_WALLET_HEADLINE_API(
+        apidata,
+        token
+      );
+
+      if (res.status) {
+        PagesIndex.toast.success(res.message);
+        getWalletHeadlineData();
+      } else {
+        PagesIndex.toast.error(res.message);
+      }
+      if (res?.status === 404) {
+        PagesIndex.toast.error(res?.data?.message);
+      }
+    },
+  });
+  const formik2 = PagesIndex.useFormik({
+    initialValues: {
+      upi: "",
+    },
+
+    validate: (values) => {
+      const errors = {};
+      if (!values.upi) {
+        errors.upi = PagesIndex.valid_err.EMPTY_UPI_ERROR;
       }
       return errors;
     },
     onSubmit: async (values) => {
       const apidata = {
-        adminId: userId,
-        walledId: walletData?._id,
-        number: +values.number,
-        headline: values.headline,
-        upiId: values.upiId,
+        id: walletUpiData?._id,
+        upi: values.upi,
       };
 
-      const res = await PagesIndex.admin_services.UPDATE_WALLET_CONTACT_API(
-        apidata
+      const res = await PagesIndex.admin_services.UPDATE_WALLET_UPI_API(
+        apidata,
+        token
       );
 
-      if (res.status === 200) {
+      if (res.status) {
         PagesIndex.toast.success(res.message);
-        getWalletData();
+        getWalletUpiData();
+      } else {
+        PagesIndex.toast.error(res.message);
+      }
+      if (res?.status === 404) {
+        PagesIndex.toast.error(res?.data?.message);
       }
     },
   });
@@ -87,38 +173,92 @@ const WalletContact = () => {
       label: "Contact No",
       type: "number",
       label_size: 12,
-      col_size: 6,
+      col_size: 12,
     },
+  ];
+  const fields1 = [
     {
       name: "headline",
-      label: "Application Headline",
+      label: "Headline",
       type: "text",
       label_size: 12,
-      col_size: 6,
+      col_size: 12,
     },
+  ];
+  const fields2 = [
     {
-      name: "upiId",
-      label: "UPI Id",
+      name: "upi",
+      label: "UPI Name",
       type: "text",
       label_size: 12,
       col_size: 12,
     },
   ];
 
+  const cardLayouts = [
+    {
+      size: 12,
+      body: (
+        <div>
+          <div>
+            <h4 class="profile-note-title mt-0 mb-4">
+              Update Wallet related query contact no
+            </h4>
+          </div>
+          <PagesIndex.Formikform
+            fieldtype={fields.filter((field) => !field.showWhen)}
+            formik={formik}
+            show_submit={true}
+            btn_name="Submit"
+          />
+        </div>
+      ),
+    },
+    {
+      size: 12,
+      body: (
+        <div>
+          <div>
+            <h4 class="profile-note-title mt-0 mb-4">
+              Update Application Headline
+            </h4>
+          </div>
+          <PagesIndex.Formikform
+            fieldtype={fields1.filter((field) => !field.showWhen)}
+            formik={formik1}
+            show_submit={true}
+            btn_name="Submit"
+          />
+        </div>
+      ),
+    },
+    {
+      size: 12,
+      body: (
+        <div>
+          <div>
+            <h4 class="profile-note-title mt-0 mb-4">Update UPI</h4>
+          </div>
+          <PagesIndex.Formikform
+            fieldtype={fields2.filter((field) => !field.showWhen)}
+            formik={formik2}
+            show_submit={true}
+            btn_name="Submit"
+          />
+        </div>
+      ),
+    },
+  ];
+
   return (
-    <PagesIndex.Main_Containt title="Update Wallet related query" col_size={12}>
-      {/* {loading ? (
-        <PagesIndex.Loader lodersize={20} />
-      ) : ( */}
-        <PagesIndex.Formikform
-          fieldtype={fields.filter((field) => !field.showWhen)}
-          formik={formik}
-          show_submit={true}
-          btn_name="Submit"
-        />
-      {/* )} */}
+    <>
+      <Split_Main_Containt
+        title="Wallet Contact"
+        add_button={false}
+        cardLayouts={cardLayouts}
+      />
       <PagesIndex.Toast />
-    </PagesIndex.Main_Containt>
+    </>
   );
 };
 

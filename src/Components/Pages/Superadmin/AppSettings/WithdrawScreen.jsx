@@ -2,7 +2,6 @@ import React from "react";
 import PagesIndex from "../../PagesIndex";
 
 const WithdrawScreen = () => {
-  const userId = localStorage.getItem("userId");
 const token =  localStorage.getItem("token")
   //all states
   const [loading, setLoading] = PagesIndex.useState(true);
@@ -11,8 +10,6 @@ const token =  localStorage.getItem("token")
   //get wallet api
   const getNoticeData = async () => {
     const res = await PagesIndex.admin_services.GET_APP_WITHDRAW_API(token);
-    console.log(res)
-
     if (res?.status) {
       setWithdrawData(res?.data);
       setLoading(false);
@@ -70,8 +67,6 @@ const token =  localStorage.getItem("token")
       return errors;
     },
     onSubmit: async (values) => {
-console.log(values)
-
       const apidata = {
         id: withdrawData?._id,
         pri_title: values.textMain,

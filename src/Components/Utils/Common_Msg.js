@@ -62,10 +62,12 @@ export const PLEASE_ENTER_APK_FILE="Please Enter Apk File"
 export const APK_FILE_VALID="Please Enter Valid Apk File";
 export const VERSION_VALIDATION="Entered Version cannot be Less than Current Version."
 export const PLEASER_ENTER_VERSION = "Please Enter Version"
-export const PLEASER_ENTER_HEADLINE = "Please Enter Application Headline"
+export const PLEASER_ENTER_HEADLINE = "Please Enter Headline"
 
 export const PROVIDER_NAME_REQUIRED = "Provider Name is required";
  export const OPEN_BID_TIME_IS_REQUIRED = "Open Bid Time is required";
  export const CLOSE_BID_TIME_IS_REQUIRED = "Close Bid Time is required";
  export const OPEN_BID_RESULT_TIME_IS_REQUIRED = "Open Bid Result Time is required";
   export const CLOSE_BID_RESULT_TIME_IS_REQUIRED = "Close Bid Result Time is required";
+  export const PROFILE_NOTE_REQUIRE = "Please Enter Profile Note";
+

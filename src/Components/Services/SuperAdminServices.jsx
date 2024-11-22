@@ -387,9 +387,9 @@ export const UPDATE_VERSION_API = async (data) => {
 //VERSION CONTROL API END
 
 //WALLET CONTACT API START
-export const GET_WALLET_CONTACT_API = async (id) => {
+export const GET_WALLET_CONTACT_API = async (token) => {
   try {
-    const res = await axios.get(`${Api.WALLET_CONTACT_LIST}?adminId=${id}`, {
+    const res = await axios.get(`${BASE_URL}${Api.WALLET_CONTACT_LIST}`, {
       headers: header(token),
     });
     return res?.data;
@@ -398,14 +398,56 @@ export const GET_WALLET_CONTACT_API = async (id) => {
   }
 };
 
-export const UPDATE_WALLET_CONTACT_API = async (data) => {
+export const GET_WALLET_HEADLINE_API = async (token) => {
   try {
-    const res = await axios.put(Api.UPDATE_WALLET_CONTACT, data, {
+    const res = await axios.get(`${BASE_URL}${Api.WALLET_HEADLINE_LIST}`, {
       headers: header(token),
     });
     return res?.data;
   } catch (error) {
     return error;
+  }
+};
+
+export const GET_WALLET_UPI_API = async (token) => {
+  try {
+    const res = await axios.get(`${BASE_URL}${Api.WALLET_UPI_LIST}`, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const UPDATE_WALLET_CONTACT_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.UPDATE_WALLET_CONTACT}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error?.response;
+  }
+};
+export const UPDATE_WALLET_HEADLINE_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.UPDATE_WALLET_HEADLINE}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error?.response;
+  }
+};
+export const UPDATE_WALLET_UPI_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.UPDATE_WALLET_UPI}`,data ,{
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error?.response;
   }
 };
 
@@ -431,7 +473,7 @@ export const UPDATE_NOTICE_BOARD_API = async (data,token) => {
     return res?.data;
   } catch (error) {
     // console.log(error.response)
-    return error.response;
+    return error?.response;
   }
 };
 //NOTICE BOARD API END
@@ -459,6 +501,30 @@ export const UPDATE_APP_WITHDRAW_API = async (data,token) => {
   }
 };
 //APP WITHDRAW API END
+
+// PROFILE NOTE GET AND UPDATE API START
+export const GET_PROFILE_NOTE_API = async(token)=>{
+  try {
+    const res = await axios.get(`${BASE_URL}${Api.GET_PROFILE_NOTE}`, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error
+  }
+}
+
+export const UPDATE_PROFILE_NOTE_API =async(data,token)=>{
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.UPDATE_PROFILE_NOTE}`,data,{
+      headers:header(token)
+    })
+    return res?.data;
+  } catch (error) {
+    return error?.response;
+  }
+}
+// PROFILE NOTE GET AND UPDATE API END
 
 // -------------------------- APP_SETTINGS ------------------------
 

@@ -10,7 +10,7 @@ const HowToPlay = () => {
   const token = localStorage.getItem("token")
   const [htpData, setHtpData] = useState([]);
   const [loading, setLoading] = PagesIndex.useState(true);
-// console.log(htpData,100)
+
   const getHtpeData = async () => {
     const res = await PagesIndex.admin_services.GET_HTP_LIST_API(token);
     if (res?.status) {
