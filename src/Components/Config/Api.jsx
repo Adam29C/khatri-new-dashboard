@@ -71,6 +71,12 @@ const Api = {
   // STARLINE_GAME_SETTING_UPDATE_ALL: "starGameSetting/updateProviderSettings",
   // STARLINE_GAME_SETTING_UPDATE_ONE: "starGameSetting",
 
+
+  //  STARLINE REVERT PAYMENT - 
+
+  STARLINE_GAME_REVERT_PAYMENT: "starGameResult",
+  STARLINE_GAME_CONFIRM_REVERT_PAYMENT: "starGameResult",
+
   // JACKPOT GAME SETTING CRUD
 
   JACKPOT_GAME_PROVIDERS: "abGameSetting/addSetting",

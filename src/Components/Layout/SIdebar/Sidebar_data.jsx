@@ -117,7 +117,7 @@ export const admin_Sidebar = [
       {
         id: 5,
         title: "Star Revert Result Payment",
-        route: "#",
+        route: "starline/revertpayment",
         permission: "0",
       },
       {

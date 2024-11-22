@@ -10,7 +10,6 @@ const ExamplePage = ({
   gameType,
   main_result,
   main_result_add,
-
   past_result,
   winner_list,
   distribute_fund,

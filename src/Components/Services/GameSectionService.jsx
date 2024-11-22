@@ -308,7 +308,7 @@ export const ALL_GAME_RESULTS = async (api_Route, token) => {
   }
 };
 
-export const ALL_GAME_RESULTS_ADD_API= async (api_Route,data ,token) => {
+export const ALL_GAME_RESULTS_ADD_API = async (api_Route, data, token) => {
   try {
     const res = await axios.post(`${BASE_URL}${api_Route}`, data, {
       headers: header(token),
@@ -318,7 +318,6 @@ export const ALL_GAME_RESULTS_ADD_API= async (api_Route,data ,token) => {
     return error;
   }
 };
-
 
 export const ALL_GAME_PAST_RESULTS = async (api_Route, data, token) => {
   console.log("data", data);
@@ -375,3 +374,38 @@ export const STARLINE_GAME_DISTIBUTE_FUND_WINNERS_API = async (
 // };
 
 // ---------------FOR_STARLINE_AND_JACPOT_LIST  ---------------------
+
+// ---------------FOR ALL GAME REVERT PAYMENT  ---------------------
+
+export const ALL_GAME_REVERT_PAYMENT_API = async (
+  api_Route,
+  data,
+  token
+) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${api_Route}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const STARLINE_GAME_CONFIRM_REVERT_PAYMENT_API = async (
+  api_Route,
+  data,
+  token
+) => {
+  try {
+    const res = await axios.patch(`${BASE_URL}${api_Route}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+// ---------------FOR ALL GAME REVERT PAYMENT  ---------------------

@@ -26,6 +26,11 @@ import GameResult from "../../Pages/Superadmin/Games/AvailableGames/GameRasult";
 import StarlineGameResult from "../../Pages/Superadmin/Games/Starline/Result/Result";
 import Winnerlist from "../../Helpers/GameProvider/GameResult/WinnerList";
 
+// Revert Payment 
+import RevertPayment from "../../Pages/Superadmin/Games/Starline/RevertPayment/RevertPayment";
+
+
+
 import MultiTabs from "../../Helpers/MultiTabs";
 import OcCuttingGroup from "../../Pages/Superadmin/BookieCorner/OcCuttingGroup";
 import FinalOcCuttingGroup from "../../Pages/Superadmin/BookieCorner/FinalOcCuttingGroup";
@@ -204,6 +209,10 @@ const adminRoutes = [
       {
         path: "starline/winnerlist/:id",
         element: <PrivateRoute element={Winnerlist} />,
+      },
+      {
+        path: "starline/revertpayment",
+        element: <PrivateRoute element={RevertPayment} />,
       },
       {
         path: "games/jackpotProvider",
