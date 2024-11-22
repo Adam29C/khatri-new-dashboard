@@ -516,11 +516,12 @@ export const admin_Sidebar = [
         route: "appSettings/walletContact",
         permission: "walletContact",
       },
+
       {
         id: 6,
         title: "App Version",
         route: "appSettings/versionSetting",
-        permission: "",
+        permission: "walletContact",
       },
     ],
   },

@@ -363,9 +363,9 @@ export const GAME_REMAINING_WINNER_LIST_API = async(data,token)=>{
 // -------------------------- APP_SETTINGS ------------------------
 
 //VERSION CONTROL API START
-export const GET_VERSION_API = async (id) => {
+export const GET_VERSION_API = async (token) => {
   try {
-    const res = await axios.get(`${Api.GET_VERSION}?adminId=${id}`, {
+    const res = await axios.get(`${BASE_URL}${Api.GET_VERSION}`, {
       headers: header(token),
     });
     return res?.data;
@@ -374,9 +374,10 @@ export const GET_VERSION_API = async (id) => {
   }
 };
 
-export const UPDATE_VERSION_API = async (data) => {
+export const UPDATE_VERSION_API = async (formData,token) => {
+
   try {
-    const res = await axios.put(Api.UPDATE_VERSION, data, {
+    const res = await axios.post(`${BASE_URL}${Api.UPDATE_VERSION}`, formData, {
       headers: header(token),
     });
     return res?.data;

@@ -55,8 +55,10 @@ const Api = {
   GET_REMAINING_WINNER_LIST: "winnerList/remaningWinnerList",
 
   USERS_IDEAS: "/admin/UserIdea",
-  GET_VERSION: "/admin/appSetting/listVersionSetting",
-  UPDATE_VERSION: "/admin/appSetting/updateVersionSetting",
+
+  //APP SETTINGS APP VERSION API'S
+  GET_VERSION: "versionSetting",
+  UPDATE_VERSION: "versionSetting/updateAppSet",
 
   //APP SETTINGS WALLET GET UPDATE API'S
   WALLET_CONTACT_LIST: "walletContect",
