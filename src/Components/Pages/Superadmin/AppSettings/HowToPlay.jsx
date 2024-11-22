@@ -7,10 +7,13 @@ import { toast } from "react-toastify";
 
 
 const HowToPlay = () => {
+  //get token in localstorage
   const token = localStorage.getItem("token")
+  //all state
   const [htpData, setHtpData] = useState([]);
   const [loading, setLoading] = PagesIndex.useState(true);
 
+  //get htp data
   const getHtpeData = async () => {
     const res = await PagesIndex.admin_services.GET_HTP_LIST_API(token);
     if (res?.status) {
@@ -31,7 +34,7 @@ const HowToPlay = () => {
   const handleFormSubmit = async (values) => {
   
     let apidata = {
-      id: htpData[0]?._id,
+      htpId: htpData[0]?._id,
       howtoplay: values.howtoplay,
     };
 
