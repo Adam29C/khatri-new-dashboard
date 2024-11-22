@@ -1,17 +1,12 @@
 import PagesIndex from "../../../Pages/PagesIndex";
-import { Link } from "react-router-dom";
-import { Get_Year_Only } from "../../../Utils/Common_Date";
-import DeleteSweetAlert from "../../DeleteSweetAlert";
-import App from "../../Modal/ReusableModal";
-import { useState } from "react";
 
 const GameRatesProvider = ({ gameType, path, title, GameRate_list }) => {
   const token = localStorage.getItem("token");
 
   const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
-  const [modalType, setModalType] = useState(""); // Tracks if Add or Edit
-  const [selectedRow, setSelectedRow] = useState(null); // For Edit functionality
-  const [visible, setVisible] = useState(false);
+  const [modalType, setModalType] = PagesIndex.useState(""); 
+  const [selectedRow, setSelectedRow] = PagesIndex.useState(null); 
+  const [visible, setVisible] = PagesIndex.useState(false);
   const [data, getData] = PagesIndex.useState([]);
   const [getGameRateList, setgetGameRateList] = PagesIndex.useState([]);
 
@@ -50,7 +45,7 @@ const GameRatesProvider = ({ gameType, path, title, GameRate_list }) => {
     if (!confirmDelete) return;
 
     try {
-      const res = await PagesIndex.admin_services.GAME_RATES_DELETE_API(id);
+      const res = await PagesIndex.admin_services.GAME_RATES_DELETE_API(id,token);
       if (res.status) {
         getGameRatesList;
         alert(res?.message);
@@ -79,6 +74,27 @@ const GameRatesProvider = ({ gameType, path, title, GameRate_list }) => {
     setVisible(true);
   };
 
+  const handleActionBtn = (row, buttonStatus) => {
+    if (buttonStatus === 1) {
+      setModalType("Edit");
+      setSelectedRow(row);
+      formik.resetForm({
+        values: {
+          gamename: row.providerName,
+          result: row.providerResult,
+          mobile: row.mobile,
+          activeStatus: row.activeStatus,
+        },
+      });
+
+      setVisible(true);
+    } else if (buttonStatus === 2) {
+      handleDelete(row?._id);
+    } else {
+      return "";
+    }
+  };
+
   // Formik Configuration
   const formik = PagesIndex.useFormik({
     enableReinitialize: true,
@@ -105,8 +121,8 @@ const GameRatesProvider = ({ gameType, path, title, GameRate_list }) => {
 
         const res =
           modalType === "Edit"
-            ? await PagesIndex.admin_services.GAME_RATES_UPDATE_API(payload)
-            : await PagesIndex.admin_services.GAME_RATES_ADD_API(payload);
+            ? await PagesIndex.admin_services.GAME_RATES_UPDATE_API(payload,token)
+            : await PagesIndex.admin_services.GAME_RATES_ADD_API(payload,token);
 
         if (res.status) {
           PagesIndex.toast.success(res?.message);
@@ -114,12 +130,12 @@ const GameRatesProvider = ({ gameType, path, title, GameRate_list }) => {
           setVisible(false); // Close modal
         } else {
           PagesIndex.toast.error(
-            res?.response?.data?.message || "Failed to save!"
+            res?.response?.data?.message 
           );
         }
       } catch (error) {
         PagesIndex.toast.error(
-          error?.response?.data?.message || "Error occurred!"
+          error?.response?.data?.message 
         );
       }
     },

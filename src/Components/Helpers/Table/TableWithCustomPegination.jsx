@@ -211,11 +211,11 @@ const PaginatedTable = ({
                   {columns.map((column) =>
                     column.visible ? (
                       <td key={column.field}>
-                        {column.field === "activeStatus"
-                          ? row.activeStatus
-                            ? "Market Is Active"
-                            : "Market Is Inactive"
-                          : row[column.field]}
+                       {
+                        column.field === "activeStatus" ? row.activeStatus  ? "Market Is Active"
+                        : "Market Is Inactive"
+                      : row[column.field]}
+                       
                       </td>
                     ) : null
                   )}
@@ -224,7 +224,9 @@ const PaginatedTable = ({
                   {UserFullButtonList?.length > 0 &&
                     UserFullButtonList?.map((items) => {
                       return (
+                     
                         <td>
+                          
                           <span key={items.buttonName}>
                             {items.type === "link" ? (
                               <Link
@@ -235,8 +237,8 @@ const PaginatedTable = ({
                               </Link>
                             ) : items.type === "button" ? (
                               <button
-                                className={`btn btn-${items.buttonColor} btn-sm me-2`}
-                                onClick={() => items.Conditions(row)}
+                              className={`btn ${items.buttonColor ? `btn-${items.buttonColor}` : "unblock-btn"} btn-sm me-2`}
+                              onClick={() => items.Conditions(row)}
                               >
                                 {items.buttonName}
                               </button>

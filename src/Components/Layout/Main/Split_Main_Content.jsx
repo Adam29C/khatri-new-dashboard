@@ -60,6 +60,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import PagesIndex from "../../Pages/PagesIndex";
 
 const Split_Main_Containt = ({
   add_button,
@@ -71,7 +72,7 @@ const Split_Main_Containt = ({
   return (
     <div className="content-body">
       <div className="container-fluid mt-3">
-        <div className={`card`}>
+        <div className={`card `}>
           <div className="d-flex align-items-center justify-content-between">
             <h4 className="m-0 p-3">{title}</h4>
             {add_button ? (
@@ -110,6 +111,7 @@ const Split_Main_Containt = ({
           ))}
         </div>
       </div>
+      <PagesIndex.Toast />
     </div>
   );
 };

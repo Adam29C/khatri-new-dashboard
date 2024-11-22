@@ -35,6 +35,7 @@ const ReusableForm = ({
   show_submit,
   label_size,
   show_preview,
+
 }) => {
   const location = useLocation();
 
@@ -62,16 +63,7 @@ const ReusableForm = ({
     }
   };
 
-  const handleDateChange = (date, name) => {
-    const formattedTime = date
-      ? date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
-      : "";
-    setDateStates((prevStates) => ({
-      ...prevStates,
-      [name]: formattedTime,
-    }));
-    formik.setFieldValue(name, formattedTime);
-  };
+
 
   const format = "h:mm a";
 

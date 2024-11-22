@@ -256,7 +256,7 @@ const GameProvider = ({
   const UserFullButtonList = [
     {
       id: 0,
-      buttonName: "Edit",
+      buttonName: "Update",
       buttonColor: "",
       route: "",
       Conditions: (row) => {
