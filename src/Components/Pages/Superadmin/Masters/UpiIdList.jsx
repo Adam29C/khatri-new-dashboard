@@ -2,21 +2,23 @@ import React, { useState, useEffect } from "react";
 import Main_Containt from "../../../Layout/Main/Main_Containt";
 import ModalComponent from "../../../Helpers/Modal/ModalComponent";
 import PagesIndex from "../../PagesIndex";
-import { DELETE_USER } from "../../../Services/SuperAdminServices";
 import DeleteSweetAlert from "../../../Helpers/DeleteSweetAlert";
 import { toast } from "react-toastify";
 
 const UpiIdList = () => {
+  //get token in localstorage
+  const token = localStorage.getItem("token");
+
+  //all state
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  const userId = localStorage.getItem("userId");
   const [visible, setVisible] = useState(false);
 
   let userDeleteReason = false;
   const getList = async () => {
     setLoading(true);
     try {
-      const res = await PagesIndex.admin_services.GET_UPI_LIST_API(userId);
+      const res = await PagesIndex.admin_services.GET_UPI_LIST_API(token);
 
       setData(res?.data);
     } catch (error) {
@@ -32,7 +34,7 @@ const UpiIdList = () => {
   const handleStatusUpdate = async (event, value) => {
     try {
       let apidata = {
-        adminId: userId,
+      id:"",
         upiId: value._id,
         status: event,
       };
@@ -122,19 +124,23 @@ const UpiIdList = () => {
   const formik = PagesIndex.useFormik({
     initialValues: {
       upiName: "",
+      status:""
     },
     validate: (values) => {
       const errors = {};
       if (!values.upiName) {
         errors.upiName = PagesIndex.valid_err.EMPTY_UPI_ERROR;
       }
+      if (!values.status) {
+        errors.status = PagesIndex.valid_err.STATUS_ERROR;
+      }
       return errors;
     },
 
     onSubmit: async (values) => {
+      console.log(values)
       try {
         let apidata = {
-          adminId: userId,
           upiName: values.upiName,
         };
 
@@ -162,7 +168,32 @@ const UpiIdList = () => {
       label_size: 12,
       col_size: 12,
     },
+
+    {
+      name: "status",
+      label: "Status",
+      type: "select",
+      title_size: 6,
+      col_size: 12,
+      options: [
+        {
+          label: "Active",
+          value: true,
+        },
+        {
+          label: "In-Active",
+          value: false,
+        },
+      ],
+    },
   ];
+
+    // Handle Add Button
+    const handleAdd = () => {
+    
+      setVisible(true);
+    };
+
 
   return (
     <Main_Containt
@@ -170,6 +201,7 @@ const UpiIdList = () => {
       add_button={false}
       btn_modal={true}
       title="UPI ID List"
+      handleAdd={handleAdd}
     >
       <PagesIndex.Data_Table
         isLoading={loading}
