@@ -1,16 +1,22 @@
 import PagesIndex from "../../../Pages/PagesIndex";
 
-const GameRatesProvider = ({ gameType, path, title, GameRate_list }) => {
+const GameRatesProvider = ({
+  gameType,
+  path,
+  title,
+  GameRate_list,
+  GameRate_delete,
+  GameRate_update,
+  GameRate_add,
+}) => {
   const token = localStorage.getItem("token");
 
   const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
-  const [modalType, setModalType] = PagesIndex.useState(""); 
-  const [selectedRow, setSelectedRow] = PagesIndex.useState(null); 
+  const [modalType, setModalType] = PagesIndex.useState("");
+  const [selectedRow, setSelectedRow] = PagesIndex.useState(null);
   const [visible, setVisible] = PagesIndex.useState(false);
   const [data, getData] = PagesIndex.useState([]);
   const [getGameRateList, setgetGameRateList] = PagesIndex.useState([]);
-
-  console.log("data", data);
 
   //get game list start
   const getGameRatesList = async () => {
@@ -22,12 +28,7 @@ const GameRatesProvider = ({ gameType, path, title, GameRate_list }) => {
         );
       setgetGameRateList(res.data);
     } else {
-      const res = await PagesIndex.admin_services.GAME_RATES_GET_LIST_API();
-
-
-
-      console.log("res" ,res);
-      
+      const res = await PagesIndex.game_service.GAME_RATES_GET_LIST_API(token);
       getData(res?.data);
     }
   };
@@ -45,19 +46,29 @@ const GameRatesProvider = ({ gameType, path, title, GameRate_list }) => {
     if (!confirmDelete) return;
 
     try {
-      const res = await PagesIndex.admin_services.GAME_RATES_DELETE_API(id,token);
+      let res;
+      if (gameType === "StarLine" || gameType === "StarLine") {
+        res =
+          await PagesIndex.game_service.STARLINE__AND_JACKPOT_GAME_RATE_DELETE_API(
+            GameRate_delete,
+            { gameRateId: id },
+            token
+          );
+      } else {
+        res = await PagesIndex.game_service.GAME_RATES_DELETE_API(id, token);
+      }
       if (res.status) {
-        getGameRatesList;
-        alert(res?.message);
+        getGameRatesList();
+        PagesIndex.toast.success(res?.message);
+      } else {
+        PagesIndex.toast.error(res?.response?.data?.message);
       }
 
-      getGameRatesList();
+      // getGameRatesList();
     } catch (error) {
       console.log(error);
     }
   };
-
-  //delete game list end
 
   // Handle Edit Button
   const handleEdit = (row) => {
@@ -111,32 +122,58 @@ const GameRatesProvider = ({ gameType, path, title, GameRate_list }) => {
       return errors;
     },
     onSubmit: async (values) => {
-      // userId, gamename, price
       try {
-        const payload = {
-          gamename: values.gameName,
-          price: values.gamePrice,
-          ...(modalType === "Edit" && { userId: selectedRow._id }),
-        };
+        let res = "";
 
-        const res =
-          modalType === "Edit"
-            ? await PagesIndex.admin_services.GAME_RATES_UPDATE_API(payload,token)
-            : await PagesIndex.admin_services.GAME_RATES_ADD_API(payload,token);
+        if (gameType === "StarLine" || gameType === "StarLine") {
+          const payload = {
+            gameName: values.gameName,
+            gamePrice: values.gamePrice,
+            ...(modalType === "Edit" && { gameRateId: selectedRow._id }),
+          };
+          res =
+            modalType === "Edit"
+              ? await PagesIndex.game_service.STARLINE__AND_JACKPOT_GAME_RATE_UPDATE_API(
+                  GameRate_update,
+                  payload,
+
+                  token
+                )
+              : await PagesIndex.game_service.STARLINE__AND_JACKPOT_GAME_RATE_ADD_API(
+                  GameRate_add,
+                  payload,
+                  token
+                );
+        } else {
+          const payload = {
+            gamename: values.gameName,
+            price: values.gamePrice,
+            ...(modalType === "Edit" && { userId: selectedRow._id }),
+          };
+
+          res =
+            modalType === "Edit"
+              ? await PagesIndex.game_service.GAME_RATES_UPDATE_API(
+                  payload,
+                  token
+                )
+              : await PagesIndex.game_service.GAME_RATES_ADD_API(
+                  payload,
+                  token
+                );
+        }
+
+        console.log("res", res);
 
         if (res.status) {
           PagesIndex.toast.success(res?.message);
           getGameRatesList();
           setVisible(false); // Close modal
         } else {
-          PagesIndex.toast.error(
-            res?.response?.data?.message 
-          );
+          PagesIndex.toast.error(res?.response?.data?.message);
         }
       } catch (error) {
-        PagesIndex.toast.error(
-          error?.response?.data?.message 
-        );
+        PagesIndex.toast.error(error?.response?.data?.message);
       }
     },
   });

@@ -11,6 +11,7 @@ const GameProvider = ({
   add_provider,
   edit_provider,
   remove_provider,
+  
 }) => {
   const token = localStorage.getItem("token");
 

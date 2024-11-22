@@ -10,6 +10,9 @@ const StarLineGameRate = () => {
         path={"/admin/games/starlinegamerates"}
         title="StarLine Game Rates"
         GameRate_list={Api.STARLINE_GAME_RATE_LIST}
+        GameRate_add={Api.STARLINE_GAME_RATE_ADD}
+        GameRate_update={Api.STARLINE_GAME_RATE_UPDATE}
+        GameRate_delete={Api.STARLINE_GAME_RATE_REMOVE}
       />
     </>
   );

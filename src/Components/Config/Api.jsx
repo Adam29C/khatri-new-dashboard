@@ -22,8 +22,11 @@ const Api = {
   MAIN_GAME: "mainGames",
   MAIN_GAME_ADD: "mainGames/insertGame",
 
-  //GAME RATES
   // ADMIN_GAME_RATES: "admin/game/gameRate",
+  MAIN_GAME_RATE_LIST: "mainGameRate",
+  MAIN_GAME_RATE_ADD: "mainGameRate/insertGame",
+  MAIN_GAME_RATE_UPDATE: "mainGameRate",
+  MAIN_GAME_RATE_REMOVE: "mainGameRate",
 
   //GAME SETTING
   // ADMIN_GAME_SETTING: "/admin/game/gameSetting",
@@ -42,9 +45,9 @@ const Api = {
   // GAME RATE
 
   STARLINE_GAME_RATE_LIST: "starGameRate",
-  STARLINE_GAME_RATE_ADD: "/starGameRate/insertGame",
-  STARLINE_GAME_RATE_UPDATE: "/starGameRate/update",
-  STARLINE_GAME_RATE_REMOVE: " /starGameRate/",
+  STARLINE_GAME_RATE_ADD: "starGameRate/insertGame",
+  STARLINE_GAME_RATE_UPDATE: "starGameRate/update",
+  STARLINE_GAME_RATE_REMOVE: "starGameRate",
 
   // STARLINE GAME SETTING CRUD
 
@@ -92,7 +95,6 @@ const Api = {
   GET_GAME_RESULT_WITH_DATE: "mainGameResult/pastResult",
   GET_REMAINING_WINNER_LIST: "winnerList/remaningWinnerList",
   GET_MAIN_WINNER_LIST: "winnerList/mainWinnerList",
-
 
   USERS_IDEAS: "/admin/UserIdea",
   GET_VERSION: "/admin/appSetting/listVersionSetting",

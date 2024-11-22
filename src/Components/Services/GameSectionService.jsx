@@ -70,9 +70,12 @@ export const STARLINE__AND_JACKPOT_GAME_PROVIDERS_DELETE_API = async (
   token
 ) => {
   try {
-    const res = await axios.delete(`${BASE_URL}${api_Route}?providerId=${data}`, {
-      headers: header(token),
-    });
+    const res = await axios.delete(
+      `${BASE_URL}${api_Route}?providerId=${data}`,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     return error;
@@ -80,8 +83,6 @@ export const STARLINE__AND_JACKPOT_GAME_PROVIDERS_DELETE_API = async (
 };
 
 // ---------------FOR_STARLINE_AND_JACPOT_LIST  ---------------------
-
-
 
 // ---------------    FOR  STARLINE AND JACPOT  PROVIDERS  ---------------------
 export const STARLINE_AND_JACKPOT_GAME_RATE_LIST_API = async (
@@ -134,7 +135,7 @@ export const STARLINE__AND_JACKPOT_GAME_RATE_UPDATE_API = async (
   token
 ) => {
   try {
-    const res = await axios.patch(`${BASE_URL}${api_Route}`, data, {
+    const res = await axios.put(`${BASE_URL}${api_Route}`, data, {
       headers: header(token),
     });
     return res?.data;
@@ -149,8 +150,9 @@ export const STARLINE__AND_JACKPOT_GAME_RATE_DELETE_API = async (
   token
 ) => {
   try {
-    const res = await axios.delete(`${BASE_URL}${api_Route}?providerId=${data}`, {
+    const res = await axios.delete(`${BASE_URL}${api_Route}`, {
       headers: header(token),
+      data: data, // Pass the payload here
     });
     return res?.data;
   } catch (error) {
@@ -160,7 +162,62 @@ export const STARLINE__AND_JACKPOT_GAME_RATE_DELETE_API = async (
 
 // ---------------FOR_STARLINE_AND_JACPOT_LIST  ---------------------
 
+// --------------------  for main game rate list ------------------------
+//GAME RATES API
+export const GAME_RATES_GET_LIST_API = async (token) => {
+  try {
+    const res = await axios.get(`${BASE_URL}${Api.MAIN_GAME_RATE_LIST}`, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
 
+export const GAME_RATES_ADD_API = async (data, token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.MAIN_GAME_RATE_ADD}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const GAME_RATES_UPDATE_API = async (data, token) => {
+  try {
+    const res = await axios.patch(
+      `${BASE_URL}${Api.MAIN_GAME_RATE_UPDATE}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const GAME_RATES_DELETE_API = async (id, token) => {
+  try {
+    let apiData = {
+      userId: id,
+    };
+
+    const res = await axios.delete(`${BASE_URL}${Api.MAIN_GAME_RATE_REMOVE}`, {
+      data: apiData,
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// --------------------  for main game rate list ------------------------
 
 // ---------------FOR_STARLINE_AND_JACPOT_LIST  ---------------------
 export const FOR_STARLINE_AND_JACPOT_LIST_API = async (

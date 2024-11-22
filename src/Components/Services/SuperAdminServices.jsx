@@ -173,59 +173,6 @@ export const GAME_PROVIDER_UPDATE_API = async (data, token) => {
   }
 };
 
-//GAME RATES API
-export const GAME_RATES_GET_LIST_API = async (token) => {
-  try {
-    const res = await axios.get(`${BASE_URL}${Api.MAIN_GAME_RATE_LIST}`, {
-      headers: header(token),
-    });
-    return res?.data;
-  } catch (error) {
-    return error;
-  }
-};
-
-export const GAME_RATES_ADD_API = async (data, token) => {
-  try {
-    const res = await axios.post(`${BASE_URL}${Api.MAIN_GAME_RATE_ADD}`, data, {
-      headers: header(token),
-    });
-    return res?.data;
-  } catch (error) {
-    return error;
-  }
-};
-
-export const GAME_RATES_UPDATE_API = async (data, token) => {
-  try {
-    const res = await axios.patch(
-      `${BASE_URL}${Api.MAIN_GAME_RATE_UPDATE}`,
-      data,
-      {
-        headers: header(token),
-      }
-    );
-    return res?.data;
-  } catch (error) {
-    return error;
-  }
-};
-
-export const GAME_RATES_DELETE_API = async (id, token) => {
-  try {
-    let apiData = {
-      userId: id,
-    };
-
-    const res = await axios.delete(`${BASE_URL}${Api.MAIN_GAME_RATE_REMOVE}`, {
-      data: apiData,
-      headers: header(token),
-    });
-    return res?.data;
-  } catch (error) {
-    return error;
-  }
-};
 
 // --------------------------  game provider api ------------------------
 // --------------------------   super admin provider api ------------------------
