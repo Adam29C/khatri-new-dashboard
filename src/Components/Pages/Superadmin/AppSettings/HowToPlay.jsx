@@ -31,7 +31,7 @@ const HowToPlay = () => {
   const handleFormSubmit = async (values) => {
   
     let apidata = {
-      htpId: htpData[0]?._id,
+      id: htpData[0]?._id,
       howtoplay: values.howtoplay,
     };
 
@@ -195,7 +195,7 @@ const HowToPlay = () => {
                                   </p>
                                 )}{" "}
                           </div>
-                          {index >= htpData[0].howtoplay?.length && (
+                          {index >= htpData?.[0]?.howtoplay?.length && (
                             <div className="col ms-auto d-flex justify-content-end pl-2 mb-2">
                               <button
                                 type="button"
