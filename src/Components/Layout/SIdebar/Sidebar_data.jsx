@@ -111,7 +111,7 @@ export const admin_Sidebar = [
       {
         id: 4,
         title: "Star Game Result",
-        route: "#",
+        route: "starline/results",
         permission: "starlineResult",
       },
       {

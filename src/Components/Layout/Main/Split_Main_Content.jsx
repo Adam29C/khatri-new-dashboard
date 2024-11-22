@@ -103,7 +103,12 @@ const Split_Main_Containt = ({
         </div>
         <div className="row">
           {cardLayouts.map((layout, index) => (
-            <div className={`col-${layout.size}`} key={index}>
+            <div
+              className={`col-${layout.size} ${
+                layout.visiblity == "hide" && "d-none"
+              }`}
+              key={index}
+            >
               <div className="card">
                 {layout.body && <div className="card-body">{layout.body}</div>}
               </div>

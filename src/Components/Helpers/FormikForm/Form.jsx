@@ -322,6 +322,7 @@ const ReusableForm = ({
                     formik={formik}
                     setDateStates={setDateStates}
                     dateStates={dateStates}
+                    default
                   />
                 </>
               ) : field.type === "time" ? (

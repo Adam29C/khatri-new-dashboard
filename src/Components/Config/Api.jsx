@@ -57,6 +57,20 @@ const Api = {
   STARLINE_GAME_SETTING_UPDATE_ALL: "starGameSetting/updateProviderSettings",
   STARLINE_GAME_SETTING_UPDATE_ONE: "starGameSetting",
 
+
+
+
+
+  //  STARLINE GAME RESULT - 
+  STARLINE_GAME_MAIN_RESULT: "starGameResult",
+  STARLINE_GAME_MAIN_RESULT_ADD: "starGameResult",
+  STARLINE_GAME_PAST_RESULT: "starGameResult/pastResult",
+  STARLINE_GAME_WINNER_LIST: "starlineWinner/starLineWinnerList",
+  STARLINE_GAME_DISTIBUTE_FUND_WINNERS: "starlineWinner/starWinners",
+  // STARLINE_GAME_SETTING_ADD: "starGameSetting/insertSettings",
+  // STARLINE_GAME_SETTING_UPDATE_ALL: "starGameSetting/updateProviderSettings",
+  // STARLINE_GAME_SETTING_UPDATE_ONE: "starGameSetting",
+
   // JACKPOT GAME SETTING CRUD
 
   JACKPOT_GAME_PROVIDERS: "abGameSetting/addSetting",

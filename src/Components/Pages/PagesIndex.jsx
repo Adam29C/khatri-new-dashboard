@@ -41,6 +41,7 @@ import MultiTabs from "../Helpers/MultiTabs";
 import WalletMain from "../Helpers/Wallet/WalletMain";
 import ChangeStatus from "../Helpers/ChangeStatus";
 import TableWitCustomPegination from "../Helpers/Table/TableWithCustomPegination"
+import TableWithCustomPeginationButton from "../Helpers/Table/TableWithCustomPeginationButton"
 import ModalComponent from "../Helpers/Modal/ModalComponent";
 const PagesIndex = {
   useDispatch,
@@ -85,6 +86,8 @@ const PagesIndex = {
   Mobile_regex,
   common_services,
   TableWitCustomPegination,
+  TableWithCustomPeginationButton,
+  
   ModalComponent,
   game_service
 };

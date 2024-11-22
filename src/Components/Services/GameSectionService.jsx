@@ -295,3 +295,83 @@ export const FOR_STARLINE_AND_JACPOT_UPDATE_ONE_GAME_SETTING_API = async (
 };
 
 // ---------------FOR_STARLINE_AND_JACPOT_LIST  ---------------------
+
+// --------------- ALL GAMES  RESULT   ---------------------
+export const ALL_GAME_RESULTS = async (api_Route, token) => {
+  try {
+    const res = await axios.get(`${BASE_URL}${api_Route}`, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const ALL_GAME_RESULTS_ADD_API= async (api_Route,data ,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${api_Route}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+export const ALL_GAME_PAST_RESULTS = async (api_Route, data, token) => {
+  console.log("data", data);
+
+  try {
+    const res = await axios.get(`${BASE_URL}${api_Route}?date=${data}`, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const ALL_GAME_WINNER_LIST_API = async (api_Route, data, token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${api_Route}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const STARLINE_GAME_DISTIBUTE_FUND_WINNERS_API = async (
+  api_Route,
+  data,
+  token
+) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${api_Route}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// export const FOR_STARLINE_AND_JACPOT_UPDATE_ONE_GAME_SETTING_API = async (
+//   api_Route,
+//   data,
+//   token
+// ) => {
+//   try {
+//     const res = await axios.patch(`${BASE_URL}${api_Route}`, data, {
+//       headers: header(token),
+//     });
+//     return res?.data;
+//   } catch (error) {
+//     return error;
+//   }
+// };
+
+// ---------------FOR_STARLINE_AND_JACPOT_LIST  ---------------------

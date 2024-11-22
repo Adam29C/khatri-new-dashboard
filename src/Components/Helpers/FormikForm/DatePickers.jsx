@@ -1,6 +1,6 @@
 // src/components/CustomDatePicker.js
-import React from 'react';
-import DatePicker from 'react-datepicker';
+import React from "react";
+import DatePicker from "react-datepicker";
 
 const CustomDatePicker = ({ field, formik, setDateStates, dateStates }) => {
   // const handleDateChange = (date, name) => {
@@ -16,11 +16,11 @@ const CustomDatePicker = ({ field, formik, setDateStates, dateStates }) => {
   // };
   const handleDateChange = (date) => {
     const formattedDate = date
-    ? `${(date.getMonth() + 1).toString().padStart(2, "0")}/${date
-        .getDate()
-        .toString()
-        .padStart(2, "0")}/${date.getFullYear()}`
-    : "";
+      ? `${(date.getMonth() + 1).toString().padStart(2, "0")}/${date
+          .getDate()
+          .toString()
+          .padStart(2, "0")}/${date.getFullYear()}`
+      : "";
     setDateStates((prevStates) => ({
       ...prevStates,
       [field.name]: date, // Store the selected date
@@ -49,16 +49,11 @@ const CustomDatePicker = ({ field, formik, setDateStates, dateStates }) => {
             selected={dateStates[field.name] || null} // Ensure a valid date object or null
             onChange={handleDateChange} // Handle date changes
             onBlur={() => formik.setFieldTouched(field.name, true)} // Mark field as touched
-            dateFormat="MM/dd/yyyy"
           />
-          <div className="invalid-feedback">
-            Please enter {field.label}
-          </div>
+          <div className="invalid-feedback">Please enter {field.label}</div>
         </div>
         {formik.errors[field.name] && (
-          <div className="error-text">
-            {formik.errors[field.name]}
-          </div>
+          <div className="error-text">{formik.errors[field.name]}</div>
         )}
       </div>
     </div>

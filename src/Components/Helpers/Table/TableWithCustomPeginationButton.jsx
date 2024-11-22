@@ -9,6 +9,7 @@ const PaginatedTable = ({
   visibleFields,
   additional,
   UserFullButtonList,
+  confirm_button,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(initialRowsPerPage);
@@ -95,22 +96,8 @@ const PaginatedTable = ({
   return (
     <div className="container">
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <div className="d-flex align-items-center">
-          <label htmlFor="rowsPerPage" className="form-label me-2">
-            Show:
-          </label>
-          <select
-            id="rowsPerPage"
-            className="form-select w-auto"
-            value={rowsPerPage}
-            onChange={handleRowsPerPageChange}
-          >
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="25">25</option>
-            <option value="50">50</option>
-          </select>
-        </div>
+        {confirm_button}
+
         <div>
           <input
             type="text"
@@ -149,7 +136,6 @@ const PaginatedTable = ({
           )}
         </thead>
         <tbody className="text-center">
-     
           {currentData?.length > 0 ? (
             <>
               {currentData?.map((row, index) => (
@@ -158,11 +144,11 @@ const PaginatedTable = ({
                   {columns.map((column) =>
                     column.visible ? (
                       <td key={column.field}>
-                       {
-                        column.field === "activeStatus" ? row.activeStatus  ? "Market Is Active"
-                        : "Market Is Inactive"
-                      : row[column.field]}
-                       
+                        {column.field === "activeStatus"
+                          ? row.activeStatus
+                            ? "Market Is Active"
+                            : "Market Is Inactive"
+                          : row[column.field]}
                       </td>
                     ) : null
                   )}
@@ -171,9 +157,7 @@ const PaginatedTable = ({
                   {UserFullButtonList?.length > 0 &&
                     UserFullButtonList?.map((items) => {
                       return (
-                     
                         <td>
-                          
                           <span key={items.buttonName}>
                             {items.type === "link" ? (
                               <Link
@@ -184,8 +168,12 @@ const PaginatedTable = ({
                               </Link>
                             ) : items.type === "button" ? (
                               <button
-                              className={`btn ${items.buttonColor ? `btn-${items.buttonColor}` : "unblock-btn"} btn-sm me-2`}
-                              onClick={() => items.Conditions(row)}
+                                className={`btn ${
+                                  items.buttonColor
+                                    ? `btn-${items.buttonColor}`
+                                    : "unblock-btn"
+                                } btn-sm me-2`}
+                                onClick={() => items.Conditions(row)}
                               >
                                 {items.buttonName}
                               </button>
@@ -217,7 +205,23 @@ const PaginatedTable = ({
       </table>
 
       {/* Pagination */}
-      <nav>
+      <nav className="d-flex justify-content-between align-items-center">
+        <div className="d-flex align-items-center">
+          <label htmlFor="rowsPerPage" className="form-label me-2">
+            Show:
+          </label>
+          <select
+            id="rowsPerPage"
+            className="form-select w-auto"
+            value={rowsPerPage}
+            onChange={handleRowsPerPageChange}
+          >
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+          </select>
+        </div>
         <ul className="pagination justify-content-end">
           <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
             <button
