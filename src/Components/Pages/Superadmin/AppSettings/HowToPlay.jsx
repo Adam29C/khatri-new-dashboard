@@ -13,6 +13,7 @@ const HowToPlay = () => {
   const [htpData, setHtpData] = useState([]);
   const [loading, setLoading] = PagesIndex.useState(true);
 
+ 
   //get htp data
   const getHtpeData = async () => {
     const res = await PagesIndex.admin_services.GET_HTP_LIST_API(token);
@@ -34,13 +35,13 @@ const HowToPlay = () => {
   const handleFormSubmit = async (values) => {
   
     let apidata = {
-      htpId: htpData[0]?._id,
+      // htpId: htpData[0]?._id,
       howtoplay: values.howtoplay,
     };
 
     const res = await PagesIndex.admin_services.UPDATE_HTP_API(apidata,token);
-  
-    if (res.status === 200) {
+  console.log(res,50)
+    if (res.status) {
       toast.success(res.message);
       getHtpeData();
     } else {
@@ -89,7 +90,7 @@ const HowToPlay = () => {
           useEffect(() => {
             if (htpData.length > 0) {
               // const formattedData = htpData[0].howtoplay?.map((data) => ({
-                const formattedData = htpData.map((data) => ({
+                const formattedData = htpData?.[0]?.howtoplay?.map((data) => ({
                 title: data?.title || "",
                 description: data?.description || "",
                 videoUrl: data?.videoUrl || "",
