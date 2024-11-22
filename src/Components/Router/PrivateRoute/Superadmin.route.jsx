@@ -55,6 +55,7 @@ import WithdrawScreen from "../../Pages/Superadmin/AppSettings/WithdrawScreen";
 import HowToPlay from "../../Pages/Superadmin/AppSettings/HowToPlay";
 import UpiIdList from "../../Pages/Superadmin/Masters/UpiIdList";
 import ProfileNote from "../../Pages/Superadmin/AppSettings/ProfileNote";
+import FundMode from "../../Pages/Superadmin/Masters/FundMode";
 
 
 // Mock authentication status
@@ -300,6 +301,10 @@ const adminRoutes = [
       {
         path: "masters/UPI",
         element: <PrivateRoute element={UpiIdList} />,
+      },
+      {
+        path: "masters/fundMode",
+        element: <PrivateRoute element={FundMode} />,
       },
   
     ],
