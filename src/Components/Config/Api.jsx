@@ -52,6 +52,41 @@ const Api = {
   //   ADMIN_GAME_SETTING_UPDATEALL: "mainGameSetting/updateAll"
   // starGameSetting
 
+
+  //  STARLINE GAME RESULT - 
+  STARLINE_GAME_MAIN_RESULT: "starGameResult",
+  STARLINE_GAME_MAIN_RESULT_ADD: "starGameResult",
+  STARLINE_GAME_PAST_RESULT: "starGameResult/pastResult",
+  STARLINE_GAME_WINNER_LIST: "starlineWinner/starLineWinnerList",
+  STARLINE_GAME_DISTIBUTE_FUND_WINNERS: "starlineWinner/starWinners",
+  // STARLINE_GAME_SETTING_ADD: "starGameSetting/insertSettings",
+  // STARLINE_GAME_SETTING_UPDATE_ALL: "starGameSetting/updateProviderSettings",
+  // STARLINE_GAME_SETTING_UPDATE_ONE: "starGameSetting",
+
+
+  //  STARLINE REVERT PAYMENT - 
+
+  STARLINE_GAME_REVERT_PAYMENT: "starGameResult/revertPayment",
+  STARLINE_GAME_CONFIRM_REVERT_PAYMENT: "starGameResult/paymentRevert",
+  
+
+    //  STARLINE REVERT PAYMENT - 
+
+    STARLINE_GAME_REFUND_PAYMENT: "mainGameResult/refundPayment",
+    STARLINE_GAME_CONFIRM_REVERT_PAYMENT: "starGameResult/paymentRevert",
+
+  // JACKPOT GAME SETTING CRUD
+
+  JACKPOT_GAME_PROVIDERS: "abGameSetting/addSetting",
+  JACKPOT_GAME_SETTING_LIST: "abGameSetting",
+  JACKPOT_GAME_SETTING_ADD: "abGameSetting/insertSettings",
+  JACKPOT_GAME_SETTING_UPDATE_ALL: "abGameSetting/updateProviderSettings",
+  JACKPOT_GAME_SETTING_UPDATE_ONE: "abGameSetting",
+
+  //   ADMIN_GAME_SETTING_ADD: "mainGameSetting/insertSettings",
+  //   ADMIN_GAME_SETTING_UPDATEALL: "mainGameSetting/updateAll"
+  // starGameSetting
+
   ADMIN_CHANGE_PASSWORD: "admin/changePassword",
 
   // SYSTEM MODULE
@@ -74,6 +109,10 @@ const Api = {
 
   // GAME RESULT
   ADMIN_GAME_RESULT: "mainGameResult",
+  ADMIN_GAME_RESULT_DELETE: "mainGameResult/delete",
+  GET_GAME_RESULT_WITH_DATE: "mainGameResult/pastResult",
+  GET_REMAINING_WINNER_LIST: "winnerList/remaningWinnerList",
+  GET_MAIN_WINNER_LIST: "winnerList/mainWinnerList",
 
   USERS_IDEAS: "/admin/UserIdea",
   GET_VERSION: "/admin/appSetting/listVersionSetting",

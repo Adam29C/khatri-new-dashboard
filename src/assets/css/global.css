@@ -31,7 +31,6 @@
   line-height: 64px;
   margin-bottom: 40px;
   color:   var(--khatri-color);
-
 }
 .buttons-con .action-link-wrap {
   margin: 40px 0px 0px 20px;
@@ -116,7 +115,8 @@ input:checked + .slider {
 }
 
 .error-text {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  font-weight: bold;
   margin-top: 5px;
   line-height: 1rem;
   color: var(--red);
@@ -301,3 +301,22 @@ color: var(--khatri-color);
 }
 
 /* set background image favicon css end */
+
+
+.hideFieldCss{
+  display: none;
+}
+
+.winner-list-text-main{
+color: rgb(141, 128, 128);
+font-size: 21px;
+text-align: center;
+}
+
+.confirm-payment-text{
+  font-size: 18px;
+  color: var(--khatri-color);
+  margin: 25px 0;
+  font-weight: 600;
+  font-family: Karla, sans-serif;
+}
