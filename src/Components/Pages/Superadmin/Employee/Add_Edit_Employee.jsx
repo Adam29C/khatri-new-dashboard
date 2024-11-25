@@ -8,11 +8,11 @@ function AddEmployee() {
   const userId = localStorage.getItem("userId");
   const navigate = PagesIndex.useNavigate();
   const location = PagesIndex.useLocation();
-  const userData = location.state;
-
+  const userData = location?.state?.row;
+console.log(location.state.row)
   const formik = PagesIndex.useFormik({
     initialValues: {
-      employeeName: userData?.employeeName || "",
+      employeeName: userData?.name || "",
       username: userData?.username || "",
       password: userData?.password || "",
       designation: userData?.designation || "",

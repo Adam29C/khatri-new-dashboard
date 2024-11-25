@@ -556,7 +556,7 @@ export const admin_Sidebar = [
         id: 4,
         permission: "createEmployee",
         title: "Register New Employee",
-        route: "employee/add",
+        route: "employees/add",
       },
     ],
   },

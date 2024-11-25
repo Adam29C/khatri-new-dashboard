@@ -14,16 +14,6 @@ export const ADMIN_PROFILE_GET_API = async (id) => {
   }
 };
 
-export const ADMIN_CHANGE_PASSWORD_API = async (data) => {
-  try {
-    const res = await axios.post(Api.ADMIN_CHANGE_PASSWORD, data, {
-      headers: header(token),
-    });
-    return res?.data;
-  } catch (error) {
-    return error;
-  }
-};
 
 // -------------------------- DASHBOARD_COUNT ------------------------
 
@@ -659,6 +649,21 @@ export const CHANGE_STATUS_FUND_MODE_API = async (data,token) => {
 
 // --------------------------   Employee Crud ------------------------
 
+
+export const EMPLOYEE_CHANGE_PASSWORD_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.EMPLOYEE_CHANGE_PASSWORD}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+
+
 export const CREATE_EMPLOYEE = async (data) => {
   try {
     const res = await axios.post(Api.CREATE_EMPLOYEE, data, {
@@ -680,9 +685,9 @@ export const UPDATE_EMPLOYEE = async (data) => {
   }
 };
 
-export const EMPLOYEE_GET_LIST_API = async (id) => {
+export const EMPLOYEE_GET_LIST_API = async (data,token) => {
   try {
-    const res = await axios.get(`${Api.EMPLOYEE_LIST}?adminId=${id}`, {
+    const res = await axios.post(`${BASE_URL}${Api.EMPLOYEE_LIST}`,data, {
       headers: header(token),
     });
     return res?.data;
@@ -691,9 +696,9 @@ export const EMPLOYEE_GET_LIST_API = async (id) => {
   }
 };
 
-export const BLOCK_EMPLOYEE_API = async (data) => {
+export const BLOCK_EMPLOYEE_API = async (data,token) => {
   try {
-    const res = await axios.patch(Api.BLOCK_EMPLOYEE, data, {
+    const res = await axios.post(`${BASE_URL}${Api.BLOCK_EMPLOYEE}`, data, {
       headers: header(token),
     });
     return res?.data;
@@ -702,15 +707,11 @@ export const BLOCK_EMPLOYEE_API = async (data) => {
   }
 };
 
-export const DELETE_EMPLOYEE = async (ID) => {
-  let apiData = {
-    adminId: ID.adminId,
-    empId: ID.deleteId,
-  };
+export const DELETE_EMPLOYEE = async (data,token) => {
+
   try {
-    const res = await axios.delete(Api.DELETE_EMPLOYEE, {
+    const res = await axios.delete(`${BASE_URL}${Api.DELETE_EMPLOYEE}`, {
       data: apiData,
-
       headers: header(token),
     });
     return res?.data;

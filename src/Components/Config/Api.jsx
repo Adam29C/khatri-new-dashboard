@@ -18,7 +18,6 @@ const Api = {
   USER_PROFILE_GET: "/allUser/getProfile",
   BLOCK_USER: "/allUser/blockUser",
 
-  ADMIN_CHANGE_PASSWORD: "admin/changePassword",
 
   // SYSTEM MODULE
   ADD_SYSTEM_INFO: "admin/addSystemInfo",
@@ -29,8 +28,10 @@ const Api = {
   // EMPLOYEE MODULE
   CREATE_EMPLOYEE: "admin/createEmployee",
   UPDATE_EMPLOYEE: "admin/updateEmployeeInformition",
+  EMPLOYEE_CHANGE_PASSWORD: "master/employees/updatePassword",
 
-  EMPLOYEE_LIST: "admin/empList",
+
+  EMPLOYEE_LIST: "master/employees",
   BLOCK_EMPLOYEE: "admin/blockEmployee",
   DELETE_EMPLOYEE: "admin/deleteEmployee",
 
