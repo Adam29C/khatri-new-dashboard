@@ -33,6 +33,9 @@ const GameProvider = ({
           provider_list,
           token
         );
+
+        console.log("res" ,res);
+        
       if (res.status) {
         setGetProviderData(res.data);
       }

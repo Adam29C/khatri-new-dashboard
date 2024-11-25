@@ -22,6 +22,41 @@ const Api = {
   MAIN_GAME: "mainGames",
   MAIN_GAME_ADD: "mainGames/insertGame",
 
+  // ADMIN_GAME_RATES: "admin/game/gameRate",
+  MAIN_GAME_RATE_LIST: "mainGameRate",
+  MAIN_GAME_RATE_ADD: "mainGameRate/insertGame",
+  MAIN_GAME_RATE_UPDATE: "mainGameRate",
+  MAIN_GAME_RATE_REMOVE: "mainGameRate",
+
+  //GAME SETTING
+  // ADMIN_GAME_SETTING: "/admin/game/gameSetting",
+  ADMIN_GAME_SETTING: "mainGameSetting",
+  ADMIN_GAME_SETTING_ADD: "mainGameSetting/insertSettings",
+  ADMIN_GAME_SETTING_UPDATEALL: "mainGameSetting/updateAll",
+
+  // GAME PROVIDER
+
+  STARLINE_GAME_PROVIDERS_LIST: "starlineProvider/getStarlineProvider",
+  STARLINE_GAME_PROVIDER_ADD: "starlineProvider/insertStarLineProvider",
+  STARLINE_GAME_PROVIDER_UPDATE: "starlineProvider/updateStarLineProvider",
+  STARLINE_GAME_PROVIDERS_DELETE: "starlineProvider/deleteStarLineProvider",
+  STARLINE_GAME_PROVIDERS_GET_BY_ID: "starlineProvider/starLineProviderById",
+
+  // GAME RATE
+
+  STARLINE_GAME_RATE_LIST: "starGameRate",
+  STARLINE_GAME_RATE_ADD: "starGameRate/insertGame",
+  STARLINE_GAME_RATE_UPDATE: "starGameRate/update",
+  STARLINE_GAME_RATE_REMOVE: "starGameRate",
+
+  // STARLINE GAME SETTING CRUD
+
+  STARLINE_GAME_PROVIDERS: "starGameSetting/addSetting",
+  STARLINE_GAME_SETTING_LIST: "starGameSetting",
+  STARLINE_GAME_SETTING_ADD: "starGameSetting/insertSettings",
+  STARLINE_GAME_SETTING_UPDATE_ALL: "starGameSetting/updateProviderSettings",
+  STARLINE_GAME_SETTING_UPDATE_ONE: "starGameSetting",
+
   //GAME RATES
   // ADMIN_GAME_RATES: "admin/game/gameRate",
   ADMIN_GAME_RATES: "mainGameRate",
@@ -74,6 +109,10 @@ const Api = {
 
     STARLINE_GAME_REFUND_PAYMENT: "mainGameResult/refundPayment",
     STARLINE_GAME_CONFIRM_REVERT_PAYMENT: "starGameResult/paymentRevert",
+
+    
+
+
 
   // JACKPOT GAME SETTING CRUD
 
