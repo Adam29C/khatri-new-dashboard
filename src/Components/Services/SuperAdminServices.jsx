@@ -562,11 +562,11 @@ export const ADD_UPI_LIST_API = async (data,token) => {
     return error;
   }
 };
-export const DELETE_UPI_LIST_API = async (data,token) => {
+export const DELETE_UPI_LIST_API = async (apidata,token) => {
 
   try {
-    const res = await axios.post(`${BASE_URL}${Api.DELETE_UPI_LIST}`, {
-      data: data,
+    const res = await axios.post(`${BASE_URL}${Api.DELETE_UPI_LIST}`, apidata, {
+     
       headers: header(token),
     });
     return res?.data;

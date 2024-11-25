@@ -138,17 +138,16 @@ console.log(res)
   //delete upi list start
   const handleDelete = async (row) => {
    
-    const apidata = {
-      id: row?._id,
-      // status: row?.is_Active,
-      // stat: 1,
-    };
+ 
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this game rate?"
     );
     if (!confirmDelete) return;
 
     try {
+      const apidata = {
+        id: row?._id,
+      };
       const res = await PagesIndex.admin_services.DELETE_UPI_LIST_API(
         apidata,
         token
