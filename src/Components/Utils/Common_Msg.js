@@ -70,4 +70,5 @@ export const PROVIDER_NAME_REQUIRED = "Provider Name is required";
  export const OPEN_BID_RESULT_TIME_IS_REQUIRED = "Open Bid Result Time is required";
   export const CLOSE_BID_RESULT_TIME_IS_REQUIRED = "Close Bid Result Time is required";
   export const PROFILE_NOTE_REQUIRE = "Please Enter Profile Note";
-
+  export const REQUIRE_MODE = "Please Enter Fund Mode";
+  export const URLWEB_MODE = "Please Enter URL";

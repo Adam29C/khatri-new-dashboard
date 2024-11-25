@@ -362,6 +362,32 @@ export const GAME_REMAINING_WINNER_LIST_API = async(data,token)=>{
 
 // -------------------------- APP_SETTINGS ------------------------
 
+//HTP LIST START
+export const GET_HTP_LIST_API = async (token) => {
+  console.log(token)
+  try {
+    const res = await axios.get(`${BASE_URL}${Api.HOW_TO_PLAY_GET_LIST}`, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const UPDATE_HTP_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.UPDATE_HTP}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+//HTP LIST END
+
 //VERSION CONTROL API START
 export const GET_VERSION_API = async (token) => {
   try {
@@ -574,13 +600,13 @@ export const DELETE_UPI_LIST_API = async (apidata,token) => {
     return error;
   }
 };
+
 //UPI LIST END
 
-//HTP LIST START
-export const GET_HTP_LIST_API = async (token) => {
-  console.log(token)
+// FUND MODE START
+export const GET_FUND_MODE_API = async (token) => {
   try {
-    const res = await axios.get(`${BASE_URL}${Api.HOW_TO_PLAY_GET_LIST}`, {
+    const res = await axios.get(`${BASE_URL}${Api.GET_FUND_MODE}`, {
       headers: header(token),
     });
     return res?.data;
@@ -589,9 +615,9 @@ export const GET_HTP_LIST_API = async (token) => {
   }
 };
 
-export const UPDATE_HTP_API = async (data,token) => {
+export const ADD_FUND_MODE_API = async (data,token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.UPDATE_HTP}`, data, {
+    const res = await axios.post(`${BASE_URL}${Api.ADD_FUND_MODE}`, data, {
       headers: header(token),
     });
     return res?.data;
@@ -600,9 +626,26 @@ export const UPDATE_HTP_API = async (data,token) => {
   }
 };
 
-//HTP LIST END
+export const DELETE_FUND_MODE_API = async (apidata,token) => {
+
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.DELETE_FUND_MODE}`, apidata, {
+     
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// FUND MODE END
 
 // -------------------------- MASTERS ------------------------
+
+
+
+
 
 // --------------------------   Employee Crud ------------------------
 

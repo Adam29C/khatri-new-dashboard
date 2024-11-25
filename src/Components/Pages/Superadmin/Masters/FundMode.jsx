@@ -15,11 +15,11 @@ const FundMode = () => {
   const [data, setData] = useState([]);
   const [visible, setVisible] = useState(false);
 
-  let userDeleteReason = false;
+
   const getList = async () => {
     setLoading(true);
     try {
-      const res = await PagesIndex.admin_services.GET_UPI_LIST_API(token);
+      const res = await PagesIndex.admin_services.GET_FUND_MODE_API(token);
 
       setData(res?.data);
     } catch (error) {
@@ -55,43 +55,54 @@ const FundMode = () => {
     }
   };
 
+
+    //delete fund mode list start
+    const handleDelete = async (row) => {
+
+      const confirmDelete = window.confirm(
+        "Are you sure you want to delete this game rate?"
+      );
+      if (!confirmDelete) return;
+  
+      try {
+        const apidata = {
+          id: row?._id,
+        };
+   
+        
+        const res = await PagesIndex.admin_services.DELETE_FUND_MODE_API(
+          apidata,
+          token
+        );
+  console.log(res)
+        if (res.status) {
+          getList();
+          alert(res?.message);
+        }
+      } catch (error) {}
+    };
+    
   const columns = [
     {
-      name: "Name",
-      selector: (row) => row?.upiName,
+      name: "Mode",
+      selector: (row) => row?.mode,
     },
-
     {
-      name: "IsActive",
-      selector: (row) => (
-        <span
-          className={`badge fw-bold ${
-            row.status === "true" ? "bg-primary" : "bg-danger"
-          }`}
-        >
-          {row.status === "true" ? "Active" : "Disable"}
-        </span>
-      ),
+      name: "Redirect Url",
+      selector: (row) => row?.redirectURL,
     },
-
     {
       name: "Status",
+      selector: (row) => row?.disabled ? "Active" : "Disabled",
+    },
+    {
+      name: "Edit",
       selector: (row) => (
-        <div>
-          <select
-            className="form-select-upi"
-            aria-label="Default select example"
-            onChange={(e) => {
-              handleStatusUpdate(e.target.value, row);
-            }}
-          >
-            <option value="false" disbled selected>
-              {row.status === "true" ? "Active" : "Disable"}
-            </option>
-            <option value="true">Active</option>
-            <option value="false">Disable</option>
-          </select>
-        </div>
+   
+        <span><button onClick={() =>
+          handleDelete(cell)
+        } class={`btn ${row.disabled ? "btn-danger":"btn-success"} btn-sm me-2`}> {row.disabled ? "Block" : "Unblock"}</button></span>
+        
       ),
     },
 
@@ -100,22 +111,11 @@ const FundMode = () => {
       selector: (cell, row) => (
         <div style={{ width: "120px" }}>
           <div>
-            <PagesIndex.Link
-             className="delete-icon"
-              href="#"
-              onClick={() =>
-                DeleteSweetAlert(
-                  PagesIndex.admin_services.DELETE_UPI_LIST_API,
-                  cell?._id,
-                  getList,
-                  userDeleteReason
-                )
-              }
-            >
-              <span data-toggle="tooltip" data-placement="top" title="Delete">
-                <i class="ti-trash fs-5 mx-1 "></i>
-              </span>
-            </PagesIndex.Link>
+          
+          <span><button onClick={() =>
+                handleDelete(cell)
+              } class="btn btn-danger btn-sm me-2">Delete</button></span>
+
           </div>
         </div>
       ),
@@ -124,13 +124,17 @@ const FundMode = () => {
 
   const formik = PagesIndex.useFormik({
     initialValues: {
-      upiName: "",
-      status:""
+      mode: "",
+      status:"",
+      urlWeb:""
     },
     validate: (values) => {
       const errors = {};
-      if (!values.upiName) {
-        errors.upiName = PagesIndex.valid_err.EMPTY_UPI_ERROR;
+      if (!values.mode) {
+        errors.mode = PagesIndex.valid_err.REQUIRE_MODE;
+      }
+      if (!values.urlWeb) {
+        errors.urlWeb = PagesIndex.valid_err.URLWEB_MODE;
       }
       if (!values.status) {
         errors.status = PagesIndex.valid_err.STATUS_ERROR;
@@ -139,19 +143,24 @@ const FundMode = () => {
     },
 
     onSubmit: async (values) => {
-      console.log(values)
+     
       try {
+
         let apidata = {
-          upiName: values.upiName,
+          mode: values.mode,
+          status: values.status === "true",
+          urlWeb: values.urlWeb,
         };
-
-        const res = await PagesIndex.admin_services.ADD_UPI_LIST_API(apidata);
-
-        if (res?.status === 200) {
+    
+        const res = await PagesIndex.admin_services.ADD_FUND_MODE_API(apidata,token);
+console.log(res)
+        if (res?.status) {
           PagesIndex.toast.success(res?.message);
           getList();
           setVisible(false);
-          formik.setFieldValue("upiName", "");
+          formik.setFieldValue("mode", "");
+          formik.setFieldValue("status", "");
+          formik.setFieldValue("urlWeb", "");
         } else {
           PagesIndex.toast.error(res.response.data.message);
         }
@@ -163,14 +172,14 @@ const FundMode = () => {
 
   const fields = [
     {
-      name: "paymentMode",
+      name: "mode",
       label: "Payment Mode",
       type: "text",
       label_size: 12,
       col_size: 12,
     },
     {
-        name: "paymentMode",
+        name: "urlWeb",
         label: "Redirect URL(Only For WEB Payment)",
         type: "text",
         label_size: 12,

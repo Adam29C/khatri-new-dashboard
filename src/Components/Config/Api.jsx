@@ -90,6 +90,11 @@ const Api = {
   ADD_UPI_LIST: "upiId/upiAdd",
   BLOCK_UPI_LIST: "upiId/disable_upi",
   DELETE_UPI_LIST: "upiId/dlt_upi",
+
+  //FUND MODE 
+  GET_FUND_MODE:"upiId/fundMode",
+  ADD_FUND_MODE:"upiId/modeAdd",
+  DELETE_FUND_MODE:"upiId/dlt_mode"
 };
 
 export { Api };
