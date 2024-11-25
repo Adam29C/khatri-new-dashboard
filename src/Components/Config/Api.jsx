@@ -88,8 +88,8 @@ const Api = {
   //UPI LIST
   GET_UPI_LIST: "upiId",
   ADD_UPI_LIST: "upiId/upiAdd",
-  UPDATE_UPI_LIST: "/admin/master/updateUpiStatus",
-  DELETE_UPI_LIST: "/admin/master/deleteUpi",
+  BLOCK_UPI_LIST: "upiId/disable_upi",
+  DELETE_UPI_LIST: "upiId/dlt_upi",
 };
 
 export { Api };

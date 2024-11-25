@@ -12,18 +12,15 @@ const UpiIdList = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [visible, setVisible] = useState(false);
-  const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
 
-
+  //get upi list function
   const getList = async () => {
     setLoading(true);
     try {
       const res = await PagesIndex.admin_services.GET_UPI_LIST_API(token);
-      if(res?.status){
+      if (res?.status) {
         setData(res?.data);
       }
-
-     
     } catch (error) {
     } finally {
       setLoading(false);
@@ -34,19 +31,21 @@ const UpiIdList = () => {
     getList();
   }, []);
 
+
+  //handle status update function for upi list
   const handleStatusUpdate = async (event, value) => {
     try {
-      let apidata = {
-      id:"",
-        upiId: value._id,
-        status: event,
+      const apidata = {
+        id: value?._id,
+        status: event === "true",
+        stat: 1,
       };
-
-      const response = await PagesIndex.admin_services.UPDATE_UPI_LIST_API(
-        apidata
+      const response = await PagesIndex.admin_services.BLOCK_UPI_LIST_API(
+        apidata,
+        token
       );
 
-      if (response?.status === 200) {
+      if (response?.status) {
         toast.success(response.message);
         getList();
       } else {
@@ -59,10 +58,11 @@ const UpiIdList = () => {
 
 
 
+//formik form
   const formik = PagesIndex.useFormik({
     initialValues: {
       upiName: "",
-      status:""
+      status: "",
     },
     validate: (values) => {
       const errors = {};
@@ -76,15 +76,16 @@ const UpiIdList = () => {
     },
 
     onSubmit: async (values) => {
- 
       try {
-
         let apidata = {
           upiId: values.upiName,
-          status:values.status === "true"
+          status: values.status === "true",
         };
 
-        const res = await PagesIndex.admin_services.ADD_UPI_LIST_API(apidata,token);
+        const res = await PagesIndex.admin_services.ADD_UPI_LIST_API(
+          apidata,
+          token
+        );
 console.log(res)
         if (res?.status) {
           PagesIndex.toast.success(res?.message);
@@ -92,7 +93,8 @@ console.log(res)
           setVisible(false);
           formik.setFieldValue("upiName", "");
         } else {
-          PagesIndex.toast.error(res.response.data.message);
+          PagesIndex.toast.error(res.message);
+          setVisible(false);
         }
       } catch (error) {
         PagesIndex.toast.error(error);
@@ -128,74 +130,87 @@ console.log(res)
     },
   ];
 
-    // Handle Add Button
-    const handleAdd = () => {
-      setVisible(true);
-    };
+  // Handle Add Button
+  const handleAdd = () => {
+    setVisible(true);
+  };
 
-      //delete upi list start
-  const handleDelete = async (id) => {
-    console.log(id)
+  //delete upi list start
+  const handleDelete = async (row) => {
+   
+    const apidata = {
+      id: row?._id,
+      // status: row?.is_Active,
+      // stat: 1,
+    };
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this game rate?"
     );
     if (!confirmDelete) return;
 
-    // try {
-    //   const res = await PagesIndex.admin_services.GAME_RATES_DELETE_API(id,token);
-    //   if (res.status) {
-    //     getList();
-    //     alert(res?.message);
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      const res = await PagesIndex.admin_services.DELETE_UPI_LIST_API(
+        apidata,
+        token
+      );
+console.log(res)
+      if (res.status) {
+        getList();
+        alert(res?.message);
+      }
+    } catch (error) {}
   };
 
-    const handleActionBtn = (row, buttonStatus) => {
-      if (buttonStatus === 1) {
 
-      } else if (buttonStatus === 2) {
-        handleDelete(row?._id);
-      } else {
-        return "";
-      }
-    };
 
-    const visibleFields = [
-      "id",
-      "UPI_ID",
-      "is_Active",
-    ];
+  const columns = [
+    {
+      name: "Name",
+      selector: (row) => row?.UPI_ID,
+    },
 
-    const UserFullButtonList = [
-      {
-        id: 0,
-        buttonName: "Block",
-        buttonColor: "danger",
-        route: "",
-        Conditions: (row) => {
-         
-          handleActionBtn(row, 1);
-        },
-        Visiblity: true,
-        type: "button",
-      },
-      {
-        id: 1,
-        buttonName: "Delete",
-        buttonColor: "danger",
-        route: "",
-        Conditions: (row) => {
-        
-          handleActionBtn(row, 2);
-        },
-        Visiblity: true,
-        type: "button",
-      },
-      
+    {
+      name: "IsActive",
+      selector: (row) => (row.is_Active  ? "Active" : "Disable")
+    
+    },
 
-    ];
+    {
+      name: "Status",
+      selector: (row) => (
+        <div>
+          <select
+            className="form-select-upi"
+            aria-label="Default select example"
+            onChange={(e) => {
+              handleStatusUpdate(e.target.value, row);
+            }}
+          >
+            <option value="false" disbled selected>
+              {row.is_Active ? "Active" : "Disable"}
+            </option>
+            <option value="true">Active</option>
+            <option value="false">Disable</option>
+          </select>
+        </div>
+      ),
+    },
+
+    {
+      name: "Actions",
+      selector: (cell, row) => (
+        <div style={{ width: "120px" }}>
+          <div>
+       
+              <span><button onClick={() =>
+                handleDelete(cell)
+              } class="btn btn-danger btn-sm me-2">Delete</button></span>
+
+          </div>
+        </div>
+      ),
+    },
+  ];
   return (
     <Main_Containt
       setVisible={setVisible}
@@ -204,22 +219,12 @@ console.log(res)
       title="UPI ID List"
       handleAdd={handleAdd}
     >
-    <PagesIndex.TableWitCustomPegination
-          data={data}
-          initialRowsPerPage={5}
-          SearchInTable={SearchInTable}
-          visibleFields={visibleFields}
-          UserFullButtonList={UserFullButtonList}
-          searchInput={
-            <input
-              type="text"
-              placeholder="Search..."
-              value={SearchInTable}
-              onChange={(e) => setSearchInTable(e.target.value)}
-              className="form-control ms-auto"
-            />
-          }
-        />
+
+          <PagesIndex.Data_Table
+      isLoading={loading}
+      columns={columns}
+      data={data}
+    />
       <ModalComponent
         visible={visible}
         setVisible={setVisible}
@@ -229,6 +234,7 @@ console.log(res)
       />
       <PagesIndex.Toast />
     </Main_Containt>
+
   );
 };
 

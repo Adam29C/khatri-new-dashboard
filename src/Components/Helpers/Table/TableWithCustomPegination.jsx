@@ -122,7 +122,7 @@ const PaginatedTable = ({
                   )
               )}
 
-              {UserFullButtonList && UserFullButtonList?.map((items) => {
+              {UserFullButtonList && UserFullButtonList?.map((items,index) => {
                 return (
                   <>
                     <th>{items.buttonName}</th>

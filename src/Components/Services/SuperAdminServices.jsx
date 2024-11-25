@@ -542,9 +542,9 @@ export const GET_UPI_LIST_API = async (token) => {
   }
 };
 
-export const UPDATE_UPI_LIST_API = async (data) => {
+export const BLOCK_UPI_LIST_API = async (data,token) => {
   try {
-    const res = await axios.put(Api.UPDATE_UPI_LIST, data, {
+    const res = await axios.post(`${BASE_URL}${Api.BLOCK_UPI_LIST}`, data, {
       headers: header(token),
     });
     return res?.data;
@@ -562,14 +562,11 @@ export const ADD_UPI_LIST_API = async (data,token) => {
     return error;
   }
 };
-export const DELETE_UPI_LIST_API = async (data) => {
-  let apiData = {
-    adminId: data.adminId,
-    upiId: data.deleteId,
-  };
+export const DELETE_UPI_LIST_API = async (data,token) => {
+
   try {
-    const res = await axios.delete(Api.DELETE_UPI_LIST, {
-      data: apiData,
+    const res = await axios.post(`${BASE_URL}${Api.DELETE_UPI_LIST}`, {
+      data: data,
       headers: header(token),
     });
     return res?.data;
