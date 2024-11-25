@@ -638,7 +638,17 @@ export const DELETE_FUND_MODE_API = async (apidata,token) => {
     return error;
   }
 };
-
+// CHANGE_STATUS_FUND_MODE
+export const CHANGE_STATUS_FUND_MODE_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.CHANGE_STATUS_FUND_MODE}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
 // FUND MODE END
 
 // -------------------------- MASTERS ------------------------

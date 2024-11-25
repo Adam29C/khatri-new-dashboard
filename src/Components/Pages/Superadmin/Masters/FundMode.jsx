@@ -1,26 +1,20 @@
-
-import React, { useState, useEffect } from "react";
 import Main_Containt from "../../../Layout/Main/Main_Containt";
 import ModalComponent from "../../../Helpers/Modal/ModalComponent";
 import PagesIndex from "../../PagesIndex";
-import DeleteSweetAlert from "../../../Helpers/DeleteSweetAlert";
-import { toast } from "react-toastify";
 
 const FundMode = () => {
   //get token in localstorage
   const token = localStorage.getItem("token");
 
   //all state
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
-  const [visible, setVisible] = useState(false);
-
+  const [loading, setLoading] = PagesIndex.useState(false);
+  const [data, setData] = PagesIndex.useState([]);
+  const [visible, setVisible] = PagesIndex.useState(false);
 
   const getList = async () => {
     setLoading(true);
     try {
       const res = await PagesIndex.admin_services.GET_FUND_MODE_API(token);
-
       setData(res?.data);
     } catch (error) {
     } finally {
@@ -28,60 +22,57 @@ const FundMode = () => {
     }
   };
 
-  useEffect(() => {
+  PagesIndex.useEffect(() => {
     getList();
   }, []);
 
-  const handleStatusUpdate = async (event, value) => {
+  //handle block and unblock status function
+  const handleStatusUpdate = async (row) => {
     try {
       let apidata = {
-      id:"",
-        upiId: value._id,
-        status: event,
+        id: row._id,
+        status: !row.disabled,
       };
 
-      const response = await PagesIndex.admin_services.UPDATE_UPI_LIST_API(
-        apidata
-      );
+      const response =
+        await PagesIndex.admin_services.CHANGE_STATUS_FUND_MODE_API(
+          apidata,
+          token
+        );
 
-      if (response?.status === 200) {
-        toast.success(response.message);
+      if (response?.status) {
+        PagesIndex.toast.success(response.message);
         getList();
-      } else {
-        alert(response.response.data.message);
       }
     } catch (error) {
       PagesIndex.toast.error(error);
     }
   };
 
+  //delete fund mode list start
+  const handleDelete = async (row) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this Fund Mode?"
+    );
+    if (!confirmDelete) return;
 
-    //delete fund mode list start
-    const handleDelete = async (row) => {
+    try {
+      const apidata = {
+        id: row?._id,
+      };
 
-      const confirmDelete = window.confirm(
-        "Are you sure you want to delete this game rate?"
+      const res = await PagesIndex.admin_services.DELETE_FUND_MODE_API(
+        apidata,
+        token
       );
-      if (!confirmDelete) return;
-  
-      try {
-        const apidata = {
-          id: row?._id,
-        };
-   
-        
-        const res = await PagesIndex.admin_services.DELETE_FUND_MODE_API(
-          apidata,
-          token
-        );
-  console.log(res)
-        if (res.status) {
-          getList();
-          alert(res?.message);
-        }
-      } catch (error) {}
-    };
-    
+
+      if (res.status) {
+        getList();
+        alert(res?.message);
+      }
+    } catch (error) {}
+  };
+
   const columns = [
     {
       name: "Mode",
@@ -93,16 +84,22 @@ const FundMode = () => {
     },
     {
       name: "Status",
-      selector: (row) => row?.disabled ? "Active" : "Disabled",
+      selector: (row) => (row?.disabled ? "Disabled" : "Active"),
     },
     {
       name: "Edit",
       selector: (row) => (
-   
-        <span><button onClick={() =>
-          handleDelete(cell)
-        } class={`btn ${row.disabled ? "btn-danger":"btn-success"} btn-sm me-2`}> {row.disabled ? "Block" : "Unblock"}</button></span>
-        
+        <span>
+          <button
+            onClick={() => handleStatusUpdate(row)}
+            class={`btn ${
+              row.disabled ? "btn-success" : "btn-danger"
+            } btn-sm me-2`}
+          >
+            {" "}
+            {row.disabled ? "Unblock" : "Block"}
+          </button>
+        </span>
       ),
     },
 
@@ -111,22 +108,26 @@ const FundMode = () => {
       selector: (cell, row) => (
         <div style={{ width: "120px" }}>
           <div>
-          
-          <span><button onClick={() =>
-                handleDelete(cell)
-              } class="btn btn-danger btn-sm me-2">Delete</button></span>
-
+            <span>
+              <button
+                onClick={() => handleDelete(cell)}
+                class="btn btn-danger btn-sm me-2"
+              >
+                Delete
+              </button>
+            </span>
           </div>
         </div>
       ),
     },
   ];
 
+  //handle add formik form
   const formik = PagesIndex.useFormik({
     initialValues: {
       mode: "",
-      status:"",
-      urlWeb:""
+      status: "",
+      urlWeb: "",
     },
     validate: (values) => {
       const errors = {};
@@ -143,17 +144,18 @@ const FundMode = () => {
     },
 
     onSubmit: async (values) => {
-     
       try {
-
         let apidata = {
           mode: values.mode,
           status: values.status === "true",
           urlWeb: values.urlWeb,
         };
-    
-        const res = await PagesIndex.admin_services.ADD_FUND_MODE_API(apidata,token);
-console.log(res)
+
+        const res = await PagesIndex.admin_services.ADD_FUND_MODE_API(
+          apidata,
+          token
+        );
+
         if (res?.status) {
           PagesIndex.toast.success(res?.message);
           getList();
@@ -179,13 +181,13 @@ console.log(res)
       col_size: 12,
     },
     {
-        name: "urlWeb",
-        label: "Redirect URL(Only For WEB Payment)",
-        type: "text",
-        label_size: 12,
-        col_size: 12,
-      },
-   
+      name: "urlWeb",
+      label: "Redirect URL(Only For WEB Payment)",
+      type: "text",
+      label_size: 12,
+      col_size: 12,
+    },
+
     {
       name: "status",
       label: "Status",
@@ -205,12 +207,10 @@ console.log(res)
     },
   ];
 
-    // Handle Add Button
-    const handleAdd = () => {
-    
-      setVisible(true);
-    };
-
+  // Handle Add Button
+  const handleAdd = () => {
+    setVisible(true);
+  };
 
   return (
     <Main_Containt

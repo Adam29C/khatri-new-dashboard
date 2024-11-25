@@ -94,7 +94,8 @@ const Api = {
   //FUND MODE 
   GET_FUND_MODE:"upiId/fundMode",
   ADD_FUND_MODE:"upiId/modeAdd",
-  DELETE_FUND_MODE:"upiId/dlt_mode"
+  DELETE_FUND_MODE:"upiId/dlt_mode",
+CHANGE_STATUS_FUND_MODE:"upiId/disable_mode"
 };
 
 export { Api };

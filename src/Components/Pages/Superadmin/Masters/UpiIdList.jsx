@@ -49,7 +49,7 @@ const UpiIdList = () => {
         toast.success(response.message);
         getList();
       } else {
-        alert(response.response.data.message);
+        alert(response.message);
       }
     } catch (error) {
       PagesIndex.toast.error(error);
@@ -140,7 +140,7 @@ console.log(res)
    
  
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this game rate?"
+      "Are you sure you want to delete this Upi Id?"
     );
     if (!confirmDelete) return;
 
