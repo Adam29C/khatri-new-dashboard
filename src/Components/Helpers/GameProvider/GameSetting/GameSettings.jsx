@@ -1,27 +1,34 @@
 import PagesIndex from "../../../Pages/PagesIndex";
-import { Link } from "react-router-dom";
-import { Get_Year_Only } from "../../../Utils/Common_Date";
-import Toggle from "../../Toggle";
-import Swal from "sweetalert2";
-import { GAME_PROVIDER_DELETE_API } from "../../../Services/SuperAdminServices";
-import DeleteSweetAlert from "../../DeleteSweetAlert";
 import { Games_Settings_List } from "../../../Redux/slice/CommonSlice";
-import { convertTo12HourFormat } from "../../../Utils/Valid_Rejex";
+import { convertTo12HourFormat } from "../../../Utils/Common_Date";
 
-const GameProvider = ({ path, title, gameType }) => {
+const GameProvider = ({ path, title, gameType, api_Route }) => {
   const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
   const navigate = PagesIndex.useNavigate();
 
   const dispatch = PagesIndex.useDispatch();
 
   const { gameSettings } = PagesIndex.useSelector((state) => state.CommonSlice);
-  const getStarLineSettingList = () => {
+  const [GetGameList, setGetGameList] = PagesIndex.useState(gameSettings);
+
+  const getStarLineSettingList = async () => {
     let apiData = {
       userId: userId,
       gameType: gameType,
     };
 
-    dispatch(Games_Settings_List(apiData));
+    if (gameType === "MainGame") {
+      dispatch(Games_Settings_List({ data: apiData, token: token }));
+    } else {
+      const res =
+        await PagesIndex.game_service.FOR_STARLINE_AND_JACPOT_LIST_API(
+          api_Route,
+          apiData,
+          token
+        );
+      setGetGameList(res.data);
+    }
   };
 
   PagesIndex.useEffect(() => {
@@ -32,7 +39,8 @@ const GameProvider = ({ path, title, gameType }) => {
     {
       name: "Game Name",
       selector: (row, cell) => {
-        const rowData = row.gameSatingInfo && row.gameSatingInfo[0];
+        const rowData = row.gameDetails && row.gameDetails[0];
+
         return (
           <div className="">
             <div className="break-text">{row.providerName}</div>
@@ -50,7 +58,7 @@ const GameProvider = ({ path, title, gameType }) => {
     {
       name: "Monday",
       selector: (row) => {
-        const rowData = row.gameSatingInfo && row.gameSatingInfo[0];
+        const rowData = row.gameDetails && row.gameDetails[0];
         return (
           <div className="py-2">
             {rowData ? (
@@ -70,7 +78,7 @@ const GameProvider = ({ path, title, gameType }) => {
                 {gameType === "MainGame" ? (
                   <p className="game-setting-font">
                     <span className="fw-bold"> CBRT</span> :
-                    {rowData ? convertTo12HourFormat(rowData.CBRT): "N/A"}
+                    {rowData ? convertTo12HourFormat(rowData.CBRT) : "N/A"}
                   </p>
                 ) : (
                   ""
@@ -101,7 +109,7 @@ const GameProvider = ({ path, title, gameType }) => {
     {
       name: "Tuesday",
       selector: (row) => {
-        const rowData = row.gameSatingInfo && row.gameSatingInfo[1];
+        const rowData = row.gameDetails && row.gameDetails[1];
         return (
           <div className="py-2">
             <div className="py-2">
@@ -154,7 +162,7 @@ const GameProvider = ({ path, title, gameType }) => {
     {
       name: "Wednesday",
       selector: (row) => {
-        const rowData = row.gameSatingInfo && row.gameSatingInfo[2];
+        const rowData = row.gameDetails && row.gameDetails[2];
         return (
           <div className="py-2">
             <div className="py-2">
@@ -208,7 +216,7 @@ const GameProvider = ({ path, title, gameType }) => {
     {
       name: "Thursday",
       selector: (row) => {
-        const rowData = row.gameSatingInfo && row.gameSatingInfo[3];
+        const rowData = row.gameDetails && row.gameDetails[3];
         return (
           <div className="py-2">
             <div className="py-2">
@@ -262,7 +270,7 @@ const GameProvider = ({ path, title, gameType }) => {
     {
       name: "Friday",
       selector: (row) => {
-        const rowData = row.gameSatingInfo && row.gameSatingInfo[4];
+        const rowData = row.gameDetails && row.gameDetails[4];
         return (
           <div className="py-2">
             <div className="py-2">
@@ -270,7 +278,7 @@ const GameProvider = ({ path, title, gameType }) => {
                 <>
                   <p className="game-setting-font">
                     <span className="fw-bold"> OBT</span> :
-                    {rowData ? convertTo12HourFormat(rowData.OBT): "N/A"}
+                    {rowData ? convertTo12HourFormat(rowData.OBT) : "N/A"}
                   </p>
                   <p className="game-setting-font">
                     <span className="fw-bold"> CBT</span> :
@@ -315,7 +323,7 @@ const GameProvider = ({ path, title, gameType }) => {
     {
       name: "Saturday",
       selector: (row) => {
-        const rowData = row.gameSatingInfo && row.gameSatingInfo[5];
+        const rowData = row.gameDetails && row.gameDetails[5];
         return (
           <div className="py-2">
             <div className="py-2">
@@ -327,7 +335,7 @@ const GameProvider = ({ path, title, gameType }) => {
                   </p>
                   <p className="game-setting-font">
                     <span className="fw-bold"> CBT</span> :
-                    {rowData ?convertTo12HourFormat(rowData.CBT) : "N/A"}
+                    {rowData ? convertTo12HourFormat(rowData.CBT) : "N/A"}
                   </p>
                   <p className="game-setting-font">
                     <span className="fw-bold"> OBRT</span> :
@@ -356,7 +364,6 @@ const GameProvider = ({ path, title, gameType }) => {
                   >
                     update
                   </PagesIndex.Link>
-     
                 </>
               ) : (
                 " No Record"
@@ -369,7 +376,7 @@ const GameProvider = ({ path, title, gameType }) => {
     {
       name: "Sunday",
       selector: (row) => {
-        const rowData = row.gameSatingInfo && row.gameSatingInfo[6];
+        const rowData = row.gameDetails && row.gameDetails[6];
         return (
           <div className="py-2">
             <div className="py-2">
@@ -387,12 +394,12 @@ const GameProvider = ({ path, title, gameType }) => {
                     <span className="fw-bold"> OBRT</span> :
                     {rowData ? convertTo12HourFormat(rowData.OBRT) : "N/A"}
                   </p>
-             
+
                   {gameType === "MainGame" ? (
-                     <p className="game-setting-font">
-                     <span className="fw-bold"> CBRT</span> :
-                     {rowData ? convertTo12HourFormat(rowData.CBRT) : "N/A"}
-                   </p>
+                    <p className="game-setting-font">
+                      <span className="fw-bold"> CBRT</span> :
+                      {rowData ? convertTo12HourFormat(rowData.CBRT) : "N/A"}
+                    </p>
                   ) : (
                     ""
                   )}
@@ -429,7 +436,10 @@ const GameProvider = ({ path, title, gameType }) => {
         title={title}
         btnTitle="Add"
       >
-        <PagesIndex.Data_Table columns={columns} data={gameSettings} />
+        <PagesIndex.Data_Table
+          columns={columns}
+          data={GetGameList && GetGameList}
+        />
       </PagesIndex.Main_Containt>
     </div>
   );

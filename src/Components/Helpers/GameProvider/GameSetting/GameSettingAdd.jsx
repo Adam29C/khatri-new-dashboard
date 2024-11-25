@@ -1,8 +1,10 @@
 import React from "react";
 import PagesIndex from "../../../Pages/PagesIndex";
+import { convertTo12HourFormat } from "../../../Utils/Common_Date";
 
 const GameProviderAdd = () => {
   const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
   const navigate = PagesIndex.useNavigate();
   const location = PagesIndex.useLocation();
   const dispatch = PagesIndex.useDispatch();
@@ -16,7 +18,7 @@ const GameProviderAdd = () => {
       userId: userId,
       gameType: "MainGame",
     };
-    dispatch(PagesIndex.commonSlice.Games_Provider_List(providerapidata));
+    dispatch(PagesIndex.commonSlice.Games_Provider_List(token));
   };
 
   PagesIndex.useEffect(() => {
@@ -25,7 +27,7 @@ const GameProviderAdd = () => {
 
   const formik = PagesIndex.useFormik({
     initialValues: {
-      providerId: location?.state?.row ? location?.state?.row.providerId : "",
+      providerId: location?.state?.row ? location?.state?.row._id : "",
       gameDay:
         location?.state?.edit === "single"
           ? location?.state?.rowData.gameDay
@@ -40,58 +42,68 @@ const GameProviderAdd = () => {
     },
     validate: (values) => {
       const errors = {};
-      if(!values.providerId && formik.touched.providerId ){
-        errors.providerId= PagesIndex.valid_err.PROVIDER_NAME_REQUIRED
+      if (!values.providerId && formik.touched.providerId) {
+        errors.providerId = PagesIndex.valid_err.PROVIDER_NAME_REQUIRED;
       }
-      if(!values.OBT && formik.touched.OBT ){
-        errors.OBT= PagesIndex.valid_err.OPEN_BID_TIME_IS_REQUIRED
+      if (!values.OBT && formik.touched.OBT) {
+        errors.OBT = PagesIndex.valid_err.OPEN_BID_TIME_IS_REQUIRED;
       }
-      if(!values.CBT && formik.touched.CBT ){
-        errors.CBT= PagesIndex.valid_err.CLOSE_BID_TIME_IS_REQUIRED
+      if (!values.CBT && formik.touched.CBT) {
+        errors.CBT = PagesIndex.valid_err.CLOSE_BID_TIME_IS_REQUIRED;
       }
-      if(!values.OBRT && formik.touched.OBRT ){
-        errors.OBRT= PagesIndex.valid_err.OPEN_BID_RESULT_TIME_IS_REQUIRED
+      if (!values.OBRT && formik.touched.OBRT) {
+        errors.OBRT = PagesIndex.valid_err.OPEN_BID_RESULT_TIME_IS_REQUIRED;
       }
-      if(!values.CBRT && formik.touched.CBRT ){
-        errors.CBRT= PagesIndex.valid_err.CLOSE_BID_RESULT_TIME_IS_REQUIRED
+      if (!values.CBRT && formik.touched.CBRT) {
+        errors.CBRT = PagesIndex.valid_err.CLOSE_BID_RESULT_TIME_IS_REQUIRED;
       }
-  
+
       return errors;
     },
 
     onSubmit: async (values) => {
       let data = {
-        adminId: userId,
-        providerId: values.providerId,
-        OBT: values.OBT,
-        CBT: values.CBT,
-        OBRT: values.OBRT,
-        CBRT: values.CBRT,
-        isClosed: values.isClosed.toString(),
-        gameType: "MainGame",
+        gameDay: values.gameDay,
+        game1: convertTo12HourFormat(values.OBT),
+        game2: convertTo12HourFormat(values.CBT),
+        game3: convertTo12HourFormat(values.OBRT),
+        game4: convertTo12HourFormat(values.CBRT),
+        status: values.isClosed.toString(),
       };
 
-      if (location?.state?.rowData?._id) {
-        data.gameSettingId = location?.state?.rowData?._id;
-      }
+      if (location?.state?.edit === "single") {
+      
 
-      if (location?.state?.edit === "multiple") {
-        data.providerId = values.providerId;
+        data.gameid = location?.state?.rowData?._id;
+      } else if (location?.state?.edit === "multiple") {
+        // data.providerId = values.providerId;
+        data.gameid = values.providerId;
       } else {
-        data.providerId = values.providerId;
+        // data.providerId = values.providerId;
         data.gameDay = values.gameDay;
+        data.gameid = values.providerId;
       }
-      const res = location?.state?.rowData?._id
-        ? await PagesIndex.admin_services.GAME_SETTING_UPDATE_API(data)
-        : await PagesIndex.admin_services.GAME_SETTING_ADD(data);
 
-      if (res?.status === 200) {
+      const res =
+        location?.state?.edit === "single"
+          ? await PagesIndex.admin_services.GAME_SETTING_UPDATE_API(data, token)
+          : location?.state?.edit === "multiple"
+          ? await PagesIndex.admin_services.GAME_SETTING_UPDATEALL_API(
+              data,
+              token
+            )
+          : await PagesIndex.admin_services.GAME_SETTING_ADD(data, token);
+
+      if (res?.status) {
         PagesIndex.toast.success(res?.message);
         setTimeout(() => {
           navigate("/admin/game/settings");
         }, 1000);
       } else {
         PagesIndex.toast.error(res.response.data.message);
+        setTimeout(() => {
+          navigate("/admin/game/settings");
+        }, 1000);
       }
     },
   });
@@ -174,7 +186,13 @@ const GameProviderAdd = () => {
     <PagesIndex.Main_Containt
       add_button={true}
       route="/admin/game/settings"
-      title="Game Setting Add"
+      title={`Game Setting ${
+        location?.state?.edit === "single"
+          ? "Update"
+          : location?.state?.edit == "multiple"
+          ? "Update All "
+          : "Add"
+      }`}
     >
       <PagesIndex.Formikform
         fieldtype={fields.filter((field) => !field.showWhen)}

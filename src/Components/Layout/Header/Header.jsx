@@ -9,6 +9,8 @@ const Header = () => {
   const navigate = PagesIndex.useNavigate();
   const dispatch = PagesIndex.useDispatch();
 
+
+
   const token = localStorage.getItem("token");
 
   const generateToken = async () => {
@@ -27,14 +29,14 @@ const Header = () => {
     // $("#sidebar-logo-short").html(shortIcon);
   };
 
-  PagesIndex.useEffect(() => {
-    generateToken();
-  }, []);
+  // PagesIndex.useEffect(() => {
+  //   generateToken();
+  // }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    localStorage.removeItem("userId");
+    // localStorage.removeItem("token");
+    // localStorage.removeItem("role");
+    // localStorage.removeItem("userId");
     PagesIndex.toast.success("Logged Out Successfully");
     setTimeout(() => {
       navigate("/");
@@ -42,11 +44,11 @@ const Header = () => {
   };
 
   const abcd = () => {
-    const checkTokenExpiry = () => {
-      GetExpired(token, navigate);
-    };
-    const interval = setInterval(checkTokenExpiry, 5000);
-    return () => clearInterval(interval);
+    // const checkTokenExpiry = () => {
+    //   GetExpired(token, navigate);
+    // };
+    // const interval = setInterval(checkTokenExpiry, 5000);
+    // return () => clearInterval(interval);
   };
 
   PagesIndex.useEffect(() => {

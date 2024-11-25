@@ -117,8 +117,9 @@
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1200px;
   --breakpoint-xxl: 1400;
-  --bhau-color: #478767;
-  --dark-bhau-color: #458163;
+  /* --khatri-color: #478767; */
+  --khatri-color:#237f8a;
+  /* --khatri-color: #458163; */
   --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -129,12 +130,12 @@
 }
 
 .unblock-btn {
-  background-color: var(--bhau-color);
+  background-color: var(--khatri-color);
   color: var(--light);
 }
 .unblock-btn:hover {
   color: var(--light);
-  background-color: var(--dark-bhau-color);
+  background-color: var(--khatri-color);
 }
 .btn-color {
   background-color: var(--main-bg-color);
@@ -4712,7 +4713,7 @@ input[type="button"].btn-block {
   padding: 0.5rem 0.75rem;
   margin-left: -1px;
   line-height: 1.25;
-  color: #7571f9;
+  color: var(--khatri-color);
   background-color: #fff;
   border: 1px solid #dee2e6;
 }
@@ -4739,6 +4740,7 @@ input[type="button"].btn-block {
 }
 
 .page-item:last-child .page-link {
+  color: var(--khatri-color);
   border-top-right-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
 }
@@ -4746,8 +4748,8 @@ input[type="button"].btn-block {
 .page-item.active .page-link {
   z-index: 1;
   color: #fff;
-  background-color: #7571f9;
-  border-color: #7571f9;
+  background-color:var(--khatri-color);
+  border-color:var(--khatri-color);
 }
 
 .page-item.disabled .page-link {
@@ -6012,7 +6014,7 @@ button.close {
 }
 
 .bg-primary {
-  background-color: var(--bhau-color) !important;
+  background-color: var(--khatri-color) !important;
 }
 
 a.bg-primary:hover,
@@ -14505,7 +14507,7 @@ input[type="checkbox"]:checked:after {
   display: block;
   content: "\f00c";
   font-family: "FontAwesome";
-  color: var(--bhau-color);
+  color: var(--khatri-color);
   font-weight: 100;
   text-align: center;
 }
@@ -16244,7 +16246,8 @@ table.dataTable thead .sorting::after {
   margin-bottom: 30px;
   border: 0px;
   border-radius: 0.625rem;
-  box-shadow: 6px 11px 41px -28px #a99de7;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
+  /* box-shadow: 6px 11px 41px -28px #a99de7; */
 }
 .card-title {
   font-size: 18px;
@@ -19757,7 +19760,7 @@ html[dir="rtl"]
 
 [data-nav-headerbg="color_1"] .nav-header {
   /* background-color: #7571f9; */
-  background-color: var(--bhau-color);
+  background-color: var(--khatri-color);
 }
 
 [data-nav-headerbg="color_2"] .nav-header {
@@ -21466,7 +21469,7 @@ html[dir="rtl"]
 
 /* For Firefox */
 .nk-nav-scroll {
-  scrollbar-color: var(--bhau-color) #f1f1f1;
+  scrollbar-color: var(--khatri-color) #f1f1f1;
   scrollbar-width: thin;
 }
 
@@ -21791,22 +21794,22 @@ a:hover {
 
 .submitBtn {
   /* background: #4e3897; */
-  background: var(--bhau-color);
+  background: var(--khatri-color);
   border: none;
   color: var(--light);
 }
 .submitBtn:hover {
-  background: var(--bhau-color);
+  background: var(--khatri-color);
   color: var(--light);
 }
 .submitBtn:active {
-  background: var(--bhau-color);
+  background: var(--khatri-color);
   color: var(--light);
 }
 .border-bottom-text {
   border-bottom: 1px solid #ced4da;
   padding-bottom: 10px;
-  width: 92%;
+  /* width: 92%; */
 }
 
 .modal-container {
@@ -22050,4 +22053,29 @@ a:hover {
 .table-header-backeground{
   background: var(--primary-color) !important;
 color: #fff;
+}
+
+
+.xxx{
+  display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+
+.rc-time-picker-input {
+  border: none !important;
+  font-size: 14px !important;
 }

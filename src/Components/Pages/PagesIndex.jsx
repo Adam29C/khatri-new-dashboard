@@ -19,6 +19,8 @@ import { Link } from "react-router-dom";
 import * as valid_err from "../Utils/Common_Msg";
 import * as admin_services from "../Services/SuperAdminServices";
 import * as common_services from "../Services/CommonServices";
+import * as game_service from "../Services/GameSectionService";
+
 import {
   ADD_SYSTEM_INFO_API,
   LIST_SYSTEM_INFO_API,
@@ -38,8 +40,9 @@ import CuttingGroupMain from "../Helpers/CuttingGroup/CuttingGroup";
 import MultiTabs from "../Helpers/MultiTabs";
 import WalletMain from "../Helpers/Wallet/WalletMain";
 import ChangeStatus from "../Helpers/ChangeStatus";
-
-
+import TableWitCustomPegination from "../Helpers/Table/TableWithCustomPegination"
+import TableWithCustomPeginationButton from "../Helpers/Table/TableWithCustomPeginationButton"
+import ModalComponent from "../Helpers/Modal/ModalComponent";
 const PagesIndex = {
   useDispatch,
   useState,
@@ -81,7 +84,12 @@ const PagesIndex = {
   ChangeStatus,
   validApkFile,
   Mobile_regex,
-  common_services
+  common_services,
+  TableWitCustomPegination,
+  TableWithCustomPeginationButton,
+  
+  ModalComponent,
+  game_service
 };
 
 export default PagesIndex;

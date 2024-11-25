@@ -4,9 +4,9 @@ const Users = () => {
   const dispatch = PagesIndex.useDispatch();
   const navigate = PagesIndex.useNavigate();
   const [loding, setLoading] = PagesIndex.useState(false);
-  const { getGenrateTokenState } = PagesIndex.useSelector(
-    (state) => state.CommonSlice
-  );
+  // const { getGenrateTokenState } = PagesIndex.useSelector(
+  //   (state) => state.CommonSlice
+  // );
 
   const generateToken = async () => {
     const val = PagesIndex.Remove_Special_Character(PagesIndex.v4());
@@ -20,9 +20,9 @@ const Users = () => {
     // $("#favicon").attr("href", favIcon);
   };
 
-  PagesIndex.useEffect(() => {
-    generateToken();
-  }, []);
+  // PagesIndex.useEffect(() => {
+  //   generateToken();
+  // }, []);
 
   const formik = PagesIndex.useFormik({
     initialValues: {
@@ -50,11 +50,11 @@ const Users = () => {
           user_password: values.password,
         };
 
-        const res = await PagesIndex.LOGIN_API(req, getGenrateTokenState);
+        const res = await PagesIndex.LOGIN_API(req);
 
-        console.log("res", res?.user);
 
         if (res?.success) {
+          // localStorage.setItem("token", res?.token);
           PagesIndex.toast.success(res?.message);
           localStorage.setItem("token", res?.token);
           localStorage.setItem("userdetails", JSON.stringify(res?.user));

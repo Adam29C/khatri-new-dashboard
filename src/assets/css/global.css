@@ -30,14 +30,14 @@
   font-size: 80px;
   line-height: 64px;
   margin-bottom: 40px;
-  color:   var(--bhau-color);
+  color:   var(--khatri-color);
 
 }
 .buttons-con .action-link-wrap {
   margin: 40px 0px 0px 20px;
 }
 .buttons-con .action-link-wrap a {
-  background:   var(--bhau-color);
+  background:   var(--khatri-color);
   padding: 12px 25px;
   border-radius: 4px;
   color: #fff;
@@ -49,13 +49,13 @@
   margin-right: 10px;
 }
 .buttons-con .action-link-wrap a:hover {
-  background: var(--bhau-color);
+  background: var(--khatri-color);
   color: #fff;
 }
 
 .message-box p {
   font-size: 20px;
-  color:  var(--bhau-color);
+  color:  var(--khatri-color);
 
   font-weight: bold;
 }
@@ -112,11 +112,12 @@
 }
 
 input:checked + .slider {
-  background-color:  var(--bhau-color);
+  background-color:  var(--khatri-color);
 }
 
 .error-text {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  font-weight: bold;
   margin-top: 5px;
   line-height: 1rem;
   color: var(--red);
@@ -259,17 +260,18 @@ input:checked + .slider:before {
 }
 
 .card-color{
-  background: #4a8c6b2e;
-  box-shadow: rgba(21, 156, 39, 0.25) 0px 30px 50px -12px inset,
-    rgba(21, 95, 52, 0.3) 0px 18px 26px -18px inset;
+  /* background: #4a8c6b2e; */
+  background: #3c7c8334;
+  box-shadow: rgba(21, 152, 156, 0.25) 0px 30px 50px -12px inset,
+    rgba(21, 84, 95, 0.3) 0px 18px 26px -18px inset;
 }
 
 
 .edit-icon{
-color: var(--bhau-color);
+color: var(--khatri-color);
 }
 .edit-icon:hover{
-  color: var(--bhau-color);
+  color: var(--khatri-color);
 }
 
 .delete-icon {
@@ -282,12 +284,40 @@ color: var(--bhau-color);
 }
 
 
-/* .data-table-extensions > .data-table-extensions-filter > .icon {
-  float: left !important;
-  display: block !important;
-  width: 20px !important;
-  height: 24px !important;
-  background-image: url(/src/assets/data-search-icon.png) !important;
-  background-repeat: no-repeat !important;
-  background-position: left center !important;
-} */
+/* set background image favicon css start*/
+#dynamic-background {
+  background-image: url('../Images/back-image-2.jpg'); 
+}
+
+#company-logo {
+  content: url('../Images/Khatri_Main_logo_white.svg'); 
+}
+
+#favicon {
+  content: url('../Images/favicon.png'); 
+}
+
+#sidebar-logo{
+  content: url('../Images/Khatri_Main_logo_white.svg'); 
+}
+
+/* set background image favicon css end */
+
+
+.hideFieldCss{
+  display: none;
+}
+
+.winner-list-text-main{
+color: rgb(141, 128, 128);
+font-size: 21px;
+text-align: center;
+}
+
+.confirm-payment-text{
+  font-size: 18px;
+  color: var(--khatri-color);
+  margin: 25px 0;
+  font-weight: 600;
+  font-family: Karla, sans-serif;
+}
