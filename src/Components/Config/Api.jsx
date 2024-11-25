@@ -1,5 +1,5 @@
 const Api = {
-  COMMON_GENERATE_TOKEN: "common/generate-token",  
+  COMMON_GENERATE_TOKEN: "common/generate-token",
 
   // AUTH MODULE
   LOGIN: "adminLogin/loginDashboard",
@@ -12,17 +12,92 @@ const Api = {
   GET_DASHBOARD_COUNT_UPI_PAYMENT: "/dashboard/getBriefDeposit",
   GET_DASHBOARD_REGISTRED_USERS: "dashboard/getRegisteredUser",
 
-
-  
   //USERS
   USERS_LIST: "allUser/getAllUsers",
   DELETED_USERS: "/allUser/deleteUserByAdmin",
   USER_PROFILE_GET: "/allUser/getProfile",
   BLOCK_USER: "/allUser/blockUser",
 
+  //MAIN GAME API'S
+  MAIN_GAME: "mainGames",
+  MAIN_GAME_ADD: "mainGames/insertGame",
+
+  // ADMIN_GAME_RATES: "admin/game/gameRate",
+  MAIN_GAME_RATE_LIST: "mainGameRate",
+  MAIN_GAME_RATE_ADD: "mainGameRate/insertGame",
+  MAIN_GAME_RATE_UPDATE: "mainGameRate",
+  MAIN_GAME_RATE_REMOVE: "mainGameRate",
+
+  //GAME SETTING
+  // ADMIN_GAME_SETTING: "/admin/game/gameSetting",
+  ADMIN_GAME_SETTING: "mainGameSetting",
+  ADMIN_GAME_SETTING_ADD: "mainGameSetting/insertSettings",
+  ADMIN_GAME_SETTING_UPDATEALL: "mainGameSetting/updateAll",
+
+  // GAME PROVIDER
+
+  STARLINE_GAME_PROVIDERS_LIST: "starlineProvider/getStarlineProvider",
+  STARLINE_GAME_PROVIDER_ADD: "starlineProvider/insertStarLineProvider",
+  STARLINE_GAME_PROVIDER_UPDATE: "starlineProvider/updateStarLineProvider",
+  STARLINE_GAME_PROVIDERS_DELETE: "starlineProvider/deleteStarLineProvider",
+  STARLINE_GAME_PROVIDERS_GET_BY_ID: "starlineProvider/starLineProviderById",
+
+  // GAME RATE
+
+  STARLINE_GAME_RATE_LIST: "starGameRate",
+  STARLINE_GAME_RATE_ADD: "starGameRate/insertGame",
+  STARLINE_GAME_RATE_UPDATE: "starGameRate/update",
+  STARLINE_GAME_RATE_REMOVE: "starGameRate",
+
+  // STARLINE GAME SETTING CRUD
+
+  STARLINE_GAME_PROVIDERS: "starGameSetting/addSetting",
+  STARLINE_GAME_SETTING_LIST: "starGameSetting",
+  STARLINE_GAME_SETTING_ADD: "starGameSetting/insertSettings",
+  STARLINE_GAME_SETTING_UPDATE_ALL: "starGameSetting/updateProviderSettings",
+  STARLINE_GAME_SETTING_UPDATE_ONE: "starGameSetting",
 
 
 
+
+
+  //  STARLINE GAME RESULT - 
+  STARLINE_GAME_MAIN_RESULT: "starGameResult",
+  STARLINE_GAME_MAIN_RESULT_ADD: "starGameResult",
+  STARLINE_GAME_PAST_RESULT: "starGameResult/pastResult",
+  STARLINE_GAME_WINNER_LIST: "starlineWinner/starLineWinnerList",
+  STARLINE_GAME_DISTIBUTE_FUND_WINNERS: "starlineWinner/starWinners",
+  // STARLINE_GAME_SETTING_ADD: "starGameSetting/insertSettings",
+  // STARLINE_GAME_SETTING_UPDATE_ALL: "starGameSetting/updateProviderSettings",
+  // STARLINE_GAME_SETTING_UPDATE_ONE: "starGameSetting",
+
+
+  //  STARLINE REVERT PAYMENT - 
+
+  STARLINE_GAME_REVERT_PAYMENT: "starGameResult/revertPayment",
+  STARLINE_GAME_CONFIRM_REVERT_PAYMENT: "starGameResult/paymentRevert",
+  
+
+    //  STARLINE REVERT PAYMENT - 
+
+    STARLINE_GAME_REFUND_PAYMENT: "mainGameResult/refundPayment",
+    STARLINE_GAME_CONFIRM_REVERT_PAYMENT: "starGameResult/paymentRevert",
+
+    
+
+
+
+  // JACKPOT GAME SETTING CRUD
+
+  JACKPOT_GAME_PROVIDERS: "abGameSetting/addSetting",
+  JACKPOT_GAME_SETTING_LIST: "abGameSetting",
+  JACKPOT_GAME_SETTING_ADD: "abGameSetting/insertSettings",
+  JACKPOT_GAME_SETTING_UPDATE_ALL: "abGameSetting/updateProviderSettings",
+  JACKPOT_GAME_SETTING_UPDATE_ONE: "abGameSetting",
+
+  //   ADMIN_GAME_SETTING_ADD: "mainGameSetting/insertSettings",
+  //   ADMIN_GAME_SETTING_UPDATEALL: "mainGameSetting/updateAll"
+  // starGameSetting
 
   ADMIN_CHANGE_PASSWORD: "admin/changePassword",
 
@@ -44,22 +119,12 @@ const Api = {
   MAIN_GAME: "mainGames",
   MAIN_GAME_ADD: "mainGames/insertGame",
 
-
-
-  //GAME RATES
-  // ADMIN_GAME_RATES: "admin/game/gameRate",
-  ADMIN_GAME_RATES: "mainGameRate",
-
-
-  //GAME SETTING
-  // ADMIN_GAME_SETTING: "/admin/game/gameSetting",
-  ADMIN_GAME_SETTING: "mainGameSetting",
-  ADMIN_GAME_SETTING_ADD: "mainGameSetting/insertSettings",
-  ADMIN_GAME_SETTING_UPDATEALL: "mainGameSetting/updateAll",
- 
-
   // GAME RESULT
   ADMIN_GAME_RESULT: "mainGameResult",
+  ADMIN_GAME_RESULT_DELETE: "mainGameResult/delete",
+  GET_GAME_RESULT_WITH_DATE: "mainGameResult/pastResult",
+  GET_REMAINING_WINNER_LIST: "winnerList/remaningWinnerList",
+  GET_MAIN_WINNER_LIST: "winnerList/mainWinnerList",
 
   USERS_IDEAS: "/admin/UserIdea",
   GET_VERSION: "/admin/appSetting/listVersionSetting",

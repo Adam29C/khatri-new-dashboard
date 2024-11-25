@@ -7,7 +7,6 @@ export const Games_Provider_List = createAsyncThunk(
   async (data) => {
     try {
       const res = await admin_service.GAME_PROVIDER_GET_LIST_API(data);
-      // console.log("data123" ,res);
 
       return await res;
     } catch (err) {
@@ -22,7 +21,6 @@ export const Games_Settings_List = createAsyncThunk("common/Games_Settings_List"
     
     try {
       const res = await admin_service.GAME_SEETING_LIST_API(data.data, data.token);
-      console.log("resres", res);
 
       return await res;
     } catch (err) {
@@ -30,6 +28,27 @@ export const Games_Settings_List = createAsyncThunk("common/Games_Settings_List"
     }
   }
 );
+
+
+// ------------------   for starline and jackpot --------------   
+
+
+
+export const forStarlineAndJackpot = createAsyncThunk("common/forStarlineAndJackpot",async (data, token) => {
+    
+  try {
+    const res = await admin_service.GAME_SEETING_LIST_API(data.data, data.token);
+
+    return await res;
+  } catch (err) {
+    return err;
+  }
+}
+);
+
+
+
+
 
 //PERMISSION_GET_API
 

@@ -1,42 +1,76 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Split_Main_Containt from "../../../../Layout/Main/Split_Main_Content";
 import PagesIndex from "../../../PagesIndex";
 import { getActualDateFormate, today } from "../../../../Utils/Common_Date";
 import DatePicker from "react-datepicker";
-
 import "react-datepicker/dist/react-datepicker.css";
+import { Games_Provider_List } from "../../../../Redux/slice/CommonSlice";
 
 const ExamplePage = () => {
-  const userId = localStorage.getItem("userId");
+  //get token in local storage
+  const token = localStorage.getItem("token")
+  //set actual date
   const actual_date_formet = getActualDateFormate(new Date());
-
-  const [Data, setData] = PagesIndex.useState([]);
-
+  //dispatch
   const dispatch = PagesIndex.useDispatch();
+
+  //navigate
+  const navigate = PagesIndex.useNavigate()
+  //all state
+const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
+const [tableData, setTableData] = useState([]);
+
+
+//get data in redux 
   const data = PagesIndex.useSelector((state) => {
     return state.CommonSlice.gameProviders;
   });
 
-  const getGameRatesList =  () => {
-    let apidata = {
-      userId: userId,
-      gameType: "MainGame",
-    };
-   dispatch(
-      PagesIndex.commonSlice.Games_Provider_List(apidata)
-    );
+
+  //get game result function
+  const getGameResultApi = async()=>{
+    const res = await PagesIndex.admin_services.GAME_RESULT(token)
+
+    if(res.status){
+      setTableData(res?.data?.result)
+    }
+
+
+  }
+
+//get game provider data 
+  const getGameProvidersList =  () => {
+  dispatch(Games_Provider_List(token));
   };
 
+
+  //get apis functions call in useEffect
   PagesIndex.useEffect(() => {
-    getGameRatesList();
+    getGameProvidersList();
+    getGameResultApi()
   }, []);
 
+
+  //set id and provider name in form functions
+  const handleProviderChange = (e) => {
+   const selectedProviderId = e.target.value;
+    const selectedProviderName = data.find(
+      (item) => item._id === selectedProviderId
+    )?.providerName;
+  
+    // Update formik values
+    formik.setFieldValue("providerId", selectedProviderId);
+    formik.setFieldValue("providerName", selectedProviderName);
+  };
+
+  //formik form 
   const formik = PagesIndex.useFormik({
     initialValues: {
       winningDigit: "",
-      resultDate: actual_date_formet || "",
+      resultDate: actual_date_formet || null,
       session: "",
       providerId: "",
+      providerName:""
     },
 
     validate: (values) => {
@@ -60,34 +94,36 @@ const ExamplePage = () => {
 
       return errors;
     },
+    
     onSubmit: async (values) => {
       const req = {
-        winningDigit: values.winningDigit,
+        winningDigit: +(values.winningDigit),
         resultDate: today(values.resultDate),
         session: values.session,
         providerId: values.providerId,
-        adminId: userId,
-        gameType: "MainGame",
+        providerName:values.providerName
       };
 
+ try {
+  const res = await PagesIndex.admin_services.ADD_GAME_RESULT(req,token);
+  console.log(res)
+  if(res.status){
+    PagesIndex.toast.success(res?.data?.message || res?.message)
+  }
 
-      // return
-      const res = await PagesIndex.admin_services.ADD_GAME_RESULT(req);
+ } catch (error) {
+ console.log(error)
+  const errorMessage = error.response?.data?.message || "Something went wrong. Please try again.";
+  PagesIndex.toast.error(errorMessage);
   
+ }
 
-      // if (response.status === 409) {
-      //   toast.error(response.data.msg);
-      // } else if (response.status) {
-      //   toast.success(response.msg);
-      //   setTimeout(() => {
-      //     navigate("/super/alladmins");
-      //   }, 1000);
-      // } else if (!response.status) {
-      //   toast.error(response.msg);
-      // }
+
     },
   });
 
+
+  //formik form for only result date 
   const formik1 = PagesIndex.useFormik({
     initialValues: {
       date: getActualDateFormate(new Date()),
@@ -98,13 +134,23 @@ const ExamplePage = () => {
       return errors;
     },
     onSubmit: async (values) => {
-      // const req = today(values.date);
-      // const res = await PagesIndex.admin_services.GAME_RESULT(req);
-      // if (res.status === 200) {
-      //   setData(res.data);
-      // }
+      
+const apidata = values.date
+   try {
+    const res = await PagesIndex.admin_services.GAME_RESULT_DATEWISE(apidata,token);
+
+    if (res.status) {
+PagesIndex.toast.success(res.message)
+      setTableData(res.data.results)
+    }else{
+      PagesIndex.toast.error(res.message)
+    }
+   } catch (error) {
+    PagesIndex.toast.error(error.response.data.message )
+   }
     },
   });
+
 
   const fields = [
     {
@@ -115,9 +161,11 @@ const ExamplePage = () => {
         data?.map((item) => ({
           label: item.providerName,
           value: item._id,
+      
         })) || [],
       label_size: 12,
       col_size: 3,
+      onChange: handleProviderChange, 
     },
 
     {
@@ -160,63 +208,89 @@ const ExamplePage = () => {
     },
   ];
 
+//game result delete 
+  const handleDelete = async (row) => {
+    const apidata = {
+      resultId:row?._id,
+      providerId:row?.providerId,
+      session:row?.session 
+      
+    }
 
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this game?"
+    );
+    if (!confirmDelete) return;
 
-  const SearchResult = async () => {
-    // const req = today(formik1.values.date);
-    // const res = await PagesIndex.admin_services.GAME_RESULT(req);
-    // if (res.status === 200) {
-    //   setData(res.data);
-    // }
+    try {
+      const res = await PagesIndex.admin_services.GAME_RESULT_DELETE(apidata,token);
+      
+      if (res.statusCode === 200) {
+        alert(res?.message);
+        getGameResultApi
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
   };
+//get remainning winner list api call function
 
-  PagesIndex.useEffect(() => {
-    SearchResult();
-  }, []);
+//navigate page on winnerlistpage function
 
-  const columns = [
-    {
-      name: "Game Name",
-      selector: (row) => row?.providerName,
-    },
-    {
-      name: "Game Session",
-      selector: (row) => row?.session,
-    },
-    {
-      name: "Result Date",
-      selector: (row) => row?.resultDate,
-    },
-    {
-      name: "winning Digit",
-      selector: (row) => row?.winningDigit,
-    },
+const winnerList=(rowdata)=>{
+  navigate(`winners?providerId=${rowdata.providerId}`, {
+    state: { rowdata }, 
+  });
+}
 
-    {
-      name: "actions",
-      selector: (cell, row) => (
-        <div style={{ width: "120px" }}>
-          <div>
-            <PagesIndex.Link to={"/admin/employee/edit"} state={cell}>
-              <span
-                data-toggle="tooltip"
-                data-placement="top"
-                title="Winners List"
-              >
-                <i class="icon-user-follow icon-size"></i>
-              </span>
-            </PagesIndex.Link>
+  //handle actions button function 
+  const handleActionBtn = (row, buttonStatus)=>{
 
-            <PagesIndex.Link href="#" onClick={SearchResult}>
-              <span data-toggle="tooltip" data-placement="top" title="Delete">
-                <i class="ti-trash fs-5 mx-1 "></i>
-                {/* <PagesIndex.Icon icon="line-md:account-delete" width="24" height="24" /> */}
-              </span>
-            </PagesIndex.Link>
-          </div>
-        </div>
-      ),
+    if (buttonStatus === 1) {
+      winnerList(row)
+    
+    } else if (buttonStatus === 2) {
+      handleDelete(row)
+    } else {
+      return "";
+    }
+  }
+
+
+  const visibleFields = [
+    "id",
+    "providerName",
+    "session",
+    "resultDate",
+    "winningDigit",
+  ];
+
+  const UserFullButtonList = [
+    {
+      id: 0,
+      buttonName: "Get Winners List",
+      buttonColor: "",
+      route: "",
+      Conditions: (row) => {
+        handleActionBtn(row, 1);
+      },
+      Visiblity: true,
+      
+      type: "button",
     },
+    {
+      id: 1,
+      buttonName: "Delete Result",
+      buttonColor: "danger",
+      route: "test",
+      Conditions: (row) => {
+        handleActionBtn(row, 2);
+      },
+      Visiblity: false,
+      type: "button",
+    },
+   
   ];
   const cardLayouts = [
     {
@@ -226,9 +300,9 @@ const ExamplePage = () => {
           <PagesIndex.Formikform
             fieldtype={fields.filter((field) => !field.showWhen)}
             show_submit={true}
-            // form_responsive={}
             formik={formik}
-            btn_name="Add Game Result"
+            btn_name="Submit"
+           
           />
         </div>
       ),
@@ -245,7 +319,7 @@ const ExamplePage = () => {
               btn_name="Search Result"
             />
           </div>
-          {/* <button className=" btn btn-primary my-1" onClick={SearchResult}>Search </button> */}
+           
         </div>
       ),
     },
@@ -253,11 +327,23 @@ const ExamplePage = () => {
       size: 12,
       body: (
         <div>
-          <PagesIndex.Data_Table
-         
-            columns={columns}
-            data={Data.gameResult}
-          />
+
+            <PagesIndex.TableWitCustomPegination
+          data={tableData}
+          initialRowsPerPage={5}
+          SearchInTable={SearchInTable}
+          visibleFields={visibleFields}
+          UserFullButtonList={UserFullButtonList}
+          searchInput={
+            <input
+              type="text"
+              placeholder="Search..."
+              value={SearchInTable}
+              onChange={(e) => setSearchInTable(e.target.value)}
+              className="form-control ms-auto"
+            />
+          }
+        />
         </div>
       ),
     },
@@ -272,7 +358,9 @@ const ExamplePage = () => {
         btnTitle="Add"
         route="/add"
         cardLayouts={cardLayouts}
+
       />
+      
     </>
   );
 };

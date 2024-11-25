@@ -17,12 +17,10 @@ const Dashboard_Component = () => {
   const [TableData, setTableData] = PagesIndex.useState([]);
 
 
-  console.log("DashboardData && DashboardData" ,DashboardData && DashboardData);
   
   const { countDlt, data, yesTerday } = (DashboardData && DashboardData) || [];
 
   const getDashboardCount = async () => {
-    console.log("testtt");
     
     const res = await PagesIndex.admin_services.GET_DASHBOARD_COUNT_API(userId , token);
     console.log("testtt1231" , res);
