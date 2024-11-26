@@ -1,14 +1,46 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import FormWizardComponent from "../../../Helpers/MultiStepForm";
 import Main_Containt from "../../../Layout/Main/Main_Containt";
 import PagesIndex from "../../../Pages/PagesIndex";
 import { makePermissions, InitialValues } from "./permissions";
+import { Get_permissions } from "../../../Redux/slice/CommonSlice";
 
 function AddEmployee() {
-  const userId = localStorage.getItem("userId");
+  let { user_id } = JSON.parse(localStorage.getItem("userdetails"));
+  const token = localStorage.getItem("token")
   const navigate = PagesIndex.useNavigate();
+  const dispatch = PagesIndex.useDispatch();
   const location = PagesIndex.useLocation();
   const userData = location?.state?.row;
+
+//all state
+const [getEmplData,setGetEmpData]=useState()
+
+console.log(getEmplData?.col_view_permission)
+
+  const { getPermissions } = PagesIndex.useSelector(
+    (state) => state.CommonSlice
+  );
+
+
+console.log(getPermissions?.col_view_permission)
+
+  const getPermissionApi = () => {
+    dispatch(Get_permissions(user_id));
+  };
+
+  const getSingleEmployee = async()=>{
+    if(userData?._id){ 
+       const res = await PagesIndex.admin_services.SINGLE_EMPLOYEE_GET_LIST_API(userData?._id,token)
+       setGetEmpData(res?.data)
+      }
+  }
+
+  PagesIndex.useEffect(() => {
+    getPermissionApi();
+  
+    getSingleEmployee()
+  }, []);
 
   const formik = PagesIndex.useFormik({
     initialValues: {
@@ -50,7 +82,7 @@ function AddEmployee() {
       type: "text",
       label_size: 12,
       col_size: 6,
-      disable: !!userData,
+      // disable: !!userData,
     },
     {
       name: "password",
@@ -83,7 +115,7 @@ function AddEmployee() {
   ];
 
   const filteredFields = userData
-    ? fields.filter((field) => field.name !== "password")
+    ? fields.filter((field) => field.name !== "password" && field.name !== "designation" && field.name !== "employeeName" )
     : fields;
 
   const formik1 = PagesIndex.useFormik({
@@ -92,41 +124,43 @@ function AddEmployee() {
     onSubmit: async (values) => {},
   });
 
+
+  
   function updateCheckedStatus(array1, makePermissions) {
     const permissions = array1[0];
     const keyMap = {
-      Dashboard: "isDashboard",
-      Users: "isUsers",
-      Games: "isGames",
-      "Games Provider": "isGamesProvider",
-      "Games Setting": "isGamesSetting",
-      "Games Rates": "isGamesRates",
-      "Games Result": "isGamesResult",
+      Dashboard: "main",
+      Users: "users",
+      Games: "games",
+      "Games Provider": "gamesProvider",
+      "Games Setting": "gamesSetting",
+      "Games Rates": "gamesRates",
+      "Games Result": "gamesResult",
       "Games Revert": "isGamesRevert",
       "Games Refund": "isGamesRefund",
-      Starline: "isStarline",
-      "Starline Provider": "isStarlineProvider",
-      "Starline Setting": "isStarlineSetting",
-      "Starline Rates": "isStarlineRates",
-      "Starline Result": "isStarlineResult",
+      Starline: "starline",
+      "Starline Provider": "starlineProvider",
+      "Starline Setting": "starlineSetting",
+      "Starline Rates": "starlineRates",
+      "Starline Result": "starlineResult",
       "Starline Revert": "isStarlineRevert",
       "Starline Refund": "isStarlineRefund",
-      "Andar Bahar": "isAndarBahar",
-      "Andar Bahar Provider": "isAndarBaharProvider",
-      "Andar Bahar Setting": "isAndarBaharSetting",
-      "Andar Bahar Rates": "isAndarBaharRates",
-      "Andar Bahar Result": "isAndarBaharResult",
+      "Andar Bahar": "ab",
+      "Andar Bahar Provider": "abProvider",
+      "Andar Bahar Setting": "abSetting",
+      "Andar Bahar Rates": "abRates",
+      "Andar Bahar Result": "abResult",
       "Andar Bahar Revert": "isAndarBaharRevert",
       "Andar Bahar Refund": "isAndarBaharRefund",
-      "Cutting Group": "isCuttingGroup",
+      "Cutting Group": "cg",
       "Bookie Corner": "isBookieCorner",
       "OC Cutting Group": "isOCCuttingGroup",
-      "Final Cutting Group": "isFinalCuttingGroup",
-      Wallet: "isWallet",
-      "Fund Request": "isFundRequest",
-      ExportDebitReport: "isExportDebitReport",
-      "View Wallet": "isViewWallet",
-      "Request ON/OFF": "isRequestON/OFF",
+      "Final Cutting Group": "fcg",
+      Wallet: "wallet",
+      "Fund Request": "fundRequest",
+      ExportDebitReport: "exportDebit",
+      "View Wallet": "viewWallet",
+      "Request ON/OFF": "reqONOFF",
       "Credit Request": "isCreditRequest",
       "Approved Debit Page": "isApprovedDebitPage",
       "Paytm Request": "isPaytmRequest",
@@ -184,19 +218,18 @@ function AddEmployee() {
   }
 
   const abcde = () => {
-    if (location?.state?.permission) {
-      updateCheckedStatus([location.state.permission], makePermissions);
+    if (userData) {
+      updateCheckedStatus([userData], makePermissions);
     }
   };
 
   useEffect(() => {
     abcde()
-  }, [location]);
+  }, [userData]);
 
   const fields1 = [
     {
       name: "permission",
-      // label: "Create Strategy",
       type: "checkbox",
       label_size: 12,
       title_size: 12,
@@ -212,43 +245,52 @@ function AddEmployee() {
     }
 
     var combinedObject;
-    if (location?.state) {
+    if (userData) {
       const combineObjects = (obj1, obj2) => {
-        const result = {};
+        const result = [];
         for (const key in obj1) {
           if (obj1[key] === true) {
-            result[key] = true;
-          } else {
-            result[key] = obj2[key] !== undefined ? obj2[key] : obj1[key];
+         
+             result.push(key);
           }
+
+          //  else {
+          //   result[key] = obj2[key] !== undefined ? obj2[key] : obj1[key];
+          // }
         }
 
         return result;
       };
 
-      combinedObject = combineObjects(updatedABC, location?.state?.permission);
+      combinedObject = combineObjects(updatedABC, userData);
     }
-
+    console.log(combinedObject,50)
     const req = {
-      adminId: userId,
+    
+      username: formik.values.username,
+      // employeeName: formik.values.employeeName,
+      loginPermission: formik.values.loginPermission,
+
+      colViewPermission: userData ? combinedObject : updatedABC,
+      ...(userData ? { id: userData?._id } : {}),
+    };
+
+    const addreq = {
       username: formik.values.username,
       employeeName: formik.values.employeeName,
       loginPermission: formik.values.loginPermission,
-      permission: location?.state ? combinedObject : updatedABC,
-      ...(location?.state ? { empId: location?.state?._id } : {}),
-    };
-
+      password: formik.values.password,
+      designation: formik.values.designation,
+      colViewPermission:combinedObject,
+      loginFor:1,
+    }
     // return;
-    const res = location?.state
-      ? await PagesIndex.admin_services.UPDATE_EMPLOYEE(req)
-      : await PagesIndex.admin_services.CREATE_EMPLOYEE({
-          ...req,
-          password: formik.values.password,
-          designation: formik.values.designation,
-          loginPermission: 1,
-        });
+    console.log(req,100)
+    const res = userData
+      ? await PagesIndex.admin_services.UPDATE_EMPLOYEE(req,token)
+      : await PagesIndex.admin_services.CREATE_EMPLOYEE(addreq,token);
 
-    if (res.status === 200) {
+    if (res.status) {
       PagesIndex.toast.success(res.message);
       setTimeout(() => {
         navigate("/admin/employees");
@@ -286,7 +328,7 @@ function AddEmployee() {
 
   return (
     <Main_Containt
-      title={location.state ? "Edit Employee" : "Add Employee"}
+      title={userData ? "Edit Employee" : "Add Employee"}
       col_size={12}
       add_button={true}
       route="/admin/employees"

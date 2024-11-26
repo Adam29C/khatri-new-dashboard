@@ -8,7 +8,7 @@ const EmployeeList = () => {
   //navigate 
   const navigate = PagesIndex.useNavigate()
   
-  //all satte
+  //all state
   const [data, setData] = PagesIndex.useState([]);
   const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
   const [visible, setVisible] = PagesIndex.useState(false);
@@ -119,17 +119,14 @@ const [adminId,setAdminId]=useState()
   
     //delete fund mode list start
     const handleDelete = async (row) => {
-     
       const confirmDelete = window.confirm(
         "Are you sure you want to delete this Employee?"
       );
       if (!confirmDelete) return;
-  
       try {
         const apidata = {
-          adminId: row?._id,
+          id: row?._id,
         };
-  
         const res = await PagesIndex.admin_services.DELETE_EMPLOYEE(
           apidata,
           token
@@ -175,7 +172,7 @@ const [adminId,setAdminId]=useState()
         handleStatusUpdate(row)
         break;
       case 2:
-        navigate("edit",{state:{row}})
+        navigate(`edit?EmpId/${row._id}`,{state:{row}})
         break;
       case 3:
         handleDelete(row)

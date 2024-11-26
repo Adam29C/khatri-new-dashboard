@@ -26,14 +26,13 @@ const Api = {
   ADMIN_PROFILE_GET: "admin/adminProfile",
 
   // EMPLOYEE MODULE
-  CREATE_EMPLOYEE: "admin/createEmployee",
-  UPDATE_EMPLOYEE: "admin/updateEmployeeInformition",
+  CREATE_EMPLOYEE: "master/employees/createEmployee",
+  UPDATE_EMPLOYEE: "master/employees/updateEmployee",
   EMPLOYEE_CHANGE_PASSWORD: "master/employees/updatePassword",
-
-
+  SINGLE_EMPLOYEE_LIST: "master/employees/empById",
   EMPLOYEE_LIST: "master/employees",
   BLOCK_EMPLOYEE: "master/employees/blockEmployee",
-  DELETE_EMPLOYEE: "admin/deleteEmployee",
+  DELETE_EMPLOYEE: "master/employees/deleteEmp",
 
   //MAIN GAME API'S
   MAIN_GAME: "mainGames",

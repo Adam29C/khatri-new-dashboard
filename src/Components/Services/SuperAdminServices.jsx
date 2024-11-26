@@ -664,9 +664,9 @@ export const EMPLOYEE_CHANGE_PASSWORD_API = async (data,token) => {
 
 
 
-export const CREATE_EMPLOYEE = async (data) => {
+export const CREATE_EMPLOYEE = async (data,token) => {
   try {
-    const res = await axios.post(Api.CREATE_EMPLOYEE, data, {
+    const res = await axios.post(`${BASE_URL}${Api.CREATE_EMPLOYEE}`, data, {
       headers: header(token),
     });
     return res?.data;
@@ -674,9 +674,9 @@ export const CREATE_EMPLOYEE = async (data) => {
     return error;
   }
 };
-export const UPDATE_EMPLOYEE = async (data) => {
+export const UPDATE_EMPLOYEE = async (data,token) => {
   try {
-    const res = await axios.put(Api.UPDATE_EMPLOYEE, data, {
+    const res = await axios.post(`${BASE_URL}${Api.UPDATE_EMPLOYEE}`, data, {
       headers: header(token),
     });
     return res?.data;
@@ -707,11 +707,23 @@ export const BLOCK_EMPLOYEE_API = async (data,token) => {
   }
 };
 
-export const DELETE_EMPLOYEE = async (data,token) => {
+export const DELETE_EMPLOYEE = async (id,token) => {
 
   try {
-    const res = await axios.delete(`${BASE_URL}${Api.DELETE_EMPLOYEE}`, {
-      data: apiData,
+    const res = await axios.post(`${BASE_URL}${Api.DELETE_EMPLOYEE}`,id, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+
+export const SINGLE_EMPLOYEE_GET_LIST_API = async (id,token) => {
+  try {
+    const res = await axios.get(`${BASE_URL}${Api.SINGLE_EMPLOYEE_LIST}/${id}`, {
       headers: header(token),
     });
     return res?.data;
