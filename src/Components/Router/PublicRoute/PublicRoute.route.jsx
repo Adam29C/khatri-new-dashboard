@@ -26,12 +26,12 @@ const publicRoutes = [
           <PublicRoute element={BlockedUser} isAuthenticated={isAuthenticated} />
         ),
       },
-      // {
-      //   path: "tokenexpiry",
-      //   element: (
-      //     <PublicRoute element={ExpiredUser} isAuthenticated={isAuthenticated} />
-      //   ),
-      // },
+      {
+        path: "tokenexpiry",
+        element: (
+          <PublicRoute element={ExpiredUser} isAuthenticated={isAuthenticated} />
+        ),
+      },
       
     ],
   },

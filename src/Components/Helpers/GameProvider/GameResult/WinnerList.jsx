@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PagesIndex from "../../../Pages/PagesIndex";
 import Split_Main_Containt from "../../../Layout/Main/Split_Main_Content";
 import ReusableModal from "../../../Helpers/Modal/ReusableModal";
-import ConfirmationModal from "../../Confirm_Box";
+// import ConfirmationModal from "../../Confirm_Box";
 
 const WinnerList = () => {
   //get token in localstorage
@@ -164,15 +164,15 @@ const WinnerList = () => {
             visibleFields={visibleFields}
             UserFullButtonList={UserFullButtonList}
             confirm_button={
-              <ConfirmationModal
-                title="Are you sure you want to delete this file?"
-                text="This action cannot be undone."
-                icon="warning"
-                confirmButtonText="Yes, delete it!"
-                cancelButtonText="No, cancel!"
-                Buttontitle="Confirm"
-                onConfirm={ConfirmPayment}
-              />
+              // <ConfirmationModal
+              //   title="Are you sure you want to delete this file?"
+              //   text="This action cannot be undone."
+              //   icon="warning"
+              //   confirmButtonText="Yes, delete it!"
+              //   cancelButtonText="No, cancel!"
+              //   Buttontitle="Confirm"
+              //   onConfirm={ConfirmPayment}
+              // />
 
               //   <button
               //     className="btn btn-primary"
@@ -180,7 +180,7 @@ const WinnerList = () => {
               //   >
               //     confirm
               //   </button>
-            }
+           "" }
             searchInput={
               <>
                 <input

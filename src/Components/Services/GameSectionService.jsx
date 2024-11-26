@@ -149,10 +149,12 @@ export const STARLINE__AND_JACKPOT_GAME_RATE_DELETE_API = async (
   data,
   token
 ) => {
+
+  
   try {
-    const res = await axios.delete(`${BASE_URL}${api_Route}`, {
+    const res = await axios.delete(`${BASE_URL}${api_Route}?gameRateId=${data}`, {
       headers: header(token),
-      data: data, // Pass the payload here
+      // data: data, // Pass the payload here
     });
     return res?.data;
   } catch (error) {
@@ -377,13 +379,9 @@ export const STARLINE_GAME_DISTIBUTE_FUND_WINNERS_API = async (
 
 // ---------------FOR ALL GAME REVERT PAYMENT  ---------------------
 
-export const ALL_GAME_REVERT_PAYMENT_API = async (
-  api_Route,
-  data,
-  token
-) => {
+export const ALL_GAME_REVERT_PAYMENT_API = async (api_Route, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${api_Route}`, data, {
+    const res = await axios.get(`${BASE_URL}${api_Route}`, {
       headers: header(token),
     });
     return res?.data;
@@ -398,7 +396,7 @@ export const STARLINE_GAME_CONFIRM_REVERT_PAYMENT_API = async (
   token
 ) => {
   try {
-    const res = await axios.patch(`${BASE_URL}${api_Route}`, data, {
+    const res = await axios.post(`${BASE_URL}${api_Route}`, data, {
       headers: header(token),
     });
     return res?.data;
@@ -407,5 +405,33 @@ export const STARLINE_GAME_CONFIRM_REVERT_PAYMENT_API = async (
   }
 };
 
-
 // ---------------FOR ALL GAME REVERT PAYMENT  ---------------------
+
+// ---------------FOR ALL GAME REFUND PAYMENT  ---------------------
+
+export const ALL_GAME_REFUND_PAYMENT_API = async (api_Route, token) => {
+  try {
+    const res = await axios.get(`${BASE_URL}${api_Route}`, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// export const STARLINE_GAME_CONFIRM_REVERT_PAYMENT_API = async (
+//   api_Route,
+//   data,
+//   token
+// ) => {
+//   try {
+//     const res = await axios.post(`${BASE_URL}${api_Route}`, data, {
+//       headers: header(token),
+//     });
+//     return res?.data;
+//   } catch (error) {
+//     return error;
+//   }
+// };
+// ---------------FOR ALL GAME REFUND PAYMENT  ---------------------

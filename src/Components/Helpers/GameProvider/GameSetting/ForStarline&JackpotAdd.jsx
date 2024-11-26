@@ -18,9 +18,6 @@ const ForStarlineJackpotAdd = ({
 
   const [Data, setData] = PagesIndex.useState([]);
 
-  console.log("api_Route2", api_Route2);
-  console.log("Data", Data);
-
   const getGameProviderList = async () => {
     let providerapidata = {
       userId: userId,
@@ -155,7 +152,7 @@ const ForStarlineJackpotAdd = ({
           navigate(path);
         }, 1000);
       } else {
-        PagesIndex.toast.error(res.response.data.message);
+        PagesIndex.toast.error(res?.response?.data?.message || res?.message);
         setTimeout(() => {
           navigate(path);
         }, 1000);

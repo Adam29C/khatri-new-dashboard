@@ -11,7 +11,6 @@ const GameProvider = ({
   add_provider,
   edit_provider,
   remove_provider,
-  
 }) => {
   const token = localStorage.getItem("token");
 
@@ -33,6 +32,8 @@ const GameProvider = ({
           provider_list,
           token
         );
+
+
       if (res.status) {
         setGetProviderData(res.data);
       }
@@ -163,7 +164,7 @@ const GameProvider = ({
                   token
                 );
 
-          console.log("resres", res);
+          // console.log("resres", res);
         } else {
           const payload = {
             gamename: values.gamename,

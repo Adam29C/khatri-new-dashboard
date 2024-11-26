@@ -1,7 +1,7 @@
 import PagesIndex from "../../../Pages/PagesIndex";
 import { Confirm_box } from "../../Confirm_Box";
 
-const RevertPayment = ({ main_result, confirm_revert_payment }) => {
+const RefundPayment = ({ refund_list, confirm_revert_payment }) => {
   const token = localStorage.getItem("token");
   let { user_id, role } = JSON.parse(localStorage.getItem("userdetails"));
 
@@ -24,8 +24,8 @@ const RevertPayment = ({ main_result, confirm_revert_payment }) => {
       searchQuery: SearchInTable,
     };
 
-    const res = await PagesIndex.game_service.ALL_GAME_REVERT_PAYMENT_API(
-      main_result,
+    const res = await PagesIndex.game_service.ALL_GAME_REFUND_PAYMENT_API(
+      refund_list,
       // payload,
       token
     );
@@ -70,7 +70,6 @@ const RevertPayment = ({ main_result, confirm_revert_payment }) => {
 
     try {
       if (res.statusCode === 200) {
-
         Confirm_box({
           title1: "You won't be able to revert this!",
           title2: "Item has been deleted successfully!",
@@ -86,7 +85,7 @@ const RevertPayment = ({ main_result, confirm_revert_payment }) => {
       <PagesIndex.Main_Containt
         add_button={false}
         route="/admin/user/add"
-        title="Revert Game Result Payment"
+        title="Starline Refund Payment List"
       >
         <PagesIndex.TableWithCustomPeginationButton
           data={TableData}
@@ -122,4 +121,4 @@ const RevertPayment = ({ main_result, confirm_revert_payment }) => {
   );
 };
 
-export default RevertPayment;
+export default RefundPayment;
