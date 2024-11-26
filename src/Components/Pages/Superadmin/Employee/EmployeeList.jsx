@@ -12,6 +12,7 @@ const EmployeeList = () => {
   const [data, setData] = PagesIndex.useState([]);
   const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
   const [visible, setVisible] = PagesIndex.useState(false);
+
 const [adminId,setAdminId]=useState()
   //dynamic header keys for datatable
   const visibleFields = ["id", "username", "name", "username", "loginStatus"];
@@ -114,28 +115,7 @@ const [adminId,setAdminId]=useState()
   }
 
 
-    //handle block and unblock status function
-    const handleStatusUpdate = async (row) => {
-      console.log(row)
-      try {
-        let apidata = {
-          id: row._id,
-          status: !row.disabled,
-        };
-  
-        const response = await PagesIndex.admin_services.BLOCK_EMPLOYEE_API(
-            apidata,
-            token
-          );
-  
-        if (response?.status) {
-          PagesIndex.toast.success(response.message);
-          getList();
-        }
-      } catch (error) {
-        PagesIndex.toast.error(error);
-      }
-    };
+
   
     //delete fund mode list start
     const handleDelete = async (row) => {
@@ -147,7 +127,7 @@ const [adminId,setAdminId]=useState()
   
       try {
         const apidata = {
-          id: row?._id,
+          adminId: row?._id,
         };
   
         const res = await PagesIndex.admin_services.DELETE_EMPLOYEE(
@@ -161,6 +141,29 @@ const [adminId,setAdminId]=useState()
         }
       } catch (error) {}
     };
+
+        //handle block and unblock status function
+        const handleStatusUpdate = async (row) => {
+          console.log(row)
+          try {
+            let apidata = {
+              adminId: row._id,
+              status: row.banned === 1 ? 0 : 1,
+            };
+      
+            const response = await PagesIndex.admin_services.BLOCK_EMPLOYEE_API(
+                apidata,
+                token
+              );
+      
+            if (response?.status) {
+              PagesIndex.toast.success(response.message);
+              getList();
+            }
+          } catch (error) {
+            PagesIndex.toast.error(error);
+          }
+        };
 
   const handleActionBtn = (row, buttonStatus) => {
     switch (buttonStatus) {
@@ -196,8 +199,8 @@ const [adminId,setAdminId]=useState()
     },
     {
       id: 1,
-      buttonName: "Block",
-      buttonColor: "danger",
+      buttonName: (row) => (row.banned === 1 ? "Unblock" : "Block"),
+      buttonColor: (row) => (row.banned === 1 ? "success" : "danger"),
       Conditions: (row) => {
         handleActionBtn(row, 1);
       },
@@ -222,7 +225,6 @@ const [adminId,setAdminId]=useState()
       Conditions: (row) => {
         handleActionBtn(row, 3);
       },
-
       Visiblity: false,
       type: "button",
     },

@@ -32,7 +32,7 @@ const Api = {
 
 
   EMPLOYEE_LIST: "master/employees",
-  BLOCK_EMPLOYEE: "admin/blockEmployee",
+  BLOCK_EMPLOYEE: "master/employees/blockEmployee",
   DELETE_EMPLOYEE: "admin/deleteEmployee",
 
   //MAIN GAME API'S

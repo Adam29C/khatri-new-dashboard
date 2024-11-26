@@ -9,7 +9,7 @@ function AddEmployee() {
   const navigate = PagesIndex.useNavigate();
   const location = PagesIndex.useLocation();
   const userData = location?.state?.row;
-console.log(location.state.row)
+
   const formik = PagesIndex.useFormik({
     initialValues: {
       employeeName: userData?.name || "",
