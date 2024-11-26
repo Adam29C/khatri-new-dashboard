@@ -11,7 +11,6 @@ const GameProvider = ({
   add_provider,
   edit_provider,
   remove_provider,
-  
 }) => {
   const token = localStorage.getItem("token");
 
@@ -33,9 +32,8 @@ const GameProvider = ({
           provider_list,
           token
         );
+      console.log("res", res);
 
-        console.log("res" ,res);
-        
       if (res.status) {
         setGetProviderData(res.data);
       }
@@ -43,7 +41,6 @@ const GameProvider = ({
       dispatch(Games_Provider_List(token));
     }
   };
-
 
   PagesIndex.useEffect(() => {
     getGameProviderList();
@@ -144,7 +141,6 @@ const GameProvider = ({
     },
 
     onSubmit: async (values) => {
-
       try {
         let res;
         if (gametype === "StarLine" || gametype === "JackPot") {
@@ -168,7 +164,7 @@ const GameProvider = ({
                   token
                 );
 
-          console.log("resres", res);
+          // console.log("resres", res);
         } else {
           const payload = {
             gamename: values.gamename,

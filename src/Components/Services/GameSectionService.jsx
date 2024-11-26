@@ -149,10 +149,12 @@ export const STARLINE__AND_JACKPOT_GAME_RATE_DELETE_API = async (
   data,
   token
 ) => {
+
+  
   try {
-    const res = await axios.delete(`${BASE_URL}${api_Route}`, {
+    const res = await axios.delete(`${BASE_URL}${api_Route}?gameRateId=${data}`, {
       headers: header(token),
-      data: data, // Pass the payload here
+      // data: data, // Pass the payload here
     });
     return res?.data;
   } catch (error) {

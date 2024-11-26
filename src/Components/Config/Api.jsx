@@ -43,7 +43,6 @@ const Api = {
   STARLINE_GAME_PROVIDERS_GET_BY_ID: "starlineProvider/starLineProviderById",
 
   // GAME RATE
-
   STARLINE_GAME_RATE_LIST: "starGameRate",
   STARLINE_GAME_RATE_ADD: "starGameRate/insertGame",
   STARLINE_GAME_RATE_UPDATE: "starGameRate/update",
@@ -75,20 +74,11 @@ const Api = {
   STARLINE_GAME_SETTING_UPDATE_ALL: "starGameSetting/updateProviderSettings",
   STARLINE_GAME_SETTING_UPDATE_ONE: "starGameSetting",
 
-  // JACKPOT GAME SETTING CRUD
-
-  JACKPOT_GAME_PROVIDERS: "abGameSetting/addSetting",
-  JACKPOT_GAME_SETTING_LIST: "abGameSetting",
-  JACKPOT_GAME_SETTING_ADD: "abGameSetting/insertSettings",
-  JACKPOT_GAME_SETTING_UPDATE_ALL: "abGameSetting/updateProviderSettings",
-  JACKPOT_GAME_SETTING_UPDATE_ONE: "abGameSetting",
-
   //   ADMIN_GAME_SETTING_ADD: "mainGameSetting/insertSettings",
   //   ADMIN_GAME_SETTING_UPDATEALL: "mainGameSetting/updateAll"
   // starGameSetting
 
-
-  //  STARLINE GAME RESULT - 
+  //  STARLINE GAME RESULT -
   STARLINE_GAME_MAIN_RESULT: "starGameResult",
   STARLINE_GAME_MAIN_RESULT_ADD: "starGameResult",
   STARLINE_GAME_PAST_RESULT: "starGameResult/pastResult",
@@ -98,33 +88,33 @@ const Api = {
   // STARLINE_GAME_SETTING_UPDATE_ALL: "starGameSetting/updateProviderSettings",
   // STARLINE_GAME_SETTING_UPDATE_ONE: "starGameSetting",
 
-
-  //  STARLINE REVERT PAYMENT - 
-
+ //  STARLINE REVERT PAYMENT -
   STARLINE_GAME_REVERT_PAYMENT: "starGameResult/revertPayment",
   STARLINE_GAME_CONFIRM_REVERT_PAYMENT: "starGameResult/paymentRevert",
-  
 
-    //  STARLINE REVERT PAYMENT - 
+  //  STARLINE REVERT PAYMENT -
 
-    STARLINE_GAME_REFUND_PAYMENT: "mainGameResult/refundPayment",
-    STARLINE_GAME_CONFIRM_REVERT_PAYMENT: "starGameResult/paymentRevert",
+  STARLINE_GAME_REFUND_PAYMENT: "mainGameResult/refundPayment",
+  STARLINE_GAME_CONFIRM_REVERT_PAYMENT: "starGameResult/paymentRevert",
 
-    
-
-
+  // JACKPOT GAME PROVIDER CRUD
+  JACKPOT_GAME_PROVIDER_LIST: "abGameSetting",
+  JACKPOT_GAME_PROVIDER_ADD: "abGameProvider/insertGame",
+  JACKPOT_GAME_PROVIDER_UPDATE: "abGameProvider",
+  JACKPOT_GAME_PROVIDERS_DELETE: "abGameProvider",
 
   // JACKPOT GAME SETTING CRUD
-
   JACKPOT_GAME_PROVIDERS: "abGameSetting/addSetting",
   JACKPOT_GAME_SETTING_LIST: "abGameSetting",
   JACKPOT_GAME_SETTING_ADD: "abGameSetting/insertSettings",
   JACKPOT_GAME_SETTING_UPDATE_ALL: "abGameSetting/updateProviderSettings",
   JACKPOT_GAME_SETTING_UPDATE_ONE: "abGameSetting",
 
-  //   ADMIN_GAME_SETTING_ADD: "mainGameSetting/insertSettings",
-  //   ADMIN_GAME_SETTING_UPDATEALL: "mainGameSetting/updateAll"
-  // starGameSetting
+  // JACKPOT GAME RATE
+  JACKPOT_GAME_RATE_LIST: "abGameRate",
+  JACKPOT_GAME_RATE_ADD: "abGameRate/insertGame",
+  JACKPOT_GAME_RATE_UPDATE: "abGameRate/update",
+  JACKPOT_GAME_RATE_REMOVE: "abGameRate",
 
   ADMIN_CHANGE_PASSWORD: "admin/changePassword",
 

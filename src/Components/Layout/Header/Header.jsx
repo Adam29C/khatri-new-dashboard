@@ -44,11 +44,11 @@ const Header = () => {
   };
 
   const abcd = () => {
-    // const checkTokenExpiry = () => {
-    //   GetExpired(token, navigate);
-    // };
-    // const interval = setInterval(checkTokenExpiry, 5000);
-    // return () => clearInterval(interval);
+    const checkTokenExpiry = () => {
+      GetExpired(token, navigate);
+    };
+    const interval = setInterval(checkTokenExpiry, 5000);
+    return () => clearInterval(interval);
   };
 
   PagesIndex.useEffect(() => {

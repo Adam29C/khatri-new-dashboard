@@ -21,7 +21,7 @@ const GameRatesProvider = ({
 
   //get game list start
   const getGameRatesList = async () => {
-    if (gameType === "StarLine" || gameType === "StarLine") {
+    if (gameType === "StarLine" || gameType === "JackPot") {
       const res =
         await PagesIndex.game_service.STARLINE_AND_JACKPOT_GAME_RATE_LIST_API(
           GameRate_list,
@@ -48,11 +48,11 @@ const GameRatesProvider = ({
 
     try {
       let res;
-      if (gameType === "StarLine" || gameType === "StarLine") {
+      if (gameType === "StarLine" || gameType === "JackPot") {
         res =
           await PagesIndex.game_service.STARLINE__AND_JACKPOT_GAME_RATE_DELETE_API(
             GameRate_delete,
-            { gameRateId: id },
+            id,
             token
           );
       } else {
@@ -64,8 +64,6 @@ const GameRatesProvider = ({
       } else {
         PagesIndex.toast.error(res?.response?.data?.message);
       }
-
-      // getGameRatesList();
     } catch (error) {
       console.log(error);
     }
@@ -85,26 +83,26 @@ const GameRatesProvider = ({
     setVisible(true);
   };
 
-  const handleActionBtn = (row, buttonStatus) => {
-    if (buttonStatus === 1) {
-      setModalType("Edit");
-      setSelectedRow(row);
-      formik.resetForm({
-        values: {
-          gamename: row.providerName,
-          result: row.providerResult,
-          mobile: row.mobile,
-          activeStatus: row.activeStatus,
-        },
-      });
+  // const handleActionBtn = (row, buttonStatus) => {
+  //   if (buttonStatus === 1) {
+  //     setModalType("Edit");
+  //     setSelectedRow(row);
+  //     formik.resetForm({
+  //       values: {
+  //         gamename: row.providerName,
+  //         result: row.providerResult,
+  //         mobile: row.mobile,
+  //         activeStatus: row.activeStatus,
+  //       },
+  //     });
 
-      setVisible(true);
-    } else if (buttonStatus === 2) {
-      handleDelete(row?._id);
-    } else {
-      return "";
-    }
-  };
+  //     setVisible(true);
+  //   } else if (buttonStatus === 2) {
+  //     handleDelete(row?._id);
+  //   } else {
+  //     return "";
+  //   }
+  // };
 
   // Formik Configuration
   const formik = PagesIndex.useFormik({
@@ -124,8 +122,7 @@ const GameRatesProvider = ({
     onSubmit: async (values) => {
       try {
         let res = "";
-
-        if (gameType === "StarLine" || gameType === "StarLine") {
+        if (gameType === "StarLine" || gameType === "JackPot") {
           const payload = {
             gameName: values.gameName,
             gamePrice: values.gamePrice,
@@ -163,29 +160,7 @@ const GameRatesProvider = ({
                 );
         }
 
-      
-
         if (res.status) {
-
-          
-        Swal.fire({
-          title: "Are you sure?",
-          text: "You won't be able to revert this!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Yes, delete it!",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            Swal.fire({
-              title: "Deleted!",
-              text: "Your file has been deleted.",
-              icon: "success",
-            });
-          }
-        });
-
           PagesIndex.toast.success(res?.message);
           getGameRatesList();
           setVisible(false); // Close modal
@@ -219,7 +194,7 @@ const GameRatesProvider = ({
       buttonColor: "danger",
       route: "users/deleted",
       Conditions: (row) => {
-        handleDelete(row);
+        handleDelete(row._id);
       },
       Visiblity: false,
       type: "button",

@@ -14,9 +14,9 @@ import EmployeeList from "../../Pages/Superadmin/Employee/EmployeeList";
 import Add_Edit_Employee from "../../Pages/Superadmin/Employee/Add_Edit_Employee";
 import System from "../../Pages/Superadmin/PenalInfo/System";
 import Games from "../../Pages/Superadmin/Games/AvailableGames/Games";
-import GameProviderAdd from "../../Helpers/GameProvider/GameCrud/GameProviderAdd";
+// import GameProviderAdd from "../../Helpers/GameProvider/GameCrud/GameProviderAdd";
 import GameRates from "../../Pages/Superadmin/Games/AvailableGames/GameRates/GameRates";
-import GameRatesAdd from "../../Helpers/GameProvider/GameRates/GameRatesAdd";
+// import GameRatesAdd from "../../Helpers/GameProvider/GameRates/GameRatesAdd";
 import GameSetting from "../../Pages/Superadmin/Games/AvailableGames/GameSettingList";
 import GameSettingAdd from "../../Helpers/GameProvider/GameSetting/GameSettingAdd";
 import CuttingGroup from "../../Pages/Superadmin/CuttingGroup/CuttingGroup";
@@ -56,12 +56,12 @@ import StarLineSettingsList from "../../Pages/Superadmin/Games/Starline/StarLine
 import ForStarlineJackpotAdd from "../../Helpers/GameProvider/GameSetting/ForStarline&JackpotAdd";
 import StarLineSettingsAddEdit from "../../Pages/Superadmin/Games/Starline/StarLineSettings/StarLineSettingsAddEdit";
 import StarLineGameRate from "../../Pages/Superadmin/Games/Starline/StarLineRates/StarLineGameRate";
-import StarLineRatesAddEdit from "../../Pages/Superadmin/Games/Starline/StarLineRates/StarLineRatesAddEdit";
-import GameRatesAddEdit from "../../Pages/Superadmin/Games/AvailableGames/GameRates/GameRatesAddEdit";
+// import StarLineRatesAddEdit from "../../Pages/Superadmin/Games/Starline/StarLineRates/StarLineRatesAddEdit";
+// import GameRatesAddEdit from "../../Pages/Superadmin/Games/AvailableGames/GameRates/GameRatesAddEdit";
 import JackpotProvider from "../../Pages/Superadmin/Games/Jackpot/JackPotProvider/JackpotProvider";
 import JackPotProviderAddEdit from "../../Pages/Superadmin/Games/Jackpot/JackPotProvider/JackPotProviderAddEdit";
 import JackPotRates from "../../Pages/Superadmin/Games/Jackpot/JackPotRates/JackPotRates";
-import JackPotRatesAddEdit from "../../Pages/Superadmin/Games/Jackpot/JackPotRates/JackPotRatesAddEdit";
+// import JackPotRatesAddEdit from "../../Pages/Superadmin/Games/Jackpot/JackPotRates/JackPotRatesAddEdit";
 import NoticeBoard from "../../Pages/Superadmin/AppSettings/NoticeBoard";
 import JackPotSettings from "../../Pages/Superadmin/Games/Jackpot/JackPotSettings/JackPotSettings";
 import JackPotAddEdit from "../../Pages/Superadmin/Games/Jackpot/JackPotSettings/JackPotAddEdit";
@@ -122,26 +122,26 @@ const adminRoutes = [
         path: "games",
         element: <PrivateRoute element={Games} />,
       },
-      {
-        path: "game/add",
-        element: <PrivateRoute element={GameProviderAdd} />,
-      },
-      {
-        path: "game/edit",
-        element: <PrivateRoute element={GameProviderAdd} />,
-      },
+      // {
+      //   path: "game/add",
+      //   element: <PrivateRoute element={GameProviderAdd} />,
+      // },
+      // {
+      //   path: "game/edit",
+      //   element: <PrivateRoute element={GameProviderAdd} />,
+      // },
       {
         path: "game/rates",
         element: <PrivateRoute element={GameRates} />,
       },
-      {
-        path: "game/rate/add",
-        element: <PrivateRoute element={GameRatesAddEdit} />,
-      },
-      {
-        path: "game/rate/edit",
-        element: <PrivateRoute element={GameRatesAddEdit} />,
-      },
+      // {
+      //   path: "game/rate/add",
+      //   element: <PrivateRoute element={GameRatesAddEdit} />,
+      // },
+      // {
+      //   path: "game/rate/edit",
+      //   element: <PrivateRoute element={GameRatesAddEdit} />,
+      // },
       {
         path: "game/settings",
         element: <PrivateRoute element={GameSetting} />,
@@ -198,14 +198,14 @@ const adminRoutes = [
         path: "games/starlinegamerates",
         element: <PrivateRoute element={StarLineGameRate} />,
       },
-      {
-        path: "games/starlinegamerates/add",
-        element: <PrivateRoute element={StarLineRatesAddEdit} />,
-      },
-      {
-        path: "games/starlinegamerates/edit",
-        element: <PrivateRoute element={StarLineRatesAddEdit} />,
-      },
+      // {
+      //   path: "games/starlinegamerates/add",
+      //   element: <PrivateRoute element={StarLineRatesAddEdit} />,
+      // },
+      // {
+      //   path: "games/starlinegamerates/edit",
+      //   element: <PrivateRoute element={StarLineRatesAddEdit} />,
+      // },
       {
         path: "starline/results",
         element: <PrivateRoute element={StarlineGameResult} />,
@@ -238,14 +238,14 @@ const adminRoutes = [
         path: "games/jackpotRates",
         element: <PrivateRoute element={JackPotRates} />,
       },
-      {
-        path: "games/jackpotRates/add",
-        element: <PrivateRoute element={JackPotRatesAddEdit} />,
-      },
-      {
-        path: "games/jackpotRates/edit",
-        element: <PrivateRoute element={JackPotRatesAddEdit} />,
-      },
+      // {
+      //   path: "games/jackpotRates/add",
+      //   element: <PrivateRoute element={JackPotRatesAddEdit} />,
+      // },
+      // {
+      //   path: "games/jackpotRates/edit",
+      //   element: <PrivateRoute element={JackPotRatesAddEdit} />,
+      // },
       {
         path: "games/jackpotGameSetting",
         element: <PrivateRoute element={JackPotSettings} />,
