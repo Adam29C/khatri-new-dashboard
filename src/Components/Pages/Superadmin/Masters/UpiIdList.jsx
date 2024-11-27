@@ -179,7 +179,7 @@ console.log(res)
       selector: (row) => (
         <div>
           <select
-            className="form-select-upi"
+            className="p-1"
             aria-label="Default select example"
             onChange={(e) => {
               handleStatusUpdate(e.target.value, row);
