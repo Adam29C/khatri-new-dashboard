@@ -196,7 +196,6 @@ const token = localStorage.getItem("token");
       designation: formik.values.designation,
       colViewPermission: PermissionKeysresult,
       loginFor: 1,
-      mobileNumber: 1111,
     };
     // return;
     const res = userData
