@@ -1,47 +1,66 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import FormWizardComponent from "../../../Helpers/MultiStepForm";
 import Main_Containt from "../../../Layout/Main/Main_Containt";
 import PagesIndex from "../../../Pages/PagesIndex";
-import { makePermissions, InitialValues } from "./permissions";
 import { Get_permissions } from "../../../Redux/slice/CommonSlice";
 
 function AddEmployee() {
+//get token in localstorage
+const token = localStorage.getItem("token");
+//get userid in localstorage
   let { user_id } = JSON.parse(localStorage.getItem("userdetails"));
-  const token = localStorage.getItem("token")
-  const navigate = PagesIndex.useNavigate();
-  const dispatch = PagesIndex.useDispatch();
-  const location = PagesIndex.useLocation();
-  const userData = location?.state?.row;
 
-//all state
-const [getEmplData,setGetEmpData]=useState()
-
-console.log(getEmplData?.col_view_permission)
-
+  //get all permission in redux
   const { getPermissions } = PagesIndex.useSelector(
     (state) => state.CommonSlice
   );
 
+  //use navigate dispatch location hooks
+  const navigate = PagesIndex.useNavigate();
+  const dispatch = PagesIndex.useDispatch();
+  const location = PagesIndex.useLocation();
 
-console.log(getPermissions?.col_view_permission)
+  //all states
+  const [getEmplData, setGetEmpData] = useState();
 
+  //destructure data for update form
+  const userData = location?.state?.row;
+
+//destructure data for get single user permission for update form 
+  const userdataPermission = getEmplData && getEmplData?.col_view_permission;
+
+ //destructure for get all permissions
+  const getAllPermissions = getPermissions && getPermissions?.col_view_permission;
+
+  //set for show dynamic permission on add and update form
+  const permissionOptions = getAllPermissions?.map((permission) => ({
+    labelName: permission,
+    name: permission,
+  }));
+
+  //get all permission api
   const getPermissionApi = () => {
     dispatch(Get_permissions(user_id));
   };
 
-  const getSingleEmployee = async()=>{
-    if(userData?._id){ 
-       const res = await PagesIndex.admin_services.SINGLE_EMPLOYEE_GET_LIST_API(userData?._id,token)
-       setGetEmpData(res?.data)
-      }
-  }
+  //get single employee api 
+  const getSingleEmployee = async () => {
+    if (userData?._id) {
+      const res = await PagesIndex.admin_services.SINGLE_EMPLOYEE_GET_LIST_API(
+        userData?._id,
+        token
+      );
+      setGetEmpData(res?.data);
+    }
+  };
 
+  //call get permission and get single employee api
   PagesIndex.useEffect(() => {
     getPermissionApi();
-  
-    getSingleEmployee()
+    getSingleEmployee();
   }, []);
 
+  //handle fields form for formwizard first tabs
   const formik = PagesIndex.useFormik({
     initialValues: {
       employeeName: userData?.name || "",
@@ -68,6 +87,7 @@ console.log(getPermissions?.col_view_permission)
     onSubmit: async (values) => {},
   });
 
+  //fields for formwizard first tabs
   const fields = [
     {
       name: "employeeName",
@@ -115,117 +135,32 @@ console.log(getPermissions?.col_view_permission)
   ];
 
   const filteredFields = userData
-    ? fields.filter((field) => field.name !== "password" && field.name !== "designation" && field.name !== "employeeName" )
+    ? fields.filter(
+        (field) =>
+          field.name !== "password" &&
+          field.name !== "designation" &&
+          field.name !== "employeeName"
+      )
     : fields;
 
+  //initial value set for permission checkbox fields
+  const initialValues = useMemo(() => {
+    if (!permissionOptions) return {};
+    return permissionOptions.reduce((acc, option) => {
+      acc[option.name] =
+        Array.isArray(userdataPermission) &&
+        userdataPermission.includes(option.name);
+      return acc;
+    }, {});
+  }, [permissionOptions, userdataPermission]);
+
   const formik1 = PagesIndex.useFormik({
-    initialValues: InitialValues,
+    initialValues: initialValues,
+    enableReinitialize: true,
     validate: () => ({}),
     onSubmit: async (values) => {},
   });
 
-
-  
-  function updateCheckedStatus(array1, makePermissions) {
-    const permissions = array1[0];
-    const keyMap = {
-      Dashboard: "main",
-      Users: "users",
-      Games: "games",
-      "Games Provider": "gamesProvider",
-      "Games Setting": "gamesSetting",
-      "Games Rates": "gamesRates",
-      "Games Result": "gamesResult",
-      "Games Revert": "isGamesRevert",
-      "Games Refund": "isGamesRefund",
-      Starline: "starline",
-      "Starline Provider": "starlineProvider",
-      "Starline Setting": "starlineSetting",
-      "Starline Rates": "starlineRates",
-      "Starline Result": "starlineResult",
-      "Starline Revert": "isStarlineRevert",
-      "Starline Refund": "isStarlineRefund",
-      "Andar Bahar": "ab",
-      "Andar Bahar Provider": "abProvider",
-      "Andar Bahar Setting": "abSetting",
-      "Andar Bahar Rates": "abRates",
-      "Andar Bahar Result": "abResult",
-      "Andar Bahar Revert": "isAndarBaharRevert",
-      "Andar Bahar Refund": "isAndarBaharRefund",
-      "Cutting Group": "cg",
-      "Bookie Corner": "isBookieCorner",
-      "OC Cutting Group": "isOCCuttingGroup",
-      "Final Cutting Group": "fcg",
-      Wallet: "wallet",
-      "Fund Request": "fundRequest",
-      ExportDebitReport: "exportDebit",
-      "View Wallet": "viewWallet",
-      "Request ON/OFF": "reqONOFF",
-      "Credit Request": "isCreditRequest",
-      "Approved Debit Page": "isApprovedDebitPage",
-      "Paytm Request": "isPaytmRequest",
-      "Bank Account Request": "isBankAccountRequest",
-      "Pending Debit Request": "isPendingDebitRequest",
-      "Pending Bank Request": "isPendingBankRequest",
-      "Pending Paytm Request": "isPendingPaytmRequest",
-      "Declined Request": "isDeclinedRequest",
-      Notification: "isNotification",
-      News: "isNews",
-      "Delete User": "isDeleteUser",
-      "App Settings": "isAppSettings",
-      "How To Play": "isHowToPlay",
-      "Withdraw Screen": "isWithdrawScreen",
-      "Notice Board": "isNoticeBoard",
-      "Wallet Contact": "isWalletContact",
-      "App Version": "isAppVersion",
-      Masters: "isMasters",
-      "Upi Id": "isUpiId",
-      "Add Fund Mode": "isAddFundMode",
-      "Manage Employee": "isManageEmployee",
-      "Create Employee": "isCreateEmployee",
-      Reports: "isReports",
-      "Jodi All": "isJodiAll",
-      "Sales Report": "isSalesReport",
-      "Andar Bahar Sales Report": "isAndarBaharSalesReport",
-      "Andar Bahar Total Bids": "isAndarBaharTotalBids",
-      "Starline Sales Report": "isStarlineSalesReport",
-      "Fund Report": "isFundReport",
-      "Total Bids": "isTotalBids",
-      "Ajay Sir Report": "isAjaySirReport",
-      "Credit Debit Report": "isCreditDebitReport",
-      "Daily Report": "isDailyReport",
-      "Bidding Report": "isBiddingReport",
-      "Customer Balance": "isCustomerBalance",
-      "All User Bids": "isAllUserBids",
-      "Deleted Users": "isDeletedUsers",
-      "Upi Fund Report": "isUpiFundReport",
-    };
-
-    function updateNested(array, parentKey) {
-      array.forEach((item) => {
-        const key = keyMap[item.name];
-        if (key !== undefined && permissions[key] !== undefined) {
-          item.checked = permissions[key];
-        }
-        if (item.Nasted && item.Nasted.length > 0) {
-          updateNested(item.Nasted);
-        }
-      });
-    }
-
-    updateNested(makePermissions);
-    return makePermissions;
-  }
-
-  const abcde = () => {
-    if (userData) {
-      updateCheckedStatus([userData], makePermissions);
-    }
-  };
-
-  useEffect(() => {
-    abcde()
-  }, [userData]);
 
   const fields1 = [
     {
@@ -234,61 +169,39 @@ console.log(getPermissions?.col_view_permission)
       label_size: 12,
       title_size: 12,
       col_size: 4,
-      options: makePermissions,
+      options: permissionOptions,
     },
   ];
 
+  //handlecomplete for complete the add and update form 
   const handleComplete = async () => {
-    let updatedABC = {};
-    for (let key in formik1.values) {
-      updatedABC["is" + key.replace(/\s+/g, "")] = formik1.values[key];
-    }
+    const PermissionKeys = Object.keys(formik1.values).filter(
+      (key) => formik1.values[key]
+    );
+    const PermissionKeysresult =
+      PermissionKeys.length > 0 ? PermissionKeys : [null];
 
-    var combinedObject;
-    if (userData) {
-      const combineObjects = (obj1, obj2) => {
-        const result = [];
-        for (const key in obj1) {
-          if (obj1[key] === true) {
-         
-             result.push(key);
-          }
-
-          //  else {
-          //   result[key] = obj2[key] !== undefined ? obj2[key] : obj1[key];
-          // }
-        }
-
-        return result;
-      };
-
-      combinedObject = combineObjects(updatedABC, userData);
-    }
-    console.log(combinedObject,50)
-    const req = {
-    
+    const updatereq = {
       username: formik.values.username,
-      // employeeName: formik.values.employeeName,
       loginPermission: formik.values.loginPermission,
-
-      colViewPermission: userData ? combinedObject : updatedABC,
-      ...(userData ? { id: userData?._id } : {}),
+      colViewPermission: PermissionKeysresult,
+      id: userData?._id,
     };
 
     const addreq = {
       username: formik.values.username,
-      employeeName: formik.values.employeeName,
+      name: formik.values.employeeName,
       loginPermission: formik.values.loginPermission,
       password: formik.values.password,
       designation: formik.values.designation,
-      colViewPermission:combinedObject,
-      loginFor:1,
-    }
+      colViewPermission: PermissionKeysresult,
+      loginFor: 1,
+      mobileNumber: 1111,
+    };
     // return;
-    console.log(req,100)
     const res = userData
-      ? await PagesIndex.admin_services.UPDATE_EMPLOYEE(req,token)
-      : await PagesIndex.admin_services.CREATE_EMPLOYEE(addreq,token);
+      ? await PagesIndex.admin_services.UPDATE_EMPLOYEE(updatereq, token)
+      : await PagesIndex.admin_services.CREATE_EMPLOYEE(addreq, token);
 
     if (res.status) {
       PagesIndex.toast.success(res.message);

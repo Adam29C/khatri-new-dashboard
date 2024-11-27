@@ -119,10 +119,12 @@ const ReusableForm = ({
                   <>
                     {field.options &&
                       field.options.map((option) => (
+                        
                         <div
                           className={`mb-3 col-lg-${field.col_size}`}
                           key={option.id}
                         >
+                      
                           <label
                           className={`custom-label col-lg-12`}
                           htmlFor={option.labelName}
@@ -138,6 +140,7 @@ const ReusableForm = ({
                               id={option.name}
                               {...formik.getFieldProps(option.name)}
                               defaultChecked={option.checked}
+                              checked={formik.values[option.name] || false} 
                             />
                             <label
                               className="form-check-label fw-bolder "
