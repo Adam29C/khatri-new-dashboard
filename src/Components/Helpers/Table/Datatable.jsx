@@ -1,5 +1,7 @@
   import React, { useEffect, useState } from "react";
-  import DataTable from "react-data-table-component";
+  // import {DataTable,createTheme } from "react-data-table-component";
+  import DataTable from 'react-data-table-component';
+
   import DataTableExtensions from "react-data-table-component-extensions";
   import "react-data-table-component-extensions/dist/index.css";
 
@@ -8,17 +10,27 @@
     const [visibleColumns, setVisibleColumns] = useState(columns);
     const customStyles = {
       rows: {
-        style: {},
+        style: {    
+          // borderColor: "#f3f3f3"
+        },
       },
       headCells: {
         style: {
-          backgroundColor: "#47876733",
+          backgroundColor: "#237f8a",
+          color:"#fff",
+          fontSize:"14px",
+          fontWeight:"bold",
+        border:"1px solid #dee2e6"
+
         },
       },
       cells: {
-        style: {},
+        style: { 
+          border:"1px solid #dee2e6"
+        },
       },
     };
+
 
     const func = () => {
       const handleResize = () => {
@@ -49,7 +61,7 @@
 
     const columns1 = [
       {
-        name: "Sr. No",
+        name: "ID",
         selector: (row, index) => index + 1,
         width: "70px",
       },
@@ -85,10 +97,12 @@
           filter={showFilter}
         >
           <DataTable
+          className="custom-datatable-design"
             defaultSortAsc={false}
             pagination
             highlightOnHover
             customStyles={customStyles}
+       
             noDataComponent={
               isLoading ? (
                 <div className="user-loading-main">

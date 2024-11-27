@@ -319,3 +319,10 @@ color: var(--khatri-color);
   align-items: center;
   justify-content: space-between;
 }
+.eYzbsH:not(:last-of-type) {
+  border-bottom-style: none !important; 
+  border-bottom-width: 0 !important; 
+   border-bottom-color: none !important;
+}
+
+/* data table css end */
