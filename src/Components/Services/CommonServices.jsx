@@ -103,7 +103,27 @@ export const GET_NOTIFICATION_API = async (token) => {
   }
 };
 
+export const DELETE_NOTIFICATION_API = async(id,token)=>{
+  try {
+    const res = await axios.delete(`${BASE_URL}${Api.DELETE_NOTIFICATION}${id}`,{
+      headers:header(token)
+    })
+    return res?.data;
+  } catch (error) {
+    return error
+  }
+}
 
+export const ADD_NOTIFICATION_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.ADD_NOTIFICATION}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
 //NOTIFICATION APIS
 
 

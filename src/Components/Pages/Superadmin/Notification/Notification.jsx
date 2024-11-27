@@ -28,64 +28,41 @@ const Notification = () => {
     getList();
   }, []);
 
-  //handle status update function for upi list
-  const handleStatusUpdate = async (event, value) => {
-    try {
-      const apidata = {
-        id: value?._id,
-        status: event === "true",
-        stat: 1,
-      };
-      const response = await PagesIndex.admin_services.BLOCK_UPI_LIST_API(
-        apidata,
-        token
-      );
 
-      if (response?.status) {
-        toast.success(response.message);
-        getList();
-      } else {
-        alert(response.message);
-      }
-    } catch (error) {
-      PagesIndex.toast.error(error);
-    }
-  };
 
   //formik form
   const formik = PagesIndex.useFormik({
     initialValues: {
-      upiName: "",
-      status: "",
+      title: "",
+      message: "",
     },
     validate: (values) => {
       const errors = {};
-      if (!values.upiName) {
-        errors.upiName = PagesIndex.valid_err.EMPTY_UPI_ERROR;
+      if (!values.title) {
+        errors.title = PagesIndex.valid_err.TITLE_ERROR;
       }
-      if (!values.status) {
-        errors.status = PagesIndex.valid_err.STATUS_ERROR;
+      if (!values.message) {
+        errors.message = PagesIndex.valid_err.REQUIRE_MESSAGE;
       }
       return errors;
     },
 
     onSubmit: async (values) => {
+      console.log(values)
       try {
         let apidata = {
-          upiId: values.upiName,
-          status: values.status === "true",
+          title: values.title,
+          message: values.message ,
         };
 
-        const res = await PagesIndex.admin_services.ADD_UPI_LIST_API(
-          apidata,
-          token
-        );
+        const res = await PagesIndex.common_services.ADD_NOTIFICATION_API(apidata,token);
         console.log(res);
         if (res?.status) {
           PagesIndex.toast.success(res?.message);
           getList();
           setVisible(false);
-          formik.setFieldValue("upiName", "");
+          formik.setFieldValue("title", "");
+          formik.setFieldValue("message", "");
         } else {
           PagesIndex.toast.error(res.message);
           setVisible(false);
@@ -106,7 +83,7 @@ const Notification = () => {
     },
 
     {
-      name: "status",
+      name: "message",
       label: "Message",
       type: "msgbox",
       label_size: 12,
@@ -127,11 +104,9 @@ const Notification = () => {
     if (!confirmDelete) return;
 
     try {
-      const apidata = {
-        id: row?._id,
-      };
-      const res = await PagesIndex.admin_services.DELETE_UPI_LIST_API(
-        apidata,
+    
+      const res = await PagesIndex.common_services.DELETE_NOTIFICATION_API(
+        row?._id,
         token
       );
       console.log(res);
