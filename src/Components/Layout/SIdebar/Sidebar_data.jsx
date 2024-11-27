@@ -437,7 +437,7 @@ export const admin_Sidebar = [
   },
   {
     id: 14,
-    route: "#",
+    route: "notification",
     headerTitle: "Notification",
     title: "Notification",
     Icon: "fa-regular fa-bell",
@@ -469,9 +469,9 @@ export const admin_Sidebar = [
   {
     id: 17,
     route: "users/deleted",
-    headerTitle: "Notification",
+ 
     title: "Deleted Users",
-    permission: "deleteUser",
+    permission: "delete",
     Icon: "fa-regular fa-bell",
     NestedElement: [],
   },

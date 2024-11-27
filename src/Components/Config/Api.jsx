@@ -98,8 +98,12 @@ const Api = {
   GET_FUND_MODE:"upiId/fundMode",
   ADD_FUND_MODE:"upiId/modeAdd",
   DELETE_FUND_MODE:"upiId/dlt_mode",
-CHANGE_STATUS_FUND_MODE:"upiId/disable_mode"
+CHANGE_STATUS_FUND_MODE:"upiId/disable_mode",
 
+//notification apis
+GET_NOTIFICATION : "notification",
+ADD_NOTIFICATION : "notification/inserNotification",
+DELETE_NOTIFICATION : "notification/",
 
 };
 

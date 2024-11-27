@@ -89,9 +89,12 @@ export const BLOCK_USER_API = async (request, token) => {
   }
 };
 
-export const DELETED_USERS_API = async (request, token) => {
+
+//NOTIFICATION APIS
+
+export const GET_NOTIFICATION_API = async (token) => {
   try {
-    const res = await dataservice.post(`${Api.DELETED_USERS}`, request, {
+    const res = await axios.get(`${BASE_URL}${Api.GET_NOTIFICATION}`, {
       headers: header(token),
     });
     return res?.data;
@@ -99,3 +102,8 @@ export const DELETED_USERS_API = async (request, token) => {
     return error;
   }
 };
+
+
+//NOTIFICATION APIS
+
+

@@ -56,6 +56,7 @@ import HowToPlay from "../../Pages/Superadmin/AppSettings/HowToPlay";
 import UpiIdList from "../../Pages/Superadmin/Masters/UpiIdList";
 import ProfileNote from "../../Pages/Superadmin/AppSettings/ProfileNote";
 import FundMode from "../../Pages/Superadmin/Masters/FundMode";
+import Notification from "../../Pages/Superadmin/Notification/Notification";
 
 
 // Mock authentication status
@@ -305,6 +306,10 @@ const adminRoutes = [
       {
         path: "masters/fundMode",
         element: <PrivateRoute element={FundMode} />,
+      },
+      {
+        path: "notification",
+        element: <PrivateRoute element={Notification} />,
       },
   
     ],
