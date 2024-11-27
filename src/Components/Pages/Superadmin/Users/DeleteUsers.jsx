@@ -2,7 +2,6 @@ import React from "react";
 import PagesIndex from "../../PagesIndex";
 
 const DeleteUsers = () => {
-
   //get token in localstorage
   const token = localStorage.getItem("token");
 
@@ -47,41 +46,41 @@ const DeleteUsers = () => {
 
   const UserFullButtonList = [];
 
- // Handle field changes
- const handleFieldChange = (field, value, row) => {
-  setUpdatedData((prev) => ({
-    ...prev,
-    [row._id]: {
-      ...prev[row._id],
-      [field]: value,
-    },
-  }));
-};
+  // Handle field changes
+  const handleFieldChange = (field, value, row) => {
+    setUpdatedData((prev) => ({
+      ...prev,
+      [row._id]: {
+        ...prev[row._id],
+        [field]: value,
+      },
+    }));
+  };
 
-// Submit handler
-const handleSubmit = async () => {
-  const timeList = timehistoryData.map((item) => ({
-    _id: item._id,
-    deleteTime: updatedData[item._id]?.deleteTime || item.deleteTime,
-    isActive: updatedData[item._id]?.isActive || item.isActive,
-    name: item.name,
-  }));
+  // Submit handler
+  const handleSubmit = async () => {
+    const timeList = timehistoryData.map((item) => ({
+      _id: item._id,
+      deleteTime: updatedData[item._id]?.deleteTime || item.deleteTime,
+      isActive: updatedData[item._id]?.isActive || item.isActive,
+      name: item.name,
+    }));
 
-  // Send payload to API
-  const payload = { timeList };
-  const res = await PagesIndex.admin_services.DELETED_USERS_TIMEHISTORY_API(
-    payload,
-    token
-  );
+    // Send payload to API
+    const payload = { timeList };
+    const res = await PagesIndex.admin_services.DELETED_USERS_TIMEHISTORY_API(
+      payload,
+      token
+    );
 
-  if (res?.status) {
-   PagesIndex.toast.success(res?.message)
-    getDeletedUserTimeHistoryList(); 
-    setUpdatedData({}); 
-  } else {
-    PagesIndex.toast.error(res?.message)
-  }
-};
+    if (res?.status) {
+      PagesIndex.toast.success(res?.message);
+      getDeletedUserTimeHistoryList();
+      setUpdatedData({});
+    } else {
+      PagesIndex.toast.error(res?.message);
+    }
+  };
 
   const columns = [
     {
@@ -93,7 +92,14 @@ const handleSubmit = async () => {
       name: "deleteTime",
       selector: (row) => (
         <div>
-          <input class="form-select-upi" type="text"    value={updatedData[row._id]?.deleteTime || row.deleteTime} onChange={(e)=>{handleFieldChange("deleteTime",e.target.value,row)}}/>
+          <input
+            class="deleted-user-field"
+            type="text"
+            value={updatedData[row._id]?.deleteTime || row.deleteTime}
+            onChange={(e) => {
+              handleFieldChange("deleteTime", e.target.value, row);
+            }}
+          />
         </div>
       ),
     },
@@ -103,10 +109,12 @@ const handleSubmit = async () => {
       selector: (row) => (
         <div>
           <select
-            className="form-select-upi"
+            className="p-1"
             aria-label="Default select example"
             value={updatedData[row._id]?.isActive || row.isActive}
-            onChange={(e)=>{handleFieldChange("isActive",e.target.value,row)}}
+            onChange={(e) => {
+              handleFieldChange("isActive", e.target.value, row);
+            }}
           >
             <option value="true">True</option>
             <option value="false">False</option>
@@ -114,11 +122,8 @@ const handleSubmit = async () => {
         </div>
       ),
     },
-
- 
   ];
 
- 
   const cardLayouts = [
     {
       size: 12,
@@ -126,7 +131,6 @@ const handleSubmit = async () => {
         <div>
           <div>
             <h4 class="profile-note-title mt-0 mb-4">View All Users</h4>
-           
           </div>
           <PagesIndex.TableWitCustomPegination
             data={deletedUserData}
@@ -153,10 +157,9 @@ const handleSubmit = async () => {
         <div>
           <div className="delete-user-main">
             <h4 class="profile-note-title mt-0 mb-4">Delete All Users Data</h4>
-            <button
-            className="btn btn-dark"
-            onClick={handleSubmit}
-          >Submit</button>
+            <button className="btn btn-dark" onClick={handleSubmit}>
+              Submit
+            </button>
           </div>
           <PagesIndex.Data_Table columns={columns} data={timehistoryData} />
         </div>
@@ -171,7 +174,7 @@ const handleSubmit = async () => {
         add_button={false}
         cardLayouts={cardLayouts}
       />
-      <PagesIndex.toast/>
+      <PagesIndex.toast />
     </>
   );
 };
