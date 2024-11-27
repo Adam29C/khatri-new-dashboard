@@ -471,7 +471,7 @@ export const admin_Sidebar = [
     route: "users/deleted",
     headerTitle: "Notification",
     title: "Deleted Users",
-    permission: "delete",
+    permission: "deleteUser",
     Icon: "fa-regular fa-bell",
     NestedElement: [],
   },

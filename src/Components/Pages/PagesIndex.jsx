@@ -40,6 +40,8 @@ import WalletMain from "../Helpers/Wallet/WalletMain";
 import ChangeStatus from "../Helpers/ChangeStatus";
 import TableWitCustomPegination from "../Helpers/Table/TableWithCustomPegination"
 import ModalComponent from "../Helpers/Modal/ModalComponent";
+import Split_Main_Containt from "../Layout/Main/Split_Main_Content";
+
 const PagesIndex = {
   useDispatch,
   useState,
@@ -83,7 +85,8 @@ const PagesIndex = {
   Mobile_regex,
   common_services,
   TableWitCustomPegination,
-  ModalComponent
+  ModalComponent,
+  Split_Main_Containt
 };
 
 export default PagesIndex;

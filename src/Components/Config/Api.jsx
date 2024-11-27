@@ -14,11 +14,14 @@ const Api = {
 
   //USERS
   USERS_LIST: "allUser/getAllUsers",
-  DELETED_USERS: "/allUser/deleteUserByAdmin",
   USER_PROFILE_GET: "/allUser/getProfile",
   BLOCK_USER: "/allUser/blockUser",
 
-
+  //DELETED USERS 
+  DELETED_USER_GET_TIMEHISTORY:"deleteduser/getTimeHistory",
+  DELETED_USER_TIMEHISTORY:"deleteduser/timeHistory",
+  GET_DELETED_USERS: "deleteduser",
+ 
   // SYSTEM MODULE
   ADD_SYSTEM_INFO: "admin/addSystemInfo",
   LIST_SYSTEM_INFO: "common/systemInforList",

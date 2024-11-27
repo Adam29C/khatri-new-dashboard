@@ -313,3 +313,9 @@ color: var(--khatri-color);
   font-weight: 600;
   color: #343a40;
 }
+
+.delete-user-main{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
