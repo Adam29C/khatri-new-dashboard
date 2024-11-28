@@ -8,10 +8,12 @@
   const Data_Table = ({ columns, data, isLoading, showFilter }) => {
     const [deviceType, setDeviceType] = useState("desktop");
     const [visibleColumns, setVisibleColumns] = useState(columns);
+
+    //datatable custom design
     const customStyles = {
       rows: {
         style: {    
-          // borderColor: "#f3f3f3"
+         
         },
       },
       headCells: {
@@ -20,17 +22,19 @@
           color:"#fff",
           fontSize:"14px",
           fontWeight:"bold",
-        border:"1px solid #dee2e6"
-
+        border:"1px solid #dee2e6",
+        justifyContent: 'center', 
+        textAlign: 'center', 
         },
       },
       cells: {
         style: { 
-          border:"1px solid #dee2e6"
+          border:"1px solid #dee2e6",
+          justifyContent: 'center', 
+          textAlign: 'center', 
         },
       },
     };
-
 
     const func = () => {
       const handleResize = () => {
