@@ -187,7 +187,7 @@ const [adminId,setAdminId]=useState()
     {
       id: 0,
       buttonName: "Change Password",
-      buttonColor: "dark",
+      buttonColor: "btn btn-dark btn-rounded width-xs waves-effect waves-light btn-sm",
       Conditions: (row) => {
         handleActionBtn(row, 0);
       },
@@ -217,7 +217,7 @@ const [adminId,setAdminId]=useState()
     },
     {
       id: 3,
-      buttonName: "Delete",
+      buttonName: "Delete Emp",
       buttonColor: "danger",
       Conditions: (row) => {
         handleActionBtn(row, 3);
