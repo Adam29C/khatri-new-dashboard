@@ -209,7 +209,7 @@ STARLINE_GAME_PROFIT_LOSS_BID_DATA: "starGameProfitLoss/getBidData",
   HOW_TO_PLAY_GET_LIST: "/admin/appSetting/htpList",
   UPDATE_HTP: "/admin/appSetting/updateHtp",
 
-  // USER IDEA'S
+  //USER IDEA'S
   USERS_IDEAS: "userIdea",
 
 };
