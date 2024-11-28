@@ -31,11 +31,14 @@ const ProfitLoss = ({ gameType, getProfiLoss, providersList, getBidData }) => {
     getGameResultApi();
   }, []);
 
+
+  // console.log("todaytoday" ,today(new Date()));
+  
   var sumdigit = 0;
   const formik = PagesIndex.useFormik({
     initialValues: {
       provider: "",
-      date: "",
+      date: today(new Date()),
     },
     validate: (values) => {
       const errors = {};

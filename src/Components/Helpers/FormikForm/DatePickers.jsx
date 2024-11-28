@@ -1,6 +1,8 @@
 // src/components/CustomDatePicker.js
 import React from "react";
 import DatePicker from "react-datepicker";
+import { today } from "../../Utils/Common_Date";
+
 
 const CustomDatePicker = ({ field, formik, setDateStates, dateStates }) => {
 
@@ -32,7 +34,8 @@ const CustomDatePicker = ({ field, formik, setDateStates, dateStates }) => {
         <div className="d-flex">
           <DatePicker
             className="form-control w-100"
-            selected={dateStates[field.name] || null} // Ensure a valid date object or null
+            value={dateStates[field.name]}
+            selected={dateStates[field.name] || today(new Date())} // Ensure a valid date object or null
             onChange={handleDateChange} // Handle date changes
             onBlur={() => formik.setFieldTouched(field.name, true)} // Mark field as touched
           />
