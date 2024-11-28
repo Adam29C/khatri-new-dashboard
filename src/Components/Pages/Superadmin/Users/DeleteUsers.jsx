@@ -157,7 +157,7 @@ const DeleteUsers = () => {
         <div>
           <div className="delete-user-main">
             <h4 class="profile-note-title mt-0 mb-4">Delete All Users Data</h4>
-            <button className="btn btn-dark" onClick={handleSubmit}>
+            <button className="btn btn-info" onClick={handleSubmit}>
               Submit
             </button>
           </div>
