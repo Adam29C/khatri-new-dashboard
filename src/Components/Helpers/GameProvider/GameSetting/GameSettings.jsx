@@ -1,14 +1,8 @@
 import PagesIndex from "../../../Pages/PagesIndex";
-import { Link } from "react-router-dom";
-import { Get_Year_Only } from "../../../Utils/Common_Date";
-import Toggle from "../../Toggle";
-import Swal from "sweetalert2";
-import { GAME_PROVIDER_DELETE_API } from "../../../Services/SuperAdminServices";
-import DeleteSweetAlert from "../../DeleteSweetAlert";
 import { Games_Settings_List } from "../../../Redux/slice/CommonSlice";
-import { convertTo12HourFormat } from "../../../Utils/Valid_Rejex";
+import { convertTo12HourFormat } from "../../../Utils/Common_Date";
 
-const GameProvider = ({ path, title, gameType }) => {
+const GameProvider = ({ path, title, gameType, api_Route }) => {
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
   const navigate = PagesIndex.useNavigate();
@@ -16,16 +10,36 @@ const GameProvider = ({ path, title, gameType }) => {
   const dispatch = PagesIndex.useDispatch();
 
   const { gameSettings } = PagesIndex.useSelector((state) => state.CommonSlice);
+<<<<<<< HEAD
 
   const getStarLineSettingList = () => {
+=======
+  const [GetGameList, setGetGameList] = PagesIndex.useState(gameSettings);
+
+  const getStarLineSettingList = async () => {
+>>>>>>> 77310baf74f61b27e088e199c3c8eb71ed58e8cf
     let apiData = {
       userId: userId,
       gameType: gameType,
     };
 
+<<<<<<< HEAD
     
 
     dispatch(Games_Settings_List({data : apiData , token :token}));
+=======
+    if (gameType === "MainGame") {
+      dispatch(Games_Settings_List({ data: apiData, token: token }));
+    } else {
+      const res =
+        await PagesIndex.game_service.FOR_STARLINE_AND_JACPOT_LIST_API(
+          api_Route,
+          apiData,
+          token
+        );
+      setGetGameList(res.data);
+    }
+>>>>>>> 77310baf74f61b27e088e199c3c8eb71ed58e8cf
   };
 
   PagesIndex.useEffect(() => {
@@ -433,7 +447,10 @@ const GameProvider = ({ path, title, gameType }) => {
         title={title}
         btnTitle="Add"
       >
-        <PagesIndex.Data_Table columns={columns} data={gameSettings} />
+        <PagesIndex.Data_Table
+          columns={columns}
+          data={GetGameList && GetGameList}
+        />
       </PagesIndex.Main_Containt>
     </div>
   );

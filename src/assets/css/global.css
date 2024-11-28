@@ -116,7 +116,8 @@ input:checked + .slider {
 }
 
 .error-text {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  font-weight: bold;
   margin-top: 5px;
   line-height: 1rem;
   color: var(--red);
@@ -340,4 +341,17 @@ color: var(--khatri-color);
   background-clip: padding-box;
   border: 1px solid #ced4da;
   border-radius: .2rem;
+}
+.winner-list-text-main{
+color: rgb(141, 128, 128);
+font-size: 21px;
+text-align: center;
+}
+
+.confirm-payment-text{
+  font-size: 18px;
+  color: var(--khatri-color);
+  margin: 25px 0;
+  font-weight: 600;
+  font-family: Karla, sans-serif;
 }

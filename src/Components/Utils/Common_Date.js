@@ -131,3 +131,17 @@ export const dateFormate = (date) => {
   const ccdate = dt.format("Y-m-d");
   return ccdate;
 };
+
+
+
+
+
+export const  convertTo12HourFormat = (time)=> {
+  let [hours, minutes] = time.split(':');
+  hours = parseInt(hours, 10);
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12 || 12; // Convert 0 to 12 for 12 AM
+  return `${hours}:${minutes}`;
+}
+
+

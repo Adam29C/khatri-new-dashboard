@@ -38,8 +38,29 @@ const GameRatesAdd = ({ gameType, path }) => {
           ? await PagesIndex.admin_services.GAME_RATES_UPDATE_API(apidata)
           : await PagesIndex.admin_services.GAME_RATES_ADD_API(apidata);
 
-        if (res?.status === 200) {
-          PagesIndex.toast.success(res?.message);
+        if (res?.status) {
+          
+          
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+          }
+        });
+
+
+          // PagesIndex.toast.success(res?.message);
           setTimeout(() => {
             navigate(path);
           }, 1000);

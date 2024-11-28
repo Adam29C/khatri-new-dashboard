@@ -19,6 +19,8 @@ import { Link } from "react-router-dom";
 import * as valid_err from "../Utils/Common_Msg";
 import * as admin_services from "../Services/SuperAdminServices";
 import * as common_services from "../Services/CommonServices";
+import * as game_service from "../Services/GameSectionService";
+
 import {
   ADD_SYSTEM_INFO_API,
   LIST_SYSTEM_INFO_API,
@@ -42,6 +44,7 @@ import TableWitCustomPegination from "../Helpers/Table/TableWithCustomPegination
 import ModalComponent from "../Helpers/Modal/ModalComponent";
 import Split_Main_Containt from "../Layout/Main/Split_Main_Content";
 
+import TableWithCustomPeginationButton from "../Helpers/Table/TableWithCustomPeginationButton"
 const PagesIndex = {
   useDispatch,
   useState,
@@ -86,7 +89,10 @@ const PagesIndex = {
   common_services,
   TableWitCustomPegination,
   ModalComponent,
-  Split_Main_Containt
+  Split_Main_Containt,
+  
+  ModalComponent,
+  game_service
 };
 
 export default PagesIndex;

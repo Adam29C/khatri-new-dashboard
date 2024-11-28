@@ -74,6 +74,7 @@ export const validApkFile = (file)=>{
 }
 
 
+<<<<<<< HEAD
 export const  convertTo12HourFormat = (time)=> {
   let [hours, minutes] = time.split(':');
   hours = parseInt(hours, 10);
@@ -81,5 +82,14 @@ export const  convertTo12HourFormat = (time)=> {
   hours = hours % 12 || 12; // Convert 0 to 12 for 12 AM
   return `${hours}:${minutes}`;
 }
+=======
+// export const  convertTo12HourFormat = (time)=> {
+//   let [hours, minutes] = time.split(':');
+//   hours = parseInt(hours, 10);
+//   const ampm = hours >= 12 ? 'PM' : 'AM';
+//   hours = hours % 12 || 12; // Convert 0 to 12 for 12 AM
+//   return `${hours}:${minutes}`;
+// }
+>>>>>>> 77310baf74f61b27e088e199c3c8eb71ed58e8cf
 
 
