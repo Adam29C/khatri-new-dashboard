@@ -108,7 +108,7 @@ const HowToPlay = () => {
                     {values?.howtoplay?.length > 0 &&
                       values?.howtoplay?.map((row, index) => (
                         <div className="row htp-card" key={index}>
-                          <div className="col-lg-6">
+                          <div className="col-lg-12">
                             <label
                               className={`custom-label  `}
                               htmlFor={`howtoplay.${index}.title`}
@@ -138,7 +138,40 @@ const HowToPlay = () => {
                                 </p>
                               )}{" "}
                           </div>
-                          <div className="col-lg-6 ">
+                  
+
+                          <div className="col-lg-12 mt-3 ">
+                            <label
+                              className={`custom-label   `}
+                              htmlFor={`howtoplay.${index}.description`}
+                            >
+                              Description
+                              <span className="text-danger">*</span>
+                            </label>
+
+                            <textarea
+                              name={`howtoplay.${index}.description`}
+                              placeholder="Enter Description"
+                              type="text"
+                              className="form-control"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={row.description}
+                              rows="5"
+                              />
+                              {errors.howtoplay &&
+                                errors.howtoplay[index] &&
+                                errors.howtoplay[index].description &&
+                                touched &&
+                                touched.howtoplay &&
+                                touched.howtoplay[index] &&
+                                touched.howtoplay[index].description && (
+                                  <p className="error-text">
+                                    {errors.howtoplay[index].description}
+                                  </p>
+                                )}{" "}
+                          </div>
+                          <div className="col-lg-12 mt-3">
                             <label
                               className={`custom-label  `}
                               htmlFor={`howtoplay.${index}.videoUrl`}
@@ -168,39 +201,8 @@ const HowToPlay = () => {
                                   </p>
                                 )}{" "}
                           </div>
-
-                          <div className="col-lg-12 mb-4 ">
-                            <label
-                              className={`custom-label   `}
-                              htmlFor={`howtoplay.${index}.description`}
-                            >
-                              Description
-                              <span className="text-danger">*</span>
-                            </label>
-
-                            <textarea
-                              name={`howtoplay.${index}.description`}
-                              placeholder="Enter Description"
-                              type="text"
-                              className="form-control"
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              value={row.description}
-                              />
-                              {errors.howtoplay &&
-                                errors.howtoplay[index] &&
-                                errors.howtoplay[index].description &&
-                                touched &&
-                                touched.howtoplay &&
-                                touched.howtoplay[index] &&
-                                touched.howtoplay[index].description && (
-                                  <p className="error-text">
-                                    {errors.howtoplay[index].description}
-                                  </p>
-                                )}{" "}
-                          </div>
                           {index >= htpData?.[0]?.howtoplay?.length && (
-                            <div className="col ms-auto d-flex justify-content-end pl-2 mb-2">
+                            <div className="col ms-auto d-flex justify-content-end pl-2 mb-2 mt-3">
                               <button
                                 type="button"
                                 className="btn btn-danger"
@@ -217,11 +219,11 @@ const HowToPlay = () => {
                         type="submit"
                         className="btn  submitBtn "
                       >
-                        Update
+                        Submit
                       </button>
                       <button
                         type="button"
-                        className="btn  submitBtn "
+                        className="btn btn-secondary "
                         onClick={() =>
                           push({ title: "", description: "", videoUrl: "" })
                         }

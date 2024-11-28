@@ -313,3 +313,7 @@ color: var(--khatri-color);
   font-weight: 600;
   color: #343a40;
 }
+
+.custom-padding-for-label{
+  padding: 7px 0px !important;
+}
