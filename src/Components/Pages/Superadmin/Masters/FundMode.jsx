@@ -96,8 +96,12 @@ const FundMode = () => {
               row.disabled ? "btn-success" : "btn-danger"
             } btn-sm me-2`}
           >
-            {" "}
-            {row.disabled ? "Unblock" : "Block"}
+         {/* <i className="fa-solid fa-user-slash mr-1 icon-fs"></i>
+         <i className="fa-solid fa-user mr-1 icon-fs"></i>
+            {row.disabled ? "Unblock" : "Block"} */}
+            {
+              row?.disabled ? (<><i className="fa-solid fa-user mr-1 icon-fs"></i>Unblock</>):(<> <i className="fa-solid fa-user-slash mr-1 icon-fs"></i>Block</>)
+            }
           </button>
         </span>
       ),
@@ -112,8 +116,8 @@ const FundMode = () => {
               <button
                 onClick={() => handleDelete(cell)}
                 class="btn btn-danger btn-sm me-2"
-              >
-                Delete
+              >  <i class="fa fa-trash mr-1 icon-fs" aria-hidden="true"></i>
+                Delete Mode
               </button>
             </span>
           </div>
