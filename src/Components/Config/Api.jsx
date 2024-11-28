@@ -105,6 +105,10 @@ GET_NOTIFICATION : "notification",
 ADD_NOTIFICATION : "notification/inserNotification",
 DELETE_NOTIFICATION : "notification",
 
+//news
+NEWS:"news",
+
+
 };
 
 export { Api };

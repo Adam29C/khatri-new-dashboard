@@ -57,6 +57,7 @@ import UpiIdList from "../../Pages/Superadmin/Masters/UpiIdList";
 import ProfileNote from "../../Pages/Superadmin/AppSettings/ProfileNote";
 import FundMode from "../../Pages/Superadmin/Masters/FundMode";
 import Notification from "../../Pages/Superadmin/Notification/Notification";
+import News from "../../Pages/Superadmin/News/News";
 
 
 // Mock authentication status
@@ -310,6 +311,10 @@ const adminRoutes = [
       {
         path: "notification",
         element: <PrivateRoute element={Notification} />,
+      },
+      {
+        path: "news",
+        element: <PrivateRoute element={News} />,
       },
   
     ],

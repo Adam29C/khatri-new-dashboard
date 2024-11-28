@@ -126,4 +126,31 @@ export const ADD_NOTIFICATION_API = async (data,token) => {
 };
 //NOTIFICATION APIS
 
+//NEWS APIS
+export const GET_NEWS_API = async (token) => {
+  try {
+    const res = await axios.get(`${BASE_URL}${Api.NEWS}`, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+export const UPDATE_NEWS_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.NEWS}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+//NEWS APIS
+
+
 

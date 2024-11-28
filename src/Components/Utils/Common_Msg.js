@@ -73,3 +73,4 @@ export const PROVIDER_NAME_REQUIRED = "Provider Name is required";
   export const REQUIRE_MODE = "Please Enter Fund Mode";
   export const URLWEB_MODE = "Please Enter URL";
   export const REQUIRE_MESSAGE = "Please Enter Message";
+

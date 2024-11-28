@@ -461,7 +461,7 @@ export const admin_Sidebar = [
     id: 16,
     headerTitle: "News",
     title: "News",
-    route: "#",
+    route: "news",
     Icon: "fa-solid fa-television",
     permission: "news",
     NestedElement: [],
