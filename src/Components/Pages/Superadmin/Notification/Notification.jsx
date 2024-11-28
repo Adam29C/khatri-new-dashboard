@@ -10,7 +10,7 @@ const Notification = () => {
   const [data, setData] = PagesIndex.useState([]);
   const [visible, setVisible] = PagesIndex.useState(false);
 
-  //get upi list function
+  //get notification list function
   const getList = async () => {
     setLoading(true);
     try {
@@ -96,10 +96,10 @@ const Notification = () => {
     setVisible(true);
   };
 
-  //delete upi list start
+  //delete notification list start
   const handleDelete = async (row) => {
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this Upi Id?"
+      "Are you sure you want to delete this Notification"
     );
     if (!confirmDelete) return;
 
@@ -109,7 +109,6 @@ const Notification = () => {
         row?._id,
         token
       );
-      console.log(res);
       if (res.status) {
         getList();
         alert(res?.message);

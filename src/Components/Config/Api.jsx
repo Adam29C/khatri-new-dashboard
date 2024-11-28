@@ -103,7 +103,7 @@ CHANGE_STATUS_FUND_MODE:"upiId/disable_mode",
 //notification apis
 GET_NOTIFICATION : "notification",
 ADD_NOTIFICATION : "notification/inserNotification",
-DELETE_NOTIFICATION : "notification/",
+DELETE_NOTIFICATION : "notification",
 
 };
 

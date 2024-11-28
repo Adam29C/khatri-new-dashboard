@@ -105,7 +105,7 @@ export const GET_NOTIFICATION_API = async (token) => {
 
 export const DELETE_NOTIFICATION_API = async(id,token)=>{
   try {
-    const res = await axios.delete(`${BASE_URL}${Api.DELETE_NOTIFICATION}${id}`,{
+    const res = await axios.delete(`${BASE_URL}${Api.DELETE_NOTIFICATION}/${id}`,{
       headers:header(token)
     })
     return res?.data;
