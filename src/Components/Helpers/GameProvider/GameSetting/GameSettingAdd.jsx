@@ -27,7 +27,7 @@ const GameProviderAdd = () => {
 
   const formik = PagesIndex.useFormik({
     initialValues: {
-      providerId: location?.state?.row ? location?.state?.row._id : "",
+      providerId: location?.state?.row ? location?.state?.row?._id : null,
       gameDay:
         location?.state?.edit === "single"
           ? location?.state?.rowData.gameDay

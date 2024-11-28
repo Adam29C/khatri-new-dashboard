@@ -116,12 +116,18 @@ export const admin_Sidebar = [
       },
       {
         id: 5,
+        title: "Star Profit/Loss",
+        permission: "starlineProfit",
+        route: "starline/profitloss",
+      },
+      {
+        id: 6,
         title: "Star Revert Result Payment",
         route: "starline/revertpayment",
         permission: "0",
       },
       {
-        id: 6,
+        id: 7,
         title: "Refund User Points",
         route: "starline/refundlist",
         permission: "0",

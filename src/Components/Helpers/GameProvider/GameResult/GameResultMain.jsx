@@ -36,6 +36,9 @@ const ExamplePage = ({
       main_result,
       token
     );
+
+    console.log("resres" ,res);
+    
     if (res.status) {
       setTableData(res?.data?.result || res?.data?.results);
       setGetProvider(res?.data?.provider || res?.data?.providers);
@@ -274,7 +277,7 @@ const ExamplePage = ({
   };
 
   const visibleFields = [
-    "id",
+    // "id",
     "providerName",
     "session",
     "resultDate",

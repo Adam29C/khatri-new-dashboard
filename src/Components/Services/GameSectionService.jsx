@@ -407,6 +407,54 @@ export const STARLINE_GAME_CONFIRM_REVERT_PAYMENT_API = async (
 
 // ---------------FOR ALL GAME REVERT PAYMENT  ---------------------
 
+
+
+// ---------------FOR ALL GAME  PROFIT/LOSS  ---------------------
+
+export const ALL_GAME_PROFIT_LOSS_API = async (api_Route, token) => {
+  try {
+    const res = await axios.get(`${BASE_URL}${api_Route}`, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const STARLINE_GAME_PROFIT_LOSS_LIST_API = async (
+  api_Route,
+  data,
+  token
+) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${api_Route}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const STARLINE_GAME_PROFIT_LOSS_BID_DATA_API = async (
+  api_Route,
+  data,
+  token
+) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${api_Route}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+// ---------------FOR ALL GAME PROFIT/LOSS  ---------------------
+
+
+
 // ---------------FOR ALL GAME REFUND PAYMENT  ---------------------
 
 export const ALL_GAME_REFUND_PAYMENT_API = async (api_Route, token) => {

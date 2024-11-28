@@ -2,8 +2,6 @@ import { jwtDecode } from "jwt-decode";
 
 
 export const GetExpired = (tokenExpiry , navigate) => {
-  console.log("GetExpired");
-  
    
   const decoded = jwtDecode(tokenExpiry && tokenExpiry);
 

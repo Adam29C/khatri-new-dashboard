@@ -115,7 +115,7 @@ input:checked + .slider {
 }
 
 .error-text {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: bold;
   margin-top: 5px;
   line-height: 1rem;

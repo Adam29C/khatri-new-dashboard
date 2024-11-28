@@ -51,7 +51,7 @@ const ForStarlineJackpotAdd = ({
   const formik = PagesIndex.useFormik({
     initialValues: {
       providerId: location?.state?.row
-        ? location?.state?.rowData.providerId
+        ? location?.state?.rowData?.providerId
         : "",
       gameDay:
         location?.state?.edit === "single"

@@ -93,7 +93,7 @@ const Api = {
 
   //   ADMIN_GAME_SETTING_ADD: "mainGameSetting/insertSettings",
   //   ADMIN_GAME_SETTING_UPDATEALL: "mainGameSetting/updateAll"
-  // starGameSetting
+
 
   //  STARLINE GAME RESULT -
   STARLINE_GAME_MAIN_RESULT: "starGameResult",
@@ -133,6 +133,14 @@ const Api = {
   // STARLINE_GAME_SETTING_ADD: "starGameSetting/insertSettings",
   // STARLINE_GAME_SETTING_UPDATE_ALL: "starGameSetting/updateProviderSettings",
   // STARLINE_GAME_SETTING_UPDATE_ONE: "starGameSetting",
+
+
+  //  STARLINE REVERT PAYMENT - 
+
+STARLINE_GAME_PROVIDER_LIST: "starGameProfitLoss",
+STARLINE_GAME_PROFIT_LOSS_LIST: "starGameProfitLoss/getResult",
+STARLINE_GAME_PROFIT_LOSS_BID_DATA: "starGameProfitLoss/getBidData",
+
 
 
   //  STARLINE REVERT PAYMENT - 
@@ -200,6 +208,7 @@ const Api = {
   //HOW TO PLAY
   HOW_TO_PLAY_GET_LIST: "/admin/appSetting/htpList",
   UPDATE_HTP: "/admin/appSetting/updateHtp",
+
 };
 
 export { Api };

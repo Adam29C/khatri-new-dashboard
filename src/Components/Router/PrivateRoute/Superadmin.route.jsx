@@ -32,6 +32,8 @@ import RevertPayment from "../../Pages/Superadmin/Games/Starline/RevertPayment/R
 // Starline Refund List 
 import StarlineRefundList from "../../Pages/Superadmin/Games/Starline/StarlineRefundList/StarlineRefundList";
 
+// starline ProfitLost  
+import ProfitLoss from "../../Pages/Superadmin/Games/Starline/ProfitLoss/ProfitLoss";
 
 
 
@@ -233,6 +235,10 @@ const adminRoutes = [
       {
         path: "starline/revertpayment",
         element: <PrivateRoute element={RevertPayment} />,
+      },
+      {
+        path: "starline/profitloss",
+        element: <PrivateRoute element={ProfitLoss} />,
       },
       {
         path: "games/jackpotProvider",

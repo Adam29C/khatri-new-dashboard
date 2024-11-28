@@ -35,7 +35,6 @@ const ReusableForm = ({
   show_submit,
   label_size,
   show_preview,
-
 }) => {
   const location = useLocation();
 
@@ -231,125 +230,122 @@ const ReusableForm = ({
                       </div>
                     ))}
 
-                    {formik.errors[field.name] && (
-                      <div className="error-text">
-                        {formik.errors[field.name]}
-                      </div>
-                    )}
-                  </>
-                ) : field.type === "radio" ? (
-                  <>
-                    <div className={`col-lg-${field.title_size}`}>
-                      {" "}
-                      <h5>permission</h5>
-                      <div className="row">
-                        {field.options &&
-                          field.options.map((option, index) => (
-                            <>
-                              <div
-                                className={`col-lg-${field.col_size}`}
-                                key={option.id}
-                              >
-                                <div className="row d-flex">
-                                  <div className={`col-lg-${field.col_size}`}>
-                                    <div class="form-check custom-checkbox mb-2">
-                                      <input
-                                        type={field.type}
-                                        className="form-check-input"
-                                        id={option.label}
-                                        {...formik.getFieldProps(option.name)}
-                                        defaultChecked={option.checked}
-                                      />
-                                      <label
-                                        className="form-check-label"
-                                        for={option.label}
-                                      >
-                                        {option.label}
-                                      </label>
-                                    </div>
-                                    {formik.errors[field.name] && (
-                                      <div className="error-text">
-                                        {formik.errors[field.name]}
-                                      </div>
-                                    )}
+                  {formik.errors[field.name] && (
+                    <div className="error-text">
+                      {formik.errors[field.name]}
+                    </div>
+                  )}
+                </>
+              ) : field.type === "radio" ? (
+                <>
+                  <div className={`col-lg-${field.title_size}`}>
+                    {" "}
+                    <h5>permission</h5>
+                    <div className="row">
+                      {field.options &&
+                        field.options.map((option, index) => (
+                          <>
+                            <div
+                              className={`col-lg-${field.col_size}`}
+                              key={option.id}
+                            >
+                              <div className="row d-flex">
+                                <div className={`col-lg-${field.col_size}`}>
+                                  <div class="form-check custom-checkbox mb-2">
+                                    <input
+                                      type={field.type}
+                                      className="form-check-input"
+                                      id={option.label}
+                                      {...formik.getFieldProps(option.name)}
+                                      defaultChecked={option.checked}
+                                    />
+                                    <label
+                                      className="form-check-label"
+                                      for={option.label}
+                                    >
+                                      {option.label}
+                                    </label>
                                   </div>
+                                  {formik.errors[field.name] && (
+                                    <div className="error-text">
+                                      {formik.errors[field.name]}
+                                    </div>
+                                  )}
                                 </div>
                               </div>
-                            </>
-                          ))}
-                      </div>
-                    </div>
-                  </>
-                ) : field.type === "password" ? (
-                  <>
-                    {after_password_field}
-                    <div className={`col-lg-${field.col_size}`}>
-                      <div className="mb-3 row">
-                        <label
-                          className={`custom-label col-lg-${field.label_size} col-form-label `}
-                          htmlFor={field.name}
-                        >
-                          {field.label}
-                          <span className="text-danger">*</span>
-                        </label>
-                        <div
-                          // className={`col-lg-${field.col_size}`}
-                          style={{ position: "relative" }}
-                        >
-                          <input
-                            id={field.name}
-                            disabled={field.disable}
-                            type={
-                              passwordVisible[field.name] ? "text" : field.type
-                            }
-                            placeholder={field.label}
-                            {...formik.getFieldProps(field.name)}
-                            className={` form-control`}
-                          />
-                          <i
-                            class={`fa-solid ${
-                              !passwordVisible[field.name]
-                                ? "fa-eye-slash"
-                                : "fa-eye"
-                            }`}
-                            style={{
-                              position: "absolute",
-                              top: "1.5px",
-                              right: "20px",
-                              padding: "12.4px 6.6px",
-                              borderRadius: "3px",
-                            }}
-                            onClick={() =>
-                              setPasswordVisible((prevState) => ({
-                                ...prevState,
-                                [field.name]: !prevState[field.name],
-                              }))
-                            }
-                          ></i>{" "}
-                          {formik.errors[field.name] && (
-                            <div
-                              className="error-text"
-                              style={{ color: "red" }}
-                            >
-                              {formik.errors[field.name]}
                             </div>
-                          )}{" "}
-                        </div>
+                          </>
+                        ))}
+                    </div>
+                  </div>
+                </>
+              ) : field.type === "password" ? (
+                <>
+                  {after_password_field}
+                  <div className={`col-lg-${field.col_size}`}>
+                    <div className="mb-3 row">
+                      <label
+                        className={`custom-label col-lg-${field.label_size} col-form-label `}
+                        htmlFor={field.name}
+                      >
+                        {field.label}
+                        <span className="text-danger">*</span>
+                      </label>
+                      <div
+                        // className={`col-lg-${field.col_size}`}
+                        style={{ position: "relative" }}
+                      >
+                        <input
+                          id={field.name}
+                          disabled={field.disable}
+                          type={
+                            passwordVisible[field.name] ? "text" : field.type
+                          }
+                          placeholder={field.label}
+                          {...formik.getFieldProps(field.name)}
+                          className={` form-control`}
+                        />
+                        <i
+                          class={`fa-solid ${
+                            !passwordVisible[field.name]
+                              ? "fa-eye-slash"
+                              : "fa-eye"
+                          }`}
+                          style={{
+                            position: "absolute",
+                            top: "1.5px",
+                            right: "20px",
+                            padding: "12.4px 6.6px",
+                            borderRadius: "3px",
+                          }}
+                          onClick={() =>
+                            setPasswordVisible((prevState) => ({
+                              ...prevState,
+                              [field.name]: !prevState[field.name],
+                            }))
+                          }
+                        ></i>{" "}
+                        {formik.errors[field.name] && (
+                          <div className="error-text" style={{ color: "red" }}>
+                            {formik.errors[field.name]}
+                          </div>
+                        )}{" "}
                       </div>
                     </div>
-                  </>
-                ) : field.type === "date" ? (
-                  <>
-                    <CustomDatePicker
-                      field={field}
-                      formik={formik}
-                      setDateStates={setDateStates}
-                      dateStates={dateStates}
-                    />
-                  </>
-                ) : field.type === "time" ? (
-                  <>
-                    {/* <div className={`col-lg-${field.col_size}`}>
+                  </div>
+                </>
+              ) : field.type === "date" ? (
+                <>
+                  <CustomDatePicker
+                    field={field}
+                    formik={formik}
+                    setDateStates={setDateStates}
+                    dateStates={dateStates}
+                  />
+                </>
+              ) : field.type === "time" ? (
+                <>
+                  {/* <div className={`col-lg-${field.col_size}`}>
                       <div className=" row flex-column">
                         <label
                           className={`custom-label col-lg-${field.label_size}`}
@@ -367,14 +363,14 @@ const ReusableForm = ({
                               handleDateChange(date, field.name)
                             }
                             {...formik.getFieldProps(field.name)} */}
-                    {/* // value={dateStates[field.name]}
+                  {/* // value={dateStates[field.name]}
                             showTimeSelect
                             showTimeSelectOnly
                             timeIntervals={5}
                             timeCaption="Time"
                             dateFormat="h:mm aa"
                           /> */}
-                    {/* <input
+                  {/* <input
                           type={field.type}
                           name={field.name}
                           className="form-control"
@@ -387,7 +383,7 @@ const ReusableForm = ({
                           }
                         /> */}
 
-                    {/* <div className="invalid-feedback">
+                  {/* <div className="invalid-feedback">
                             Please enter {field.label}
                           </div>
                         </div>
@@ -399,16 +395,14 @@ const ReusableForm = ({
                       </div>
                     </div> */}
 
-                    <div className={`col-lg-${field.col_size} mb-3`}>
-                      <label
-                        className={`custom-label col-lg-${field.label_size}`}
-                        htmlFor={field.name}
-                      >
-                        {field.label}
-                        <span className="text-danger">*</span>
-                      </label>
-
-                      {console.log("dateTimeStates[field.name]")}
+                  <div className={`col-lg-${field.col_size} mb-3`}>
+                    <label
+                      className={`custom-label col-lg-${field.label_size}`}
+                      htmlFor={field.name}
+                    >
+                      {field.label}
+                      <span className="text-danger">*</span>
+                    </label>
 
                     <TimePicker
                       use12Hours
@@ -437,9 +431,9 @@ const ReusableForm = ({
                         }
                         inputReadOnly
                       /> */}
-                    </div>
+                  </div>
 
-                    {/* <div className={`col-lg-${field.col_size} mb-3`}>
+                  {/* <div className={`col-lg-${field.col_size} mb-3`}>
                       <label
                         className={`custom-label col-lg-${field.label_size}`}
                         htmlFor={field.name}
@@ -458,54 +452,54 @@ const ReusableForm = ({
                         max={field.max && field.max.actual_date_formet}
                       />
                     </div> */}
-                  </>
-                ) : field.type === "msgbox" ? (
-                  <>
-                    <div className={`col-lg-${field.col_size}`}>
-                      <div className="row d-flex">
-                        <div
-                        // className={`col-lg-${field.col_size}`}
-                        >
-                          <div class="mb-3">
-                            <label
-                              className={`custom-label col-lg-${field.label_size}`}
-                              for={field.name}
-                            >
-                              {field.label}
-                            </label>
-                            <textarea
-                              class="form-control"
-                              rows={field.row_size}
-                              id={field.name}
-                              name={field.name}
-                              {...formik.getFieldProps(field.name)}
-                              placeholder={field.label}
-                            ></textarea>
-                            {formik.errors[field.name] && (
-                              <div className="error-text">
-                                {formik.errors[field.name]}
-                              </div>
-                            )}
-                          </div>
+                </>
+              ) : field.type === "msgbox" ? (
+                <>
+                  <div className={`col-lg-${field.col_size}`}>
+                    <div className="row d-flex">
+                      <div
+                      // className={`col-lg-${field.col_size}`}
+                      >
+                        <div class="mb-3">
+                          <label
+                            className={`custom-label col-lg-${field.label_size}`}
+                            for={field.name}
+                          >
+                            {field.label}
+                          </label>
+                          <textarea
+                            class="form-control"
+                            rows={field.row_size}
+                            id={field.name}
+                            name={field.name}
+                            {...formik.getFieldProps(field.name)}
+                            placeholder={field.label}
+                          ></textarea>
+                          {formik.errors[field.name] && (
+                            <div className="error-text">
+                              {formik.errors[field.name]}
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
-                  </>
-                ) : field.type === "file" ? (
-                  <>
-                    <div className={`col-lg-${field.col_size}`}>
-                      <div className="row d-flex">
-                        <div
-                          className={`col-lg-${title === "addgroup" ? 6 : 12}`}
-                        >
-                          <div className="mb-3">
-                            <label
-                              className={`custom-label col-form-label`}
-                              htmlFor={field.name}
-                            >
-                              {field.label}
-                              <span className="text-danger">*</span>
-                            </label>
+                  </div>
+                </>
+              ) : field.type === "file" ? (
+                <>
+                  <div className={`col-lg-${field.col_size}`}>
+                    <div className="row d-flex">
+                      <div
+                        className={`col-lg-${title === "addgroup" ? 6 : 12}`}
+                      >
+                        <div className="mb-3">
+                          <label
+                            className={`custom-label col-form-label`}
+                            htmlFor={field.name}
+                          >
+                            {field.label}
+                            <span className="text-danger">*</span>
+                          </label>
 
                           <input
                             type="file"
