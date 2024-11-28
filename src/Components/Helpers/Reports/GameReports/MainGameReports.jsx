@@ -2,17 +2,13 @@ import React, { useEffect, useState } from "react";
 import Split_Main_Containt from "../../../Layout/Main/Split_Main_Content";
 import PagesIndex from "../../../Pages/PagesIndex";
 import { getActualDateFormate, today } from "../../../Utils/Common_Date";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Games_Provider_List } from "../../../Redux/slice/CommonSlice";
 
-const ExamplePage = ({
+const MainGameReports = ({
   gameType,
-  main_result,
-  main_result_add,
-  past_result,
-  winner_list,
-  distribute_fund,
+
+  report_api,
 }) => {
   //get token in local storage
   const token = localStorage.getItem("token");
@@ -28,18 +24,23 @@ const ExamplePage = ({
   const [tableData, setTableData] = useState([]);
   const [GetProvider, setGetProvider] = useState([]);
 
+  const { gameProviders } = PagesIndex.useSelector(
+    (state) => state.CommonSlice
+  );
+
+  console.log("gameProviders", gameProviders);
+
   //get game result function
   const getGameResultApi = async () => {
     // const res = await PagesIndex.admin_services.GAME_RESULT(token);
-
-    const res = await PagesIndex.game_service.ALL_GAME_RESULTS(
-      main_result,
-      token
-    );
-    if (res.status) {
-      setTableData(res?.data?.result || res?.data?.results);
-      setGetProvider(res?.data?.provider || res?.data?.providers);
-    }
+    // const res = await PagesIndex.game_service.ALL_GAME_RESULTS(
+    //   main_result,
+    //   token
+    // );
+    // if (res.status) {
+    //   setTableData(res?.data?.result || res?.data?.results);
+    //   setGetProvider(res?.data?.provider || res?.data?.providers);
+    // }
   };
 
   //get game provider data
@@ -47,7 +48,6 @@ const ExamplePage = ({
     dispatch(Games_Provider_List(token));
   };
 
-  //get apis functions call in useEffect
   PagesIndex.useEffect(() => {
     getGameProvidersList();
     getGameResultApi();
@@ -55,65 +55,35 @@ const ExamplePage = ({
 
   const formik = PagesIndex.useFormik({
     initialValues: {
-      winningDigit: "",
-      resultDate: actual_date_formet || null,
-      session: "",
       providerId: "",
-      providerName: "",
+      startdate: today(new Date()),
+      enddate: today(new Date()),
+      username: "",
     },
 
     validate: (values) => {
       const errors = {};
-      if (!values.providerId) {
-        errors.providerId = PagesIndex.valid_err.GAME_PROVIDER_ERROR;
-      }
-      if (!values.session) {
-        errors.session = PagesIndex.valid_err.GAME_SESSION_ERROR;
-      }
-      if (!values.resultDate) {
-        errors.resultDate = PagesIndex.valid_err.DOMAIN_ERROR;
-      }
-      if (!values.winningDigit) {
-        errors.winningDigit = PagesIndex.valid_err.GAME_WINING_DIGIT_ERROR;
-      }
+
       return errors;
     },
 
     onSubmit: async (values) => {
-      const selectedProviderName =
-        GetProvider &&
-        GetProvider.find((item) => item._id === values.providerId)
-          ?.providerName;
-
       const payload = {
-        providerId: values.providerId,
-        providerName: selectedProviderName,
-        session: values.session,
-        resultDate: today(values.resultDate),
-        winningDigit: values.winningDigit,
+        userId: values.username,
+        gameId: values.providerId ||0,
+        startDate: values.startdate,
+        endDate: values.enddate,
       };
 
-      //   console.log("payload", payload);
-
-      //   return;
-
-      //   const req = {
-      //     winningDigit: values.winningDigit,
-      //     resultDate: today(values.resultDate),
-      //     session: values.session,
-      //     providerId: values.providerId,
-      //     providerName: values.providerName,
-      //   };
-
       try {
-        const res = await PagesIndex.game_service.ALL_GAME_RESULTS_ADD_API(
-          main_result_add,
+        const res = await PagesIndex.report_service.ALL_GAME_REPORT_API(
+          report_api,
           payload,
           token
         );
 
         // const res = await PagesIndex.admin_services.ADD_GAME_RESULT(req, token);
-        // console.log(res);
+        console.log("res" ,res);
         if (res.status) {
           PagesIndex.toast.success(res?.data?.message || res?.message);
           getGameResultApi();
@@ -128,45 +98,30 @@ const ExamplePage = ({
     },
   });
 
-  //formik form for only result date
-  const formik1 = PagesIndex.useFormik({
-    initialValues: {
-      date: getActualDateFormate(new Date()),
-    },
-
-    validate: (values) => {
-      const errors = {};
-      return errors;
-    },
-    onSubmit: async (values) => {
-      const apidata = values.date;
-      try {
-        const res = await PagesIndex.game_service.ALL_GAME_PAST_RESULTS(
-          past_result,
-          apidata,
-          token
-        );
-
-        if (res.status) {
-          PagesIndex.toast.success(res.message);
-          setTableData(res.data.results || res.data.result);
-        } else {
-          PagesIndex.toast.error(res.message);
-        }
-      } catch (error) {
-        PagesIndex.toast.error(error.response.data.message);
-      }
-    },
-  });
-
   const fields = [
+    {
+      name: "startdate",
+      label: "Start Date",
+      type: "date",
+      label_size: 12,
+      col_size: 3,
+      max: { actual_date_formet },
+    },
+    {
+      name: "enddate",
+      label: "End Date",
+      type: "date",
+      label_size: 12,
+      col_size: 3,
+      max: { actual_date_formet },
+    },
     {
       name: "providerId",
       label: "Provider Name",
       type: "select",
       options:
-        (GetProvider &&
-          GetProvider?.map((item) => ({
+        (gameProviders &&
+          gameProviders?.map((item) => ({
             label: item.providerName,
             value: item._id,
           }))) ||
@@ -174,44 +129,12 @@ const ExamplePage = ({
       label_size: 12,
       col_size: 3,
     },
-
     {
-      name: "session",
-      label: "Session",
-      type: "select",
-      options: [
-        { label: "Open", values: 1 },
-        { label: "Close", values: 0 },
-      ],
-      label_size: 12,
-      col_size: 3,
-    },
-    {
-      name: "resultDate",
-      label: "Result Date",
-      type: "date",
-      label_size: 12,
-      col_size: 3,
-      // min: { actual_date_formet },
-      max: { actual_date_formet },
-    },
-    {
-      name: "winningDigit",
-      label: "Winning Digit",
+      name: "username",
+      label: "Player Name",
       type: "text",
       label_size: 12,
       col_size: 3,
-    },
-  ];
-
-  const fields1 = [
-    {
-      name: "date",
-      label: "Result Date",
-      type: "date",
-      label_size: 12,
-      col_size: 12,
-      max: { actual_date_formet },
     },
   ];
 
@@ -307,7 +230,7 @@ const ExamplePage = ({
   ];
   const cardLayouts = [
     {
-      size: 9,
+      size: 12,
       body: (
         <div>
           <PagesIndex.Formikform
@@ -319,21 +242,7 @@ const ExamplePage = ({
         </div>
       ),
     },
-    {
-      size: 3,
-      body: (
-        <div>
-          <div>
-            <PagesIndex.Formikform
-              fieldtype={fields1.filter((field) => !field.showWhen)}
-              formik={formik1}
-              show_submit={true}
-              btn_name="Search Result"
-            />
-          </div>
-        </div>
-      ),
-    },
+
     {
       size: 12,
       body: (
@@ -362,7 +271,7 @@ const ExamplePage = ({
   return (
     <>
       <Split_Main_Containt
-        title="Game Results"
+        title="Sales Report "
         add_button={false}
         btnTitle="Add"
         route="/add"
@@ -372,4 +281,4 @@ const ExamplePage = ({
   );
 };
 
-export default ExamplePage;
+export default MainGameReports;

@@ -26,16 +26,14 @@ import GameResult from "../../Pages/Superadmin/Games/AvailableGames/GameRasult";
 import StarlineGameResult from "../../Pages/Superadmin/Games/Starline/Result/Result";
 import Winnerlist from "../../Helpers/GameProvider/GameResult/WinnerList";
 
-// Revert Payment 
+// Revert Payment
 import RevertPayment from "../../Pages/Superadmin/Games/Starline/RevertPayment/RevertPayment";
 
-// Starline Refund List 
+// Starline Refund List
 import StarlineRefundList from "../../Pages/Superadmin/Games/Starline/StarlineRefundList/StarlineRefundList";
 
-// starline ProfitLost  
+// starline ProfitLost
 import ProfitLoss from "../../Pages/Superadmin/Games/Starline/ProfitLoss/ProfitLoss";
-
-
 
 import MultiTabs from "../../Helpers/MultiTabs";
 import OcCuttingGroup from "../../Pages/Superadmin/BookieCorner/OcCuttingGroup";
@@ -71,6 +69,13 @@ import WithdrawScreen from "../../Pages/Superadmin/AppSettings/WithdrawScreen";
 import HowToPlay from "../../Pages/Superadmin/AppSettings/HowToPlay";
 import UpiIdList from "../../Pages/Superadmin/Masters/UpiIdList";
 import WinnerList from "../../Pages/Superadmin/Games/AvailableGames/WinnerList";
+
+//  ---- Report Section - --------------
+
+import SalesReports from "../../Pages/Superadmin/Reports/SalesReports";
+import StarlineSalesReport from "../../Pages/Superadmin/Reports/StarlineSalesReport";
+import AndarBharTotalBids from "../../Pages/Superadmin/Reports/AndarBharTotalBids";
+import AndarBaharSalesReport from "../../Pages/Superadmin/Reports/AndarBaharSalesReport";
 
 // Mock authentication status
 
@@ -315,6 +320,22 @@ const adminRoutes = [
       {
         path: "wallet/reqOnOff",
         element: <PrivateRoute element={WithdrawRequest} />,
+      },
+      {
+        path: "report/salesreport",
+        element: <PrivateRoute element={SalesReports} />,
+      },
+      {
+        path: "report/absalesreport",
+        element: <PrivateRoute element={AndarBaharSalesReport} />,
+      },
+      {
+        path: "report/abtotalbids",
+        element: <PrivateRoute element={AndarBharTotalBids} />,
+      },
+      {
+        path: "report/starlinesalesreport",
+        element: <PrivateRoute element={StarlineSalesReport} />,
       },
       {
         path: "creditUPI",

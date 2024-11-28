@@ -351,25 +351,25 @@ export const admin_Sidebar = [
       {
         id: 1,
         title: "Sales Report",
-        route: "#",
+        route: "report/salesreport",
         permission: "salesReport",
       },
       {
         id: 2,
         title: "Starline Sales Report",
-        route: "#",
+        route: "report/starlinesalesreport",
         permission: "starLineSaleReport",
       },
       {
         id: 3,
         title: "Andar Bahar Sales Report",
-        route: "#",
+        route: "report/absalesreport",
         permission: "abTotalBids",
       },
       {
         id: 4,
         title: "Andar Bahar Total Bids",
-        route: "#",
+        route: "report/abtotalbids",
         permission: "abTotalBids",
       },
       {

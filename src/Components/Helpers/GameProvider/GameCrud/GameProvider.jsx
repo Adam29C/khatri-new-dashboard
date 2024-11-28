@@ -203,7 +203,7 @@ const GameProvider = ({
     {
       name: "gamename",
       label: "Game Name",
-      type: "text",
+      type: "time",
       Visiblity: "show",
       label_size: 12,
       col_size: 12,

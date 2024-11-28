@@ -14,7 +14,6 @@
 }
 
 .message-box {
-
   height: 300px;
   width: 500px;
 
@@ -30,13 +29,13 @@
   font-size: 80px;
   line-height: 64px;
   margin-bottom: 40px;
-  color:   var(--khatri-color);
+  color: var(--khatri-color);
 }
 .buttons-con .action-link-wrap {
   margin: 40px 0px 0px 20px;
 }
 .buttons-con .action-link-wrap a {
-  background:   var(--khatri-color);
+  background: var(--khatri-color);
   padding: 12px 25px;
   border-radius: 4px;
   color: #fff;
@@ -54,7 +53,7 @@
 
 .message-box p {
   font-size: 20px;
-  color:  var(--khatri-color);
+  color: var(--khatri-color);
 
   font-weight: bold;
 }
@@ -65,8 +64,6 @@
   object-fit: fill;
   background-position: center;
 }
-
-
 
 .switch {
   position: relative;
@@ -81,7 +78,6 @@
   height: 0;
 }
 
-
 .slider:before {
   position: absolute;
   content: "";
@@ -93,7 +89,6 @@
   transition: 0.4s;
   border-radius: 50%;
   padding: 0px;
-
 }
 
 .slider {
@@ -111,7 +106,7 @@
 }
 
 input:checked + .slider {
-  background-color:  var(--khatri-color);
+  background-color: var(--khatri-color);
 }
 
 .error-text {
@@ -121,7 +116,6 @@ input:checked + .slider {
   line-height: 1rem;
   color: var(--red);
 }
-
 
 .main-loader {
   width: 100%;
@@ -139,11 +133,9 @@ input:checked + .slider:before {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-
 }
 
 .custom-card {
-
   backdrop-filter: blur(0px);
   background-color: #ffffff73;
 }
@@ -163,7 +155,7 @@ input:checked + .slider:before {
 }
 
 .update-button {
-  background:#478767;
+  background: #478767;
   color: #fff;
   height: 24px;
   width: 66px;
@@ -211,13 +203,13 @@ input:checked + .slider:before {
   padding: 5px 10px 5px 10px;
   border-radius: 5px;
 }
-.short-datatable-main{
+.short-datatable-main {
   width: 500px;
   display: flex;
   flex-direction: column;
   padding: 15px 0px 0px 20px;
 }
-.short-datatable-data{
+.short-datatable-data {
   font-size: 14px;
 }
 @keyframes type {
@@ -247,29 +239,27 @@ input:checked + .slider:before {
   }
 }
 
-
-.htp-card{
+.htp-card {
   border: 1px solid #e3e3e3;
   padding: 20px;
   margin-top: 10px;
 }
 
-.bbb{
+.bbb {
   border: 1px solid black;
 }
 
-.card-color{
+.card-color {
   /* background: #4a8c6b2e; */
   background: #3c7c8334;
   box-shadow: rgba(21, 152, 156, 0.25) 0px 30px 50px -12px inset,
     rgba(21, 84, 95, 0.3) 0px 18px 26px -18px inset;
 }
 
-
-.edit-icon{
-color: var(--khatri-color);
+.edit-icon {
+  color: var(--khatri-color);
 }
-.edit-icon:hover{
+.edit-icon:hover {
   color: var(--khatri-color);
 }
 
@@ -277,46 +267,48 @@ color: var(--khatri-color);
   color: var(--red);
 }
 
-
-.delete-icon:hover{
+.delete-icon:hover {
   color: var(--red);
 }
 
-
 /* set background image favicon css start*/
 #dynamic-background {
-  background-image: url('../Images/back-image-2.jpg'); 
+  background-image: url("../Images/back-image-2.jpg");
 }
 
 #company-logo {
-  content: url('../Images/Khatri_Main_logo_white.svg'); 
+  content: url("../Images/Khatri_Main_logo_white.svg");
 }
 
 #favicon {
-  content: url('../Images/favicon.png'); 
+  content: url("../Images/favicon.png");
 }
 
-#sidebar-logo{
-  content: url('../Images/Khatri_Main_logo_white.svg'); 
+#sidebar-logo {
+  content: url("../Images/Khatri_Main_logo_white.svg");
 }
 
 /* set background image favicon css end */
 
-
-.hideFieldCss{
+.hideFieldCss {
   display: none;
 }
 
-.winner-list-text-main{
-color: rgb(141, 128, 128);
-font-size: 21px;
-text-align: center;
+.winner-list-text-main {
+  color: rgb(141, 128, 128);
+  font-size: 21px;
+  text-align: center;
 }
 
-.confirm-payment-text{
+.confirm-payment-text {
   font-size: 18px;
   color: var(--khatri-color);
   margin: 25px 0;
   font-weight: 600;
   font-family: Karla, sans-serif;
+}
+
+.rc-time-picker-panel {
+  z-index: 10001 !important;
+  position: absolute;
 }
