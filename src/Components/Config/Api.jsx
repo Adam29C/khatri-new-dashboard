@@ -188,7 +188,7 @@ STARLINE_GAME_PROFIT_LOSS_BID_DATA: "starGameProfitLoss/getBidData",
   GET_REMAINING_WINNER_LIST: "winnerList/remaningWinnerList",
   GET_MAIN_WINNER_LIST: "winnerList/mainWinnerList",
 
-  USERS_IDEAS: "/admin/UserIdea",
+
   GET_VERSION: "/admin/appSetting/listVersionSetting",
   UPDATE_VERSION: "/admin/appSetting/updateVersionSetting",
   WALLET_CONTACT_LIST: "/admin/appSetting/walledContestList",
@@ -208,6 +208,9 @@ STARLINE_GAME_PROFIT_LOSS_BID_DATA: "starGameProfitLoss/getBidData",
   //HOW TO PLAY
   HOW_TO_PLAY_GET_LIST: "/admin/appSetting/htpList",
   UPDATE_HTP: "/admin/appSetting/updateHtp",
+
+  // USER IDEA'S
+  USERS_IDEAS: "userIdea",
 
 };
 

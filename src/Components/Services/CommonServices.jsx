@@ -99,3 +99,19 @@ export const DELETED_USERS_API = async (request, token) => {
     return error;
   }
 };
+
+
+// --------------------------USER IDEA ------------------------
+
+export const GET_USERS_IDEAS = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.USERS_IDEAS}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// --------------------------USER IDEA ------------------------

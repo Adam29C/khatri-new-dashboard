@@ -1,69 +1,56 @@
-import React from 'react'
-import PagesIndex from '../../PagesIndex'
-import { show } from '../../../Utils/Common_Date';
+import React from "react";
+import PagesIndex from "../../PagesIndex";
+import { show } from "../../../Utils/Common_Date";
 
 const UsersIdeas = () => {
-  const [loading, setLoading] = PagesIndex.useState(false);
+  //get token in localstorage
+  const token = localStorage.getItem("token");
+
+  //all state
   const [data, setData] = PagesIndex.useState([]);
+  const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
 
-  const userId = localStorage.getItem("userId");
-
+  //get useridea list function
   const getList = async () => {
-    setLoading(true);
     try {
-      const res = await PagesIndex.admin_services.GET_USERS_IDEAS(userId);
-      setData(res?.data);
+      const payload = {
+        page: 1,
+        limit: 10,
+        searchQuery: SearchInTable,
+      };
+      const res = await PagesIndex.common_services.GET_USERS_IDEAS(payload,token);
+      if (res?.status) {
+        setData(res?.data);
+      }
     } catch (error) {
-    } finally {
-      setLoading(false);
-    }
+    } 
   };
 
   PagesIndex.useEffect(() => {
     getList();
   }, []);
 
-
-  const columns = [
-    {
-      name: "Idea",
-      selector: (row) => row?.idea,
-    },
-    {
-      name: "User Name",
-      selector: (row) => row?.username,
-    },
-
-    {
-      name: "Is Approved Idea",
-      selector: (row) => (
-        <span
-          className={`badge fw-bold ${
-            row.approveIdea ? "bg-primary" : "bg-danger"
-          }`}
-        >
-          {row.approveIdea ? "Approved" : "Not-Approved"}
-        </span>
-      ),
-    },
-    {
-      name: "Submitted At",
-      selector: (row) => show(row?.createdAt),
-    },
-
-  ];
+  const visibleFields = ["id","idea","username","createdAt"];
 
   return (
-    <PagesIndex.Main_Containt add_button={false} 
-    title="Users Idea's">
- <PagesIndex.Data_Table
-      isLoading={loading}
-      columns={columns}
-      data={data}
+    <PagesIndex.Main_Containt add_button={false} title="Users Idea's">
+      <PagesIndex.TableWitCustomPegination
+        data={data}
+        initialRowsPerPage={5}
+        SearchInTable={SearchInTable}
+        visibleFields={visibleFields}
+        searchInput={
+          <input
+            type="text"
+            placeholder="Search..."
+            value={SearchInTable}
+            onChange={(e) => setSearchInTable(e.target.value)}
+            className="form-control ms-auto"
+          />
+        }
+      />
+    </PagesIndex.Main_Containt>
+  );
+};
 
-    />
-  </PagesIndex.Main_Containt>
-  )
-}
-
-export default UsersIdeas
+export default UsersIdeas;
