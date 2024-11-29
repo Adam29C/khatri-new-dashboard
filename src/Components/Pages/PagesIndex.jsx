@@ -50,8 +50,6 @@ import ChangeStatus from "../Helpers/ChangeStatus";
 import TableWitCustomPegination from "../Helpers/Table/TableWithCustomPegination";
 import TableWithCustomPeginationNew from "../Helpers/Table/TableWithCustomPeginationNew";
 import TableWithCustomPeginationButton from "../Helpers/Table/TableWithCustomPeginationButton";
-import TableWitCustomPegination from "../Helpers/Table/TableWithCustomPegination";
-import TableWithCustomPeginationButton from "../Helpers/Table/TableWithCustomPeginationButton";
 import ModalComponent from "../Helpers/Modal/ModalComponent";
 const PagesIndex = {
   useDispatch,
