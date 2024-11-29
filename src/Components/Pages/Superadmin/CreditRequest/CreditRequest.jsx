@@ -1,58 +1,23 @@
 import React from 'react'
 import PagesIndex from "../../PagesIndex";
+import Split_Main_Containt from '../../../Layout/Main/Split_Main_Content';
 const CreditRequest = () => {
 
+  //get token in local storage
+  const token = localStorage.getItem("token")
 
 
-  const columns = [
-    {
-      name: "Username",
-      selector: (row) => row.title,
-    },
-    {
-      name: "Name",
-      selector: (row) => row.year,
-    },
-    {
-      name: "Mobile",
-      selector: (row) => row.year,
-    },
-    {
-      name: "Status",
-      selector: (row) => row.year,
-    },
-    {
-      name: "Time",
-      selector: (row) => row.year,
-    },
-    {
-      name: "Mode",
-      selector: (row) => row.year,
-    },
-    {
-      name: "Amount",
-      selector: (row) => row.year,
-    }
-   
-   
-  ];
+  //dispatch
+  const dispatch = PagesIndex.useDispatch();
 
-  const data = [
-    {
-      id: 1,
-      title: "Beetlejuice",
-      year: "1988",
-    },
-    {
-      id: 2,
-      title: "Ghostbusters",
-      year: "1984",
-    },
-  ];
+  //all state
+const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
+const [tableData, setTableData] = PagesIndex.useState([]);
+
+
 
   const formik = PagesIndex.useFormik({
     initialValues: {
-     
       date: "",
     },
     validate: (values) => {
@@ -74,10 +39,87 @@ const CreditRequest = () => {
       col_size: 12,
     },
   ];
-let amount = "Approved : 0"
+
+
+const visibleFields = [
+  "id",
+  "providerName",
+  "session",
+  "resultDate",
+  "winningDigit",
+];
+const UserFullButtonList = [
+  {
+    id: 0,
+    buttonName: "Get Winners List",
+    buttonColor: "",
+    route: "",
+    Conditions: "",
+    Visiblity: true,
+    
+    type: "button",
+  },
+  {
+    id: 1,
+    buttonName: "Delete Result",
+    buttonColor: "danger",
+    route: "test",
+    Conditions: "",
+    Visiblity: false,
+    type: "button",
+  },
+ 
+];
+
+const cardLayouts = [
+  {
+    size: 12,
+    body: (
+      <div>
+         <PagesIndex.Formikform
+                fieldtype={fields.filter((field) => !field.showWhen)}
+                show_submit={true}
+                formik={formik}
+                button_Size={"w-15"}
+                btn_name="Submit"
+              />
+      </div>
+    ),
+  },
+
+  {
+    size: 12,
+    body: (
+      <div>
+
+          <PagesIndex.TableWitCustomPegination
+        data={tableData}
+        initialRowsPerPage={5}
+        SearchInTable={SearchInTable}
+        visibleFields={visibleFields}
+        UserFullButtonList={UserFullButtonList}
+        searchInput={
+          <input
+            type="text"
+            placeholder="Search..."
+            value={SearchInTable}
+            onChange={(e) => setSearchInTable(e.target.value)}
+            className="form-control ms-auto"
+          />
+        }
+      />
+      </div>
+    ),
+  },
+];
   return (
     <>
-  <PagesIndex.WalletMain title="Declined Report" columns={columns} data={data} fields={fields} formik={formik}  totalAmount={true} showsubmitbtn={true} amount={amount}/>
+    <Split_Main_Containt
+      title="Credit Requests : UPI"
+      add_button={false}
+      cardLayouts={cardLayouts}
+
+    />
     </>
   );
 };
