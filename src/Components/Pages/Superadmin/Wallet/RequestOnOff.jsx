@@ -73,6 +73,35 @@ const RequestOnOff = () => {
     },
   ];
 
+  const fields1 = [
+    {
+      name: "status",
+      label: "On or Off",
+      type: "select",
+      Visiblity: true,
+      title_size: 12,
+      col_size: 12,
+      options: [
+        {
+          label: "ON",
+          value: "true",
+        },
+        {
+          label: "OFF",
+          value: "false",
+        },
+      ],
+    },
+    {
+      name: "reason",
+      label: "Message",
+      type: "msgbox",
+      row_size: 4,
+      title_size: 4,
+      col_size: 12,
+    },
+  ];
+
   const formik1 = PagesIndex.useFormik({
     initialValues: {
       status: "",
@@ -113,6 +142,30 @@ const RequestOnOff = () => {
     },
   });
 
+  const fields = [
+    {
+      name: "startDate",
+      label: "From Time",
+      type: "time",
+      title_size: 4,
+      col_size: 4,
+    },
+    {
+      name: "endDate",
+      label: "To Time",
+      type: "time",
+      title_size: 4,
+      col_size: 4,
+    },
+    {
+      name: "requestCount",
+      label: "Withdraw Request Count",
+      type: "number",
+      label_size: 12,
+      col_size: 4,
+    },
+  ];
+
   const formik = PagesIndex.useFormik({
     initialValues: {
       requestCount: "",
@@ -142,59 +195,6 @@ const RequestOnOff = () => {
       }
     },
   });
-
-  const fields1 = [
-    {
-      name: "status",
-      label: "On or Off",
-      type: "select",
-      Visiblity: true,
-      title_size: 12,
-      col_size: 12,
-      options: [
-        {
-          label: "ON",
-          value: "true",
-        },
-        {
-          label: "OFF",
-          value: "false",
-        },
-      ],
-    },
-    {
-      name: "reason",
-      label: "Message",
-      type: "msgbox",
-      row_size: 4,
-      title_size: 4,
-      col_size: 12,
-    },
-  ];
-
-  const fields = [
-    {
-      name: "startDate",
-      label: "From Time",
-      type: "time",
-      title_size: 4,
-      col_size: 4,
-    },
-    {
-      name: "endDate",
-      label: "To Time",
-      type: "time",
-      title_size: 4,
-      col_size: 4,
-    },
-    {
-      name: "requestCount",
-      label: "Withdraw Request Count",
-      type: "number",
-      label_size: 12,
-      col_size: 4,
-    },
-  ];
 
   const cardLayouts = [
     {
