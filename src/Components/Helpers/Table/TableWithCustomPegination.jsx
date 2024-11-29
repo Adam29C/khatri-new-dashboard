@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
+import PagesIndex from "../../Pages/PagesIndex";
 const PaginatedTable = ({
   data,
   initialRowsPerPage = 5,
@@ -8,14 +9,15 @@ const PaginatedTable = ({
   visibleFields,
   additional,
   UserFullButtonList,
+  showIndex,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(initialRowsPerPage);
   const [filteredData, setFilteredData] = useState(data);
   const [searchQuery, setSearchQuery] = useState("");
-
+  //
   const columns = useMemo(() => {
-    if (data.length > 0) {
+    if (data?.length > 0) {
       return Object.keys(data[0]).map((key) => ({
         header: key.charAt(0).toUpperCase() + key.slice(1),
         field: key,
@@ -26,7 +28,7 @@ const PaginatedTable = ({
   }, [data, visibleFields]);
 
   const ddd = () => {
-    const filtered = data.filter((row) =>
+    const filtered = data?.filter((row) =>
       columns.some((column) =>
         row[column.field]
           ?.toString()
@@ -43,10 +45,10 @@ const PaginatedTable = ({
   }, [searchQuery, data, columns]);
 
   // Calculate total pages
-  const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+  const totalPages = Math.ceil(filteredData?.length / rowsPerPage);
 
   // Get current page data
-  const currentData = filteredData.slice(
+  const currentData = filteredData?.slice(
     (currentPage - 1) * rowsPerPage,
     currentPage * rowsPerPage
   );
@@ -58,9 +60,59 @@ const PaginatedTable = ({
   };
 
   // Render pagination items
+  // const renderPagination = () => {
+  //   let pages = [];
+  //   for (let i = 1; i <= totalPages; i++) {
+  //     pages.push(
+  //       <li
+  //         key={i}
+  //         className={`page-item ${i === currentPage ? "active" : ""}`}
+  //       >
+  //         <button className="page-link" onClick={() => setCurrentPage(i)}>
+  //           {i}
+  //         </button>
+  //       </li>
+  //     );
+  //   }
+  //   return pages;
+  // };
+
   const renderPagination = () => {
+    const visiblePageLinks = 5; // Number of visible page links at a time
     let pages = [];
-    for (let i = 1; i <= totalPages; i++) {
+
+    // Determine start and end of page links
+    const startPage = Math.max(
+      1,
+      currentPage - Math.floor(visiblePageLinks / 2)
+    );
+    const endPage = Math.min(totalPages, startPage + visiblePageLinks - 1);
+
+    // Ensure there's a consistent number of visible links
+    const adjustedStartPage = Math.max(1, endPage - visiblePageLinks + 1);
+
+    // Add "Previous" and "First" if not on the first page
+    if (currentPage > 1) {
+      pages.push(
+        <li key="first" className="page-item">
+          <button className="page-link" onClick={() => setCurrentPage(1)}>
+            &laquo;
+          </button>
+        </li>
+      );
+    }
+
+    // Render ellipsis if there's a gap before the first visible page
+    if (adjustedStartPage > 1) {
+      pages.push(
+        <li key="start-ellipsis" className="page-item disabled">
+          <span className="page-link">...</span>
+        </li>
+      );
+    }
+
+    // Render visible page links
+    for (let i = adjustedStartPage; i <= endPage; i++) {
       pages.push(
         <li
           key={i}
@@ -72,9 +124,49 @@ const PaginatedTable = ({
         </li>
       );
     }
+
+    // Render ellipsis if there's a gap after the last visible page
+    if (endPage < totalPages) {
+      pages.push(
+        <li key="end-ellipsis" className="page-item disabled">
+          <span className="page-link">...</span>
+        </li>
+      );
+    }
+
+    // Add "Next" and "Last" if not on the last page
+    if (currentPage < totalPages) {
+      pages.push(
+        <li key="last" className="page-item">
+          <button
+            className="page-link"
+            onClick={() => setCurrentPage(totalPages)}
+          >
+            &raquo;
+          </button>
+        </li>
+      );
+    }
+
     return pages;
   };
 
+  const toggleResponsiveTable = () => {
+    const table = document.getElementById("myTable");
+    if (window.innerWidth <= 425) {
+      table?.classList.add("table-responsive");
+    } else {
+      table?.classList.remove("table-responsive");
+    }
+  };
+
+  useEffect(() => {
+    toggleResponsiveTable();
+    window.addEventListener("resize", toggleResponsiveTable);
+    return () => {
+      window.removeEventListener("resize", toggleResponsiveTable);
+    };
+  }, [window]);
   return (
     <div className="container">
       <div className="d-flex justify-content-between align-items-center mb-3">
@@ -106,93 +198,107 @@ const PaginatedTable = ({
       </div>
 
       {/* Table */}
-      <table className="table table-striped table-bordered">
+      <table
+        id="myTable"
+        className="table table-striped table-bordered table-responsive "
+      >
         <thead className="text-center table-header-backeground">
-          <tr>
-            <th>ID</th>
+          {data && data?.length > 0 && (
+            <tr>
+              {showIndex && <th>ID</th>}
+              {columns.map(
+                (column, id) =>
+                  column.visible && (
+                    <>
+                      <th key={column.field}>{column.header}</th>
+                    </>
+                  )
+              )}
 
-            {columns.map(
-              (column, id) =>
-                column.visible && (
-                  <>
-                    <th key={column.field}>{column.header}</th>
-                  </>
-                )
-            )}
-
-            {UserFullButtonList.map((items) => {
-              return (
-                <>
-                  <th>{items.buttonName}</th>
-                </>
-              );
-            })}
-          </tr>
+              {UserFullButtonList &&
+                UserFullButtonList?.map((items) => {
+                  return (
+                    <>
+                      <th>{items.buttonName}</th>
+                    </>
+                  );
+                })}
+            </tr>
+          )}
         </thead>
         <tbody className="text-center">
-          {currentData.length > 0 ? (
+          {currentData?.length > 0 ? (
             <>
-              {currentData.map((row, index) => (
+              {currentData?.map((row, index) => (
                 <tr key={index}>
-                  <td>{index + 1}</td>
+                  {showIndex && (
+                    <td>{(currentPage - 1) * rowsPerPage + index + 1}</td>
+                  )}
                   {columns.map((column) =>
                     column.visible ? (
-                      <td key={column.field}>
-                        {" "}
+                      <td  className="bg-red" key={column.field}>
                         {column.field === "activeStatus"
                           ? row.activeStatus
                             ? "Market Is Active"
                             : "Market Is Inactive"
                           : row[column.field]}
                       </td>
-                    ) : (
-                      ""
-                    )
+                    ) : null
                   )}
 
-                  {UserFullButtonList.map((items) => {
-                    return (
-                      <>
-                     
+                  {/* Render buttons only in the last column */}
+                  {UserFullButtonList?.length > 0 &&
+                    UserFullButtonList?.map((items) => {
+                      return (
                         <td>
-                          {items.type === "link" ? (
-                            <Link
-                              to={items.route}
-                              className={`btn btn-${items.buttonColor} btn-sm me-2`}
-                            >
-                              {items.buttonName}
-                            </Link>
-                          ) :
-                           (
-                            <button
-                              type="button"
-                              className={`btn ${items.buttonColor ? `btn-${items.buttonColor}` : "unblock-btn"} btn-sm me-2`}
-                              
-                              onClick={() => {
-                                if (items.buttonName === "Delete") {
-                                  items.onClick(row._id);
-                                }  else if (items.buttonName === "Edit") {
-                                  items.onClick(row); 
-                                }
-                              }}
-                            >
-                              {items.buttonName}
-                            </button>
-                          )}{" "}
+                          <span key={items.buttonName}>
+                            {items.type === "link" ? (
+                              <Link
+                                to={items.route}
+                                className={`btn btn-${items.buttonColor} btn-sm me-2`}
+                              >
+                                {items.buttonName}
+                              </Link>
+                            ) : items.type === "button" ? (
+                              <button
+                                className={`btn ${
+                                  items.buttonColor
+                                    ? `btn-${items.buttonColor}`
+                                    : "unblock-btn"
+                                } btn-sm me-2`}
+                                onClick={() => items.Conditions(row)}
+                              >
+                                {items.buttonName}
+                              </button>
+                            ) : items.type === "check" ? (
+                              <PagesIndex.ChangeStatus
+                                apiRoute={""}
+                                req={""}
+                                checkboxStatus={""}
+                                rowData={""}
+                              />
+                            ) : items.type === "ankertag" ? (
+                              <button
+                                className={`btn  me-2`}
+                                onClick={() => items.Conditions(row)}
+                              >
+                                {items.buttonName}
+                              </button>
+                            ) : null}
+                          </span>
                         </td>
-                      </>
-                    );
-                  })}
+                      );
+                    })}
                 </tr>
               ))}
             </>
           ) : (
-            <span>No Data Available</span>
+            <h4 className="text-center">No Data Available</h4>
           )}
 
           {additional && (
             <tr>
-              <td colSpan={3}>{additional}</td>
+              <td colSpan={columns.length + 1}>{additional}</td>
             </tr>
           )}
         </tbody>

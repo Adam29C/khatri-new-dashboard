@@ -4,10 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { v4 } from "uuid";
-import { Remove_Special_Character, Password_Rejex,validApkFile,Mobile_regex } from "../Utils/Valid_Rejex";
+import {
+  Remove_Special_Character,
+  Password_Rejex,
+  validApkFile,
+  Mobile_regex,
+} from "../Utils/Valid_Rejex";
 import { LOGIN_API } from "../Services/AuthServices";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import 'react-responsive-modal/styles.css';
+import "react-responsive-modal/styles.css";
 
 import Logo from "../Layout/Logo/Logo_png";
 import { useFormik } from "formik";
@@ -15,11 +20,12 @@ import Auth_Containt from "../Layout/Main/Auth_content";
 import Main_Containt from "../Layout/Main/Main_Containt";
 import Formikform from "../Helpers/FormikForm/Form";
 import Toast from "../Helpers/Toast";
-import { getGenerateToken } from "../Redux/slice/CommonSlice";
 import { Link } from "react-router-dom";
 import * as valid_err from "../Utils/Common_Msg";
 import * as admin_services from "../Services/SuperAdminServices";
 import * as common_services from "../Services/CommonServices";
+import * as game_service from "../Services/GameSectionService";
+
 import {
   ADD_SYSTEM_INFO_API,
   LIST_SYSTEM_INFO_API,
@@ -39,7 +45,9 @@ import CuttingGroupMain from "../Helpers/CuttingGroup/CuttingGroup";
 import MultiTabs from "../Helpers/MultiTabs";
 import WalletMain from "../Helpers/Wallet/WalletMain";
 import ChangeStatus from "../Helpers/ChangeStatus";
-import TableWitCustomPegination from "../Helpers/Table/TableWithCustomPegination"
+import TableWitCustomPegination from "../Helpers/Table/TableWithCustomPegination";
+import TableWithCustomPeginationNew from "../Helpers/Table/TableWithCustomPeginationNew";
+import TableWithCustomPeginationButton from "../Helpers/Table/TableWithCustomPeginationButton";
 import ModalComponent from "../Helpers/Modal/ModalComponent";
 const PagesIndex = {
   useDispatch,
@@ -55,7 +63,7 @@ const PagesIndex = {
   Main_Containt,
   Formikform,
   Toast,
-  getGenerateToken,
+
   useEffect,
   Link,
   valid_err,
@@ -84,7 +92,11 @@ const PagesIndex = {
   Mobile_regex,
   common_services,
   TableWitCustomPegination,
-  ModalComponent
+  TableWithCustomPeginationNew,
+  TableWithCustomPeginationButton,
+
+  ModalComponent,
+  game_service,
 };
 
 export default PagesIndex;

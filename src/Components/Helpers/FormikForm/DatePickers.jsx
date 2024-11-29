@@ -1,20 +1,26 @@
 // src/components/CustomDatePicker.js
-import React from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import React from "react";
+import DatePicker from "react-datepicker";
+import { today } from "../../Utils/Common_Date";
+
 
 const CustomDatePicker = ({ field, formik, setDateStates, dateStates }) => {
-  const handleDateChange = (date, name) => {
-    const formattedTime = date
-      ? date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+
+
+  
+  const handleDateChange = (date) => {
+    const formattedDate = date
+      ? `${(date.getMonth() + 1).toString().padStart(2, "0")}/${date
+          .getDate()
+          .toString()
+          .padStart(2, "0")}/${date.getFullYear()}`
       : "";
     setDateStates((prevStates) => ({
       ...prevStates,
-      [name]: formattedTime,
+      [field.name]: date, // Store the selected date
     }));
-    formik.setFieldValue(name, formattedTime);
+    formik.setFieldValue(field.name, formattedDate); // Update Formik state
   };
-
   return (
     <div className={`col-lg-${field.col_size}`}>
       <div className="row flex-column">
@@ -27,25 +33,16 @@ const CustomDatePicker = ({ field, formik, setDateStates, dateStates }) => {
         </label>
         <div className="d-flex">
           <DatePicker
-            className={`col-lg-${field.col_size} form-control Date-picker-control`}
-            name={field.name}
-            selected={dateStates[field.name]}
-            onChange={(date) => handleDateChange(date, field.name)}
-            {...formik.getFieldProps(field.name)}
-            showTimeSelect
-            showTimeSelectOnly
-            timeIntervals={5}
-            timeCaption="Time"
-            dateFormat="h:mm aa"
+            className="form-control w-100"
+            value={dateStates[field.name]}
+            selected={dateStates[field.name] || today(new Date())} // Ensure a valid date object or null
+            onChange={handleDateChange} // Handle date changes
+            onBlur={() => formik.setFieldTouched(field.name, true)} // Mark field as touched
           />
-          <div className="invalid-feedback">
-            Please enter {field.label}
-          </div>
+          <div className="invalid-feedback">Please enter {field.label}</div>
         </div>
         {formik.errors[field.name] && (
-          <div className="error-text">
-            {formik.errors[field.name]}
-          </div>
+          <div className="error-text">{formik.errors[field.name]}</div>
         )}
       </div>
     </div>

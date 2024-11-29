@@ -17,24 +17,24 @@ export const admin_Sidebar = [
     Icon: "fa fa-users",
     NestedElement: [],
   },
-  {
-    id: 2,
-    route: "system",
-    headerTitle: "Penal Info",
-  permission: "000",
+  // {
+  //   id: 2,
+  //   route: "system",
+  //   headerTitle: "Penal Info",
+  // permission: "000",
 
-    title: "Penal Info",
-    Icon: "icon-globe-alt",
-    NestedElement: [
-      {
-        id: 1,
-        title: "Systems",
-  permission: "000",
+  //   title: "Penal Info",
+  //   Icon: "icon-globe-alt",
+  //   NestedElement: [
+  //     {
+  //       id: 1,
+  //       title: "Systems",
+  // permission: "000",
 
-        route: "system",
-      },
-    ],
-  },
+  //       route: "system",
+  //     },
+  //   ],
+  // },
 
   {
     id: 3,
@@ -111,19 +111,25 @@ export const admin_Sidebar = [
       {
         id: 4,
         title: "Star Game Result",
-        route: "#",
+        route: "starline/results",
         permission: "starlineResult",
       },
       {
         id: 5,
-        title: "Star Revert Result Payment",
-        route: "#",
-        permission: "0",
+        title: "Star Profit/Loss",
+        permission: "starlineProfit",
+        route: "starline/profitloss",
       },
       {
         id: 6,
+        title: "Star Revert Result Payment",
+        route: "starline/revertpayment",
+        permission: "0",
+      },
+      {
+        id: 7,
         title: "Refund User Points",
-        route: "#",
+        route: "starline/refundlist",
         permission: "0",
       },
     ],
@@ -160,20 +166,20 @@ export const admin_Sidebar = [
         route: "#",
       },
       {
-        id: 4,
+        id: 5,
         title: "Jackpot Game Result",
         permission: "abResult",
         route: "#",
       },
 
       {
-        id: 5,
+        id: 6,
         title: "Jackpot Revert Result Payment",
         permission: "0",
         route: "#",
       },
       {
-        id: 6,
+        id: 7,
         title: "Refund User Points",
         permission: "0",
         route: "#",
