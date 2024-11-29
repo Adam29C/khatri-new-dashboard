@@ -765,3 +765,20 @@ export const SINGLE_EMPLOYEE_GET_LIST_API = async (id,token) => {
   }
 };
 // --------------------------   Employee Crud ------------------------
+
+
+// --------------------------   GET_CREDIT_REQUEST_UPI ------------------------
+
+export const GET_CREDIT_REQUEST_UPI_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.GET_CREDIT_REQUEST_UPI}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// --------------------------   GET_CREDIT_REQUEST_UPI ------------------------
+

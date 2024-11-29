@@ -62,6 +62,23 @@ export const getActualDateFormate = (d) => {
   return `${year}-${month}-${day}`;
 };
 
+
+export const getActualDateWithFormat = (d) => {
+  const today = new Date(d);
+  const year = today.getFullYear();
+  let month = today.getMonth() + 1;
+  let day = today.getDate();
+
+  if (month < 10) {
+    month = `0${month}`;
+  }
+  if (day < 10) {
+    day = `0${day}`;
+  }
+
+  return `${month}/${day}/${year}`;
+};
+
 export const today = (d) => {
   let abc = new Date(d);
   let month = abc.getMonth() + 1;

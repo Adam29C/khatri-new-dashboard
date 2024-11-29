@@ -46,7 +46,7 @@ const CustomDatePicker = ({ field, formik, setDateStates, dateStates }) => {
             // {...formik.getFieldProps(field.name)}
             // dateFormat="mm/dd/yyyy"
             className="form-control"
-            selected={dateStates[field.name] || null} // Ensure a valid date object or null
+            selected={dateStates[field.name] || formik.values.date} // Ensure a valid date object or null
             onChange={handleDateChange} // Handle date changes
             onBlur={() => formik.setFieldTouched(field.name, true)} // Mark field as touched
             dateFormat="MM/dd/yyyy"

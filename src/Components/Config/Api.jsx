@@ -105,6 +105,9 @@ GET_NOTIFICATION : "notification",
 ADD_NOTIFICATION : "notification/inserNotification",
 DELETE_NOTIFICATION : "notification",
 
+//CREDIT REQUEST GET API
+GET_CREDIT_REQUEST_UPI:"creditRequest/creditUPI"
+
 };
 
 export { Api };
