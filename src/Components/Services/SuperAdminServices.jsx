@@ -173,7 +173,6 @@ export const GAME_PROVIDER_UPDATE_API = async (data, token) => {
   }
 };
 
-
 // --------------------------  game provider api ------------------------
 // --------------------------   super admin provider api ------------------------
 
@@ -568,4 +567,73 @@ export const DELETE_EMPLOYEE = async (ID) => {
     return error;
   }
 };
-// --------------------------   Employee Crud ------------------------
+
+// -----------------  WALLET SECTION -------------------------------
+
+export const GET_WALLET_LIST = async (data, token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.WALLET_LIST}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const WALLET_LIST_HISTORY_API = async (data, token) => {
+  try {
+    const res = await axios.post(
+      `${BASE_URL}${Api.WALLET_LIST_HISTORY}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const WALLET_LIST_CREDIT_API = async (data, token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.WALLET_LIST_CREDIT}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const WALLET_LIST_USER_PROFILE_API = async (data, token) => {
+  try {
+    const res = await axios.get(
+      `${BASE_URL}${Api.WALLET_LIST_USER_PROFILE}`,
+
+      {
+        headers: header(token),
+      }
+    );
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+export const WALLET_LIST_UPDATE_WALLET_API = async (data, token) => {
+  try {
+    const res = await axios.post(
+      `${BASE_URL}${Api.WALLET_LIST_UPDATE_WALLET}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// -----------------  WALLET SECTION -------------------------------

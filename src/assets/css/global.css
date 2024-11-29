@@ -320,3 +320,36 @@ text-align: center;
   font-weight: 600;
   font-family: Karla, sans-serif;
 }
+
+
+
+.main {
+  background: #fff;
+  position: relative;
+  z-index: 3;
+  text-align: center;
+}
+
+.user-data {
+  padding-top: 40px;
+}
+
+.title {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #3c4858;
+  font-weight: 700;
+  font-family: "Roboto Slab", "Times New Roman", serif;
+  font-size: 20px;
+}
+
+.walletbalance {
+  font-weight: 500;
+  color: #888888;
+  margin-bottom: 0;
+}
+
+.name{
+  display: flex;
+  flex-direction: column;
+}

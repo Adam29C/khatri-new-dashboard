@@ -94,7 +94,6 @@ const Api = {
   //   ADMIN_GAME_SETTING_ADD: "mainGameSetting/insertSettings",
   //   ADMIN_GAME_SETTING_UPDATEALL: "mainGameSetting/updateAll"
 
-
   //  STARLINE GAME RESULT -
   STARLINE_GAME_MAIN_RESULT: "starGameResult",
   STARLINE_GAME_MAIN_RESULT_ADD: "starGameResult",
@@ -105,7 +104,7 @@ const Api = {
   // STARLINE_GAME_SETTING_UPDATE_ALL: "starGameSetting/updateProviderSettings",
   // STARLINE_GAME_SETTING_UPDATE_ONE: "starGameSetting",
 
- //  STARLINE REVERT PAYMENT -
+  //  STARLINE REVERT PAYMENT -
   STARLINE_GAME_REVERT_PAYMENT: "starGameResult/revertPayment",
   STARLINE_GAME_CONFIRM_REVERT_PAYMENT: "starGameResult/paymentRevert",
 
@@ -120,11 +119,7 @@ const Api = {
   JACKPOT_GAME_PROVIDER_UPDATE: "abGameProvider",
   JACKPOT_GAME_PROVIDERS_DELETE: "abGameProvider",
 
-
-
-
-
-  //  STARLINE GAME RESULT - 
+  //  STARLINE GAME RESULT -
   STARLINE_GAME_MAIN_RESULT: "starGameResult",
   STARLINE_GAME_MAIN_RESULT_ADD: "starGameResult",
   STARLINE_GAME_PAST_RESULT: "starGameResult/pastResult",
@@ -134,16 +129,13 @@ const Api = {
   // STARLINE_GAME_SETTING_UPDATE_ALL: "starGameSetting/updateProviderSettings",
   // STARLINE_GAME_SETTING_UPDATE_ONE: "starGameSetting",
 
+  //  STARLINE REVERT PAYMENT -
 
-  //  STARLINE REVERT PAYMENT - 
+  STARLINE_GAME_PROVIDER_LIST: "starGameProfitLoss",
+  STARLINE_GAME_PROFIT_LOSS_LIST: "starGameProfitLoss/getResult",
+  STARLINE_GAME_PROFIT_LOSS_BID_DATA: "starGameProfitLoss/getBidData",
 
-STARLINE_GAME_PROVIDER_LIST: "starGameProfitLoss",
-STARLINE_GAME_PROFIT_LOSS_LIST: "starGameProfitLoss/getResult",
-STARLINE_GAME_PROFIT_LOSS_BID_DATA: "starGameProfitLoss/getBidData",
-
-
-
-  //  STARLINE REVERT PAYMENT - 
+  //  STARLINE REVERT PAYMENT -
 
   STARLINE_GAME_REVERT_PAYMENT: "starGameResult",
   STARLINE_GAME_CONFIRM_REVERT_PAYMENT: "starGameResult",
@@ -162,6 +154,14 @@ STARLINE_GAME_PROFIT_LOSS_BID_DATA: "starGameProfitLoss/getBidData",
   JACKPOT_GAME_RATE_REMOVE: "abGameRate",
 
   ADMIN_CHANGE_PASSWORD: "admin/changePassword",
+
+  // WALLET
+
+  WALLET_LIST: "view_wallet",
+  WALLET_LIST_HISTORY: "view_wallet/newHistroy",
+  WALLET_LIST_CREDIT: "view_wallet/newCredit",
+  WALLET_LIST_USER_PROFILE: "view_walle/getProfile",
+  WALLET_LIST_UPDATE_WALLET: "view_walle/walletUpdate",
 
   // SYSTEM MODULE
   ADD_SYSTEM_INFO: "admin/addSystemInfo",
@@ -208,7 +208,6 @@ STARLINE_GAME_PROFIT_LOSS_BID_DATA: "starGameProfitLoss/getBidData",
   //HOW TO PLAY
   HOW_TO_PLAY_GET_LIST: "/admin/appSetting/htpList",
   UPDATE_HTP: "/admin/appSetting/updateHtp",
-
 };
 
 export { Api };
