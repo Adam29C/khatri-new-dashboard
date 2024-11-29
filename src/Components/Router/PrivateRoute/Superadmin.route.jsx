@@ -26,26 +26,18 @@ import GameResult from "../../Pages/Superadmin/Games/AvailableGames/GameRasult";
 import StarlineGameResult from "../../Pages/Superadmin/Games/Starline/Result/Result";
 import Winnerlist from "../../Helpers/GameProvider/GameResult/WinnerList";
 
-// Revert Payment 
+// Revert Payment
 import RevertPayment from "../../Pages/Superadmin/Games/Starline/RevertPayment/RevertPayment";
 
-// Starline Refund List 
+// Starline Refund List
 import StarlineRefundList from "../../Pages/Superadmin/Games/Starline/StarlineRefundList/StarlineRefundList";
 
-// starline ProfitLost  
+// starline ProfitLost
 import ProfitLoss from "../../Pages/Superadmin/Games/Starline/ProfitLoss/ProfitLoss";
-
-
 
 import MultiTabs from "../../Helpers/MultiTabs";
 import OcCuttingGroup from "../../Pages/Superadmin/BookieCorner/OcCuttingGroup";
 import FinalOcCuttingGroup from "../../Pages/Superadmin/BookieCorner/FinalOcCuttingGroup";
-import ManualRequest from "../../Pages/Superadmin/Wallet/ManualRequest";
-import ExportDebitReport from "../../Pages/Superadmin/Wallet/ExportDebitReport";
-import DownloadDebitReport from "../../Pages/Superadmin/Wallet/DownloadDebitReport";
-import SearchAccount from "../../Pages/Superadmin/Wallet/SearchAccount";
-import Invoices from "../../Pages/Superadmin/Wallet/Invoices";
-import ViewWallet from "../../Pages/Superadmin/Wallet/ViewWallet";
 import WithdrawRequest from "../../Pages/Superadmin/Wallet/WithdrawRequest";
 import CreditRequest from "../../Pages/Superadmin/CreditRequest/CreditRequest";
 import UsersIdeas from "../../Pages/Superadmin/Users/UsersIdeas";
@@ -71,6 +63,16 @@ import WithdrawScreen from "../../Pages/Superadmin/AppSettings/WithdrawScreen";
 import HowToPlay from "../../Pages/Superadmin/AppSettings/HowToPlay";
 import UpiIdList from "../../Pages/Superadmin/Masters/UpiIdList";
 import WinnerList from "../../Pages/Superadmin/Games/AvailableGames/WinnerList";
+
+// WALLET SECTION
+
+import RequestOnOff from "../../Pages/Superadmin/Wallet/RequestOnOff";
+import ManualRequest from "../../Pages/Superadmin/Wallet/ManualRequest";
+import ExportDebitReport from "../../Pages/Superadmin/Wallet/ExportDebitReport";
+import DownloadDebitReport from "../../Pages/Superadmin/Wallet/DownloadDebitReport";
+import SearchAccount from "../../Pages/Superadmin/Wallet/SearchAccount";
+import Invoices from "../../Pages/Superadmin/Wallet/Invoices";
+import ViewWallet from "../../Pages/Superadmin/Wallet/ViewWallet";
 
 // Mock authentication status
 
@@ -314,7 +316,7 @@ const adminRoutes = [
       },
       {
         path: "wallet/reqOnOff",
-        element: <PrivateRoute element={WithdrawRequest} />,
+        element: <PrivateRoute element={RequestOnOff} />,
       },
       {
         path: "creditUPI",

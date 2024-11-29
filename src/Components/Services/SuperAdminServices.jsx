@@ -568,6 +568,60 @@ export const DELETE_EMPLOYEE = async (ID) => {
   }
 };
 
+// ----------------------------------  WALLET ---------------------------------------------------
+
+// -----------------  REQUEST ON OFF SECTION -------------------------------
+
+export const REQUEST_LIST_API = async (token) => {
+  try {
+    const res = await axios.get(`${BASE_URL}${Api.REQUEST_LIST}`, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const REQUEST_LIST_UPDATE_API = async (data, token) => {
+  try {
+    const res = await axios.post(
+      `${BASE_URL}${Api.REQUEST_LIST_UPDATE}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const GET_REQUEST_LIST_API = async (token) => {
+  try {
+    const res = await axios.get(`${BASE_URL}${Api.GET_REQUEST_LIST}`, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const UPDATE_REQUEST_API = async (data, token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.UPDATE_REQUEST}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// -----------------  WALLET SECTION -------------------------------
+
 // -----------------  WALLET SECTION -------------------------------
 
 export const GET_WALLET_LIST = async (data, token) => {
@@ -607,11 +661,10 @@ export const WALLET_LIST_CREDIT_API = async (data, token) => {
   }
 };
 
-export const WALLET_LIST_USER_PROFILE_API = async (data, token) => {
+export const WALLET_LIST_USER_PROFILE_API = async (id, token) => {
   try {
     const res = await axios.get(
-      `${BASE_URL}${Api.WALLET_LIST_USER_PROFILE}`,
-
+      `${BASE_URL}${Api.WALLET_LIST_USER_PROFILE}?userId=${id}`,
       {
         headers: header(token),
       }

@@ -1,9 +1,11 @@
 import React from "react";
 import PagesIndex from "../../PagesIndex";
 import ReusableModal from "../../../Helpers/Modal/ModalComponent_main";
+import { useFormik } from "formik";
 
 const ViewWallet = () => {
   const token = localStorage.getItem("token");
+  let { user_id, role } = JSON.parse(localStorage.getItem("userdetails"));
 
   const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
   const [TableData, setTableData] = PagesIndex.useState([]);
@@ -14,12 +16,14 @@ const ViewWallet = () => {
   const [ModalStateHistoryUserDetails, setModalStateHistoryUserDetails] =
     PagesIndex.useState("");
   const [rowStatus, setRowStatus] = PagesIndex.useState(0);
+  const [UserDetails, setUserDetails] = PagesIndex.useState([]);
 
   const visibleFields = [
     "id",
     "username",
     "name",
     "mobile",
+    "wallet_balance",
     "wallet_bal_updated_at",
   ];
 
@@ -36,7 +40,7 @@ const ViewWallet = () => {
 
   const getHistory = async (row, number) => {
     setRowStatus(number);
-    setModalStateHistoryUserDetails(row.username);
+    setModalStateHistoryUserDetails(row);
     setModalStateHistory(true);
 
     if (number === 1) {
@@ -66,8 +70,115 @@ const ViewWallet = () => {
       );
       setModalStateHistoryTable(res.data);
     } else if (number === 3) {
+      const res = await PagesIndex.admin_services.WALLET_LIST_USER_PROFILE_API(
+        row._id,
+        token
+      );
+      if (res.status) {
+        setUserDetails(res.data);
+      }
     }
   };
+
+  var formik = useFormik({
+    initialValues: {
+      amount: "",
+      type: "",
+      particular: "",
+    },
+
+    validate: (values) => {
+      const errors = {};
+  if (!values.type) {
+        errors.type = "Please Select Type";
+      }
+      if (!values.amount) {
+        errors.amount = "Please Enter Amount";
+      }
+      if (parseInt(values.amount) > 510000) {
+        errors.amount = "Max amount is 510000";
+      }
+    
+      if (!values.particular) {
+        errors.particular = "Please Select particular";
+      }
+
+      return errors;
+    },
+    onSubmit: async (values) => {
+      console.log("ModalStateHistoryUserDetails", ModalStateHistoryUserDetails);
+
+      const payload = {
+        id: ModalStateHistoryUserDetails._id,
+        amount: values.amount,
+        type: values.type,
+        particular: values.particular,
+        admin_id: user_id,
+      };
+
+      const res = await PagesIndex.admin_services.WALLET_LIST_UPDATE_WALLET_API(
+        payload,
+        token
+      );
+      if (res.status) {
+        setUserDetails(res.data);
+      }
+
+      console.log("payloadpayload", payload);
+    },
+  });
+
+  const fields = [
+    {
+      name: "type",
+      label: "Type",
+      type: "select",
+      Visiblity: true,
+      title_size: 12,
+      col_size: 12,
+      options: [
+        {
+          label: "Credit(Deposit)",
+          value: 1,
+        },
+        {
+          label: "Debit(Withdrawal)",
+          value: 2,
+        },
+      ],
+    },
+    {
+      name: "amount",
+      label: "Amount",
+      type: "number",
+      label_size: 12,
+      col_size: 12,
+      Visiblity: true,
+    },
+
+    {
+      name: "particular",
+      label: "Particular",
+      type: "select",
+      Visiblity: true,
+      title_size: 12,
+      col_size: 12,
+      options: [
+        {
+          label: "Manual",
+          value: "manual",
+        },
+        {
+          label: "ManualPayment",
+          value: "paymentManual",
+        },
+        {
+          label: "UPI",
+          value: "UPI",
+        },
+      ],
+    },
+  ];
 
   const UserFullButtonList = [
     {
@@ -89,6 +200,7 @@ const ViewWallet = () => {
       route: "test",
       Conditions: (row) => {
         // getProfile(row);
+        getHistory(row, 4);
       },
       Visiblity: false,
       type: "button",
@@ -135,6 +247,7 @@ const ViewWallet = () => {
     getList();
   }, []);
 
+  const { userData1, userData2 } = UserDetails && UserDetails;
 
   return (
     <PagesIndex.Main_Containt
@@ -163,11 +276,17 @@ const ViewWallet = () => {
       <ReusableModal
         show={ModalStateHistory}
         onClose={setModalStateHistory}
-        title={`Transaction History of : ${ModalStateHistoryUserDetails} `}
-        size={"lg"}
+        title={
+          rowStatus === 1 || rowStatus === 2
+            ? `Transaction History of : ${ModalStateHistoryUserDetails.username} `
+            : rowStatus === 4
+            ? "Update Wallet Balance "
+            : "User Profile"
+        }
+        size={rowStatus === 4 ? "sm" : "lg"}
         body={
           <>
-            {rowStatus === 1 || 2 ? (
+            {rowStatus === 1 || rowStatus === 2 ? (
               <PagesIndex.TableWitCustomPegination
                 data={ModalStateHistoryTable}
                 // columns={columns}
@@ -184,28 +303,19 @@ const ViewWallet = () => {
                   />
                 }
               />
-            ) : (
+            ) : rowStatus === 3 ? (
               <div className="main">
                 <div className="profile-content">
                   <div className="container">
                     <div className="row">
                       <div className="col-md-6 ml-auto mr-auto">
                         <div className="profile">
-                          {/* <div class="avatar">
-											<img
-                      width="110"
-												height="150"
-												src="https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTU0NjQzOTk4OTQ4OTkyMzQy/ansel-elgort-poses-for-a-portrait-during-the-baby-driver-premiere-2017-sxsw-conference-and-festivals-on-march-11-2017-in-austin-texas-photo-by-matt-winkelmeyer_getty-imagesfor-sxsw-square.jpg"
-												alt="Circle Image"
-												class="img-raised rounded-circle img-fluid"
-											/>
-                      </div> */}
                           <div className="name">
                             <h3 className="title" id="username">
-                              User Name : srinivas yadav{" "}
+                              User Name : {userData1.username}
                             </h3>
                             <p className="walletbalance" id="balance">
-                              Wallet Balance : 20295/-
+                              Wallet Balance : {userData1.wallet_balance}/-
                             </p>
                           </div>
                         </div>
@@ -219,35 +329,49 @@ const ViewWallet = () => {
                       <tbody>
                         <tr>
                           <td>Bank Name</td>
-                          <td id="bankName">
-                            Canara Bank SANTHEBENNUR SANTHEBENNUR
-                          </td>
+                          <td id="bankName">{userData2.bank_name}</td>
                         </tr>
                         <tr>
                           <td>Account Number</td>
-                          <td id="accNo">0579119012562</td>
+                          <td id="accNo"> {userData2.account_no}</td>
                         </tr>
                         <tr>
                           <td>IFSC Code</td>
-                          <td id="ifsc">CNRB0000579</td>
+                          <td id="ifsc">{userData2.ifsc_code}</td>
                         </tr>
                         <tr>
                           <td>Account Holder Name</td>
-                          <td id="accHolder">srinivas t</td>
+                          <td id="accHolder">
+                            {userData2.account_holder_name}
+                          </td>
                         </tr>
                         <tr>
                           <td>Paytm Number</td>
-                          <td id="paytm" />
+                          <td>
+                            {userData2.paytm_number
+                              ? userData2.paytm_number
+                              : "-"}
+                          </td>
                         </tr>
                         <tr>
                           <td>Personal Number</td>
-                          <td id="regular">+919591957918</td>
+                          <td id="regular">{userData1.mobile}</td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
                 </div>
               </div>
+            ) : (
+              <>
+                <PagesIndex.Formikform
+                  fieldtype={fields.filter((field) => !field.showWhen)}
+                  formik={formik}
+                  btn_name={"Submit"}
+                  button_Size={"w-100"}
+                  show_submit={true}
+                />
+              </>
             )}
           </>
         }

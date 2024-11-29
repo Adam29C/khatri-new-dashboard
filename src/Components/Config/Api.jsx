@@ -156,12 +156,18 @@ const Api = {
   ADMIN_CHANGE_PASSWORD: "admin/changePassword",
 
   // WALLET
+  
+  REQUEST_LIST: "reqOn_Off",
+  REQUEST_LIST_UPDATE: "reqOn_Off/updateReq",
+  GET_REQUEST_LIST: "reqOn_Off/getWithdrawReqOnOff",
+  UPDATE_REQUEST: "reqOn_Off/withdrawReqOnOff",
+
 
   WALLET_LIST: "view_wallet",
   WALLET_LIST_HISTORY: "view_wallet/newHistroy",
   WALLET_LIST_CREDIT: "view_wallet/newCredit",
-  WALLET_LIST_USER_PROFILE: "view_walle/getProfile",
-  WALLET_LIST_UPDATE_WALLET: "view_walle/walletUpdate",
+  WALLET_LIST_USER_PROFILE: "view_wallet/getProfile",
+  WALLET_LIST_UPDATE_WALLET: "view_wallet/walletUpdate",
 
   // SYSTEM MODULE
   ADD_SYSTEM_INFO: "admin/addSystemInfo",
