@@ -455,7 +455,6 @@ const UsersList = () => {
 
   const getListfilter = () => {
     if (TableData) {
-      // Update the buttonName dynamically based on the `banned` status
       TableData.forEach((item) => {
         const button = UserFullButtonList.find((btn) => btn.id === 0);
         if (button) {

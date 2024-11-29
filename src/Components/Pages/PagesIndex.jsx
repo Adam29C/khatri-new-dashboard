@@ -13,6 +13,7 @@ import {
 import { LOGIN_API } from "../Services/AuthServices";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import "react-responsive-modal/styles.css";
+import "react-responsive-modal/styles.css";
 
 import Logo from "../Layout/Logo/Logo_png";
 import { useFormik } from "formik";
@@ -46,6 +47,9 @@ import CuttingGroupMain from "../Helpers/CuttingGroup/CuttingGroup";
 import MultiTabs from "../Helpers/MultiTabs";
 import WalletMain from "../Helpers/Wallet/WalletMain";
 import ChangeStatus from "../Helpers/ChangeStatus";
+import TableWitCustomPegination from "../Helpers/Table/TableWithCustomPegination";
+import TableWithCustomPeginationNew from "../Helpers/Table/TableWithCustomPeginationNew";
+import TableWithCustomPeginationButton from "../Helpers/Table/TableWithCustomPeginationButton";
 import TableWitCustomPegination from "../Helpers/Table/TableWithCustomPegination";
 import TableWithCustomPeginationButton from "../Helpers/Table/TableWithCustomPeginationButton";
 import ModalComponent from "../Helpers/Modal/ModalComponent";
@@ -92,8 +96,11 @@ const PagesIndex = {
   Mobile_regex,
   common_services,
   TableWitCustomPegination,
+  TableWithCustomPeginationNew,
   TableWithCustomPeginationButton,
+
   ModalComponent,
+  game_service,
   game_service,
   report_service,
 };

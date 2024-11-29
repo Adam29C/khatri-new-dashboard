@@ -9,25 +9,23 @@ const Header = () => {
   const navigate = PagesIndex.useNavigate();
   const dispatch = PagesIndex.useDispatch();
 
-
-
   const token = localStorage.getItem("token");
 
-  const generateToken = async () => {
-    const val = PagesIndex.Remove_Special_Character(PagesIndex.v4());
-    // const res = await dispatch(PagesIndex.getGenerateToken(val)).unwrap();
-    // const res1 = await PagesIndex.LIST_SYSTEM_INFO_API(res?.data?.token);
-    // let image = res1?.data?.details?.[0]?.backgroundImage;
-    // let logo = res1?.data?.details?.[0]?.logo;
-    // let favIcon = res1?.data?.details?.[0]?.favIcon;
-    // let shortIcon = Remove_Space_Character(res1?.data?.details?.[0]?.title);
+  // const generateToken = async () => {
+  // const val = PagesIndex.Remove_Special_Character(PagesIndex.v4());
+  // const res = await dispatch(PagesIndex.getGenerateToken(val)).unwrap();
+  // const res1 = await PagesIndex.LIST_SYSTEM_INFO_API(res?.data?.token);
+  // let image = res1?.data?.details?.[0]?.backgroundImage;
+  // let logo = res1?.data?.details?.[0]?.logo;
+  // let favIcon = res1?.data?.details?.[0]?.favIcon;
+  // let shortIcon = Remove_Space_Character(res1?.data?.details?.[0]?.title);
 
-    // $("#dynamic-background").css("background-image", `url(${image && image})`);
-    // $("#company-logo").attr("src", logo);
-    // $("#favicon").attr("href", favIcon);
-    // $("#sidebar-logo").attr("src", logo);
-    // $("#sidebar-logo-short").html(shortIcon);
-  };
+  // $("#dynamic-background").css("background-image", `url(${image && image})`);
+  // $("#company-logo").attr("src", logo);
+  // $("#favicon").attr("href", favIcon);
+  // $("#sidebar-logo").attr("src", logo);
+  // $("#sidebar-logo-short").html(shortIcon);
+  // };
 
   // PagesIndex.useEffect(() => {
   //   generateToken();

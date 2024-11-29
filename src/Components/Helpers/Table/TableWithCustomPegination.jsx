@@ -200,7 +200,7 @@ const PaginatedTable = ({
       {/* Table */}
       <table
         id="myTable"
-        className="table table-striped table-bordered "
+        className="table table-striped table-bordered table-responsive "
       >
         <thead className="text-center table-header-backeground">
           {data && data?.length > 0 && (
