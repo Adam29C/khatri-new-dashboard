@@ -16,7 +16,7 @@ const CreditDeclinedRequest = ({
 
     const totalAmount =
     tableData &&
-    tableData.reduce((acc, item) => acc + (item?.reqAmount || 0), 0);
+    tableData?.reduce((acc, item) => acc + (item?.reqAmount || 0), 0);
 
     const cardLayouts = [
         {
