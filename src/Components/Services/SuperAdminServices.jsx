@@ -797,3 +797,29 @@ export const GET_DECLINED_REQUEST_API = async (data,token) => {
 };
 
 // --------------------------  GET_DECLINED_REQUEST------------------------
+
+
+// --------------------------APPROVED DEBIT REQUEST------------------------
+export const APPROVED_DEBIT_BANK_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.APPROVED_DEBIT_BANK}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const APPROVED_DEBIT_BANK_MANUAL_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.APPROVED_DEBIT_BANK_MANUAL}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// --------------------------APPROVED DEBIT REQUEST------------------------
