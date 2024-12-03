@@ -15,7 +15,7 @@ const ApproveReportBank = () => {
     //all state
     const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
     const [tableData, setTableData] = PagesIndex.useState([]);
-  
+  console.log(tableData)
     const title = "Declined Report"
     const subtitle = "APPROVED Debit Requests : Bank Account"
   
@@ -34,7 +34,10 @@ const ApproveReportBank = () => {
       );
 
       if (res?.status) {
+
         setTableData(Object.values(res.approvedData));
+      }else {
+        setTableData([]); 
       }
 
     };
