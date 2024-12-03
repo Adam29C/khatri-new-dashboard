@@ -1,6 +1,5 @@
 import React from "react";
 import PagesIndex from "../../PagesIndex";
-import Split_Main_Containt from "../../../Layout/Main/Split_Main_Content";
 import { getActualDateWithFormat } from "../../../Utils/Common_Date";
 import CreditDeclinedRequest from "../../../Helpers/CreditDeclinedRequest/CreditDeclinedRequest";
 
