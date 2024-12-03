@@ -1,7 +1,8 @@
 import React from "react";
 import PagesIndex from "../../PagesIndex";
-import Split_Main_Containt from "../../../Layout/Main/Split_Main_Content";
 import { getActualDateWithFormat } from "../../../Utils/Common_Date";
+import CreditDeclinedRequest from "../../../Helpers/CreditDeclinedRequest/CreditDeclinedRequest";
+
 const CreditRequest = () => {
 
   //get token in local storage
@@ -10,15 +11,14 @@ const CreditRequest = () => {
   //set actual date
   const actual_date_formet = getActualDateWithFormat(new Date());
 
-  //dispatch
-  const dispatch = PagesIndex.useDispatch();
-
   //all state
   const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
   const [tableData, setTableData] = PagesIndex.useState([]);
 
-  // get api credit request upi
+  const title = "Credit Reports";
+  const subtitle = "Credit Requests : UPI";
 
+  // get api credit request upi
   const getCreditRequest = async (date = actual_date_formet) => {
     const payload = {
       date_cust: date,
@@ -46,12 +46,9 @@ const CreditRequest = () => {
     validate: (values) => {},
 
     onSubmit: async (values) => {
-      getCreditRequest(values.date)
+      getCreditRequest(values.date);
     },
   });
-
-
-const totalAmount = tableData && tableData.reduce((acc,item)=>acc + (item?.reqAmount || 0),0)
 
   const fields = [
     {
@@ -75,52 +72,17 @@ const totalAmount = tableData && tableData.reduce((acc,item)=>acc + (item?.reqAm
     "reqAmount",
   ];
 
-  const cardLayouts = [
-    {
-      size: 12,
-      body: (
-        <div>
-          <PagesIndex.Formikform
-            fieldtype={fields.filter((field) => !field.showWhen)}
-            show_submit={true}
-            formik={formik}
-            button_Size={"w-15"}
-            btn_name="Submit"
-          />
-        </div>
-      ),
-    },
-
-    {
-      size: 12,
-      body: (
-        <div>
-          <PagesIndex.TableWitCustomPegination
-            data={tableData}
-            initialRowsPerPage={5}
-            SearchInTable={SearchInTable}
-            visibleFields={visibleFields}
-            searchInput={
-              <input
-                type="text"
-                placeholder="Search..."
-                value={SearchInTable}
-                onChange={(e) => setSearchInTable(e.target.value)}
-                className="form-control ms-auto"
-              />
-            }
-          />
-          <h3 className="ml-3 mb-3 fw-bold">Total Amount {totalAmount}/-</h3>
-        </div>
-      ),
-    },
-  ];
   return (
     <>
-      <Split_Main_Containt
-        title="Credit Requests : UPI"
-        add_button={false}
-        cardLayouts={cardLayouts}
+      <CreditDeclinedRequest
+        fields={fields}
+        formik={formik}
+        tableData={tableData}
+        SearchInTable={SearchInTable}
+        setSearchInTable={setSearchInTable}
+        visibleFields={visibleFields}
+        title={title}
+        subtitle={subtitle}
       />
     </>
   );
