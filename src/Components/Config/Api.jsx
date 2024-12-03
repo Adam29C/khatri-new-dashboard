@@ -106,7 +106,12 @@ ADD_NOTIFICATION : "notification/inserNotification",
 DELETE_NOTIFICATION : "notification",
 
 //CREDIT REQUEST GET API
-GET_CREDIT_REQUEST_UPI:"creditRequest/creditUPI"
+GET_CREDIT_REQUEST_UPI:"creditRequest/creditUPI",
+
+//DECLINED REQUEST GET API
+GET_DECLINED_REQUEST:"declineReq/declined"
+
+
 
 };
 

@@ -57,6 +57,7 @@ import UpiIdList from "../../Pages/Superadmin/Masters/UpiIdList";
 import ProfileNote from "../../Pages/Superadmin/AppSettings/ProfileNote";
 import FundMode from "../../Pages/Superadmin/Masters/FundMode";
 import Notification from "../../Pages/Superadmin/Notification/Notification";
+import DeclinedRequest from "../../Pages/Superadmin/DeclinedRequest/DeclinedRequest";
 
 
 // Mock authentication status
@@ -271,6 +272,10 @@ const adminRoutes = [
       {
         path: "creditUPI",
         element: <PrivateRoute element={CreditRequest} />,
+      },
+      {
+        path: "approvedReports/declined",
+        element: <PrivateRoute element={DeclinedRequest} />,
       },
       {
         path: "appSettings/versionSetting",

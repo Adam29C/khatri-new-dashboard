@@ -782,3 +782,18 @@ export const GET_CREDIT_REQUEST_UPI_API = async (data,token) => {
 
 // --------------------------   GET_CREDIT_REQUEST_UPI ------------------------
 
+
+// --------------------------  GET_DECLINED_REQUEST ---------------------------
+
+export const GET_DECLINED_REQUEST_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.GET_DECLINED_REQUEST}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// --------------------------  GET_DECLINED_REQUEST------------------------
