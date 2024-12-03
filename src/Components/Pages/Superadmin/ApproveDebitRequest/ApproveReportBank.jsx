@@ -3,6 +3,7 @@ import CreditDeclinedRequest from '../../../Helpers/CreditDeclinedRequest/Credit
 import { getActualDateWithFormat } from '../../../Utils/Common_Date';
 import PagesIndex from '../../PagesIndex';
 
+
 const ApproveReportBank = () => {
 
     //get token in local storage
@@ -19,7 +20,6 @@ const ApproveReportBank = () => {
     const subtitle = "APPROVED Debit Requests : Bank Account"
   
     // get api decline request 
-  
     const getDataList = async (date = actual_date_formet) => {
  
       const payload = {
@@ -32,10 +32,11 @@ const ApproveReportBank = () => {
         payload,
         token
       );
-  
+
       if (res?.status) {
-        setTableData(res?.data);
+        setTableData(Object.values(res.approvedData));
       }
+
     };
   
     PagesIndex.useEffect(() => {
@@ -68,12 +69,13 @@ const ApproveReportBank = () => {
     const visibleFields = [
       "id",
       "username",
-      "fullname",
+      "name",
+      "account_no",
       "mobile",
       "reqDate",
-      "reqTime",
       "withdrawalMode",
-      "reqAmount",
+      "reqAmount"
+ 
     ];
   return (
     <CreditDeclinedRequest fields={fields} formik={formik} tableData={tableData} SearchInTable={SearchInTable} setSearchInTable={setSearchInTable} visibleFields={visibleFields} title={title} subtitle={subtitle}/>
