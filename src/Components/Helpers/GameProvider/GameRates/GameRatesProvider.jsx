@@ -71,7 +71,7 @@ const GameRatesProvider = ({
 
   // Handle Edit Button
   const handleEdit = (row) => {
-    console.log("Fdfsdf");
+  
     setModalType("Edit");
     setSelectedRow(row);
     setVisible(true);

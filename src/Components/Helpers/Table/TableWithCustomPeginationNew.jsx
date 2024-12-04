@@ -6,6 +6,7 @@ const PaginatedTable = ({
   visibleFields,
   UserFullButtonList,
   showIndex,
+  additional,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(initialRowsPerPage);
@@ -13,10 +14,14 @@ const PaginatedTable = ({
   const [searchQuery, setSearchQuery] = useState("");
   const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
 
-  const maxPagesToShow = 5; // Max pages to show in pagination at a time
+  const maxPagesToShow = 5;
 
   // Sort and Filter data
   useEffect(() => {
+
+
+    console.log("datadatadata" ,data);
+    
     let sortedData = [...data];
 
     // Apply sorting
@@ -141,25 +146,31 @@ const PaginatedTable = ({
         </thead>
         <tbody className="text-center">
           {currentData?.length ? (
-            currentData.map((row, index) => (
-              <>
+            <>
+              {currentData.map((row, index) => (
                 <tr key={index}>
-                {showIndex && (
-                  <td>{(currentPage - 1) * rowsPerPage + index + 1}</td>
-                )}
+                  {showIndex && (
+                    <td>{(currentPage - 1) * rowsPerPage + index + 1}</td>
+                  )}
                   {visibleFields.map((field) => (
-                    <td key={field.value}>
+                    <td
+                      key={field.value}
+                      style={field.style ? field.style(row) : {}}
+                    >
                       {field.render
                         ? field.render(row) // Custom render function
                         : field.transform
-                        ? field.transform(row[field.value]) // Custom transformation
-                        :field.isButton
-                        ? renderButton(field, row): row[field.value]}
+                        ? field.transform(row[field.value], row) // Custom transformation
+                        : field.isButton
+                        ? renderButton(field, row)
+                        : row[field.value]}
                     </td>
                   ))}
                 </tr>
-              </>
-            ))
+              ))}
+
+              <tr> {additional}</tr>
+            </>
           ) : (
             <tr>
               <td colSpan={visibleFields.length + (showIndex ? 1 : 0)}>

@@ -1,12 +1,18 @@
 import React from "react";
 import MainGameReports from "../../../Helpers/Reports/GameReports/MainGameReports";
+import { Api } from "../../../Config/Api";
 
-const AndarBaharSalesReport = () => {
+const SalesReports = () => {
   return (
     <div>
-      <MainGameReports />
+      <MainGameReports
+        gameType={"JACKPOT"}
+        report_api={Api.JACKPOT_REPORT}
+        starandjackProvider={Api.JACKPOT_GAME_PROVIDERS}
+title="Andar Bahar Sales Report"
+/>
     </div>
   );
 };
 
-export default AndarBaharSalesReport;
+export default SalesReports;

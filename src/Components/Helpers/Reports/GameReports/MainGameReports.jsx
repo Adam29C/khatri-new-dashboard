@@ -7,8 +7,9 @@ import { Games_Provider_List } from "../../../Redux/slice/CommonSlice";
 
 const MainGameReports = ({
   gameType,
-
   report_api,
+  starandjackProvider,
+  title,
 }) => {
   //get token in local storage
   const token = localStorage.getItem("token");
@@ -22,35 +23,77 @@ const MainGameReports = ({
   //all state
   const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
   const [tableData, setTableData] = useState([]);
-  const [GetProvider, setGetProvider] = useState([]);
+  const [ProviderList, setProviderList] = useState([]);
 
   const { gameProviders } = PagesIndex.useSelector(
     (state) => state.CommonSlice
   );
 
-  console.log("gameProviders", gameProviders);
-
   //get game result function
-  const getGameResultApi = async () => {
-    // const res = await PagesIndex.admin_services.GAME_RESULT(token);
-    // const res = await PagesIndex.game_service.ALL_GAME_RESULTS(
-    //   main_result,
-    //   token
-    // );
-    // if (res.status) {
-    //   setTableData(res?.data?.result || res?.data?.results);
-    //   setGetProvider(res?.data?.provider || res?.data?.providers);
-    // }
-  };
+  // const getGameResultApi = async () => {
+  //   if (gameType !== "mainGame") {
+  //     const res =
+  //       await PagesIndex.game_service.FOR_STARLINE_AND_JACPOT_PROVIDER_LIST_API(
+  //         starandjackProvider,
+  //         token
+  //       );
+  //     setProviderList(res.data);
+  //   }
+  // };
+
+  const visibleFields = [
+    {
+      name: "Provider Name",
+      value: "providerName",
+      sortable: true,
+    },
+    {
+      name: "Date",
+      value: "enabled",
+      sortable: false,
+      transform: (value) =>
+        `${formik.values.startdate} To ${formik.values.enddate}`,
+    },
+    {
+      name: "Bidding Points",
+      value: "BiddingPoints",
+      sortable: true,
+    },
+    {
+      name: "Winning Points",
+      value: "GameWinPoints",
+      sortable: true,
+    },
+
+    {
+      name: "Profit/Loss",
+      value: "bidPointDiffence",
+      style: (row) => ({
+        color:
+          parseInt(row.BiddingPoints - row.GameWinPoints) < 0 ? "red" : "green",
+        fontWeight: "bold",
+      }),
+      sortable: true,
+    },
+  ];
 
   //get game provider data
-  const getGameProvidersList = () => {
-    dispatch(Games_Provider_List(token));
+  const getGameProvidersList = async () => {
+    if (gameType === "mainGame") {
+      dispatch(Games_Provider_List(token));
+    } else {
+      const res =
+        await PagesIndex.game_service.FOR_STARLINE_AND_JACPOT_PROVIDER_LIST_API(
+          starandjackProvider,
+          token
+        );
+      setProviderList(res.data);
+    }
   };
 
   PagesIndex.useEffect(() => {
     getGameProvidersList();
-    getGameResultApi();
+    // getGameProvidersList();
   }, []);
 
   const formik = PagesIndex.useFormik({
@@ -70,9 +113,11 @@ const MainGameReports = ({
     onSubmit: async (values) => {
       const payload = {
         userId: values.username,
-        gameId: values.providerId ||0,
-        startDate: values.startdate,
-        endDate: values.enddate,
+        gameId: values.providerId || "0",
+        startDate: getActualDateFormate(values.startdate),
+        endDate: getActualDateFormate(values.enddate),
+        // startDate: values.startdate,
+        // endDate: values.enddate,
       };
 
       try {
@@ -82,11 +127,44 @@ const MainGameReports = ({
           token
         );
 
-        // const res = await PagesIndex.admin_services.ADD_GAME_RESULT(req, token);
-        console.log("res" ,res);
         if (res.status) {
-          PagesIndex.toast.success(res?.data?.message || res?.message);
-          getGameResultApi();
+          setTableData(res.data);
+
+          let totalPointDifference = 0;
+          let totalBiddingPoint = 0;
+          let totalWiningPoint = 0;
+          let totalAmount = 0;
+
+          const finalaray = [];
+
+          res.data.forEach((e) => {
+            const bidPoint = e.BiddingPoints;
+            const winPoint = e.GameWinPoints;
+            const pointDifference = bidPoint - winPoint;
+
+            // Update totals
+            totalPointDifference += pointDifference;
+            totalBiddingPoint += bidPoint;
+            totalWiningPoint += winPoint;
+            totalAmount += e.reqAmount;
+
+            finalaray.push({
+              GameWinPoints: e.GameWinPoints,
+              BiddingPoints: e.BiddingPoints,
+              providerName: e.providerName,
+              bidPointDiffence: pointDifference,
+            });
+          });
+
+          // Add totals as a separate entry or object
+          finalaray.push({
+            totalBiddingPoint: totalBiddingPoint,
+            totalWiningPoint: totalWiningPoint,
+            totalPointDifference: totalPointDifference,
+          });
+
+          setTableData(finalaray);
+          getGameProvidersList();
         }
       } catch (error) {
         console.log(error);
@@ -120,12 +198,19 @@ const MainGameReports = ({
       label: "Provider Name",
       type: "select",
       options:
-        (gameProviders &&
-          gameProviders?.map((item) => ({
-            label: item.providerName,
-            value: item._id,
-          }))) ||
-        [],
+        gameType === "mainGame"
+          ? (gameProviders &&
+              gameProviders.map((item) => ({
+                label: item.providerName,
+                value: item._id,
+              }))) ||
+            []
+          : (ProviderList &&
+              ProviderList.map((item) => ({
+                label: item.providerName,
+                value: item._id,
+              }))) ||
+            [],
       label_size: 12,
       col_size: 3,
     },
@@ -138,96 +223,6 @@ const MainGameReports = ({
     },
   ];
 
-  //game result delete
-  const handleDelete = async (row) => {
-    const apidata = {
-      resultId: row?._id,
-      providerId: row?.providerId,
-      session: row?.session,
-    };
-
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this game?"
-    );
-    if (!confirmDelete) return;
-
-    try {
-      const res = await PagesIndex.admin_services.GAME_RESULT_DELETE(
-        apidata,
-        token
-      );
-
-      if (res.statusCode === 200) {
-        alert(res?.message);
-        getGameResultApi;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  //handle actions button function
-  const handleActionBtn = (row, buttonStatus) => {
-    // console.log("row", row.providerId);
-    var locationData = {
-      row: row,
-      route: winner_list,
-      gameType: gameType,
-      distribute_fund: distribute_fund,
-    };
-    if (buttonStatus === 1) {
-      if (gameType === "StarLine") {
-        navigate(`/admin/starline/winnerlist/providerId=${row.providerId}`, {
-          state: locationData,
-        });
-      } else if (gameType === "JackPot") {
-        navigate(`/admin/starline/winnerlist/providerId=${row.providerId}`, {
-          state: locationData,
-        });
-      } else {
-        navigate(`/admin/starline/winnerlist/providerId=${row.providerId}`, {
-          state: locationData,
-        });
-      }
-    } else if (buttonStatus === 2) {
-      handleDelete(row);
-    } else {
-      return "";
-    }
-  };
-
-  const visibleFields = [
-    // "id",
-    "providerName",
-    "session",
-    "resultDate",
-    "winningDigit",
-  ];
-
-  const UserFullButtonList = [
-    {
-      id: 0,
-      buttonName: "Get Winners List",
-      buttonColor: "",
-      route: "",
-      Conditions: (row) => {
-        handleActionBtn(row, 1);
-      },
-      Visiblity: true,
-      type: "button",
-    },
-    {
-      id: 1,
-      buttonName: "Delete Result",
-      buttonColor: "danger",
-      route: "test",
-      Conditions: (row) => {
-        handleActionBtn(row, 2);
-      },
-      Visiblity: false,
-      type: "button",
-    },
-  ];
   const cardLayouts = [
     {
       size: 12,
@@ -247,12 +242,52 @@ const MainGameReports = ({
       size: 12,
       body: (
         <div>
-          <PagesIndex.TableWitCustomPegination
+          <PagesIndex.TableWithCustomPeginationNew
             data={tableData}
             initialRowsPerPage={5}
             SearchInTable={SearchInTable}
             visibleFields={visibleFields}
-            UserFullButtonList={UserFullButtonList}
+            additional={
+              <>
+                <td colSpan={2} style={{ fontWeight: "bold" }}></td>
+                <td
+                  style={{
+                    color:
+                      tableData[tableData.length - 1]?.totalBiddingPoint < 0
+                        ? "red"
+                        : "green",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Total:&nbsp;
+                  {tableData[tableData.length - 1]?.totalBiddingPoint}
+                </td>
+                <td
+                  style={{
+                    color:
+                      tableData[tableData.length - 1]?.totalWiningPoint < 0
+                        ? "red"
+                        : "green",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Total:&nbsp;
+                  {tableData[tableData.length - 1]?.totalWiningPoint}
+                </td>
+                <td
+                  style={{
+                    color:
+                      tableData[tableData.length - 1]?.totalPointDifference < 0
+                        ? "red"
+                        : "green",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Total:&nbsp;
+                  {tableData[tableData.length - 1]?.totalPointDifference}
+                </td>
+              </>
+            }
             searchInput={
               <input
                 type="text"
@@ -271,7 +306,7 @@ const MainGameReports = ({
   return (
     <>
       <Split_Main_Containt
-        title="Sales Report "
+        title={title}
         add_button={false}
         btnTitle="Add"
         route="/add"

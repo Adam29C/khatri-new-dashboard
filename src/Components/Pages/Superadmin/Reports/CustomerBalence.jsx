@@ -6,10 +6,9 @@ const SalesReports = () => {
   return (
     <div>
       <MainGameReports
-        gameType={"STARLINE"}
-        report_api={Api.STARLINE_GAME_REPORT}
-        starandjackProvider={Api.STARLINE_GAME_PROVIDERS}
-        title="Starline Sales Report"
+        gameType={"JACKPOT"}
+        report_api={Api.JACKPOT_REPORT}
+        starandjackProvider={Api.JACKPOT_GAME_PROVIDERS}
       />
     </div>
   );

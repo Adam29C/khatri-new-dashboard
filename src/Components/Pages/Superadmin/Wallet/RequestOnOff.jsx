@@ -222,6 +222,7 @@ const RequestOnOff = () => {
             SearchInTable={SearchInTable}
             visibleFields={visibleFields}
             UserFullButtonList={UserFullButtonList}
+           
             showIndex={true}
             searchInput={
               <input

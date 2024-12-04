@@ -74,6 +74,25 @@ import SearchAccount from "../../Pages/Superadmin/Wallet/SearchAccount";
 import Invoices from "../../Pages/Superadmin/Wallet/Invoices";
 import ViewWallet from "../../Pages/Superadmin/Wallet/ViewWallet";
 
+// REPORT  SECTION
+
+import AndarBaharSalesReport from "../../Pages/Superadmin/Reports/AndarBaharSalesReport";
+import AndarBharTotalBids from "../../Pages/Superadmin/Reports/AndarBharTotalBids";
+import SalesReports from "../../Pages/Superadmin/Reports/SalesReports";
+import StarlineSalesReport from "../../Pages/Superadmin/Reports/StarlineSalesReport";
+import FundReport from "../../Pages/Superadmin/Reports/FundReport";
+import UpiFundReport from "../../Pages/Superadmin/Reports/UpiFundReport";
+import NewUpiFundReport from "../../Pages/Superadmin/Reports/NewUpiFundReport";
+import TrakPayFundReport from "../../Pages/Superadmin/Reports/TrakPayFundReport";
+import RazorPayReport from "../../Pages/Superadmin/Reports/RazorPayReport";
+import TotalBIds from "../../Pages/Superadmin/Reports/TotalBIds";
+import CreditDebitReport from "../../Pages/Superadmin/Reports/CreditDebitReport";
+import DailyReport from "../../Pages/Superadmin/Reports/DailyReport";
+import BidingReport from "../../Pages/Superadmin/Reports/BidingReport";
+import UserAnalaysis from "../../Pages/Superadmin/Reports/UserAnalaysis";
+import CustomerBalence from "../../Pages/Superadmin/Reports/CustomerBalence";
+import AllUserBids from "../../Pages/Superadmin/Reports/AllUserBids";
+
 // Mock authentication status
 
 const adminRoutes = [
@@ -126,26 +145,10 @@ const adminRoutes = [
         path: "games",
         element: <PrivateRoute element={Games} />,
       },
-      // {
-      //   path: "game/add",
-      //   element: <PrivateRoute element={GameProviderAdd} />,
-      // },
-      // {
-      //   path: "game/edit",
-      //   element: <PrivateRoute element={GameProviderAdd} />,
-      // },
       {
         path: "game/rates",
         element: <PrivateRoute element={GameRates} />,
       },
-      // {
-      //   path: "game/rate/add",
-      //   element: <PrivateRoute element={GameRatesAddEdit} />,
-      // },
-      // {
-      //   path: "game/rate/edit",
-      //   element: <PrivateRoute element={GameRatesAddEdit} />,
-      // },
       {
         path: "game/settings",
         element: <PrivateRoute element={GameSetting} />,
@@ -202,14 +205,7 @@ const adminRoutes = [
         path: "games/starlinegamerates",
         element: <PrivateRoute element={StarLineGameRate} />,
       },
-      // {
-      //   path: "games/starlinegamerates/add",
-      //   element: <PrivateRoute element={StarLineRatesAddEdit} />,
-      // },
-      // {
-      //   path: "games/starlinegamerates/edit",
-      //   element: <PrivateRoute element={StarLineRatesAddEdit} />,
-      // },
+
       {
         path: "starline/results",
         element: <PrivateRoute element={StarlineGameResult} />,
@@ -333,6 +329,54 @@ const adminRoutes = [
       {
         path: "report/starlinesalesreport",
         element: <PrivateRoute element={StarlineSalesReport} />,
+      },
+      {
+        path: "report/fundreport",
+        element: <PrivateRoute element={FundReport} />,
+      },
+      {
+        path: "report/upifundreport",
+        element: <PrivateRoute element={UpiFundReport} />,
+      },
+      {
+        path: "report/newupifundreport",
+        element: <PrivateRoute element={NewUpiFundReport} />,
+      },
+      {
+        path: "report/trakpayreport",
+        element: <PrivateRoute element={TrakPayFundReport} />,
+      },
+      {
+        path: "report/razorpayreport",
+        element: <PrivateRoute element={RazorPayReport} />,
+      },
+      {
+        path: "report/totalbids",
+        element: <PrivateRoute element={TotalBIds} />,
+      },
+      {
+        path: "report/debitreport",
+        element: <PrivateRoute element={CreditDebitReport} />,
+      },
+      {
+        path: "report/dailyreport",
+        element: <PrivateRoute element={DailyReport} />,
+      },
+      {
+        path: "report/bidingreport",
+        element: <PrivateRoute element={BidingReport} />,
+      },
+      {
+        path: "report/useranalaysis",
+        element: <PrivateRoute element={UserAnalaysis} />,
+      },
+      {
+        path: "report/customerbids",
+        element: <PrivateRoute element={ViewWallet} />,
+      },
+      {
+        path: "report/alluserbids",
+        element: <PrivateRoute element={AllUserBids} />,
       },
       {
         path: "creditUPI",

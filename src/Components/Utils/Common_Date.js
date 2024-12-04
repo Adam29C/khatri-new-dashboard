@@ -59,19 +59,43 @@ export const getActualDateFormate = (d) => {
     day = `0${day}`;
   }
 
-  return `${year}-${month}-${day}`;
+  return `${month}-${day}-${year}`;
 };
 
+export const abc = (d) => {
+  const today = new Date(d);
+  const year = today.getFullYear();
+  let month = today.getMonth() + 1;
+  let day = today.getDate();
+
+  if (month < 10) {
+    month = `0${month}`;
+  }
+  if (day < 10) {
+    day = `0${day}`;
+  }
+
+  return `${year}-${month}-${day}`;
+};
 export const today = (d) => {
+  // Validate karein ki `d` valid date hai ya nahi
   let abc = new Date(d);
+  if (isNaN(abc.getTime())) {
+    abc = new Date(); // Agar `d` invalid hai, toh current date lein
+  }
+
   let month = abc.getMonth() + 1;
   let date = abc.getDate();
   let year = abc.getFullYear();
-  let full = `${parseInt(month) < 10 ? "0" + month : month}/${
-    parseInt(date) < 10 ? "0" + date : date
+
+  // Format karein date ko MM/DD/YYYY
+  let full = `${month < 10 ? "0" + month : month}/${
+    date < 10 ? "0" + date : date
   }/${year}`;
+
   return full;
 };
+
 
 export const convert_string_to_month = (expiry) => {
   const day_expiry = expiry.substring(0, 2);
@@ -132,16 +156,10 @@ export const dateFormate = (date) => {
   return ccdate;
 };
 
-
-
-
-
-export const  convertTo12HourFormat = (time)=> {
-  let [hours, minutes] = time.split(':');
+export const convertTo12HourFormat = (time) => {
+  let [hours, minutes] = time.split(":");
   hours = parseInt(hours, 10);
-  const ampm = hours >= 12 ? 'PM' : 'AM';
+  const ampm = hours >= 12 ? "PM" : "AM";
   hours = hours % 12 || 12; // Convert 0 to 12 for 12 AM
   return `${hours}:${minutes}`;
-}
-
-
+};

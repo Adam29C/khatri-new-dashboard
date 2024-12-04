@@ -155,13 +155,32 @@ const Api = {
 
   ADMIN_CHANGE_PASSWORD: "admin/changePassword",
 
+  // REPORT
+  MAIN_GAME_REPORT: "mainSalesReport/userReport",
+  STARLINE_GAME_REPORT: "starSalesReport/userReportStar",
+  JACKPOT_REPORT: "abSalesReport/userReportAB",
+  JACKPOT_BIDS_REPORT: "totalBids/andarBaharBidsData",
+  GET_FUND_REPORT_DETAILS: "fundReports",
+  GET_FUND_REPORT: "fundReports",
+  GET_UPI_FUND_REPORT_DETAILS: "upiFundReport/upiReport",
+  GET_UPI_FUND_REPORT: "upiFundReport/getUPIReport",
+  GET_NEW_UPI_FUND_REPORT: "upiFundReport/getUPIFundReport",
+
+  TOTAL_BIDS_LIST_DETAILS: "totalBidsReport/games",
+  TOTAL_BIDS_LIST: "totalBidsReport/gameBidsData",
+  CREDIT_DEBIT_LIST_DETAILS: "creditDebitReport",
+  CREDIT_DEBIT_LIST: "creditDebitReport/report",
+  DAILY_REPORT: "daliyReport/dailyData",
+  DETAILS_BIDDING_REPORT: "biddingReport/biddingDay",
+  GET_USER_ANALAYSIS_REPORT: "userAnalysis/analysisReport",
+  GET_USER_BIDS_REPORT: "userBids/getUserBidData",
+
   // WALLET
-  
+
   REQUEST_LIST: "reqOn_Off",
   REQUEST_LIST_UPDATE: "reqOn_Off/updateReq",
   GET_REQUEST_LIST: "reqOn_Off/getWithdrawReqOnOff",
   UPDATE_REQUEST: "reqOn_Off/withdrawReqOnOff",
-
 
   WALLET_LIST: "view_wallet",
   WALLET_LIST_HISTORY: "view_wallet/newHistroy",
