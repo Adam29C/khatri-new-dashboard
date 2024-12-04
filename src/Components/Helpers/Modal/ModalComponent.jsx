@@ -2,20 +2,25 @@ import React, { Children, useState } from "react";
 import Modal from "react-awesome-modal";
 import PagesIndex from "../../Pages/PagesIndex";
 
-const ModalComponent = ({visible,setVisible,fields,form_title,formik,setSelectedRow}) => {
+const ModalComponent = ({
+  visible,
+  setVisible,
+  fields,
+  form_title,
+  formik,
+  setSelectedRow,
+  showBal,
+}) => {
 
   const closeModal = () => {
     setVisible(false);
-    
   };
 
   return (
     <section>
-    
       <Modal
         visible={visible}
         width="400"
- 
         effect="fadeInDown"
         onClickAway={closeModal}
       >
@@ -28,7 +33,11 @@ const ModalComponent = ({visible,setVisible,fields,form_title,formik,setSelected
             X
           </a>
           <h3 className="border-bottom-text">{form_title}</h3>
-
+          {showBal !== undefined && showBal >= 0 && (
+            <h4 class="modal-title text-center mt-2 mb-2 fw-bold">
+              Current Bal : {showBal}/-
+            </h4>
+          )}
           <PagesIndex.Formikform
             fieldtype={fields.filter((field) => !field.showWhen)}
             formik={formik}
