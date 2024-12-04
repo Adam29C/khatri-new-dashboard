@@ -351,4 +351,18 @@ align-items: center;
 justify-content: center;
 }
 
+.model-cross-btn{
+  border: none;
+  background-color: transparent;
+  float: right;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: none;
+  opacity: .5;
+margin-bottom: 30px;
+}
+
+
 /* css for pending request get user profile model  */
