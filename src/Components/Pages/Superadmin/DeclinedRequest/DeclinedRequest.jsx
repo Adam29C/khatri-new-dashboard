@@ -72,6 +72,7 @@ const DeclinedRequest = () => {
     "reqTime",
     "withdrawalMode",
     "reqAmount",
+    "reqUpdatedAt"
   ];
 
 
