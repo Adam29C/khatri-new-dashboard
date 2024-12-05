@@ -36,7 +36,7 @@ const ManualRequest = () => {
    }
     if(value === "approve"){
     const res = await PagesIndex.admin_services.APPROVED_FUND_REQUEST_API(apidata,token)
-    console.log(res)
+    
     if(res?.status){
       PagesIndex.toast.success(res?.message)
       getFundRequestList();
@@ -52,6 +52,10 @@ const ManualRequest = () => {
     }
   }
  
+  const totalAmount = useMemo(
+    () => data.reduce((acc, item) => acc + (parseFloat(item?.amount) || 0), 0),
+    [data]
+  );
 
   const columns = [
     {
@@ -113,7 +117,7 @@ const ManualRequest = () => {
       content: (
         <div className="mt-4">
           <PagesIndex.Data_Table columns={columns} data={data} />{" "}
-          <h3 className="ml-3 mb-3 fw-bold">Total Amount 450/-</h3>
+          <h3 className="ml-3 mb-3 fw-bold">Total Amount {totalAmount}/-</h3>
         </div>
       ),
     },
@@ -122,7 +126,7 @@ const ManualRequest = () => {
       content: (
         <div className="mt-4">
           <PagesIndex.Data_Table columns={columns} data={data} />{" "}
-          <h3 className="ml-3 mb-3 fw-bold">Total Amount 50/-</h3>
+          <h3 className="ml-3 mb-3 fw-bold">Total Amount {totalAmount}/-</h3>
         </div>
       ),
     },
@@ -131,7 +135,7 @@ const ManualRequest = () => {
       content: (
         <div className="mt-4">
           <PagesIndex.Data_Table columns={columns} data={data} />{" "}
-          <h3 className="ml-3 mb-3 fw-bold">Total Amount 0/-</h3>
+          <h3 className="ml-3 mb-3 fw-bold">Total Amount {totalAmount}/-</h3>
         </div>
       ),
     },
