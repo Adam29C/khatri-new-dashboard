@@ -1,35 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import PagesIndex from "../../PagesIndex";
 
 const TeamMets = () => {
-  const { getEmployeeListState } = PagesIndex.useSelector(
-    (state) => state.SuperAdminSlice
-  );
+  //get token in localstorage
+  const token = localStorage.getItem("token");
 
-  const dispatch = PagesIndex.useDispatch();
-  const userId = localStorage.getItem("userId");
+  //all state
+  const [data, setData] = useState([]);
 
-  const abcd = () => {
-    dispatch(PagesIndex.getEmployeeList(userId));
+  const getUserList = async () => {
+    const res = await PagesIndex.admin_services.USER_PROFILE_GET_LIST(token);
+    if (res?.status) {
+      setData(res?.data);
+    }
   };
-  
+
   PagesIndex.useEffect(() => {
-    abcd();
+    getUserList();
   }, []);
 
   const handleBlockEmployee = async (id, isBlock) => {
     try {
       let apidata = {
-        adminId: userId,
-        empId: id,
+        adminId: id,
         isBlock: !isBlock,
+        status: isBlock === 1 ? 0 : 1,
       };
-
-      const res = await PagesIndex.admin_services.BLOCK_EMPLOYEE_API(apidata);
-
-      if (res?.status === 200) {
+      const res = await PagesIndex.admin_services.USER_PROFILE_BLOCK_API(
+        apidata,
+        token
+      );
+      if (res?.status) {
         PagesIndex.toast.success(res?.message);
-        dispatch(PagesIndex.getEmployeeList(userId));
+        getUserList();
       } else {
         PagesIndex.toast.error(res?.message);
       }
@@ -41,33 +44,40 @@ const TeamMets = () => {
   return (
     <div className="card">
       <div className="card-body">
-        <h3 className="card-title-text text-center">
-          Bhau777 Games Team Members
+        <h3 className="card-title-text text-center fw-bold">
+          Khatri Games Team Members
         </h3>
-        {getEmployeeListState &&
-          getEmployeeListState?.map((row) => (
+        {data &&
+          data?.map((row) => (
             <div>
-              <div className="media media-reply">
-                <img
-                  className="circle-rounded"
-                  src={PagesIndex.empLogo}
-                  width={90}
-                  height={50}
-                  alt="Logo"
-                />
-
-                <div className="">
-                  <h5 className="">{row?.employeeName}</h5>
-                  <p>Bhau777 Employee</p>
+              <div className="main-user-profile-list">
+                <div className="user-profile-list-first">
+                  {" "}
+                  <img
+                    className="circle-rounded"
+                    src={PagesIndex.empLogo}
+                    width={90}
+                    height={50}
+                    alt="Logo"
+                  />
+                  <div className="">
+                    <h5 className="fw-bold">{row?.name}</h5>
+                    <p>{row?.username}</p>
+                  </div>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={() => handleBlockEmployee(row?._id, row?.isBlock)}
-                  class={`btn ${row?.isBlock ? "unblock-btn" : "btn-danger"} `}
-                >
-                  {row?.isBlock ? "Unblock" : "Block"}
-                </button>
+                <div>
+                  {" "}
+                  <button
+                    type="button"
+                    onClick={() => handleBlockEmployee(row?._id, row?.banned)}
+                    class={`btn ${
+                      row?.banned === 1 ? "btn-success" : "btn-danger"
+                    } `}
+                  >
+                    {row?.banned === 1 ? "Unblock" : "Block"}
+                  </button>
+                </div>
               </div>
               <hr />
             </div>

@@ -893,3 +893,43 @@ export const PENDING_DEBIT_GETPROFILE_API = async(id,token)=>{
 // --------------------------PENDING_DEBIT_BANK_REQUEST------------------------
 
 
+// --------------------------USER PROFILE APIS------------------------
+ export const UPDATE_USER_PASSWORD_API = async(data,token)=>{
+  try {
+    const res = await dataservice.post(`${BASE_URL}${Api.USER_PROFILE_UPDATE_PASSWORD}`,data,{
+      headers:header(token)
+    })
+    return res?.data
+  } catch (error) {
+    return error
+  }
+ }
+
+ export const USER_PROFILE_GET_LIST = async(token)=>{
+  try {
+    const res = await dataservice.get(`${BASE_URL}${Api.USER_PROFILE_GET_LIST}`,{
+      headers:header(token)
+    })
+    return res?.data
+  } catch (error) {
+    return error
+  }
+ }
+ export const USER_PROFILE_BLOCK_API = async(data,token)=>{
+  try {
+    const res = await dataservice.post(`${BASE_URL}${Api.USER_PROFILE_BLOCK}`,data,{
+      headers:header(token)
+    })
+    return res?.data
+  } catch (error) {
+    return error
+  }
+ }
+
+
+// --------------------------USER PROFILE APIS------------------------
+
+
+
+
+

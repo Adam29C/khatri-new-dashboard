@@ -2,9 +2,14 @@ import React from "react";
 import PagesIndex from "../../PagesIndex";
 
 const SuperAdminChangePassword = () => {
-  const navigate = PagesIndex.useNavigate();
+  //get token in localstorage
+  const token = localStorage.getItem("token");
 
-  const userId = localStorage.getItem("userId");
+  //get userdetails in localstorage
+  const userdetails = JSON.parse(localStorage.getItem("userdetails"));
+
+  //navigate
+  const navigate = PagesIndex.useNavigate();
 
   const formik = PagesIndex.useFormik({
     initialValues: {
@@ -32,14 +37,15 @@ const SuperAdminChangePassword = () => {
     onSubmit: async (values) => {
       try {
         let data = {
-          id: userId,
+          adminId: userdetails?.user_id,
           password: values.password,
         };
-        const res = await PagesIndex.admin_services.ADMIN_CHANGE_PASSWORD_API(
-          data
+        const res = await PagesIndex.admin_services.UPDATE_USER_PASSWORD_API(
+          data,
+          token
         );
 
-        if (res?.status === 200) {
+        if (res?.status) {
           PagesIndex.toast.success(res?.message);
           setTimeout(() => {
             navigate("/admin/dashboard");
@@ -73,12 +79,10 @@ const SuperAdminChangePassword = () => {
   return (
     <div className="card">
       <div className="card-body profile-change-password-card-padding">
-        <h3 className="card-title-text text-center ">Change Password</h3>
         <PagesIndex.Formikform
           fieldtype={fields.filter((field) => !field.showWhen)}
           formik={formik}
-          //btn_name={loding ? <PagesIndex.Loader text="Submit"/> : "Login"}
-          btn_name={"Submit"}
+          btn_name={"Confirm & Change Password"}
           button_Size={"w-100"}
           show_submit={true}
         />
