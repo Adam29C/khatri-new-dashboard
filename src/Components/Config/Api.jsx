@@ -249,6 +249,11 @@ const Api = {
   ADD_UPI_LIST: "upiId/upiAdd",
   BLOCK_UPI_LIST: "upiId/disable_upi",
   DELETE_UPI_LIST: "upiId/dlt_upi",
+
+    //FUND REQUEST APIS
+    GET_FUND_REQUEST : "fundsRequest/getManualPaymentList"
+
 };
+
 
 export { Api };

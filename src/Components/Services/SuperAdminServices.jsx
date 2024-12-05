@@ -756,3 +756,21 @@ export const WALLET_LIST_UPDATE_WALLET_API = async (data, token) => {
 };
 
 // -----------------  WALLET SECTION -------------------------------
+
+// ----------------- FUND REQUEST -------------------------------
+
+
+export const FUND_REQUEST_LIST_API = async (data,token) => {
+
+  try {
+    const res = await axios.get(`${BASE_URL}${Api.GET_FUND_REQUEST}?status=${data}`, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+// -----------------  FUND REQUEST -------------------------------
