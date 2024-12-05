@@ -87,8 +87,8 @@ const EmployeeList = () => {
   return (
     <div>
       <Main_Containt
-        add_button={true}
-        route="/admin/employee/add"
+        add_button={false}
+        // route="/admin/employee/add"
         btnTitle="Add"
         title="Employee List "
       >

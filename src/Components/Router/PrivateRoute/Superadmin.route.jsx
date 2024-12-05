@@ -63,6 +63,8 @@ import WithdrawScreen from "../../Pages/Superadmin/AppSettings/WithdrawScreen";
 import HowToPlay from "../../Pages/Superadmin/AppSettings/HowToPlay";
 import UpiIdList from "../../Pages/Superadmin/Masters/UpiIdList";
 import WinnerList from "../../Pages/Superadmin/Games/AvailableGames/WinnerList";
+import ProfileNote from "../../Pages/Superadmin/AppSettings/ProfileNote";
+import FundMode from "../../Pages/Superadmin/Masters/FundMode";
 
 // WALLET SECTION
 
@@ -406,9 +408,19 @@ const adminRoutes = [
       },
 
       {
+        path: "appSettings/profileNote",
+        element: <PrivateRoute element={ProfileNote} />,
+      },
+     
+      {
         path: "masters/UPI",
         element: <PrivateRoute element={UpiIdList} />,
       },
+      {
+        path: "masters/fundMode",
+        element: <PrivateRoute element={FundMode} />,
+      },
+  
     ],
   },
 ];

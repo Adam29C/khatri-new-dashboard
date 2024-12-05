@@ -2,23 +2,25 @@ import React, { useState, useEffect } from "react";
 import Main_Containt from "../../../Layout/Main/Main_Containt";
 import ModalComponent from "../../../Helpers/Modal/ModalComponent";
 import PagesIndex from "../../PagesIndex";
-import { DELETE_USER } from "../../../Services/SuperAdminServices";
-import DeleteSweetAlert from "../../../Helpers/DeleteSweetAlert";
 import { toast } from "react-toastify";
 
 const UpiIdList = () => {
+  //get token in localstorage
+  const token = localStorage.getItem("token");
+
+  //all state
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  const userId = localStorage.getItem("userId");
   const [visible, setVisible] = useState(false);
 
-  let userDeleteReason = false;
+  //get upi list function
   const getList = async () => {
     setLoading(true);
     try {
-      const res = await PagesIndex.admin_services.GET_UPI_LIST_API(userId);
-
-      setData(res?.data);
+      const res = await PagesIndex.admin_services.GET_UPI_LIST_API(token);
+      if (res?.status) {
+        setData(res?.data);
+      }
     } catch (error) {
     } finally {
       setLoading(false);
@@ -29,19 +31,21 @@ const UpiIdList = () => {
     getList();
   }, []);
 
+
+  //handle status update function for upi list
   const handleStatusUpdate = async (event, value) => {
     try {
-      let apidata = {
-        adminId: userId,
-        upiId: value._id,
-        status: event,
+      const apidata = {
+        id: value?._id,
+        status: event === "true",
+        stat: 1,
       };
-
-      const response = await PagesIndex.admin_services.UPDATE_UPI_LIST_API(
-        apidata
+      const response = await PagesIndex.admin_services.BLOCK_UPI_LIST_API(
+        apidata,
+        token
       );
 
-      if (response?.status === 200) {
+      if (response?.status) {
         toast.success(response.message);
         getList();
       } else {
@@ -52,81 +56,21 @@ const UpiIdList = () => {
     }
   };
 
-  const columns = [
-    {
-      name: "Name",
-      selector: (row) => row?.upiName,
-    },
 
-    {
-      name: "IsActive",
-      selector: (row) => (
-        <span
-          className={`badge fw-bold ${
-            row.status === "true" ? "bg-primary" : "bg-danger"
-          }`}
-        >
-          {row.status === "true" ? "Active" : "Disable"}
-        </span>
-      ),
-    },
 
-    {
-      name: "Status",
-      selector: (row) => (
-        <div>
-          <select
-            className="form-select-upi"
-            aria-label="Default select example"
-            onChange={(e) => {
-              handleStatusUpdate(e.target.value, row);
-            }}
-          >
-            <option value="false" disbled selected>
-              {row.status === "true" ? "Active" : "Disable"}
-            </option>
-            <option value="true">Active</option>
-            <option value="false">Disable</option>
-          </select>
-        </div>
-      ),
-    },
-
-    {
-      name: "Actions",
-      selector: (cell, row) => (
-        <div style={{ width: "120px" }}>
-          <div>
-            <PagesIndex.Link
-             className="delete-icon"
-              href="#"
-              onClick={() =>
-                DeleteSweetAlert(
-                  PagesIndex.admin_services.DELETE_UPI_LIST_API,
-                  cell?._id,
-                  getList,
-                  userDeleteReason
-                )
-              }
-            >
-              <span data-toggle="tooltip" data-placement="top" title="Delete">
-                <i class="ti-trash fs-5 mx-1 "></i>
-              </span>
-            </PagesIndex.Link>
-          </div>
-        </div>
-      ),
-    },
-  ];
-
+//formik form
   const formik = PagesIndex.useFormik({
     initialValues: {
       upiName: "",
+      status: "",
     },
     validate: (values) => {
       const errors = {};
       if (!values.upiName) {
         errors.upiName = PagesIndex.valid_err.EMPTY_UPI_ERROR;
+      }
+      if (!values.status) {
+        errors.status = PagesIndex.valid_err.STATUS_ERROR;
       }
       return errors;
     },
@@ -134,19 +78,23 @@ const UpiIdList = () => {
     onSubmit: async (values) => {
       try {
         let apidata = {
-          adminId: userId,
-          upiName: values.upiName,
+          upiId: values.upiName,
+          status: values.status === "true",
         };
 
-        const res = await PagesIndex.admin_services.ADD_UPI_LIST_API(apidata);
-
-        if (res?.status === 200) {
+        const res = await PagesIndex.admin_services.ADD_UPI_LIST_API(
+          apidata,
+          token
+        );
+console.log(res)
+        if (res?.status) {
           PagesIndex.toast.success(res?.message);
           getList();
           setVisible(false);
           formik.setFieldValue("upiName", "");
         } else {
-          PagesIndex.toast.error(res.response.data.message);
+          PagesIndex.toast.error(res.message);
+          setVisible(false);
         }
       } catch (error) {
         PagesIndex.toast.error(error);
@@ -162,20 +110,120 @@ const UpiIdList = () => {
       label_size: 12,
       col_size: 12,
     },
+
+    {
+      name: "status",
+      label: "Status",
+      type: "select",
+      title_size: 6,
+      col_size: 12,
+      options: [
+        {
+          label: "Active",
+          value: true,
+        },
+        {
+          label: "In-Active",
+          value: false,
+        },
+      ],
+    },
   ];
 
+  // Handle Add Button
+  const handleAdd = () => {
+    setVisible(true);
+  };
+
+  //delete upi list start
+  const handleDelete = async (row) => {
+   
+ 
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this game rate?"
+    );
+    if (!confirmDelete) return;
+
+    try {
+      const apidata = {
+        id: row?._id,
+      };
+      const res = await PagesIndex.admin_services.DELETE_UPI_LIST_API(
+        apidata,
+        token
+      );
+console.log(res)
+      if (res.status) {
+        getList();
+        alert(res?.message);
+      }
+    } catch (error) {}
+  };
+
+
+
+  const columns = [
+    {
+      name: "Name",
+      selector: (row) => row?.UPI_ID,
+    },
+
+    {
+      name: "IsActive",
+      selector: (row) => (row.is_Active  ? "Active" : "Disable")
+    
+    },
+
+    {
+      name: "Status",
+      selector: (row) => (
+        <div>
+          <select
+            className="form-select-upi"
+            aria-label="Default select example"
+            onChange={(e) => {
+              handleStatusUpdate(e.target.value, row);
+            }}
+          >
+            <option value="false" disbled selected>
+              {row.is_Active ? "Active" : "Disable"}
+            </option>
+            <option value="true">Active</option>
+            <option value="false">Disable</option>
+          </select>
+        </div>
+      ),
+    },
+
+    {
+      name: "Actions",
+      selector: (cell, row) => (
+        <div style={{ width: "120px" }}>
+          <div>
+       
+              <span><button onClick={() =>
+                handleDelete(cell)
+              } class="btn btn-danger btn-sm me-2">Delete</button></span>
+
+          </div>
+        </div>
+      ),
+    },
+  ];
   return (
     <Main_Containt
       setVisible={setVisible}
       add_button={false}
       btn_modal={true}
       title="UPI ID List"
+      handleAdd={handleAdd}
     >
-      <PagesIndex.Data_Table
-        isLoading={loading}
-        columns={columns}
-        data={data}
-      />
+
+          <PagesIndex.Data_Table
+      isLoading={loading}
+      columns={columns}
+      data={data}
+    />
       <ModalComponent
         visible={visible}
         setVisible={setVisible}
@@ -185,6 +233,7 @@ const UpiIdList = () => {
       />
       <PagesIndex.Toast />
     </Main_Containt>
+
   );
 };
 

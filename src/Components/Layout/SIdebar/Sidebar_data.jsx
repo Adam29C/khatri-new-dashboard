@@ -517,24 +517,25 @@ export const admin_Sidebar = [
         route: "appSettings/noticeBoard",
         permission: "noticeBoard",
       },
+ 
       {
         id: 4,
         title: "Profile Note",
-        route: "appSettings/noticeBoard",
-        permission: "noticeBoard",
+        route: "appSettings/profileNote",
+        permission: "profileNote",
       },
-
       {
         id: 5,
         title: "Wallet Contact",
         route: "appSettings/walletContact",
         permission: "walletContact",
       },
+
       {
         id: 6,
         title: "App Version",
         route: "appSettings/versionSetting",
-        permission: "",
+        permission: "walletContact",
       },
     ],
   },
@@ -546,36 +547,30 @@ export const admin_Sidebar = [
     title: "Masters",
     Icon: "ti-money",
     NestedElement: [
-      // {
-      //   id: 1,
-      //   title: "Bank",
-      //   permission: "bank",
-      //   route: "#",
-      // },
+      
       {
         id: 1,
         title: "UPI Id",
         route: "masters/UPI",
-        permission: "",
+        permission: "upiId",
       },
       {
         id: 2,
         title: "Add Fund Mode",
-        permission: "",
-
-        route: "#",
+        permission: "addFoundMode",
+        route: "masters/fundMode",
       },
       {
         id: 3,
         title: "Manage Employee",
         permission: "manageEmp",
-        route: "#",
+        route: "employees",
       },
       {
         id: 4,
         permission: "createEmployee",
         title: "Register New Employee",
-        route: "#",
+        route: "employee/add",
       },
     ],
   },
