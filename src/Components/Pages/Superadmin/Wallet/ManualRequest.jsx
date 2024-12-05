@@ -4,14 +4,17 @@ import PagesIndex from "../../PagesIndex";
 const ManualRequest = () => {
   //get token in localstorage
   const token = localStorage.getItem("token");
+  
+  //all state
   const [activeTabIndex, setActiveTabIndex] = PagesIndex.useState(0);
   const [data, setData] = PagesIndex.useState([]);
 
   // Log the corresponding tab name
   const tabTitles = ["pending", "approve", "decline"];
-
+  const status = tabTitles[activeTabIndex];
+  //get fund requestdata
   const getFundRequestList = async () => {
-    const status = tabTitles[activeTabIndex];
+   
     const res = await PagesIndex.admin_services.FUND_REQUEST_LIST_API(
       status,
       token
@@ -25,6 +28,29 @@ const ManualRequest = () => {
     getFundRequestList();
   }, [activeTabIndex]);
 
+  //handle status change 
+
+  const handleStatusChange = async(id,value)=>{
+   const apidata = {
+    id:id
+   }
+    if(value === "approve"){
+    const res = await PagesIndex.admin_services.APPROVED_FUND_REQUEST_API(apidata,token)
+    console.log(res)
+    if(res?.status){
+      PagesIndex.toast.success(res?.message)
+      getFundRequestList();
+    }
+
+    }else if(value === "decline"){
+      const res = await PagesIndex.admin_services.DECLINED_FUND_REQUEST_API(apidata,token)
+     
+      if(res?.status){
+        PagesIndex.toast.success(res?.message)
+        getFundRequestList();
+      }
+    }
+  }
  
 
   const columns = [
@@ -57,13 +83,12 @@ const ManualRequest = () => {
       name: "Type",
       selector: (row) => (
         <div>
-          <select
+          {status === "pending" ? (       <select
             className="p-1"
             aria-label="Default select example"
             value={row.status}
-            // value={updatedData[row._id]?.status || row.status}
             onChange={(e) => {
-              // handleFieldChange("isActive", e.target.value, row);
+               handleStatusChange(row?._id,e.target.value);
             }}
           >
             <option disabled value="pending">
@@ -71,7 +96,8 @@ const ManualRequest = () => {
             </option>
             <option value="approve">Approve</option>
             <option value="decline">Decline</option>
-          </select>
+          </select>) :row.status}
+   
         </div>
       ),
     },
@@ -119,6 +145,7 @@ const ManualRequest = () => {
           setActiveTabIndex(index); // Update active tab index
         }}
       />
+      <PagesIndex.Toast/>
     </PagesIndex.Main_Containt>
   );
 };

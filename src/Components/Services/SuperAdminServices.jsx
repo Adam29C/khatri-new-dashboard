@@ -773,4 +773,32 @@ export const FUND_REQUEST_LIST_API = async (data,token) => {
 };
 
 
+// FUND REQUEST APPROVED_FUND_REQUEST
+
+export const APPROVED_FUND_REQUEST_API = async (data,token) => {
+
+  try {
+    const res = await axios.patch(`${BASE_URL}${Api.APPROVED_FUND_REQUEST}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// FUND REQUEST DECLINED_FUND_REQUEST
+export const DECLINED_FUND_REQUEST_API = async (data,token) => {
+
+  try {
+    const res = await axios.patch(`${BASE_URL}${Api.DECLINED_FUND_REQUEST}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
 // -----------------  FUND REQUEST -------------------------------

@@ -250,8 +250,10 @@ const Api = {
   BLOCK_UPI_LIST: "upiId/disable_upi",
   DELETE_UPI_LIST: "upiId/dlt_upi",
 
-    //FUND REQUEST APIS
-    GET_FUND_REQUEST : "fundsRequest/getManualPaymentList"
+    //FUND REQUEST GET LIST AND APPROVED / DECLINED REQUEST APIS
+    GET_FUND_REQUEST : "fundsRequest/getManualPaymentList",
+    APPROVED_FUND_REQUEST : "fundsRequest/approveManualPayment",
+    DECLINED_FUND_REQUEST : "fundsRequest/declineManualPayment"
 
 };
 
