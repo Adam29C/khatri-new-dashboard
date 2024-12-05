@@ -60,6 +60,7 @@ import Notification from "../../Pages/Superadmin/Notification/Notification";
 import DeclinedRequest from "../../Pages/Superadmin/DeclinedRequest/DeclinedRequest";
 import ApproveReportBank from "../../Pages/Superadmin/ApproveDebitRequest/ApproveReportBank";
 import ApproveReportBankManual from "../../Pages/Superadmin/ApproveDebitRequest/ApproveReportBankManual";
+import PendingBankRequests from "../../Pages/Superadmin/PendingBankRequests/PendingBankRequests";
 
 
 // Mock authentication status
@@ -325,6 +326,10 @@ const adminRoutes = [
       {
         path: "approvedReports/bankManual",
         element: <PrivateRoute element={ApproveReportBankManual} />,
+      },
+      {
+        path: "fundRequest/pendingBank",
+        element: <PrivateRoute element={PendingBankRequests} />,
       },
       
     ],

@@ -306,6 +306,7 @@ export const admin_Sidebar = [
   },
   {
     id: 11,
+    route: "fundRequest/pendingBank",
     headerTitle: "Pending Requests",
     title: "Pending Debit Requests",
     permission: "fundRequest",
@@ -315,14 +316,14 @@ export const admin_Sidebar = [
         id: 1,
         title: "Pending Bank Requests",
         permission: "fundRequest",
-        route: "#",
+        route: "fundRequest/pendingBank",
       },
-      {
-        id: 2,
-        title: "Pending Paytm Requests",
-        permission: "fundRequest",
-        route: "#",
-      },
+      // {
+      //   id: 2,
+      //   title: "Pending Paytm Requests",
+      //   permission: "fundRequest",
+      //   route: "#",
+      // },
     ],
   },
 
