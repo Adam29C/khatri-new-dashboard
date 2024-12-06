@@ -802,3 +802,61 @@ export const DECLINED_FUND_REQUEST_API = async (data,token) => {
 
 
 // -----------------  FUND REQUEST -------------------------------
+
+
+// ----------------- WALLET EXPORT DEBIT REPORT -------------------------------
+//GET_EXPORT_DEBIT_REPORT
+export const GET_EXPORT_DEBIT_REPORT_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.GET_EXPORT_DEBIT_REPORT}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+export const EXPORT_DEBIT_SEE_TODAY_REPORT_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.EXPORT_DEBIT_TODAY_APPROVED_REPORT}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+export const EXPORT_DEBIT_GET_REPORT_API = async (data,token,endpoint) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.GET_EXPORT_DEBIT_REPORT}/${endpoint}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+// EXPORT_DEBIT_DECLINE_REPORT
+
+export const EXPORT_DEBIT_DECLINE_REPORT_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.EXPORT_DEBIT_DECLINE_REPORT}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// ---------------------WALLET EXPORT DEBIT REPORT-------------------------------
+
+
+
+

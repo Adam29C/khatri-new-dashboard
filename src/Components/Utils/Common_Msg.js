@@ -71,3 +71,6 @@ export const PROVIDER_NAME_REQUIRED = "Provider Name is required";
   export const CLOSE_BID_RESULT_TIME_IS_REQUIRED = "Close Bid Result Time is required";
   export const PROFILE_NOTE_REQUIRE = "Please Enter Profile Note";
 
+  //for wallet export debit report
+  export const REQUIRED_SEARCH_TYPE = "Please Enter Request Type";
+  export const REQUIRED_REPORT_TYPE = "Plese Enter Report Type"

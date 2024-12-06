@@ -21882,7 +21882,7 @@ a:hover {
   font-size: 13px;
 }
 
-.approve-btn {
+/* .approve-btn {
   padding: 10px 25px;
   border-radius: 25px;
   font-weight: 500;
@@ -21894,7 +21894,7 @@ a:hover {
   color: #000;
   text-decoration: none;
   text-align: center;
-}
+} */
 
 .icon-size {
   font-size: 19px;
@@ -22090,4 +22090,23 @@ color: #fff;
 
 .green {
   color: #4BB543;
+}
+
+
+
+/* css for approve btn for wallet export debit report  */
+.approve-btn {
+  font-weight: 500;
+  display: inline-block;
+  margin: 20px;
+  text-decoration: none;
+  text-align: center;
+  background-color:var(--khatri-color) ;
+  color: var(--white) ;
+  min-width: 120px;
+  border: 1px solid transparent;
+  padding: .45rem .9rem;
+  font-size: .9rem;
+  line-height: 1.5;
+  border-radius: .15rem;
 }

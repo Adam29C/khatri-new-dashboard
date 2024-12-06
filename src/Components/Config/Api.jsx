@@ -253,7 +253,15 @@ const Api = {
     //FUND REQUEST GET LIST AND APPROVED / DECLINED REQUEST APIS
     GET_FUND_REQUEST : "fundsRequest/getManualPaymentList",
     APPROVED_FUND_REQUEST : "fundsRequest/approveManualPayment",
-    DECLINED_FUND_REQUEST : "fundsRequest/declineManualPayment"
+    DECLINED_FUND_REQUEST : "fundsRequest/declineManualPayment",
+
+    //wallet export debit report 
+    GET_EXPORT_DEBIT_REPORT:"exportDebit",
+    //todayApproved
+    EXPORT_DEBIT_TODAY_APPROVED_REPORT:"exportDebit/todayApproved",
+
+    EXPORT_DEBIT_DECLINE_REPORT:"exportDebit/decline"
+
 
 };
 
