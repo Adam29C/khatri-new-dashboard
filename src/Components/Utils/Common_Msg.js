@@ -77,3 +77,6 @@ export const PROVIDER_NAME_REQUIRED = "Provider Name is required";
 
   //message for wallet module decline request
   export const REQUIRED_REASON  = "Please Select Reason"
+
+  //message for wallet module search account
+  export const REQUIRED_ACCOUNT_NUMBER = "Please Enter User Account Number"
