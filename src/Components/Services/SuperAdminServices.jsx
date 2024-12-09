@@ -331,9 +331,9 @@ export const GAME_MAIN_WINNER_LIST_API = async (data, token) => {
 // -------------------------- APP_SETTINGS ------------------------
 
 //VERSION CONTROL API START
-export const GET_VERSION_API = async (id) => {
+export const GET_VERSION_API = async (token) => {
   try {
-    const res = await axios.get(`${Api.GET_VERSION}?adminId=${id}`, {
+    const res = await axios.get(`${BASE_URL}${Api.GET_VERSION}`, {
       headers: header(token),
     });
     return res?.data;
@@ -342,9 +342,10 @@ export const GET_VERSION_API = async (id) => {
   }
 };
 
-export const UPDATE_VERSION_API = async (data) => {
+export const UPDATE_VERSION_API = async (formData,token) => {
+
   try {
-    const res = await axios.put(Api.UPDATE_VERSION, data, {
+    const res = await axios.post(`${BASE_URL}${Api.UPDATE_VERSION}`, formData, {
       headers: header(token),
     });
     return res?.data;
@@ -355,9 +356,9 @@ export const UPDATE_VERSION_API = async (data) => {
 //VERSION CONTROL API END
 
 //WALLET CONTACT API START
-export const GET_WALLET_CONTACT_API = async (id) => {
+export const GET_WALLET_CONTACT_API = async (token) => {
   try {
-    const res = await axios.get(`${Api.WALLET_CONTACT_LIST}?adminId=${id}`, {
+    const res = await axios.get(`${BASE_URL}${Api.WALLET_CONTACT_LIST}`, {
       headers: header(token),
     });
     return res?.data;
@@ -366,23 +367,65 @@ export const GET_WALLET_CONTACT_API = async (id) => {
   }
 };
 
-export const UPDATE_WALLET_CONTACT_API = async (data) => {
+export const GET_WALLET_HEADLINE_API = async (token) => {
   try {
-    const res = await axios.put(Api.UPDATE_WALLET_CONTACT, data, {
+    const res = await axios.get(`${BASE_URL}${Api.WALLET_HEADLINE_LIST}`, {
       headers: header(token),
     });
     return res?.data;
   } catch (error) {
     return error;
+  }
+};
+
+export const GET_WALLET_UPI_API = async (token) => {
+  try {
+    const res = await axios.get(`${BASE_URL}${Api.WALLET_UPI_LIST}`, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const UPDATE_WALLET_CONTACT_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.UPDATE_WALLET_CONTACT}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error?.response;
+  }
+};
+export const UPDATE_WALLET_HEADLINE_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.UPDATE_WALLET_HEADLINE}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error?.response;
+  }
+};
+export const UPDATE_WALLET_UPI_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.UPDATE_WALLET_UPI}`,data ,{
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error?.response;
   }
 };
 
 //WALLET CONTACT API END
 
 //NOTICE BOARD API START
-export const GET_NOTICE_BOARD_API = async (id) => {
+export const GET_NOTICE_BOARD_API = async (token) => {
   try {
-    const res = await axios.get(`${Api.NOTICE_BOARD_LIST}?adminId=${id}`, {
+    const res = await axios.get(`${BASE_URL}${Api.NOTICE_BOARD_LIST}`, {
       headers: header(token),
     });
     return res?.data;
@@ -391,22 +434,23 @@ export const GET_NOTICE_BOARD_API = async (id) => {
   }
 };
 
-export const UPDATE_NOTICE_BOARD_API = async (data) => {
+export const UPDATE_NOTICE_BOARD_API = async (data,token) => {
   try {
-    const res = await axios.put(Api.UPDATE_NOTICE_BOARD, data, {
+    const res = await axios.post(`${BASE_URL}${Api.UPDATE_NOTICE_BOARD}`, data, {
       headers: header(token),
     });
     return res?.data;
   } catch (error) {
-    return error;
+    // console.log(error.response)
+    return error?.response;
   }
 };
 //NOTICE BOARD API END
 
 //APP WITHDRAW API START
-export const GET_APP_WITHDRAW_API = async (id) => {
+export const GET_APP_WITHDRAW_API = async (token) => {
   try {
-    const res = await axios.get(`${Api.GET_WITHDRAW_SCREEN}?adminId=${id}`, {
+    const res = await axios.get(`${BASE_URL}${Api.GET_WITHDRAW_SCREEN}`, {
       headers: header(token),
     });
     return res?.data;
@@ -415,9 +459,9 @@ export const GET_APP_WITHDRAW_API = async (id) => {
   }
 };
 
-export const UPDATE_APP_WITHDRAW_API = async (data) => {
+export const UPDATE_APP_WITHDRAW_API = async (data,token) => {
   try {
-    const res = await axios.put(Api.UPDATE_WITHDRAW_SCREEN, data, {
+    const res = await axios.post(`${BASE_URL}${Api.UPDATE_WITHDRAW_SCREEN}`, data, {
       headers: header(token),
     });
     return res?.data;
@@ -427,13 +471,37 @@ export const UPDATE_APP_WITHDRAW_API = async (data) => {
 };
 //APP WITHDRAW API END
 
+// PROFILE NOTE GET AND UPDATE API START
+export const GET_PROFILE_NOTE_API = async(token)=>{
+  try {
+    const res = await axios.get(`${BASE_URL}${Api.GET_PROFILE_NOTE}`, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error
+  }
+}
+
+export const UPDATE_PROFILE_NOTE_API =async(data,token)=>{
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.UPDATE_PROFILE_NOTE}`,data,{
+      headers:header(token)
+    })
+    return res?.data;
+  } catch (error) {
+    return error?.response;
+  }
+}
+// PROFILE NOTE GET AND UPDATE API END
+
 // -------------------------- APP_SETTINGS ------------------------
 
 // -------------------------- MASTERS ------------------------
 //UPI LIST START
-export const GET_UPI_LIST_API = async (id) => {
+export const GET_UPI_LIST_API = async (token) => {
   try {
-    const res = await axios.get(`${Api.GET_UPI_LIST}?adminId=${id}`, {
+    const res = await axios.get(`${BASE_URL}${Api.GET_UPI_LIST}`, {
       headers: header(token),
     });
     return res?.data;
@@ -442,9 +510,9 @@ export const GET_UPI_LIST_API = async (id) => {
   }
 };
 
-export const UPDATE_UPI_LIST_API = async (data) => {
+export const BLOCK_UPI_LIST_API = async (data,token) => {
   try {
-    const res = await axios.put(Api.UPDATE_UPI_LIST, data, {
+    const res = await axios.post(`${BASE_URL}${Api.BLOCK_UPI_LIST}`, data, {
       headers: header(token),
     });
     return res?.data;
@@ -452,9 +520,9 @@ export const UPDATE_UPI_LIST_API = async (data) => {
     return error;
   }
 };
-export const ADD_UPI_LIST_API = async (data) => {
+export const ADD_UPI_LIST_API = async (data,token) => {
   try {
-    const res = await axios.post(Api.ADD_UPI_LIST, data, {
+    const res = await axios.post(`${BASE_URL}${Api.ADD_UPI_LIST}`, data, {
       headers: header(token),
     });
     return res?.data;
@@ -462,14 +530,11 @@ export const ADD_UPI_LIST_API = async (data) => {
     return error;
   }
 };
-export const DELETE_UPI_LIST_API = async (data) => {
-  let apiData = {
-    adminId: data.adminId,
-    upiId: data.deleteId,
-  };
+export const DELETE_UPI_LIST_API = async (apidata,token) => {
+
   try {
-    const res = await axios.delete(Api.DELETE_UPI_LIST, {
-      data: apiData,
+    const res = await axios.post(`${BASE_URL}${Api.DELETE_UPI_LIST}`, apidata, {
+     
       headers: header(token),
     });
     return res?.data;
@@ -480,9 +545,10 @@ export const DELETE_UPI_LIST_API = async (data) => {
 //UPI LIST END
 
 //HTP LIST START
-export const GET_HTP_LIST_API = async (id) => {
+export const GET_HTP_LIST_API = async (token) => {
+  console.log(token)
   try {
-    const res = await axios.get(`${Api.HOW_TO_PLAY_GET_LIST}?adminId=${id}`, {
+    const res = await axios.get(`${BASE_URL}${Api.HOW_TO_PLAY_GET_LIST}`, {
       headers: header(token),
     });
     return res?.data;
@@ -491,9 +557,9 @@ export const GET_HTP_LIST_API = async (id) => {
   }
 };
 
-export const UPDATE_HTP_API = async (data) => {
+export const UPDATE_HTP_API = async (data,token) => {
   try {
-    const res = await axios.put(Api.UPDATE_HTP, data, {
+    const res = await axios.post(`${BASE_URL}${Api.UPDATE_HTP}`, data, {
       headers: header(token),
     });
     return res?.data;
@@ -690,3 +756,107 @@ export const WALLET_LIST_UPDATE_WALLET_API = async (data, token) => {
 };
 
 // -----------------  WALLET SECTION -------------------------------
+
+// ----------------- FUND REQUEST -------------------------------
+
+
+export const FUND_REQUEST_LIST_API = async (data,token) => {
+
+  try {
+    const res = await axios.get(`${BASE_URL}${Api.GET_FUND_REQUEST}?status=${data}`, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+// FUND REQUEST APPROVED_FUND_REQUEST
+
+export const APPROVED_FUND_REQUEST_API = async (data,token) => {
+
+  try {
+    const res = await axios.patch(`${BASE_URL}${Api.APPROVED_FUND_REQUEST}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// FUND REQUEST DECLINED_FUND_REQUEST
+export const DECLINED_FUND_REQUEST_API = async (data,token) => {
+
+  try {
+    const res = await axios.patch(`${BASE_URL}${Api.DECLINED_FUND_REQUEST}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+// -----------------  FUND REQUEST -------------------------------
+
+
+// ----------------- WALLET EXPORT DEBIT REPORT -------------------------------
+//GET_EXPORT_DEBIT_REPORT
+export const GET_EXPORT_DEBIT_REPORT_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.GET_EXPORT_DEBIT_REPORT}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+export const EXPORT_DEBIT_SEE_TODAY_REPORT_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.EXPORT_DEBIT_TODAY_APPROVED_REPORT}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+export const EXPORT_DEBIT_GET_REPORT_API = async (data,token,endpoint) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.GET_EXPORT_DEBIT_REPORT}/${endpoint}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+// EXPORT_DEBIT_DECLINE_REPORT
+
+export const EXPORT_DEBIT_DECLINE_REPORT_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.EXPORT_DEBIT_DECLINE_REPORT}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// ---------------------WALLET EXPORT DEBIT REPORT-------------------------------
+
+
+
+

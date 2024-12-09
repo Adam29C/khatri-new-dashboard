@@ -4,18 +4,21 @@ import PagesIndex from "../../PagesIndex";
 const AppVersion = () => {
   const userId = localStorage.getItem("userId");
 
+  //get token in localstorage
+  const token = localStorage.getItem("token")
+
   //all states
   const [versionData, setVersionData] = PagesIndex.useState();
   const [loading, setLoading] = PagesIndex.useState(true);
   const [isMaintanance, setIsMaintanance] = PagesIndex.useState();
   const [isForceUpdate, setIsForceUpdate] = PagesIndex.useState();
-
+  console.log(versionData)
   //get version list api
   const getVersionData = async () => {
-    const res = await PagesIndex.admin_services.GET_VERSION_API(userId);
+    const res = await PagesIndex.admin_services.GET_VERSION_API(token);
 
-    if (res?.status === 200) {
-      setVersionData(res?.data?.[0]);
+    if (res?.status) {
+      setVersionData(res?.data);
       setLoading(false);
     }
   };
@@ -70,14 +73,18 @@ const AppVersion = () => {
       return errors;
     },
     onSubmit: async (values) => {
+      console.log(values,100)
+
       const formData = new FormData();
       formData.append("appVer", values.version);
       formData.append("type", values.showType);
-      formData.append("adminId", userId);
-      formData.append("versionId", versionData?._id);
+      formData.append("id", versionData?._id);
       formData.append("apk", values.apkfile);
-      const res = await PagesIndex.admin_services.UPDATE_VERSION_API(formData);
-      if (res.status === 200) {
+      for (const pair of formData.entries()) {
+        console.log(pair[0], pair[1]);
+      }
+      const res = await PagesIndex.admin_services.UPDATE_VERSION_API(formData,token);
+      if (res.status) {
         PagesIndex.toast.success(res.message);
         getVersionData();
       }
@@ -105,12 +112,12 @@ const AppVersion = () => {
   const toggleMaintenance = async () => {
     setIsMaintanance((prev) => (prev === "On" ? "Off" : "On"));
     const formData = new FormData();
-    formData.append("adminId", userId);
-    formData.append("versionId", versionData?._id);
+
+    formData.append("id", versionData?._id);
     formData.append("type", 2);
     formData.append("status", isMaintanance === "On" ? "false" : "true");
-    const res = await PagesIndex.admin_services.UPDATE_VERSION_API(formData);
-    if (res.status === 200) {
+    const res = await PagesIndex.admin_services.UPDATE_VERSION_API(formData,token);
+    if (res.status) {
       PagesIndex.toast.success(res.message);
       getVersionData();
     }
@@ -119,12 +126,12 @@ const AppVersion = () => {
   const toggleForceUpdate = async () => {
     setIsForceUpdate((prev) => (prev === "On" ? "Off" : "On"));
     const formData = new FormData();
-    formData.append("adminId", userId);
-    formData.append("versionId", versionData?._id);
+
+    formData.append("id", versionData?._id);
     formData.append("type", 1);
     formData.append("status", isForceUpdate === "On" ? "false" : "true");
-    const res = await PagesIndex.admin_services.UPDATE_VERSION_API(formData);
-    if (res.status === 200) {
+    const res = await PagesIndex.admin_services.UPDATE_VERSION_API(formData,token);
+    if (res.status) {
       PagesIndex.toast.success(res.message);
       getVersionData();
     }
@@ -160,7 +167,7 @@ const AppVersion = () => {
             </>
           }
         />
-      )}
+ )} 
       <PagesIndex.Toast />
     </PagesIndex.Main_Containt>
   );

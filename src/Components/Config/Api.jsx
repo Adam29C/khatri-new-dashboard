@@ -228,25 +228,56 @@ OC_CUTTING_GROUP_OC_LIST: "ocCuttingGroup/finalCloseCutingGroup",
   GET_MAIN_WINNER_LIST: "winnerList/mainWinnerList",
 
   USERS_IDEAS: "/admin/UserIdea",
-  GET_VERSION: "/admin/appSetting/listVersionSetting",
-  UPDATE_VERSION: "/admin/appSetting/updateVersionSetting",
-  WALLET_CONTACT_LIST: "/admin/appSetting/walledContestList",
-  UPDATE_WALLET_CONTACT: "/admin/appSetting/updateWalledContest",
 
-  //NOTICE BOARD
-  NOTICE_BOARD_LIST: "/admin/appSetting/noticeBoardList",
-  UPDATE_NOTICE_BOARD: "/admin/appSetting/updateNoticeBoard",
-  GET_WITHDRAW_SCREEN: "/admin/appSetting/withdrawMessageList",
-  UPDATE_WITHDRAW_SCREEN: "/admin/appSetting/updateWithdrawMessage",
+  //APP SETTINGS APP VERSION API'S
+  GET_VERSION: "versionSetting",
+  UPDATE_VERSION: "versionSetting/updateAppSet",
+
+  //APP SETTINGS WALLET GET UPDATE API'S
+  WALLET_CONTACT_LIST: "walletContect",
+  WALLET_HEADLINE_LIST: "walletContect/headLine",
+  WALLET_UPI_LIST: "walletContect/upi",
+  UPDATE_WALLET_CONTACT: "walletContect/updatewalletContact",
+  UPDATE_WALLET_HEADLINE: "walletContect/updateHeadline",
+  UPDATE_WALLET_UPI: "walletContect/updateUpiId",
+
+  //APP SETTINGS NOTICE BOARD
+  NOTICE_BOARD_LIST: "noticeBoard",
+  UPDATE_NOTICE_BOARD: "noticeBoard/updateNotice",
+
+  //APP SETTINGS WITHDRAW SCREEN
+  GET_WITHDRAW_SCREEN: "withdraw",
+  UPDATE_WITHDRAW_SCREEN: "withdraw/updateWithdraw",
+
+  //APP SETTINGS PROFILE NOT GET AND UPDATE API
+
+  GET_PROFILE_NOTE: "profileNote",
+  UPDATE_PROFILE_NOTE: "profileNote/updateProfileNote",
+
+  // APP SETTINGS HOW TO PLAY
+  HOW_TO_PLAY_GET_LIST: "appSetting/htp",
+  UPDATE_HTP: "appSetting/updateHtp",
+
   //UPI LIST
-  GET_UPI_LIST: "/admin/master/upiList",
-  ADD_UPI_LIST: "/admin/master/addUpi",
-  UPDATE_UPI_LIST: "/admin/master/updateUpiStatus",
-  DELETE_UPI_LIST: "/admin/master/deleteUpi",
+  GET_UPI_LIST: "upiId",
+  ADD_UPI_LIST: "upiId/upiAdd",
+  BLOCK_UPI_LIST: "upiId/disable_upi",
+  DELETE_UPI_LIST: "upiId/dlt_upi",
 
-  //HOW TO PLAY
-  HOW_TO_PLAY_GET_LIST: "/admin/appSetting/htpList",
-  UPDATE_HTP: "/admin/appSetting/updateHtp",
+    //FUND REQUEST GET LIST AND APPROVED / DECLINED REQUEST APIS
+    GET_FUND_REQUEST : "fundsRequest/getManualPaymentList",
+    APPROVED_FUND_REQUEST : "fundsRequest/approveManualPayment",
+    DECLINED_FUND_REQUEST : "fundsRequest/declineManualPayment",
+
+    //wallet export debit report 
+    GET_EXPORT_DEBIT_REPORT:"exportDebit",
+    //todayApproved
+    EXPORT_DEBIT_TODAY_APPROVED_REPORT:"exportDebit/todayApproved",
+
+    EXPORT_DEBIT_DECLINE_REPORT:"exportDebit/decline"
+
+
 };
+
 
 export { Api };

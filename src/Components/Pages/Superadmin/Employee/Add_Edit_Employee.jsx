@@ -294,7 +294,7 @@ function AddEmployee() {
     >
       <FormWizardComponent
         shape="circle"
-        color="#478767"
+        color="#237f8a"
         stepSize="sm"
         onComplete={handleComplete}
         tabs={tabs}

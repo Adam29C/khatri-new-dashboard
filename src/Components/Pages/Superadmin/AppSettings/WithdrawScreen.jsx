@@ -2,18 +2,16 @@ import React from "react";
 import PagesIndex from "../../PagesIndex";
 
 const WithdrawScreen = () => {
-  const userId = localStorage.getItem("userId");
-
+const token =  localStorage.getItem("token")
   //all states
   const [loading, setLoading] = PagesIndex.useState(true);
   const [withdrawData, setWithdrawData] = PagesIndex.useState();
 
   //get wallet api
   const getNoticeData = async () => {
-    const res = await PagesIndex.admin_services.GET_APP_WITHDRAW_API(userId);
-
-    if (res?.status === 200) {
-      setWithdrawData(res?.data?.[0]);
+    const res = await PagesIndex.admin_services.GET_APP_WITHDRAW_API(token);
+    if (res?.status) {
+      setWithdrawData(res?.data);
       setLoading(false);
     }
   };
@@ -70,19 +68,16 @@ const WithdrawScreen = () => {
     },
     onSubmit: async (values) => {
       const apidata = {
-        adminId: userId,
-        widhdrawMessageId: withdrawData?._id,
-        textMain: values.textMain,
-        textSecondry: values.textSecondry,
-        Number: +values.Number,
-        Timing: values.Timing,
+        id: withdrawData?._id,
+        pri_title: values.textMain,
+        sec_title: values.textSecondry,
+        number: +values.Number,
+        timing: values.Timing,
       };
 
-      const res = await PagesIndex.admin_services.UPDATE_APP_WITHDRAW_API(
-        apidata
-      );
+      const res = await PagesIndex.admin_services.UPDATE_APP_WITHDRAW_API(apidata,token);
 
-      if (res.status === 200) {
+      if (res.status) {
         PagesIndex.toast.success(res.message);
         getNoticeData();
       }
@@ -132,7 +127,7 @@ const WithdrawScreen = () => {
           show_submit={true}
           btn_name="Submit"
         />
-      )}
+    )} 
       <PagesIndex.Toast />
     </PagesIndex.Main_Containt>
   );

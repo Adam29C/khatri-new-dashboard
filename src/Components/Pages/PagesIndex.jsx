@@ -51,6 +51,7 @@ import TableWitCustomPegination from "../Helpers/Table/TableWithCustomPegination
 import TableWithCustomPeginationNew from "../Helpers/Table/TableWithCustomPeginationNew";
 import TableWithCustomPeginationButton from "../Helpers/Table/TableWithCustomPeginationButton";
 import ModalComponent from "../Helpers/Modal/ModalComponent";
+import Split_Main_Containt from "../Layout/Main/Split_Main_Content"
 const PagesIndex = {
   useDispatch,
   useState,
@@ -101,6 +102,7 @@ const PagesIndex = {
   game_service,
   game_service,
   report_service,
+  Split_Main_Containt
 };
 
 export default PagesIndex;
