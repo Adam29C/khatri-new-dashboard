@@ -297,7 +297,7 @@ const adminRoutes = [
         element: <PrivateRoute element={ExportDebitReport} />,
       },
       {
-        path: "wallet/moneycheck",
+        path: "wallet/debitReport/moneyCheck",
         element: <PrivateRoute element={DownloadDebitReport} />,
       },
       {

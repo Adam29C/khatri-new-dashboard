@@ -907,6 +907,27 @@ export const WALLET_GET_SEARCH_DETAILS_API = async (data,token) => {
 // ---------------------WALLET_GET_SEARCH_DETAILS-------------------------------
 
 
+// ---------------------WALLET_DOWNLOAD_DEBIT_REPORT-------------------------------
+
+export const WALLET_DOWNLOAD_DEBIT_REPORT_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.WALLET_DOWNLOAD_DEBIT_REPORT}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+// ---------------------WALLET_DOWNLOAD_DEBIT_REPORT-------------------------------
+
+
+
+
+
+
 
 
 

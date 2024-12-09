@@ -267,7 +267,10 @@ const Api = {
     GET_WALLET_INVOICE_PROFILE_CHANGE:"invoice/profileChange",
 
  //wallet /searchAccount/getDetails
- WALLET_GET_SEARCH_DETAILS :"searchAccount/getDetails"
+ WALLET_GET_SEARCH_DETAILS :"searchAccount/getDetails",
+
+ //exportDebit/showCondition
+ WALLET_DOWNLOAD_DEBIT_REPORT : "exportDebit/showCondition"
 
 
 };

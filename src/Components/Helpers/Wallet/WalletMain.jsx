@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import PagesIndex from "../../Pages/PagesIndex";
 import ReusableModal from "../Modal/ReusableModal";
 
@@ -7,7 +7,6 @@ const WalletMain = ({
   TableData,
   fields,
   formik,
-  totalAmount,
   UserFullButtonList,
   visibleFields,
   setSearchInTable,
@@ -22,6 +21,11 @@ const WalletMain = ({
   formik1,
   fields1,
 }) => {
+
+  const totalAmount = useMemo(
+    () => TableData.reduce((acc, item) => acc + (item?.reqAmount || 0), 0),
+    [TableData]
+  );
   const cardLayouts = [
     {
       size: 12,

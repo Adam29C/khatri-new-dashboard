@@ -325,18 +325,14 @@ const ExportDebitReport = () => {
 
   ];
 
-  const totalAmount = useMemo(
-    () => TableData.reduce((acc, item) => acc + (item?.reqAmount || 0), 0),
-    [TableData]
-  );
+
   return (
     <>
       <PagesIndex.WalletMain
-        title="Withdraw Report"
+        title="Export Debit Report"
         TableData={TableData}
         fields={fields}
         formik={formik}
-        totalAmount={totalAmount}
         UserFullButtonList={UserFullButtonList}
         visibleFields={visibleFields}
         setSearchInTable={setSearchInTable}
