@@ -857,6 +857,28 @@ export const EXPORT_DEBIT_DECLINE_REPORT_API = async (data,token) => {
 
 // ---------------------WALLET EXPORT DEBIT REPORT-------------------------------
 
+// ---------------------GET_WALLET_INVOICE_PROFILE_CHANGE-------------------------------
+
+export const GET_WALLET_INVOICE_PROFILE_CHANGE_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.GET_WALLET_INVOICE_PROFILE_CHANGE}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+
+
+
+
+// ---------------------GET_WALLET_INVOICE_PROFILE_CHANGE-------------------------------
+
+
+
 
 
 

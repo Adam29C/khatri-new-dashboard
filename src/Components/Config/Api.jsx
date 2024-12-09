@@ -257,10 +257,16 @@ const Api = {
 
     //wallet export debit report 
     GET_EXPORT_DEBIT_REPORT:"exportDebit",
+
     //todayApproved
     EXPORT_DEBIT_TODAY_APPROVED_REPORT:"exportDebit/todayApproved",
 
-    EXPORT_DEBIT_DECLINE_REPORT:"exportDebit/decline"
+    EXPORT_DEBIT_DECLINE_REPORT:"exportDebit/decline",
+
+    //wallet /invoice/profileChange
+    GET_WALLET_INVOICE_PROFILE_CHANGE:"invoice/profileChange",
+
+
 
 
 };

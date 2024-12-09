@@ -74,3 +74,6 @@ export const PROVIDER_NAME_REQUIRED = "Provider Name is required";
   //for wallet export debit report
   export const REQUIRED_SEARCH_TYPE = "Please Enter Request Type";
   export const REQUIRED_REPORT_TYPE = "Plese Enter Report Type"
+
+  //message for wallet module decline request
+  export const REQUIRED_REASON  = "Please Select Reason"
