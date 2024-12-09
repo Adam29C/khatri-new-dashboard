@@ -6,13 +6,13 @@ const SearchAccount = () => {
   //get token in local storage
   const token = localStorage.getItem("token");
   //all state
-  const [tableData, setTableData] = PagesIndex.useState([]);
-
+  const [currentData, setCurrentData] = PagesIndex.useState([]);
+  const [oldData, setOldData] = PagesIndex.useState([]);
+console.log(oldData)
   //formik form
   const formik = PagesIndex.useFormik({
     initialValues: {
       acc_num: "",
-     
     },
     validate: (values) => {
       const errors = {};
@@ -24,11 +24,20 @@ const SearchAccount = () => {
 
     onSubmit: async (values) => {
       try {
+        console.log(values)
         let apidata = {
           acc_num: values.acc_num,
         };
+        const res =
+          await PagesIndex.admin_services.WALLET_GET_SEARCH_DETAILS_API(
+            apidata,
+            token
+          );
+   
+        setCurrentData(res?.data)
+        setOldData(res.data?.[0]?.changeDetails)
+        
 
-    
       } catch (error) {
         PagesIndex.toast.error(error);
       }
@@ -37,31 +46,75 @@ const SearchAccount = () => {
 
   const fields = [
     {
-      name: "upiName",
+      name: "acc_num",
       label: "User Account Number",
       type: "text",
       label_size: 12,
       col_size: 4,
     },
-
-
   ];
-
-
 
   const columns = [
     {
-      name: "Name",
+      name: "Username",
+      selector: (row) => row?.username,
+    },
+    {
+      name: "Acc Holder	",
+      selector: (row) => row?.account_holder_name,
+    },
+
+    {
+      name: "A/C NO	",
+      selector: (row) => row?.account_no,
+    },
+
+    {
+      name: "Bank",
+      selector: (row) => row?.bank_name,
+    },
+
+    {
+      name: "IFSC",
+      selector: (row) => row?.ifsc_code,
+    },
+  ];
+
+  const columns1 = [
+    {
+      name: "Username",
+      selector: (row) => row?.username,
+    },
+    {
+      name: "Old Acc No",
       selector: (row) => row?.UPI_ID,
     },
 
     {
-      name: "IsActive",
-      selector: (row) => (row.is_Active ? "Active" : "Disable"),
+      name: "Old Bank Name",
+      selector: (row) => row?.UPI_ID,
     },
 
- 
+    {
+      name: "Old IFSC",
+      selector: (row) => row?.UPI_ID,
+    },
+
+    {
+      name: "Old Acc Name	",
+      selector: (row) => row?.UPI_ID,
+    },
+
+    {
+      name: "Changed On",
+      selector: (row) => row?.UPI_ID,
+    },
+
+
+
   ];
+
+
   const cardLayouts = [
     {
       size: 12,
@@ -81,7 +134,12 @@ const SearchAccount = () => {
       size: 12,
       body: (
         <div>
-          <PagesIndex.Data_Table columns={columns} data={tableData} />
+          <div>
+            <h4 class="profile-note-title mt-0 mb-4 text-center">
+              Current Details
+            </h4>
+          </div>
+          <PagesIndex.Data_Table columns={columns} data={currentData} />
         </div>
       ),
     },
@@ -89,8 +147,13 @@ const SearchAccount = () => {
       size: 12,
       body: (
         <div>
-        <PagesIndex.Data_Table columns={columns} data={tableData} />
-      </div>
+          <div>
+            <h4 class="profile-note-title mt-0 mb-4 text-center">
+              Old Details
+            </h4>
+          </div>
+          <PagesIndex.Data_Table columns={columns1} data={oldData} />
+        </div>
       ),
     },
   ];

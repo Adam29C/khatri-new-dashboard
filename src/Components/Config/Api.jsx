@@ -266,7 +266,8 @@ const Api = {
     //wallet /invoice/profileChange
     GET_WALLET_INVOICE_PROFILE_CHANGE:"invoice/profileChange",
 
-
+ //wallet /searchAccount/getDetails
+ WALLET_GET_SEARCH_DETAILS :"searchAccount/getDetails"
 
 
 };

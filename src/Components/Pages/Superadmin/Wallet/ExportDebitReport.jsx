@@ -84,43 +84,63 @@ const ExportDebitReport = () => {
     },
   ];
 
+  const handleDownloadFiles = async(row)=>{
+
+    const data = {
+      reportDate: actual_date_formet,
+      searchType: "Pending",
+    };
+    
+    const res = await PagesIndex.admin_services.EXPORT_MKXLS_FILE_API(data,token);
+    console.log(res)
+    if (res?.status) {
+      const { filename, writeString} = res;
+      if (writeString) {
+        // Handle plain text format
+        handleTextFile(writeString, filename || `MKTTC.txt`);
+      }
+    }
+  }
+
   const UserFullButtonList1 = [
-    {
-      id: 0,
-      buttonName: "Download RBL.xls Report	",
-      buttonColor: "dark",
-      route: "",
-      Conditions: (row) => {},
-      Visiblity: true,
-      type: "button",
-    },
+    // {
+    //   id: 0,
+    //   buttonName: "Download RBL.xls Report	",
+    //   buttonColor: "dark",
+    //   route: "",
+    //   Conditions: (row) => {},
+    //   Visiblity: true,
+    //   type: "button",
+    // },
     {
       id: 1,
       buttonName: "Download MK.txt Report	",
       buttonColor: "dark",
       route: "",
-      Conditions: (row) => {},
+      Conditions: (row) => {
+        handleDownloadFiles(row)
+      },
       Visiblity: true,
       type: "button",
     },
-    {
-      id: 2,
-      buttonName: "Download Gajju Report",
-      buttonColor: "dark",
-      route: "",
-      Conditions: (row) => {},
-      Visiblity: true,
-      type: "button",
-    },
-    {
-      id: 3,
-      buttonName: "Download FINA PNB Report",
-      buttonColor: "dark",
-      route: "",
-      Conditions: (row) => {},
-      Visiblity: true,
-      type: "button",
-    },
+    // {
+    //   id: 2,
+    //   buttonName: "Download Gajju Report",
+    //   buttonColor: "dark",
+    //   route: "",
+    //   Conditions: (row) => {},
+    //   Visiblity: true,
+    //   type: "button",
+    // },
+    // {
+    //   id: 3,
+    //   buttonName: "Download FINA PNB Report",
+    //   buttonColor: "dark",
+    //   route: "",
+    //   Conditions: (row) => {},
+    //   Visiblity: true,
+    //   type: "button",
+    // },
   ];
 
   const visibleFields = [
@@ -248,31 +268,31 @@ const ExportDebitReport = () => {
       label_size: 12,
       col_size: 4,
       options: [
-        {
-          label: "Kotk XLS",
-          value: "xlsDataNew",
-        },
-        {
-          label: "Cash free",
-          value: "xlsDataDailyTrak",
-        },
-        {
-          label: "Rbl.xls",
-          value: "rblxls",
-        },
+        // {
+        //   label: "Kotk XLS",
+        //   value: "xlsDataNew",
+        // },
+        // {
+        //   label: "Cash free",
+        //   value: "xlsDataDailyTrak",
+        // },
+        // {
+        //   label: "Rbl.xls",
+        //   value: "rblxls",
+        // },
         {
           label: "MK.txt",
           value: "mkxls",
         },
-        {
-          label: "Gajju Bob",
-          value: "gajjubob",
-        },
+        // {
+        //   label: "Gajju Bob",
+        //   value: "gajjubob",
+        // },
 
-        {
-          label: "FINAPNB",
-          value: "Finapnb",
-        },
+        // {
+        //   label: "FINAPNB",
+        //   value: "Finapnb",
+        // },
       ],
     },
     {
