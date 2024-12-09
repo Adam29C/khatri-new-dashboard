@@ -104,9 +104,9 @@ const Split_Main_Containt = ({
         <div className="row">
           {cardLayouts.map((layout, index) => (
             <div
-              className={`col-${layout.size} ${
-                layout.visiblity == "hide" && "d-none"
-              }`}
+              className={`col-${layout.size} 
+              
+           ${layout.visiblity ? "hide d-none" : ""}`}
               key={index}
             >
               <div className="card">

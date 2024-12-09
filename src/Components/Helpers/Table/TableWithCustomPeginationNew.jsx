@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 const PaginatedTable = ({
   data,
-  initialRowsPerPage = 5,
+  initialRowsPerPage = 10,
   visibleFields,
   UserFullButtonList,
   showIndex,
@@ -14,14 +14,10 @@ const PaginatedTable = ({
   const [searchQuery, setSearchQuery] = useState("");
   const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
 
-  const maxPagesToShow = 5;
+  const maxPagesToShow = 10;
 
   // Sort and Filter data
   useEffect(() => {
-
-
-    console.log("datadatadata" ,data);
-    
     let sortedData = [...data];
 
     // Apply sorting
@@ -134,7 +130,18 @@ const PaginatedTable = ({
               <th
                 key={field.value}
                 onClick={() => handleSort(field.value)}
-                style={{ cursor: "pointer" }}
+                style={
+                  field.notheader
+                    ? {
+                        color: "white", // Default color when notheader
+                        cursor: "pointer",
+                        ...(field.style ? field.style(field) : {}),
+                      }
+                    : {
+                        cursor: "pointer",
+                        ...(field.style ? field.style(field) : {}),
+                      }
+                }
               >
                 {field.name}
                 {sortConfig.key === field.value && (
@@ -156,6 +163,11 @@ const PaginatedTable = ({
                     <td
                       key={field.value}
                       style={field.style ? field.style(row) : {}}
+                      onClick={() => {
+                        if (field.onClick) {
+                          field.onClick(row); // Call the onClick function passed in field
+                        }
+                      }}
                     >
                       {field.render
                         ? field.render(row) // Custom render function
