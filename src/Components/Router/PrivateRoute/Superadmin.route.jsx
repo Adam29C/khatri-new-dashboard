@@ -128,11 +128,11 @@ const adminRoutes = [
         element: <PrivateRoute element={EmployeeList} />,
       },
       {
-        path: "employee/add",
+        path: "employees/add",
         element: <PrivateRoute element={Add_Edit_Employee} />,
       },
       {
-        path: "employee/edit",
+        path: "employees/edit",
         element: <PrivateRoute element={Add_Edit_Employee} />,
       },
       {

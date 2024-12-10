@@ -1,18 +1,69 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import FormWizardComponent from "../../../Helpers/MultiStepForm";
 import Main_Containt from "../../../Layout/Main/Main_Containt";
 import PagesIndex from "../../../Pages/PagesIndex";
-import { makePermissions, InitialValues } from "./permissions";
+import { Get_permissions } from "../../../Redux/slice/CommonSlice";
 
 function AddEmployee() {
-  const userId = localStorage.getItem("userId");
-  const navigate = PagesIndex.useNavigate();
-  const location = PagesIndex.useLocation();
-  const userData = location.state;
+//get token in localstorage
+const token = localStorage.getItem("token");
+//get userid in localstorage
+  let { user_id } = JSON.parse(localStorage.getItem("userdetails"));
 
+  //get all permission in redux
+  const { getPermissions } = PagesIndex.useSelector(
+    (state) => state.CommonSlice
+  );
+
+  //use navigate dispatch location hooks
+  const navigate = PagesIndex.useNavigate();
+  const dispatch = PagesIndex.useDispatch();
+  const location = PagesIndex.useLocation();
+
+  //all states
+  const [getEmplData, setGetEmpData] = useState();
+
+  //destructure data for update form
+  const userData = location?.state?.row;
+
+//destructure data for get single user permission for update form 
+  const userdataPermission = getEmplData && getEmplData?.col_view_permission;
+
+ //destructure for get all permissions
+  const getAllPermissions = getPermissions && getPermissions?.col_view_permission;
+
+  //set for show dynamic permission on add and update form
+  const permissionOptions = getAllPermissions?.map((permission) => ({
+    labelName: permission,
+    name: permission,
+  }));
+
+  //get all permission api
+  const getPermissionApi = () => {
+    dispatch(Get_permissions(user_id));
+  };
+
+  //get single employee api 
+  const getSingleEmployee = async () => {
+    if (userData?._id) {
+      const res = await PagesIndex.admin_services.SINGLE_EMPLOYEE_GET_LIST_API(
+        userData?._id,
+        token
+      );
+      setGetEmpData(res?.data);
+    }
+  };
+
+  //call get permission and get single employee api
+  PagesIndex.useEffect(() => {
+    getPermissionApi();
+    getSingleEmployee();
+  }, []);
+
+  //handle fields form for formwizard first tabs
   const formik = PagesIndex.useFormik({
     initialValues: {
-      employeeName: userData?.employeeName || "",
+      employeeName: userData?.name || "",
       username: userData?.username || "",
       password: userData?.password || "",
       designation: userData?.designation || "",
@@ -36,10 +87,11 @@ function AddEmployee() {
     onSubmit: async (values) => {},
   });
 
+  //fields for formwizard first tabs
   const fields = [
     {
       name: "employeeName",
-      label: "name",
+      label: "Employee Name",
       type: "text",
       label_size: 12,
       col_size: 6,
@@ -50,7 +102,7 @@ function AddEmployee() {
       type: "text",
       label_size: 12,
       col_size: 6,
-      disable: !!userData,
+      // disable: !!userData,
     },
     {
       name: "password",
@@ -70,7 +122,7 @@ function AddEmployee() {
     },
     {
       name: "loginPermission",
-      label: "Dashboard/App Permission",
+      label: "Select Login Permission",
       type: "select",
       label_size: 12,
       col_size: 6,
@@ -83,172 +135,74 @@ function AddEmployee() {
   ];
 
   const filteredFields = userData
-    ? fields.filter((field) => field.name !== "password")
+    ? fields.filter(
+        (field) =>
+          field.name !== "password" &&
+          field.name !== "designation" &&
+          field.name !== "employeeName"
+      )
     : fields;
 
+  //initial value set for permission checkbox fields
+  const initialValues = useMemo(() => {
+    if (!permissionOptions) return {};
+    return permissionOptions.reduce((acc, option) => {
+      acc[option.name] =
+        Array.isArray(userdataPermission) &&
+        userdataPermission.includes(option.name);
+      return acc;
+    }, {});
+  }, [permissionOptions, userdataPermission]);
+
   const formik1 = PagesIndex.useFormik({
-    initialValues: InitialValues,
+    initialValues: initialValues,
+    enableReinitialize: true,
     validate: () => ({}),
     onSubmit: async (values) => {},
   });
 
-  function updateCheckedStatus(array1, makePermissions) {
-    const permissions = array1[0];
-    const keyMap = {
-      Dashboard: "isDashboard",
-      Users: "isUsers",
-      Games: "isGames",
-      "Games Provider": "isGamesProvider",
-      "Games Setting": "isGamesSetting",
-      "Games Rates": "isGamesRates",
-      "Games Result": "isGamesResult",
-      "Games Revert": "isGamesRevert",
-      "Games Refund": "isGamesRefund",
-      Starline: "isStarline",
-      "Starline Provider": "isStarlineProvider",
-      "Starline Setting": "isStarlineSetting",
-      "Starline Rates": "isStarlineRates",
-      "Starline Result": "isStarlineResult",
-      "Starline Revert": "isStarlineRevert",
-      "Starline Refund": "isStarlineRefund",
-      "Andar Bahar": "isAndarBahar",
-      "Andar Bahar Provider": "isAndarBaharProvider",
-      "Andar Bahar Setting": "isAndarBaharSetting",
-      "Andar Bahar Rates": "isAndarBaharRates",
-      "Andar Bahar Result": "isAndarBaharResult",
-      "Andar Bahar Revert": "isAndarBaharRevert",
-      "Andar Bahar Refund": "isAndarBaharRefund",
-      "Cutting Group": "isCuttingGroup",
-      "Bookie Corner": "isBookieCorner",
-      "OC Cutting Group": "isOCCuttingGroup",
-      "Final Cutting Group": "isFinalCuttingGroup",
-      Wallet: "isWallet",
-      "Fund Request": "isFundRequest",
-      ExportDebitReport: "isExportDebitReport",
-      "View Wallet": "isViewWallet",
-      "Request ON/OFF": "isRequestON/OFF",
-      "Credit Request": "isCreditRequest",
-      "Approved Debit Page": "isApprovedDebitPage",
-      "Paytm Request": "isPaytmRequest",
-      "Bank Account Request": "isBankAccountRequest",
-      "Pending Debit Request": "isPendingDebitRequest",
-      "Pending Bank Request": "isPendingBankRequest",
-      "Pending Paytm Request": "isPendingPaytmRequest",
-      "Declined Request": "isDeclinedRequest",
-      Notification: "isNotification",
-      News: "isNews",
-      "Delete User": "isDeleteUser",
-      "App Settings": "isAppSettings",
-      "How To Play": "isHowToPlay",
-      "Withdraw Screen": "isWithdrawScreen",
-      "Notice Board": "isNoticeBoard",
-      "Wallet Contact": "isWalletContact",
-      "App Version": "isAppVersion",
-      Masters: "isMasters",
-      "Upi Id": "isUpiId",
-      "Add Fund Mode": "isAddFundMode",
-      "Manage Employee": "isManageEmployee",
-      "Create Employee": "isCreateEmployee",
-      Reports: "isReports",
-      "Jodi All": "isJodiAll",
-      "Sales Report": "isSalesReport",
-      "Andar Bahar Sales Report": "isAndarBaharSalesReport",
-      "Andar Bahar Total Bids": "isAndarBaharTotalBids",
-      "Starline Sales Report": "isStarlineSalesReport",
-      "Fund Report": "isFundReport",
-      "Total Bids": "isTotalBids",
-      "Ajay Sir Report": "isAjaySirReport",
-      "Credit Debit Report": "isCreditDebitReport",
-      "Daily Report": "isDailyReport",
-      "Bidding Report": "isBiddingReport",
-      "Customer Balance": "isCustomerBalance",
-      "All User Bids": "isAllUserBids",
-      "Deleted Users": "isDeletedUsers",
-      "Upi Fund Report": "isUpiFundReport",
-    };
-
-    function updateNested(array, parentKey) {
-      array.forEach((item) => {
-        const key = keyMap[item.name];
-        if (key !== undefined && permissions[key] !== undefined) {
-          item.checked = permissions[key];
-        }
-        if (item.Nasted && item.Nasted.length > 0) {
-          updateNested(item.Nasted);
-        }
-      });
-    }
-
-    updateNested(makePermissions);
-    return makePermissions;
-  }
-
-  const abcde = () => {
-    if (location?.state?.permission) {
-      updateCheckedStatus([location.state.permission], makePermissions);
-    }
-  };
-
-  useEffect(() => {
-    abcde()
-  }, [location]);
 
   const fields1 = [
     {
       name: "permission",
-      // label: "Create Strategy",
       type: "checkbox",
       label_size: 12,
       title_size: 12,
       col_size: 4,
-      options: makePermissions,
+      options: permissionOptions,
     },
   ];
 
+  //handlecomplete for complete the add and update form 
   const handleComplete = async () => {
-    let updatedABC = {};
-    for (let key in formik1.values) {
-      updatedABC["is" + key.replace(/\s+/g, "")] = formik1.values[key];
-    }
+    const PermissionKeys = Object.keys(formik1.values).filter(
+      (key) => formik1.values[key]
+    );
+    const PermissionKeysresult =
+      PermissionKeys.length > 0 ? PermissionKeys : [null];
 
-    var combinedObject;
-    if (location?.state) {
-      const combineObjects = (obj1, obj2) => {
-        const result = {};
-        for (const key in obj1) {
-          if (obj1[key] === true) {
-            result[key] = true;
-          } else {
-            result[key] = obj2[key] !== undefined ? obj2[key] : obj1[key];
-          }
-        }
-
-        return result;
-      };
-
-      combinedObject = combineObjects(updatedABC, location?.state?.permission);
-    }
-
-    const req = {
-      adminId: userId,
+    const updatereq = {
       username: formik.values.username,
-      employeeName: formik.values.employeeName,
       loginPermission: formik.values.loginPermission,
-      permission: location?.state ? combinedObject : updatedABC,
-      ...(location?.state ? { empId: location?.state?._id } : {}),
+      colViewPermission: PermissionKeysresult,
+      id: userData?._id,
     };
 
+    const addreq = {
+      username: formik.values.username,
+      name: formik.values.employeeName,
+      loginPermission: formik.values.loginPermission,
+      password: formik.values.password,
+      designation: formik.values.designation,
+      colViewPermission: PermissionKeysresult,
+      loginFor: 1,
+    };
     // return;
-    const res = location?.state
-      ? await PagesIndex.admin_services.UPDATE_EMPLOYEE(req)
-      : await PagesIndex.admin_services.CREATE_EMPLOYEE({
-          ...req,
-          password: formik.values.password,
-          designation: formik.values.designation,
-          loginPermission: 1,
-        });
+    const res = userData
+      ? await PagesIndex.admin_services.UPDATE_EMPLOYEE(updatereq, token)
+      : await PagesIndex.admin_services.CREATE_EMPLOYEE(addreq, token);
 
-    if (res.status === 200) {
+    if (res.status) {
       PagesIndex.toast.success(res.message);
       setTimeout(() => {
         navigate("/admin/employees");
@@ -286,7 +240,7 @@ function AddEmployee() {
 
   return (
     <Main_Containt
-      title={location.state ? "Edit Employee" : "Add Employee"}
+      title={userData ? "Edit Employee" : "Register New Employee"}
       col_size={12}
       add_button={true}
       route="/admin/employees"
