@@ -33,12 +33,11 @@ const GameProvider = ({
           token
         );
 
-
       if (res.status) {
         setGetProviderData(res.data);
       }
     } else {
-      dispatch(Games_Provider_List(token));
+      const res = dispatch(Games_Provider_List(token));
     }
   };
 
@@ -247,12 +246,40 @@ const GameProvider = ({
     },
   ];
 
-  const visibleFields = [
-    "id",
-    "providerName",
-    "providerResult",
-    "activeStatus",
-    "modifiedAt",
+  const visibleFields1 = [
+    {
+      name: "provider Name",
+      value: "providerName",
+      sortable: true,
+    },
+    {
+      name: "provider Result",
+      value: "providerResult",
+      sortable: true,
+    },
+    {
+      name: "active Status",
+      value: "activeStatus",
+      sortable: false,
+      transform: (row, items) => {
+        return row ? "Market is active " : " Market Is Inactive";
+      },
+    },
+    {
+      name: "modifiedAt",
+      value: "modifiedAt",
+      sortable: true,
+    },
+    {
+      name: "Update",
+      value: "Update",
+      buttonColor: "danger",
+      buttonName :'Update',
+      buttonColor :'green',
+      sortable: true,
+      isButton: true,
+      renderButton: (row) => {},
+    },
   ];
 
   const UserFullButtonList = [
@@ -296,22 +323,14 @@ const GameProvider = ({
           btnTitle="Add"
           handleAdd={handleAdd}
         >
-          <PagesIndex.TableWitCustomPegination
-            data={PROVIDERDATA && PROVIDERDATA}
-            initialRowsPerPage={5}
-            SearchInTable={SearchInTable}
-            visibleFields={visibleFields}
+          <PagesIndex.TableWithCustomPeginationNew123
+            data={(PROVIDERDATA && PROVIDERDATA) || []}
+            initialRowsPerPage={10}
+            // SearchInTable={SearchInTable}
+            visibleFields={visibleFields1}
             UserFullButtonList={UserFullButtonList}
-            searchInput={
-              <input
-                type="text"
-                placeholder="Search..."
-                value={SearchInTable}
-                onChange={(e) => setSearchInTable(e.target.value)}
-                className="form-control ms-auto"
-              />
-            }
           />
+
           <PagesIndex.ModalComponent
             visible={visible}
             setVisible={setVisible}

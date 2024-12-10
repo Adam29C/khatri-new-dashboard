@@ -26,6 +26,9 @@ const App = () => {
       console.log("rtestr");
     }
   };
+  PagesIndex.useEffect(() => {
+    fetchData();
+  }, []);
 
   const visibleFields = [
     {
@@ -89,95 +92,6 @@ const App = () => {
     //   sortable: true,
     // },
   ];
-
-  const UserFullButtonList = [
-    {
-      id: 0,
-      buttonName: "Block",
-      value: "block",
-      buttonColor: "danger",
-      route: "",
-      Conditions: (row) => {
-        setGetBannedData(row.banned);
-        BlockUserAndRemoveUser(row, 1);
-      },
-      Visiblity: true,
-      type: "button",
-    },
-    {
-      id: 1,
-      buttonName: "Profile",
-      buttonColor: "info",
-      value: "Profile",
-      route: "test",
-      Conditions: (row) => {
-        getProfile(row);
-      },
-      Visiblity: false,
-      type: "button",
-    },
-    {
-      id: 2,
-      buttonName: "Delete",
-      buttonColor: "danger",
-      Conditions: (row) => {
-        BlockUserAndRemoveUser(row, 2);
-      },
-
-      Visiblity: false,
-      type: "button",
-    },
-  ];
-
-  // const UserFullButtonList = [
-  //   {
-  //     value: "actions",
-  //     buttonName: "Edit",
-  //     buttonColor: "primary",
-  //     Conditions: (row) => console.log("Edit:", row),
-  //   },
-  // ];
-
-  // const UserFullButtonList = [
-  //   {
-  //     id: 0,
-  //     buttonName: "Block",
-  //     buttonColor: "danger",
-  //     route: "",
-  //     Conditions: (row) => {
-  //       setGetBannedData(row.banned);
-  //       BlockUserAndRemoveUser(row, 1);
-  //     },
-  //     Visiblity: true,
-  //     type: "button",
-  //   },
-  //   {
-  //     id: 1,
-  //     buttonName: "Profile",
-  //     buttonColor: "info",
-  //     route: "test",
-  //     Conditions: (row) => {
-  //       getProfile(row);
-  //     },
-  //     Visiblity: false,
-  //     type: "button",
-  //   },
-  //   {
-  //     id: 2,
-  //     buttonName: "Delete",
-  //     buttonColor: "danger",
-  //     Conditions: (row) => {
-  //       BlockUserAndRemoveUser(row, 2);
-  //     },
-
-  //     Visiblity: false,
-  //     type: "button",
-  //   },
-  // ];
-
-  PagesIndex.useEffect(() => {
-    fetchData();
-  }, []);
 
   return (
     <PagesIndex.Main_Containt

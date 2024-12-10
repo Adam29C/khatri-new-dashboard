@@ -50,6 +50,7 @@ import ChangeStatus from "../Helpers/ChangeStatus";
 import TableWitCustomPegination from "../Helpers/Table/TableWithCustomPegination";
 import TableWithCustomPeginationNew from "../Helpers/Table/TableWithCustomPeginationNew";
 import TableWithCustomPeginationButton from "../Helpers/Table/TableWithCustomPeginationButton";
+import TableWithCustomPeginationNew123 from "../Helpers/Table/TableWithCustomPeginationNew123";
 import ModalComponent from "../Helpers/Modal/ModalComponent";
 import Split_Main_Containt from "../Layout/Main/Split_Main_Content"
 const PagesIndex = {
@@ -97,7 +98,7 @@ const PagesIndex = {
   TableWitCustomPegination,
   TableWithCustomPeginationNew,
   TableWithCustomPeginationButton,
-
+  TableWithCustomPeginationNew123,
   ModalComponent,
   game_service,
   game_service,

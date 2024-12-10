@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 const PaginatedTable = ({
   data,
-  initialRowsPerPage = 10,
+  initialRowsPerPage,
   visibleFields,
   UserFullButtonList,
   showIndex,
