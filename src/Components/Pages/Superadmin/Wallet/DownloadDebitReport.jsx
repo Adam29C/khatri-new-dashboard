@@ -1,127 +1,142 @@
-import { useEffect, useMemo } from "react";
 import PagesIndex from "../../PagesIndex";
 import { getActualDateFormate } from "../../../Utils/Common_Date";
-import ReusableModal from "../../../Helpers/Modal/ReusableModal";
-import Papa from "papaparse";
-import { handleCSVFile, handleTextFile, normalizeData } from "../../../Utils/ConvertFile";
-
+import { handleTextFile } from "../../../Utils/ConvertFile";
 
 const DownloadDebitReport = () => {
-    //get token in localstorage
-    const token = localStorage.getItem("token");
-  
-    //set actual date
-    const actual_date_formet = getActualDateFormate(new Date());
-  
-    //all state
-    const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
-    const [TableData, setTableData] = PagesIndex.useState([]);
-    const[totalAmount,setTotalAmount]=PagesIndex.useState(0)
+  //get token in localstorage
+  const token = localStorage.getItem("token");
 
-  
+  //set actual date
+  const actual_date_formet = getActualDateFormate(new Date());
 
-    const visibleFields = [
-      "id",
-      "username",
-      "account_holder_name",
-      "bank_name",
-      "ifsc_code",
-      "account_no",
+  //all state
+  const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
+  const [TableData, setTableData] = PagesIndex.useState([]);
+  const [totalAmount, setTotalAmount] = PagesIndex.useState(0);
+  const [btnStatus, setBtnStatus] = PagesIndex.useState("");
 
-    ];
-  
-  
-    const formik = PagesIndex.useFormik({
-      initialValues: {
-        searchType: "",
-        reportType: "",
-        date: actual_date_formet,
-      },
-      validate: (values) => {
-        const errors = {};
-        if (!values.searchType) {
-          errors.searchType = PagesIndex.valid_err.REQUIRED_SEARCH_TYPE;
+  const visibleFields = [
+    "id",
+    "username",
+    "account_holder_name",
+    "bank_name",
+    "ifsc_code",
+    "account_no",
+  ];
+
+  const handleBtnStatus = (status) => {
+    setBtnStatus(status);
+    formik.handleSubmit();
+  };
+
+  const formik = PagesIndex.useFormik({
+    initialValues: {
+      searchType: "",
+      reportType: "",
+      date: actual_date_formet,
+    },
+    validate: (values) => {
+      const errors = {};
+      if (!values.searchType) {
+        errors.searchType = PagesIndex.valid_err.REQUIRED_SEARCH_TYPE;
+      }
+      if (!values.reportType) {
+        errors.reportType = PagesIndex.valid_err.REQUIRED_REPORT_TYPE;
+      }
+      return errors;
+    },
+
+    onSubmit: async (values) => {
+      const data = {
+        reportDate: values.date,
+        searchType: values.searchType,
+        reportType: values.reportType,
+      };
+      if (btnStatus === "see-report") {
+        const res =
+          await PagesIndex.admin_services.WALLET_DOWNLOAD_DEBIT_REPORT_API(
+            data,
+            token
+          );
+
+        if (res?.status) {
+          setTableData(res.Profile);
+          setTotalAmount(res?.totalAmt);
         }
-        if (!values.reportType) {
-          errors.reportType = PagesIndex.valid_err.REQUIRED_REPORT_TYPE;
-        }
-        return errors;
-      },
-  
-      onSubmit: async (values) => {
-      
-        const data = {
+      } else if (btnStatus === "download-report") {
+        const apidata = {
+          searchType: values.searchType === "0" ? "Approved" : "Pending",
           reportDate: values.date,
-          searchType: values.searchType,
-          reportType: values.reportType,
-          
         };
-        const res = await PagesIndex.admin_services.WALLET_DOWNLOAD_DEBIT_REPORT_API(
-          data,
+        const reportType = values.reportType === "8" ? "mkxls" : "";
+        const res = await PagesIndex.admin_services.EXPORT_DEBIT_GET_REPORT_API(
+          apidata,
           token,
+          reportType
         );
- 
+        if (res?.status) {
+          if (res?.writeString) {
+            handleTextFile(res?.writeString, res?.filename || `MKTTC.txt`);
+          } else {
+            alert("No Data Available");
+          }
+        }
+      }
+    },
+  });
 
-   if(res?.status){
-    setTableData(res.Profile)
-    setTotalAmount(res?.totalAmt)
-   }
-      },
-    });
+  const fields = [
+    {
+      name: "searchType",
+      label: "Search Type",
+      type: "select",
+      label_size: 12,
+      col_size: 4,
+      options: [
+        {
+          label: "All Approved",
+          value: "0",
+        },
+        {
+          label: "Approved 1000 Only",
+          value: "1",
+        },
+        {
+          label: "Approved Below 5000 Only",
+          value: "2",
+        },
+        {
+          label: "Approved Below 20000 Only",
+          value: "3",
+        },
+        {
+          label: "Approved Above 20000 Only",
+          value: "4",
+        },
+      ],
+    },
+    {
+      name: "reportType",
+      label: "Report Type",
+      type: "select",
+      label_size: 12,
+      col_size: 4,
+      options: [
+        {
+          label: "MK.txt",
+          value: "8",
+        },
+      ],
+    },
+    {
+      name: "date",
+      label: "Report Date",
+      type: "date",
+      label_size: 12,
+      col_size: 4,
+    },
+  ];
 
-  
-    const fields = [
-      {
-        name: "searchType",
-        label: "Search Type",
-        type: "select",
-        label_size: 12,
-        col_size: 4,
-        options: [
-          {
-            label: "All Approved",
-            value: "0",
-          },
-          {
-            label: "Approved 1000 Only",
-            value: "1",
-          },
-          {
-            label: "Approved Below 5000 Only",
-            value: "2",
-          },
-          {
-            label: "Approved Below 20000 Only",
-            value: "3",
-          },
-          {
-            label: "Approved Above 20000 Only",
-            value: "4",
-          },
-        ],
-      },
-      {
-        name: "reportType",
-        label: "Report Type",
-        type: "select",
-        label_size: 12,
-        col_size: 4,
-        options: [
-          {
-            label: "MK.txt",
-            value: "8",
-          },
-        ],
-      },
-      {
-        name: "date",
-        label: "Report Date",
-        type: "date",
-        label_size: 12,
-        col_size: 4,
-      },
-    ];
-  
   const cardLayouts = [
     {
       size: 12,
@@ -132,14 +147,20 @@ const DownloadDebitReport = () => {
             formik={formik}
             btn_name={"Get Report"}
             button_Size={"w-15"}
-            show_submit={true}
+            show_submit={false}
           />
           <div className="report-btn-main mt-3">
             <button
-              // onClick={() => handleBtnStatus("see-report")}
+              onClick={() => handleBtnStatus("see-report")}
               className="approve-btn"
             >
-              See Report
+              See Report Data
+            </button>
+            <button
+              onClick={() => handleBtnStatus("download-report")}
+              className="approve-btn"
+            >
+              Download Report
             </button>
           </div>
         </div>
@@ -161,7 +182,6 @@ const DownloadDebitReport = () => {
             initialRowsPerPage={5}
             SearchInTable={SearchInTable}
             visibleFields={visibleFields}
-
             searchInput={
               <input
                 type="text"
@@ -177,25 +197,14 @@ const DownloadDebitReport = () => {
       ),
     },
   ];
-  
-  return (
-  //   <PagesIndex.WalletMain
-  //   title="Download Debit Report"
-  //   TableData={TableData}
-  //   fields={fields}
-  //   formik={formik}
-  //   visibleFields={visibleFields}
-  //   setSearchInTable={setSearchInTable}
-  //   SearchInTable={SearchInTable}
-  //   setModalState={setModalState}
-  //   ModalState={ModalState}
-  // />
-  <PagesIndex.Split_Main_Containt
-  title={"Download Debit Report"}
-  add_button={false}
-  cardLayouts={cardLayouts}
-/>
-  )
-}
 
-export default DownloadDebitReport
+  return (
+    <PagesIndex.Split_Main_Containt
+      title={"Download Debit Report"}
+      add_button={false}
+      cardLayouts={cardLayouts}
+    />
+  );
+};
+
+export default DownloadDebitReport;
