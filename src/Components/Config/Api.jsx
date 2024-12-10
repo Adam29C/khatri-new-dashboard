@@ -58,9 +58,9 @@ const Api = {
   WALLET_LIST_USER_PROFILE: "view_wallet/getProfile",
   WALLET_LIST_UPDATE_WALLET: "view_wallet/walletUpdate",
 
-  //DELETED USERS 
-  DELETED_USER_GET_TIMEHISTORY:"deleteduser/getTimeHistory",
-  DELETED_USER_TIMEHISTORY:"deleteduser/timeHistory",
+  //DELETED USERS
+  DELETED_USER_GET_TIMEHISTORY: "deleteduser/getTimeHistory",
+  DELETED_USER_TIMEHISTORY: "deleteduser/timeHistory",
   GET_DELETED_USERS: "deleteduser",
   // SYSTEM MODULE
   ADD_SYSTEM_INFO: "admin/addSystemInfo",
@@ -88,7 +88,11 @@ const Api = {
   GET_REMAINING_WINNER_LIST: "winnerList/remaningWinnerList",
   GET_MAIN_WINNER_LIST: "winnerList/mainWinnerList",
 
-  USERS_IDEAS: "/admin/UserIdea",
+
+  GET_VERSION: "/admin/appSetting/listVersionSetting",
+  UPDATE_VERSION: "/admin/appSetting/updateVersionSetting",
+  WALLET_CONTACT_LIST: "/admin/appSetting/walledContestList",
+  UPDATE_WALLET_CONTACT: "/admin/appSetting/updateWalledContest",
 
   //APP SETTINGS APP VERSION API'S
   GET_VERSION: "versionSetting",
@@ -144,20 +148,21 @@ const Api = {
   DELETE_FUND_MODE: "upiId/dlt_mode",
   CHANGE_STATUS_FUND_MODE: "upiId/disable_mode",
 
-  //FUND MODE 
-  GET_FUND_MODE:"upiId/fundMode",
-  DELETE_FUND_MODE:"upiId/dlt_mode",
-CHANGE_STATUS_FUND_MODE:"upiId/disable_mode",
+  //FUND MODE
+  GET_FUND_MODE: "upiId/fundMode",
+  DELETE_FUND_MODE: "upiId/dlt_mode",
+  CHANGE_STATUS_FUND_MODE: "upiId/disable_mode",
 
-//notification apis
-GET_NOTIFICATION : "notification",
-ADD_NOTIFICATION : "notification/inserNotification",
-DELETE_NOTIFICATION : "notification",
+  //notification apis
+  GET_NOTIFICATION: "notification",
+  ADD_NOTIFICATION: "notification/inserNotification",
+  DELETE_NOTIFICATION: "notification",
 
-//news
-NEWS:"news",
+  //news
+  NEWS: "news",
 
-
+  //USER IDEA'S
+  USERS_IDEAS: "userIdea",
 };
 
 export { Api };

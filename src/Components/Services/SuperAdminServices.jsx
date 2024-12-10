@@ -96,6 +96,16 @@ export const GET_USERS_IDEAS = async (id) => {
   } catch (error) {
     return error;
   }
+  }
+export const GET_DELETED_USERS = async (id) => {
+  try {
+    const res = await axios.get(`${Api.DELETED_USERS}?adminId=${id}`, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
 };
 // --------------------------   USERS CRUD ------------------------
 
@@ -141,7 +151,10 @@ export const DELETED_USERS_TIMEHISTORY_API = async (data,token) => {
 
 
 
-// --------------------------  game provider api ------------------------
+
+// --------------------------   USERS CRUD ------------------------
+
+// --------------------------  game provider api ------------------
 
 export const GAME_PROVIDER_GET_LIST_API = async (token) => {
   try {
