@@ -173,7 +173,12 @@ GET_DECLINED_REQUEST:"declineReq/declined",
 APPROVED_DEBIT_BANK:"approveDebit/bank_ajax",
 APPROVED_DEBIT_BANK_MANUAL:"approveDebit/bankManual",
 
-
+//PENDING DEBIT BANK REQUEST 
+PENDING_DEBIT_BANK_REQUEST:"pendingDebit/pendingBank",
+PENDING_DEBIT_GET_BALANCE:"pendingDebit/getBal",
+PENDING_DEBIT_UPDATE_WALLET:"pendingDebit/updateWallet",
+PENDING_DEBIT_DECLINE:"pendingDebit/decline",
+PENDING_DEBIT_GETPROFILE:"pendingDebit/getProfile",
 
 
 };

@@ -571,6 +571,7 @@ export const GET_UPI_LIST_API = async (token) => {
     return error;
   }
 };
+
 export const BLOCK_UPI_LIST_API = async (data,token) => {
   try {
     const res = await axios.post(`${BASE_URL}${Api.BLOCK_UPI_LIST}`, data, {
@@ -804,6 +805,7 @@ export const UPDATE_REQUEST_API = async (data, token) => {
     return error;
   }
 };
+
 export const APPROVED_DEBIT_BANK_API = async (data,token) => {
   try {
     const res = await axios.post(`${BASE_URL}${Api.APPROVED_DEBIT_BANK}`,data, {
@@ -814,6 +816,7 @@ export const APPROVED_DEBIT_BANK_API = async (data,token) => {
     return error;
   }
 };
+
 // -----------------  WALLET SECTION -------------------------------
 
 // -----------------  WALLET SECTION -------------------------------
@@ -829,7 +832,6 @@ export const GET_WALLET_LIST = async (data, token) => {
   }
 };
 
-
 export const APPROVED_DEBIT_BANK_MANUAL_API = async (data,token) => {
   try {
     const res = await axios.post(`${BASE_URL}${Api.APPROVED_DEBIT_BANK_MANUAL}`,data, {
@@ -840,6 +842,7 @@ export const APPROVED_DEBIT_BANK_MANUAL_API = async (data,token) => {
     return error;
   }
 };
+
 export const WALLET_LIST_HISTORY_API = async (data, token) => {
   try {
     const res = await axios.post(

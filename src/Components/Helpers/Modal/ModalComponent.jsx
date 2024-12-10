@@ -2,33 +2,42 @@ import React, { Children, useState } from "react";
 import Modal from "react-awesome-modal";
 import PagesIndex from "../../Pages/PagesIndex";
 
-const ModalComponent = ({visible,setVisible,fields,form_title,formik,setSelectedRow}) => {
+const ModalComponent = ({
+  visible,
+  setVisible,
+  fields,
+  form_title,
+  formik,
+  setSelectedRow,
+  showBal,
+}) => {
 
   const closeModal = () => {
     setVisible(false);
-    
   };
 
   return (
     <section>
-    
       <Modal
         visible={visible}
         width="400"
- 
         effect="fadeInDown"
         onClickAway={closeModal}
       >
         <div className="p-4 modal-container">
-          <a
-            className="d-flex justify-content-end"
-            href="#"
-            onClick={closeModal}
-          >
-            X
-          </a>
+        <div className="d-flex justify-content-between">
           <h3 className="border-bottom-text">{form_title}</h3>
+            <button className="model-cross-btn" onClick={closeModal}>
+              X
+            </button>
+          
+          </div>
 
+          {showBal !== undefined && showBal >= 0 && (
+            <h4 class="modal-title text-center mt-2 mb-2 fw-bold">
+              Current Bal : {showBal}/-
+            </h4>
+          )}
           <PagesIndex.Formikform
             fieldtype={fields.filter((field) => !field.showWhen)}
             formik={formik}
