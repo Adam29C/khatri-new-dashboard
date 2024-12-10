@@ -7,6 +7,9 @@ const ProfileNote = () => {
   //all state
   const [getProfileData, setGetProfileData] = useState([]);
 
+
+  console.log("getProfileDatagetProfileData" ,getProfileData.note); 
+  
   //get profile note api
   const getProfileNote = async () => {
     const res = await PagesIndex.admin_services.GET_PROFILE_NOTE_API(token);
@@ -81,7 +84,7 @@ const ProfileNote = () => {
       />
       <div class="form-group text-right mb-0">
         <h4 class="profile-note-title mt-0 mb-3" id="note">
-          Good luck again{" "}
+         {getProfileData.note}
         </h4>
       </div>
       <PagesIndex.Toast />

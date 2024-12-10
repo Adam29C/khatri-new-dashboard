@@ -176,7 +176,7 @@ const CustomTable = ({
               ))}
             </tr>
           </thead>
-          <tbody>
+          <tbody className="text-center">
             {filteredData.map((row, index) => (
               <tr key={index}>
                 {showIndex && <td>{(page - 1) * rowsPerPage + index + 1}</td>}
