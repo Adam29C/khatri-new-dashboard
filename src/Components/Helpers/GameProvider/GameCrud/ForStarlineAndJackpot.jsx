@@ -70,7 +70,7 @@ const ForStarlineAndJackpot = ({gametype,listpath , }) => {
 
   const fields = [
     {
-      name: "providerName",
+      name: "providerName1212",
       label: "Provider Name",
       type: "date",
       label_size: 6,

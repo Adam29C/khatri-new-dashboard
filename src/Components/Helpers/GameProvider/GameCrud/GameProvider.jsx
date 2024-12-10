@@ -113,6 +113,7 @@ const GameProvider = ({
     }
   };
   // Formik Configuration
+``  
   const formik = PagesIndex.useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -140,6 +141,8 @@ const GameProvider = ({
     },
 
     onSubmit: async (values) => {
+
+      
       try {
         let res;
         if (gametype === "StarLine" || gametype === "JackPot") {
@@ -163,7 +166,7 @@ const GameProvider = ({
                   token
                 );
 
-          // console.log("resres", res);
+        
         } else {
           const payload = {
             gamename: values.gamename,
@@ -197,12 +200,14 @@ const GameProvider = ({
       }
     },
   });
+  
+  console.log("dsfsdfds" , formik.values);
 
   const fields = [
     {
       name: "gamename",
       label: "Game Name",
-      type: "time",
+      type:  gametype === "StarLine" || gametype === "JackPot" ? "time" : "text",
       Visiblity: "show",
       label_size: 12,
       col_size: 12,
@@ -273,12 +278,23 @@ const GameProvider = ({
     {
       name: "Update",
       value: "Update",
-      buttonColor: "danger",
-      buttonName :'Update',
-      buttonColor :'green',
+      buttonColor: "info",
       sortable: true,
       isButton: true,
-      renderButton: (row) => {},
+      Conditions: (row) => {
+        handleActionBtn(row, 1);
+      },
+    },
+
+    {
+      // name: "Profile",
+      name: "Block",
+      isButton: true,
+      value: (row) => (row.banned ? "Unblock" : "Block"),
+      buttonColor: (row) => (row.banned ? "success" : "danger"),
+      Conditions: (row) => {
+        handleActionBtn(row, 2);
+      },
     },
   ];
 
