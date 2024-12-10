@@ -113,7 +113,7 @@ const ReusableForm = ({
 
   return (
     <>
-      <form onSubmit={formik.handleSubmit}>
+      <form onSubmit={formik?.handleSubmit}>
         <div
           className="row"
           style={{
@@ -122,7 +122,7 @@ const ReusableForm = ({
           }}
         >
           {/* <div > */}
-          {fieldtype.map((field, index) => (
+          {fieldtype?.map((field, index) => (
             <>
               {field.type === "select" ? (
                 <>

@@ -3,15 +3,22 @@ import { Get_Year_Only } from "../../../Utils/Common_Date";
 import Toggle from "../../../Helpers/Toggle";
 import PagesIndex from "../../PagesIndex";
 import DeleteSweetAlert from "../../../Helpers/DeleteSweetAlert";
+import TableWithCustomPeginationNew123 from "../../../Helpers/Table/TableWithCustomPeginationNew123";
 
 
 const EmployeeList = () => {
+  const token = localStorage.getItem("token");
+
   const [loading, setLoading] = PagesIndex.useState(false);
   const [data, setData] = PagesIndex.useState([]);
   const userId = localStorage.getItem("userId");
   let userDeleteReason = false
   const getList = async () => {
     const res = await PagesIndex.admin_services.EMPLOYEE_GET_LIST_API(userId);
+
+
+    console.log("resresres" ,res); 
+    
     setData(res?.data?.details);
   };
 

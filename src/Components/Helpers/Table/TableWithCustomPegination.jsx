@@ -198,10 +198,9 @@ const PaginatedTable = ({
       </div>
 
       {/* Table */}
-      <table
-        id="myTable"
-        className="table table-striped table-bordered table-responsive "
-      >
+
+      <div className="table-responsive">
+      <table id="myTable" className="table table-striped table-bordered  ">
         <thead className="text-center table-header-backeground">
           {data && data?.length > 0 && (
             <tr>
@@ -215,13 +214,14 @@ const PaginatedTable = ({
                   )
               )}
 
-              {UserFullButtonList && UserFullButtonList?.map((items,index) => {
-                return (
-                  <>
-                    <th>{items.buttonName}</th>
-                  </>
-                );
-              })}
+              {UserFullButtonList &&
+                UserFullButtonList?.map((items, index) => {
+                  return (
+                    <>
+                      <th>{items.buttonName}</th>
+                    </>
+                  );
+                })}
             </tr>
           )}
         </thead>
@@ -236,11 +236,15 @@ const PaginatedTable = ({
                   {columns.map((column) =>
                     column.visible ? (
                       <td key={column.field}>
-                       {
-                        column.field === "activeStatus" ? row.activeStatus  ? "Market Is Active"
-                        : "Market Is Inactive" : column.field === "is_Active" ? row.is_Active ? "Active" : "Disabled" 
-                      : row[column.field]}
-                       
+                        {column.field === "activeStatus"
+                          ? row.activeStatus
+                            ? "Market Is Active"
+                            : "Market Is Inactive"
+                          : column.field === "is_Active"
+                          ? row.is_Active
+                            ? "Active"
+                            : "Disabled"
+                          : row[column.field]}
                       </td>
                     ) : null
                   )}
@@ -302,6 +306,7 @@ const PaginatedTable = ({
           )}
         </tbody>
       </table>
+      </div>
 
       {/* Pagination */}
       <nav>

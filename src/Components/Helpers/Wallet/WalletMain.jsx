@@ -27,7 +27,7 @@ const WalletMain = ({
       body: (
         <div>
           <PagesIndex.Formikform
-            fieldtype={fields.filter((field) => !field.showWhen)}
+            fieldtype={fields?.filter((field) => !field.showWhen)}
             formik={formik}
             btn_name={"Get Report"}
             button_Size={"w-15"}
