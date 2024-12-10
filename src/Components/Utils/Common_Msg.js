@@ -75,7 +75,15 @@ export const CLOSE_BID_RESULT_TIME_IS_REQUIRED =
 export const PROFILE_NOTE_REQUIRE = "Please Enter Profile Note";
 
 //for wallet export debit report
-export const REQUIRED_SEARCH_TYPE = "Please Enter Request Type";
-export const REQUIRED_REPORT_TYPE = "Plese Enter Report Type";
+
 export const REQUIRE_MODE = "Please Enter Fund Mode";
 export const URLWEB_MODE = "Please Enter URL";
+//for wallet export debit report
+export const REQUIRED_SEARCH_TYPE = "Please Enter Request Type";
+export const REQUIRED_REPORT_TYPE = "Plese Enter Report Type";
+
+//message for wallet module decline request
+export const REQUIRED_REASON = "Please Select Reason";
+
+//message for wallet module search account
+export const REQUIRED_ACCOUNT_NUMBER = "Please Enter User Account Number";

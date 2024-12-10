@@ -943,8 +943,21 @@ export const EXPORT_DEBIT_SEE_TODAY_REPORT_API = async (data,token) => {
 
 
 export const EXPORT_DEBIT_GET_REPORT_API = async (data,token,endpoint) => {
+  console.log(data)
   try {
     const res = await axios.post(`${BASE_URL}${Api.GET_EXPORT_DEBIT_REPORT}/${endpoint}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const EXPORT_MKXLS_FILE_API = async (data,token) => {
+  console.log(data)
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.GET_EXPORT_DEBIT_REPORT}/mkxls`,data, {
       headers: header(token),
     });
     return res?.data;
@@ -968,6 +981,68 @@ export const EXPORT_DEBIT_DECLINE_REPORT_API = async (data,token) => {
 };
 
 // ---------------------WALLET EXPORT DEBIT REPORT-------------------------------
+
+// ---------------------GET_WALLET_INVOICE_PROFILE_CHANGE-------------------------------
+
+export const GET_WALLET_INVOICE_PROFILE_CHANGE_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.GET_WALLET_INVOICE_PROFILE_CHANGE}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+
+
+
+
+// ---------------------GET_WALLET_INVOICE_PROFILE_CHANGE-------------------------------
+
+// ---------------------WALLET_GET_SEARCH_DETAILS-------------------------------
+
+export const WALLET_GET_SEARCH_DETAILS_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.WALLET_GET_SEARCH_DETAILS}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+// ---------------------WALLET_GET_SEARCH_DETAILS-------------------------------
+
+
+// ---------------------WALLET_DOWNLOAD_DEBIT_REPORT-------------------------------
+
+export const WALLET_DOWNLOAD_DEBIT_REPORT_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.WALLET_DOWNLOAD_DEBIT_REPORT}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+// ---------------------WALLET_DOWNLOAD_DEBIT_REPORT-------------------------------
+
+
+
+
+
+
+
+
+
 
 
 

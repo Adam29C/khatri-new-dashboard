@@ -249,7 +249,7 @@ export const admin_Sidebar = [
         id: 3,
         title: "Download Debit Report",
         permission: "exportDebit",
-        route: "wallet/moneycheck",
+        route: "wallet/debitReport/moneyCheck",
       },
       {
         id: 4,
