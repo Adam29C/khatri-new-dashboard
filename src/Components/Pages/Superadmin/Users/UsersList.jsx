@@ -11,7 +11,6 @@ const App = () => {
   const [ModalStateUserProfile, setModalStateUserProfile] =
     PagesIndex.useState(false);
   const [GetRowData, setGetRowData] = PagesIndex.useState("");
-  const [GetBannedData, setGetBannedData] = PagesIndex.useState("");
   const [Refresh, setRefresh] = PagesIndex.useState(false);
 
   const [ModalStateForRemoveAndBlock, setModalStateForRemoveAndBlock] =
@@ -73,16 +72,7 @@ const App = () => {
       value: "CreatedAt",
       sortable: true,
     },
-    // {
-    //   name: "Block",
-    //   value: "Block",
-    //   sortable: true,
-    //   isButton: true,
-    //   Conditions: (row) => {
-    //     setGetBannedData(row.banned);
-    //     BlockUserAndRemoveUser(row, 1);
-    //   },
-    // },
+
     {
       // name: "Profile",
       name: "Block",
@@ -90,7 +80,6 @@ const App = () => {
       value: (row) => (row.banned ? "Unblock" : "Block"),
       buttonColor: (row) => (row.banned ? "success" : "danger"),
       Conditions: (row) => {
-        setGetBannedData(row.banned);
         BlockUserAndRemoveUser(row, 1);
       },
     },
