@@ -147,16 +147,16 @@ const ExportDebitReport = () => {
     "id",
     "username",
     "mobile",
-    // "withdrawalMode",
-    // "name",
-    // "bank_name",
-    // "ifsc",
-    // "account_no",
-    // "walletBal",
+    "withdrawalMode",
+    "name",
+    "bank_name",
+    "ifsc",
+    "account_no",
+    "walletBal",
     "reqAmount",
     "reqDate",
-    // "address",
-    // "city"
+    "address",
+    "city"
   ];
 
   const visibleFields1 = ["id", "ReportName", "ReportTime", "adminName"];
