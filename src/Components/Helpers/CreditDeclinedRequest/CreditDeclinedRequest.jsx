@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import PagesIndex from '../../Pages/PagesIndex';
 import Split_Main_Containt from '../../Layout/Main/Split_Main_Content';
 
@@ -14,9 +14,10 @@ const CreditDeclinedRequest = ({
 
   }) => {
 
-    const totalAmount =
-    tableData &&
-    tableData.reduce((acc, item) => acc + (item?.reqAmount || 0), 0);
+    const totalAmount = useMemo(
+      () => tableData.reduce((acc, item) => acc + (item?.reqAmount || 0), 0),
+      [tableData]
+    );
 
     const cardLayouts = [
         {

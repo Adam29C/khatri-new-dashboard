@@ -68,6 +68,8 @@ import FundMode from "../../Pages/Superadmin/Masters/FundMode";
 import Notification from "../../Pages/Superadmin/Notification/Notification";
 import News from "../../Pages/Superadmin/News/News";
 import DeclinedRequest from "../../Pages/Superadmin/DeclinedRequest/DeclinedRequest";
+import ApproveReportBank from "../../Pages/Superadmin/ApproveDebitRequest/ApproveReportBank";
+import ApproveReportBankManual from "../../Pages/Superadmin/ApproveDebitRequest/ApproveReportBankManual";
 
 // WALLET SECTION
 
@@ -433,9 +435,17 @@ const adminRoutes = [
       },
       {
         path: "news",
-        element: <PrivateRoute element={News} />,
+        element: <PrivateRoute element={News} />
       },
-  
+  {
+        path: "approvedReports/bank",
+        element: <PrivateRoute element={ApproveReportBank} />,
+      },
+      {
+        path: "approvedReports/bankManual",
+        element: <PrivateRoute element={ApproveReportBankManual} />,
+      },
+      
     ],
   },
 ];

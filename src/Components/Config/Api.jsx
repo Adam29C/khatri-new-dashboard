@@ -167,7 +167,12 @@ const Api = {
 GET_CREDIT_REQUEST_UPI:"creditRequest/creditUPI",
 
 //DECLINED REQUEST GET API
-GET_DECLINED_REQUEST:"declineReq/declined"
+GET_DECLINED_REQUEST:"declineReq/declined",
+
+//APPROVED DEBIT REQUEST BANK AND BANK MANUAL APIS
+APPROVED_DEBIT_BANK:"approveDebit/bank_ajax",
+APPROVED_DEBIT_BANK_MANUAL:"approveDebit/bankManual",
+
 
 
 

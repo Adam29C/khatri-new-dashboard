@@ -292,6 +292,7 @@ export const admin_Sidebar = [
     id: 10,
     headerTitle: "Approved Requests",
     title: "Approved Debit Requests",
+    route: "approvedReports/bank",
     permission: "appDebit",
     Icon: "fa-solid fa-check",
     NestedElement: [
@@ -299,13 +300,13 @@ export const admin_Sidebar = [
         id: 1,
         title: "Bank Account(Export)",
         permission: "bankReq",
-        route: "#",
+        route: "approvedReports/bank",
       },
       {
         id: 2,
         title: "Bank Account(Manual)",
         permission: "bankReq",
-        route: "#",
+        route: "approvedReports/bankManual",
       },
     ],
   },
