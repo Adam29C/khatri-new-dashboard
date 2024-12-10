@@ -200,8 +200,6 @@ const GameProvider = ({
     },
   });
 
-  console.log("dsfsdfds", formik.values);
-
   const fields = [
     {
       name: "gamename",

@@ -113,7 +113,7 @@ const ReusableForm = ({
 
   return (
     <>
-      <form onSubmit={formik.handleSubmit}>
+      <form onSubmit={formik?.handleSubmit}>
         <div
           className="row"
           style={{
@@ -122,7 +122,7 @@ const ReusableForm = ({
           }}
         >
           {/* <div > */}
-          {fieldtype.map((field, index) => (
+          {fieldtype?.map((field, index) => (
             <>
               {field.type === "select" ? (
                 <>
@@ -185,7 +185,6 @@ const ReusableForm = ({
                           className={`custom-label col-lg-12`}
                           htmlFor={option.labelName}
                         >
-                          {/* {field.label} */}
                           {option.labelName}
                           <span className="text-danger">*</span>
                         </label>
@@ -411,7 +410,7 @@ const ReusableForm = ({
                       format="h:mm a"
                       name={field.name}
                       // defaultValue={dateTimeStates && dateTimeStates[field.name]}
-                      // value={dateTimeStates && dateTimeStates[field.name]}
+                      value={dateTimeStates && dateTimeStates[field.name]}
                       onChange={(value) =>
                         handleDateTimeChange(value, field.name)
                       }
@@ -419,18 +418,6 @@ const ReusableForm = ({
                       // {...formik.getFieldProps(field.name)}
                       inputReadOnly
                     />
-
-                    {/* <TimePicker
-                        name="time"
-                        use12Hours
-                        showSecond={false}
-                        format="h:mm a"
-                        value={formik.values.time} // Pass the Formik value
-                        onChange={
-                          (value) => formik.setFieldValue("time", value) // Update Formik's value
-                        }
-                        inputReadOnly
-                      /> */}
                   </div>
 
                   {/* <div className={`col-lg-${field.col_size} mb-3`}>
@@ -718,3 +705,9 @@ const ReusableForm = ({
 };
 
 export default ReusableForm;
+
+
+
+
+
+
