@@ -441,7 +441,7 @@ const SplitForm = () => {
       body: (
         <div>
           <h4>{formik.values.gameSession}</h4>
-          <PagesIndex.TableWithCustomPeginationNew
+          <PagesIndex.TableWithCustomPeginationNew123
             data={TableTwo && TableTwo}
             initialRowsPerPage={10}
             SearchInTable={SearchInTable}
@@ -460,7 +460,7 @@ const SplitForm = () => {
       size: 12,
       body: (
         <div>
-          <PagesIndex.TableWithCustomPeginationNew
+          <PagesIndex.TableWithCustomPeginationNew123
             data={(TableThree && TableThree) || []}
             initialRowsPerPage={10}
             SearchInTable={SearchInTable}
