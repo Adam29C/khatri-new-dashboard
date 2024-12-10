@@ -198,9 +198,7 @@ const PaginatedTable = ({
       </div>
 
       {/* Table */}
-
-      <div className="table-responsive">
-      <table id="myTable" className="table table-striped table-bordered  ">
+      <table className="table table-striped table-bordered table-responsive">
         <thead className="text-center table-header-backeground">
           {data && data?.length > 0 && (
             <tr>
@@ -301,7 +299,8 @@ const PaginatedTable = ({
             </>
           ) : (
             <h4 className="text-center">No Data Available</h4>
-          )
+          )}
+
           {additional && (
             <tr>
               <td colSpan={columns.length + 1}>{additional}</td>
@@ -309,7 +308,6 @@ const PaginatedTable = ({
           )}
         </tbody>
       </table>
-      </div>
 
       {/* Pagination */}
       <nav>

@@ -67,7 +67,7 @@ export const PERMISSION_GET_API = async (id) => {
   }
 };
 
-export const PROFILE_GET_API = async (id) => {
+export const PROFILE_GET_API = async (id, token) => {
   try {
     const res = await dataservice.get(`${Api.USER_PROFILE_GET}?id=${id}`, {
       headers: header(token),

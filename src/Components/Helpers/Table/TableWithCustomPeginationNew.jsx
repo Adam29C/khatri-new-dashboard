@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 
-const CustomTable = ({ fetchData, columns, UserFullButtonList, showIndex }) => {
+const CustomTable = ({
+  fetchData,
+  columns,
+  UserFullButtonList,
+  showIndex,
+  Refresh,
+}) => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [page, setPage] = useState(1);
@@ -11,6 +17,7 @@ const CustomTable = ({ fetchData, columns, UserFullButtonList, showIndex }) => {
   const [error, setError] = useState(null);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
   const [isResponsive, setIsResponsive] = useState(window.innerWidth < 425);
+  const [Refresh1, setRefresh1] = useState(false);
 
   const fetchTableData = async () => {
     setLoading(true);
@@ -18,9 +25,11 @@ const CustomTable = ({ fetchData, columns, UserFullButtonList, showIndex }) => {
 
     try {
       const result = await fetchData(page, rowsPerPage);
+      setRefresh1(!Refresh1);
       setData(result.mainRes || []);
-      setFilteredData(result.mainRes || []); 
+      setFilteredData(result.mainRes || []);
       setTotalPages(result.totalRows);
+      // setRefresh1();
     } catch (err) {
       setError("Failed to fetch data.");
     } finally {
@@ -30,7 +39,7 @@ const CustomTable = ({ fetchData, columns, UserFullButtonList, showIndex }) => {
 
   useEffect(() => {
     fetchTableData();
-  }, [ page, rowsPerPage]);
+  }, [Refresh, page, rowsPerPage]);
 
   useEffect(() => {
     let sortedData = [...data];
@@ -73,18 +82,22 @@ const CustomTable = ({ fetchData, columns, UserFullButtonList, showIndex }) => {
   const totalPages = Math.ceil(TotalPages && TotalPages / rowsPerPage);
 
   const renderButton = (field, row) => {
-    const buttonConfig = UserFullButtonList.find(
-      (btn) => btn.value === field.value
-    );
-    if (!buttonConfig) return null;
-
+    const buttonText =
+      typeof field.value === "function" ? field.value(row) : field.value;
     return (
       <button
-        key={buttonConfig.buttonName}
-        className={`btn btn-${buttonConfig.buttonColor} btn-sm`}
-        onClick={() => buttonConfig.Conditions(row)}
+        key={field.name}
+        // className={`btn btn-${field.buttonColor} btn-sm`}
+        onClick={() => field.Conditions(row)}
+        className={`btn ${
+          typeof field.buttonColor === "function"
+            ? `btn-${field.buttonColor(row)}`
+            : field.buttonColor
+            ? `btn-${field.buttonColor}`
+            : "unblock-btn"
+        } btn-sm me-2`}
       >
-        {buttonConfig.buttonName}
+        {buttonText}
       </button>
     );
   };

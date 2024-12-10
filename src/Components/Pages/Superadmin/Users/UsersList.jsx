@@ -8,9 +8,6 @@ const App = () => {
 
   let { user_id, role } = JSON.parse(localStorage.getItem("userdetails"));
 
-  const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
-  const [TableData, setTableData] = PagesIndex.useState([]);
-
   const [ModalStateUserProfile, setModalStateUserProfile] =
     PagesIndex.useState(false);
   const [GetRowData, setGetRowData] = PagesIndex.useState("");
@@ -35,18 +32,15 @@ const App = () => {
         payload,
         token
       );
-      const totalRows = response?.recordsTotal || 50;
-      const startIndex = (page - 1) * rowsPerPage;
-
+      const totalRows = response?.recordsTotal || 5;
       let mainRes = response.data;
 
-      console.log("mainRes", mainRes);
-
       return { mainRes, totalRows };
-    } catch {
-      console.log("rtestr");
-    }
+    } catch {}
   };
+  PagesIndex.useEffect(() => {
+    fetchData();
+  }, []);
 
   const visibleFields = [
     {
@@ -79,76 +73,58 @@ const App = () => {
       value: "CreatedAt",
       sortable: true,
     },
+    // {
+    //   name: "Block",
+    //   value: "Block",
+    //   sortable: true,
+    //   isButton: true,
+    //   Conditions: (row) => {
+    //     setGetBannedData(row.banned);
+    //     BlockUserAndRemoveUser(row, 1);
+    //   },
+    // },
     {
+      // name: "Profile",
       name: "Block",
-      value: "Block",
-      sortable: true,
       isButton: true,
-      renderButton: (row) => {
+      value: (row) => (row.banned ? "Unblock" : "Block"),
+      buttonColor: (row) => (row.banned ? "success" : "danger"),
+      Conditions: (row) => {
         setGetBannedData(row.banned);
         BlockUserAndRemoveUser(row, 1);
       },
-    },
-    {
-      name: "Block",
-      value: "block",
-      isButton: true, // Indicates this column contains buttons
     },
     {
       name: "Profile",
       value: "Profile",
-      isButton: true, // Indicates this column contains buttons
-    },
-    // {
-    //   name: "Profile",
-    //   value: "Profile",
-    //   sortable: true,
-    // },
-    // {
-    //   name: "Delete",
-    //   value: "Delete",
-    //   sortable: true,
-    // },
-  ];
-
-  const UserFullButtonList = [
-    {
-      id: 0,
-      buttonName: "Block",
-      value: "block",
-      buttonColor: "danger",
-      route: "",
-      Conditions: (row) => {
-        setGetBannedData(row.banned);
-        BlockUserAndRemoveUser(row, 1);
-      },
-      Visiblity: true,
-      type: "button",
-    },
-    {
-      id: 1,
-      buttonName: "Profile",
-      buttonColor: "info",
-      value: "Profile",
-      route: "test",
+      isButton: true,
+      buttonColor: "purple",
       Conditions: (row) => {
         getProfile(row);
       },
-      Visiblity: false,
-      type: "button",
     },
     {
-      id: 2,
-      buttonName: "Delete",
+      name: "Delete",
+      value: "Delete",
       buttonColor: "danger",
+      isButton: true,
+      sortable: true,
       Conditions: (row) => {
         BlockUserAndRemoveUser(row, 2);
       },
-
-      Visiblity: false,
-      type: "button",
     },
   ];
+
+  const getProfile = async (row) => {
+    const res = await PagesIndex.common_services.PROFILE_GET_API(row.id, token);
+    if (res.status) {
+      setModalStateUserProfile(true);
+      seGetUserProfile(res.userData);
+    } else {
+      setModalStateUserProfile(false);
+      PagesIndex.toast.error(res.response.data.message);
+    }
+  };
 
   const BlockUserAndRemoveUser = async (row, buttonStatus) => {
     setGetRowData(row);
@@ -163,9 +139,6 @@ const App = () => {
       return "";
     }
   };
-  PagesIndex.useEffect(() => {
-    fetchData();
-  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -181,7 +154,7 @@ const App = () => {
       if (ManageModalStatus === 1) {
         const req = {
           id: GetRowData.id,
-          blockStatus: GetRowData.banned ? true : false,
+          blockStatus: GetRowData.banned ? false : true,
           blockReason: values.blockReason,
         };
 
@@ -189,11 +162,12 @@ const App = () => {
 
         if (res.status) {
           setRefresh(!Refresh);
+          //   window.location.reload();
           PagesIndex.toast.success(res.message);
           setModalStateForRemoveAndBlock(!ModalStateForRemoveAndBlock);
         } else {
           setModalStateForRemoveAndBlock(!ModalStateForRemoveAndBlock);
-          setRefresh(!Refresh);
+          // setRefresh(!Refresh);
           PagesIndex.toast.error(res.response.data.message);
         }
       } else if (ManageModalStatus === 2) {
@@ -213,11 +187,6 @@ const App = () => {
           setRefresh(!Refresh);
           PagesIndex.toast.error(res.response.data.message);
         }
-
-        console.log("res1231", res);
-
-        // PagesIndex.toast.error(res.response.data.message);
-        // if()
       } else {
         return "";
       }
@@ -244,8 +213,9 @@ const App = () => {
       <PagesIndex.TableWithCustomPeginationNew
         fetchData={fetchData}
         columns={visibleFields}
-        UserFullButtonList={UserFullButtonList}
+        // UserFullButtonList={UserFullButtonList}
         showIndex={true}
+        Refresh={Refresh}
       />
 
       <ReusableModal
