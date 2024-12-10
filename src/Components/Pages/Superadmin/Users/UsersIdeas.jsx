@@ -1,54 +1,60 @@
 import React from "react";
 import PagesIndex from "../../PagesIndex";
-import { show } from "../../../Utils/Common_Date";
+// import { show } from "../../../Utils/Common_Date";
 
 const UsersIdeas = () => {
-  
-  //get token in localstorage
   const token = localStorage.getItem("token");
 
-  //all state
-  const [data, setData] = PagesIndex.useState([]);
-  const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
+  const [Refresh, setRefresh] = PagesIndex.useState(false);
 
-  //get useridea list function
-  const getList = async () => {
+  const fetchData = async (page, rowsPerPage, searchQuery = "") => {
+    const payload = {
+      page: page,
+      limit: rowsPerPage,
+      searchQuery,
+    };
+
     try {
-      const payload = {
-        page: 1,
-        limit: 10,
-        searchQuery: SearchInTable,
-      };
-      const res = await PagesIndex.common_services.GET_USERS_IDEAS(payload,token);
-      if (res?.status) {
-        setData(res?.data);
-      }
-    } catch (error) {
-    } 
-  };
+      const response = await PagesIndex.common_services.GET_USERS_IDEAS(
+        payload,
+        token
+      );
+      const totalRows = response?.recordsTotal || 5;
+      let mainRes = response.data;
 
+      return { mainRes, totalRows };
+    } catch {}
+  };
   PagesIndex.useEffect(() => {
-    getList();
+    fetchData();
   }, []);
 
-  const visibleFields = ["id","idea","username","createdAt"];
+  const visibleFields = [
+    {
+      name: "Idea",
+      value: "idea",
+      sortable: false,
+    },
+    {
+      name: "User Name",
+      value: "username",
+      sortable: true,
+    },
+    {
+      name: "Created-At",
+      value: "createdAt",
+      sortable: true,
+    },
+  ];
 
   return (
     <PagesIndex.Main_Containt add_button={false} title="Users Idea's">
-      <PagesIndex.TableWitCustomPegination
-        data={data}
-        initialRowsPerPage={5}
-        SearchInTable={SearchInTable}
-        visibleFields={visibleFields}
-        searchInput={
-          <input
-            type="text"
-            placeholder="Search..."
-            value={SearchInTable}
-            onChange={(e) => setSearchInTable(e.target.value)}
-            className="form-control ms-auto"
-          />
-        }
+      <PagesIndex.TableWithCustomPeginationNew
+        fetchData={fetchData}
+        columns={visibleFields}
+        // UserFullButtonList={UserFullButtonList}
+        showIndex={true}
+        Refresh={Refresh}
       />
     </PagesIndex.Main_Containt>
   );

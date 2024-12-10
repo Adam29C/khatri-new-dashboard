@@ -1,8 +1,11 @@
 import React from "react";
 import PagesIndex from "../../PagesIndex";
+// import { show } from "../../../Utils/Common_Date";
 
-const App = () => {
+const UsersIdeas = () => {
   const token = localStorage.getItem("token");
+
+  const [Refresh, setRefresh] = PagesIndex.useState(false);
 
   const fetchData = async (page, rowsPerPage, searchQuery = "") => {
     const payload = {
@@ -12,19 +15,15 @@ const App = () => {
     };
 
     try {
-      const response = await PagesIndex.admin_services.USERS_LIST_API(
+      const response = await PagesIndex.common_services.GET_USERS_IDEAS(
         payload,
         token
       );
-      const totalRows = response?.recordsTotal || 50;
-      const startIndex = (page - 1) * rowsPerPage;
-
+      const totalRows = response?.recordsTotal || 5;
       let mainRes = response.data;
 
       return { mainRes, totalRows };
-    } catch {
-      console.log("rtestr");
-    }
+    } catch {}
   };
   PagesIndex.useEffect(() => {
     fetchData();
@@ -32,81 +31,33 @@ const App = () => {
 
   const visibleFields = [
     {
-      name: "Name",
-      value: "name",
-      sortable: true,
+      name: "Idea",
+      value: "idea",
+      sortable: false,
     },
     {
       name: "User Name",
       value: "username",
-      sortable: false,
-    },
-    {
-      name: "Mobile",
-      value: "mobile",
       sortable: true,
     },
     {
-      name: "Device Name",
-      value: "deviceName",
+      name: "Created-At",
+      value: "createdAt",
       sortable: true,
     },
-    {
-      name: "Device-Id",
-      value: "deviceId",
-      sortable: true,
-    },
-    {
-      name: "Created At",
-      value: "CreatedAt",
-      sortable: true,
-    },
-    {
-      name: "Block",
-      value: "Block",
-      sortable: true,
-      isButton: true,
-      renderButton: (row) => {
-        setGetBannedData(row.banned);
-        BlockUserAndRemoveUser(row, 1);
-      },
-    },
-    {
-      name: "Block",
-      value: "block",
-      isButton: true, // Indicates this column contains buttons
-    },
-    {
-      name: "Profile",
-      value: "Profile",
-      isButton: true, // Indicates this column contains buttons
-    },
-    // {
-    //   name: "Profile",
-    //   value: "Profile",
-    //   sortable: true,
-    // },
-    // {
-    //   name: "Delete",
-    //   value: "Delete",
-    //   sortable: true,
-    // },
   ];
 
   return (
-    <PagesIndex.Main_Containt
-      add_button={false}
-      route="/admin/user/add"
-      title="All Users"
-    >
+    <PagesIndex.Main_Containt add_button={false} title="Users Idea's">
       <PagesIndex.TableWithCustomPeginationNew
         fetchData={fetchData}
         columns={visibleFields}
-        UserFullButtonList={UserFullButtonList}
+        // UserFullButtonList={UserFullButtonList}
         showIndex={true}
+        Refresh={Refresh}
       />
     </PagesIndex.Main_Containt>
   );
 };
 
-export default App;
+export default UsersIdeas;

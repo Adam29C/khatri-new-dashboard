@@ -138,6 +138,19 @@ export const GET_NEWS_API = async (token) => {
   }
 };
 
+// --------------------------USER IDEA ------------------------
+
+export const GET_USERS_IDEAS = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.USERS_IDEAS}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 
 export const UPDATE_NEWS_API = async (data,token) => {
   try {
@@ -151,6 +164,4 @@ export const UPDATE_NEWS_API = async (data,token) => {
 };
 
 //NEWS APIS
-
-
 
