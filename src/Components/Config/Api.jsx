@@ -203,14 +203,13 @@ const Api = {
   APPROVED_FUND_REQUEST: "fundsRequest/approveManualPayment",
   DECLINED_FUND_REQUEST: "fundsRequest/declineManualPayment",
 
+   //wallet export debit report 
+  GET_EXPORT_DEBIT_REPORT:"exportDebit",
 
-    //wallet export debit report 
-    GET_EXPORT_DEBIT_REPORT:"exportDebit",
+  //todayApproved
+  EXPORT_DEBIT_TODAY_APPROVED_REPORT:"exportDebit/todayApproved",
 
-    //todayApproved
-    EXPORT_DEBIT_TODAY_APPROVED_REPORT:"exportDebit/todayApproved",
-
-    EXPORT_DEBIT_DECLINE_REPORT:"exportDebit/decline",
+  EXPORT_DEBIT_DECLINE_REPORT:"exportDebit/decline",
 
     //wallet /invoice/profileChange
     GET_WALLET_INVOICE_PROFILE_CHANGE:"invoice/profileChange",
@@ -222,7 +221,6 @@ const Api = {
  WALLET_DOWNLOAD_DEBIT_REPORT : "exportDebit/showCondition",
 
   //FUND MODE
-
   ADD_FUND_MODE: "upiId/modeAdd",
 
   DELETE_FUND_MODE: "upiId/dlt_mode",
