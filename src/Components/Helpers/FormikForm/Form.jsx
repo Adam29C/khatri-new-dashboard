@@ -185,7 +185,6 @@ const ReusableForm = ({
                           className={`custom-label col-lg-12`}
                           htmlFor={option.labelName}
                         >
-                          {/* {field.label} */}
                           {option.labelName}
                           <span className="text-danger">*</span>
                         </label>
@@ -419,7 +418,6 @@ const ReusableForm = ({
                       // {...formik.getFieldProps(field.name)}
                       inputReadOnly
                     />
-                
                   </div>
 
                   {/* <div className={`col-lg-${field.col_size} mb-3`}>

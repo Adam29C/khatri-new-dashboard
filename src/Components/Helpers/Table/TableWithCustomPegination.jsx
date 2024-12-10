@@ -265,13 +265,17 @@ const PaginatedTable = ({
                             ) : items.type === "button" ? (
                               <button
                                 className={`btn ${
-                                  items.buttonColor
+                                  typeof items.buttonColor === "function"
+                                    ? `btn-${items.buttonColor(row)}`
+                                    : items.buttonColor
                                     ? `btn-${items.buttonColor}`
                                     : "unblock-btn"
                                 } btn-sm me-2`}
                                 onClick={() => items.Conditions(row)}
                               >
-                                {items.buttonName}
+                                {typeof items.buttonName === "function"
+                                  ? items.buttonName(row)
+                                  : items.buttonName}
                               </button>
                             ) : items.type === "check" ? (
                               <PagesIndex.ChangeStatus
@@ -297,8 +301,7 @@ const PaginatedTable = ({
             </>
           ) : (
             <h4 className="text-center">No Data Available</h4>
-          )}
-
+          )
           {additional && (
             <tr>
               <td colSpan={columns.length + 1}>{additional}</td>

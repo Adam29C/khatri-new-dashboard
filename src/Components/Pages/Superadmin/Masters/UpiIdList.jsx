@@ -31,7 +31,6 @@ const UpiIdList = () => {
     getList();
   }, []);
 
-
   //handle status update function for upi list
   const handleStatusUpdate = async (event, value) => {
     try {
@@ -49,16 +48,14 @@ const UpiIdList = () => {
         toast.success(response.message);
         getList();
       } else {
-        alert(response.response.data.message);
+        alert(response.message);
       }
     } catch (error) {
       PagesIndex.toast.error(error);
     }
   };
 
-
-
-//formik form
+  //formik form
   const formik = PagesIndex.useFormik({
     initialValues: {
       upiName: "",
@@ -86,7 +83,7 @@ const UpiIdList = () => {
           apidata,
           token
         );
-console.log(res)
+        console.log(res);
         if (res?.status) {
           PagesIndex.toast.success(res?.message);
           getList();
@@ -137,10 +134,8 @@ console.log(res)
 
   //delete upi list start
   const handleDelete = async (row) => {
-   
- 
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete this game rate?"
+      "Are you sure you want to delete this Upi Id?"
     );
     if (!confirmDelete) return;
 
@@ -152,15 +147,13 @@ console.log(res)
         apidata,
         token
       );
-console.log(res)
+      console.log(res);
       if (res.status) {
         getList();
         alert(res?.message);
       }
     } catch (error) {}
   };
-
-
 
   const columns = [
     {
@@ -170,8 +163,7 @@ console.log(res)
 
     {
       name: "IsActive",
-      selector: (row) => (row.is_Active  ? "Active" : "Disable")
-    
+      selector: (row) => (row.is_Active ? "Active" : "Disable"),
     },
 
     {
@@ -179,8 +171,9 @@ console.log(res)
       selector: (row) => (
         <div>
           <select
-            className="form-select-upi"
+            className="p-1"
             aria-label="Default select example"
+            value={row.is_Active}
             onChange={(e) => {
               handleStatusUpdate(e.target.value, row);
             }}
@@ -200,11 +193,15 @@ console.log(res)
       selector: (cell, row) => (
         <div style={{ width: "120px" }}>
           <div>
-       
-              <span><button onClick={() =>
-                handleDelete(cell)
-              } class="btn btn-danger btn-sm me-2">Delete</button></span>
-
+            <span>
+              <button
+                onClick={() => handleDelete(cell)}
+                class="btn btn-danger btn-sm me-2"
+              >
+                <i class="fa fa-trash mr-1 icon-fs" aria-hidden="true"></i>
+                Delete
+              </button>
+            </span>
           </div>
         </div>
       ),
@@ -218,12 +215,11 @@ console.log(res)
       title="UPI ID List"
       handleAdd={handleAdd}
     >
-
-          <PagesIndex.Data_Table
-      isLoading={loading}
-      columns={columns}
-      data={data}
-    />
+      <PagesIndex.Data_Table
+        isLoading={loading}
+        columns={columns}
+        data={data}
+      />
       <ModalComponent
         visible={visible}
         setVisible={setVisible}
@@ -233,7 +229,6 @@ console.log(res)
       />
       <PagesIndex.Toast />
     </Main_Containt>
-
   );
 };
 
