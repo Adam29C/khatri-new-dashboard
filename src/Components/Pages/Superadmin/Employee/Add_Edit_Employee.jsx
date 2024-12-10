@@ -5,8 +5,9 @@ import PagesIndex from "../../../Pages/PagesIndex";
 import { Get_permissions } from "../../../Redux/slice/CommonSlice";
 
 function AddEmployee() {
+
 //get token in localstorage
-const token = localStorage.getItem("token");
+ const token = localStorage.getItem("token");
 //get userid in localstorage
   let { user_id } = JSON.parse(localStorage.getItem("userdetails"));
 
