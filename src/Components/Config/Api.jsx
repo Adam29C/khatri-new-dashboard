@@ -163,6 +163,14 @@ const Api = {
 
   //USER IDEA'S
   USERS_IDEAS: "userIdea",
+//CREDIT REQUEST GET API
+GET_CREDIT_REQUEST_UPI:"creditRequest/creditUPI",
+
+//DECLINED REQUEST GET API
+GET_DECLINED_REQUEST:"declineReq/declined"
+
+
+
 };
 
 export { Api };

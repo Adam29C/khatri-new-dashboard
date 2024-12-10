@@ -333,7 +333,7 @@ export const admin_Sidebar = [
 
   {
     id: 12,
-    route: "#",
+    route: "approvedReports/declined",
     headerTitle: "Declined Request",
     permission: "decDebit",
     title: "Declined Request",

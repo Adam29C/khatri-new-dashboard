@@ -6,22 +6,19 @@ const Notification = () => {
   const token = localStorage.getItem("token");
 
   //all state
-  const [loading, setLoading] = PagesIndex.useState(false);
   const [data, setData] = PagesIndex.useState([]);
   const [visible, setVisible] = PagesIndex.useState(false);
 
   //get notification list function
   const getList = async () => {
-    setLoading(true);
+    
     try {
       const res = await PagesIndex.common_services.GET_NOTIFICATION_API(token);
       if (res?.status) {
         setData(res?.data);
       }
     } catch (error) {
-    } finally {
-      setLoading(false);
-    }
+    } 
   };
 
   PagesIndex.useEffect(() => {
@@ -48,7 +45,7 @@ const Notification = () => {
     },
 
     onSubmit: async (values) => {
-      console.log(values)
+  
       try {
         let apidata = {
           title: values.title,
@@ -56,7 +53,7 @@ const Notification = () => {
         };
 
         const res = await PagesIndex.common_services.ADD_NOTIFICATION_API(apidata,token);
-        console.log(res);
+   
         if (res?.status) {
           PagesIndex.toast.success(res?.message);
           getList();
@@ -137,8 +134,8 @@ const Notification = () => {
                 onClick={() => handleDelete(cell)}
                 class="btn btn-dark waves-effect waves-light btn-sm"
               >
-                <i class="far fa-trash-alt mr-1" aria-hidden="true"></i>
-                Delete
+                <i class="far fa-trash-alt mr-2 icon-fs" aria-hidden="true"></i>
+                Delete Notifiction
               </button>
             </span>
           </div>
@@ -155,7 +152,6 @@ const Notification = () => {
       handleAdd={handleAdd}
     >
       <PagesIndex.Data_Table
-        isLoading={loading}
         columns={columns}
         data={data}
       />

@@ -473,7 +473,7 @@ export const UPDATE_WALLET_HEADLINE_API = async (data,token) => {
 };
 export const UPDATE_WALLET_UPI_API = async (data,token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.UPDATE_WALLET_UPI}`,data ,{
+    const res = await axios.post(`${BASE_URL}${Api.UPDATE_WALLET_UPI}`,data, {
       headers: header(token),
     });
     return res?.data;
@@ -745,14 +745,14 @@ export const SINGLE_EMPLOYEE_GET_LIST_API = async (id,token) => {
     return error;
   }
 };
+// --------------------------   Employee Crud ------------------------
 
-// ----------------------------------  WALLET ---------------------------------------------------
 
-// -----------------  REQUEST ON OFF SECTION -------------------------------
+// --------------------------   GET_CREDIT_REQUEST_UPI ------------------------
 
-export const REQUEST_LIST_API = async (token) => {
+export const GET_CREDIT_REQUEST_UPI_API = async (data,token) => {
   try {
-    const res = await axios.get(`${BASE_URL}${Api.REQUEST_LIST}`, {
+    const res = await axios.post(`${BASE_URL}${Api.GET_CREDIT_REQUEST_UPI}`,data, {
       headers: header(token),
     });
     return res?.data;
@@ -776,9 +776,17 @@ export const REQUEST_LIST_UPDATE_API = async (data, token) => {
   }
 };
 
-export const GET_REQUEST_LIST_API = async (token) => {
+// export const GET_REQUEST_LIST_API = async (token) => {
+//   try {
+//     const res = await axios.get(`${BASE_URL}${Api.GET_REQUEST_LIST}`, {
+// --------------------------   GET_CREDIT_REQUEST_UPI ------------------------
+
+
+// --------------------------  GET_DECLINED_REQUEST ---------------------------
+
+export const GET_DECLINED_REQUEST_API = async (data,token) => {
   try {
-    const res = await axios.get(`${BASE_URL}${Api.GET_REQUEST_LIST}`, {
+    const res = await axios.post(`${BASE_URL}${Api.GET_DECLINED_REQUEST}`,data, {
       headers: header(token),
     });
     return res?.data;

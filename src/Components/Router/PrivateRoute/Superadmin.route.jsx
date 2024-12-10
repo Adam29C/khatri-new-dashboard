@@ -67,6 +67,7 @@ import ProfileNote from "../../Pages/Superadmin/AppSettings/ProfileNote";
 import FundMode from "../../Pages/Superadmin/Masters/FundMode";
 import Notification from "../../Pages/Superadmin/Notification/Notification";
 import News from "../../Pages/Superadmin/News/News";
+import DeclinedRequest from "../../Pages/Superadmin/DeclinedRequest/DeclinedRequest";
 
 // WALLET SECTION
 
@@ -385,6 +386,10 @@ const adminRoutes = [
       {
         path: "creditUPI",
         element: <PrivateRoute element={CreditRequest} />,
+      },
+      {
+        path: "approvedReports/declined",
+        element: <PrivateRoute element={DeclinedRequest} />,
       },
       {
         path: "appSettings/versionSetting",

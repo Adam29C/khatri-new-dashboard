@@ -3,8 +3,7 @@ import PagesIndex from "../../PagesIndex";
 import { getActualDateWithFormat } from "../../../Utils/Common_Date";
 import CreditDeclinedRequest from "../../../Helpers/CreditDeclinedRequest/CreditDeclinedRequest";
 
-const CreditRequest = () => {
-
+const DeclinedRequest = () => {
   //get token in local storage
   const token = localStorage.getItem("token");
 
@@ -15,28 +14,30 @@ const CreditRequest = () => {
   const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
   const [tableData, setTableData] = PagesIndex.useState([]);
 
-  const title = "Credit Reports";
-  const subtitle = "Credit Requests : UPI";
+  const title = "Declined Report"
+  const subtitle = "Declined Debit Requests"
 
-  // get api credit request upi
-  const getCreditRequest = async (date = actual_date_formet) => {
+  // get api decline request 
+
+  const getDeclinedRequest = async (date = actual_date_formet) => {
     const payload = {
       date_cust: date,
       page: 1,
       limit: 10,
       search: SearchInTable,
     };
-    const res = await PagesIndex.admin_services.GET_CREDIT_REQUEST_UPI_API(
+    const res = await PagesIndex.admin_services.GET_DECLINED_REQUEST_API(
       payload,
       token
     );
+
     if (res?.status) {
-      setTableData(res?.approvedData);
+      setTableData(res?.data);
     }
   };
 
   PagesIndex.useEffect(() => {
-    getCreditRequest();
+    getDeclinedRequest();
   }, []);
 
   const formik = PagesIndex.useFormik({
@@ -46,9 +47,11 @@ const CreditRequest = () => {
     validate: (values) => {},
 
     onSubmit: async (values) => {
-      getCreditRequest(values.date);
+        getDeclinedRequest(values.date);
     },
   });
+
+  
 
   const fields = [
     {
@@ -65,27 +68,18 @@ const CreditRequest = () => {
     "username",
     "fullname",
     "mobile",
-    "reqStatus",
     "reqDate",
     "reqTime",
-    "paymentMode",
+    "withdrawalMode",
     "reqAmount",
   ];
 
+
   return (
     <>
-      <CreditDeclinedRequest
-        fields={fields}
-        formik={formik}
-        tableData={tableData}
-        SearchInTable={SearchInTable}
-        setSearchInTable={setSearchInTable}
-        visibleFields={visibleFields}
-        title={title}
-        subtitle={subtitle}
-      />
+      <CreditDeclinedRequest fields={fields} formik={formik} tableData={tableData} SearchInTable={SearchInTable} setSearchInTable={setSearchInTable} visibleFields={visibleFields} title={title} subtitle={subtitle}/>
     </>
   );
 };
 
-export default CreditRequest;
+export default DeclinedRequest;
