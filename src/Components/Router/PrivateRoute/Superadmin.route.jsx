@@ -65,6 +65,8 @@ import UpiIdList from "../../Pages/Superadmin/Masters/UpiIdList";
 import WinnerList from "../../Pages/Superadmin/Games/AvailableGames/WinnerList";
 import ProfileNote from "../../Pages/Superadmin/AppSettings/ProfileNote";
 import FundMode from "../../Pages/Superadmin/Masters/FundMode";
+import Notification from "../../Pages/Superadmin/Notification/Notification";
+import News from "../../Pages/Superadmin/News/News";
 
 // WALLET SECTION
 
@@ -419,6 +421,14 @@ const adminRoutes = [
       {
         path: "masters/fundMode",
         element: <PrivateRoute element={FundMode} />,
+      },
+      {
+        path: "notification",
+        element: <PrivateRoute element={Notification} />,
+      },
+      {
+        path: "news",
+        element: <PrivateRoute element={News} />,
       },
   
     ],

@@ -14,7 +14,6 @@ const Api = {
 
   //USERS
   USERS_LIST: "allUser/getAllUsers",
-  DELETED_USERS: "/allUser/deleteUserByAdmin",
   USER_PROFILE_GET: "/allUser/getProfile",
   BLOCK_USER: "/allUser/blockUser",
 

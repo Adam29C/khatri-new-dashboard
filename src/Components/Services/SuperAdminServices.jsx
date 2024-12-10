@@ -86,16 +86,7 @@ export const DELETE_USER = async (ID) => {
   }
 };
 
-export const GET_DELETED_USERS = async (id) => {
-  try {
-    const res = await axios.get(`${Api.DELETED_USERS}?adminId=${id}`, {
-      headers: header(token),
-    });
-    return res?.data;
-  } catch (error) {
-    return error;
-  }
-};
+
 export const GET_USERS_IDEAS = async (id) => {
   try {
     const res = await axios.get(`${Api.USERS_IDEAS}?adminId=${id}`, {
@@ -107,6 +98,48 @@ export const GET_USERS_IDEAS = async (id) => {
   }
 };
 // --------------------------   USERS CRUD ------------------------
+
+// -------------------------- DELETED USERS ------------------------
+
+export const GET_DELETED_USERS_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.GET_DELETED_USERS}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+export const DELETED_USERS_GET_TIMEHISTORY_API = async (token) => {
+  try {
+    const res = await axios.get(`${BASE_URL}${Api.DELETED_USER_GET_TIMEHISTORY}`, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const DELETED_USERS_TIMEHISTORY_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.DELETED_USER_TIMEHISTORY}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+// -------------------------- DELETED USERS ------------------------
+
+
+
 
 // --------------------------  game provider api ------------------------
 
