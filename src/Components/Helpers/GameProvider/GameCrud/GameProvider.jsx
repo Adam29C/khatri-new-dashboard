@@ -113,7 +113,10 @@ const GameProvider = ({
     }
   };
   // Formik Configuration
-``  
+
+  ``;
+  console.log("selectedRow", selectedRow);
+
   const formik = PagesIndex.useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -141,8 +144,6 @@ const GameProvider = ({
     },
 
     onSubmit: async (values) => {
-
-      
       try {
         let res;
         if (gametype === "StarLine" || gametype === "JackPot") {
@@ -165,8 +166,6 @@ const GameProvider = ({
                   payload,
                   token
                 );
-
-        
         } else {
           const payload = {
             gamename: values.gamename,
@@ -200,14 +199,14 @@ const GameProvider = ({
       }
     },
   });
-  
-  console.log("dsfsdfds" , formik.values);
+
+  console.log("dsfsdfds", formik.values);
 
   const fields = [
     {
       name: "gamename",
       label: "Game Name",
-      type:  gametype === "StarLine" || gametype === "JackPot" ? "time" : "text",
+      type: gametype === "StarLine" || gametype === "JackPot" ? "time" : "text",
       Visiblity: "show",
       label_size: 12,
       col_size: 12,

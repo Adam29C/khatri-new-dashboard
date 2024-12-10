@@ -384,3 +384,9 @@ input:checked + .slider:before {
   color: #343a40;
   font-weight: 600;
 }
+
+
+.rc-time-picker-panel {
+  z-index: 10001 !important; 
+  position: absolute; 
+}
