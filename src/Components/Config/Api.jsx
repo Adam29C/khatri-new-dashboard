@@ -58,6 +58,10 @@ const Api = {
   WALLET_LIST_USER_PROFILE: "view_wallet/getProfile",
   WALLET_LIST_UPDATE_WALLET: "view_wallet/walletUpdate",
 
+  //DELETED USERS 
+  DELETED_USER_GET_TIMEHISTORY:"deleteduser/getTimeHistory",
+  DELETED_USER_TIMEHISTORY:"deleteduser/timeHistory",
+  GET_DELETED_USERS: "deleteduser",
   // SYSTEM MODULE
   ADD_SYSTEM_INFO: "admin/addSystemInfo",
   LIST_SYSTEM_INFO: "common/systemInforList",
@@ -134,12 +138,26 @@ const Api = {
   EXPORT_DEBIT_DECLINE_REPORT: "exportDebit/decline",
 
   //FUND MODE
-  GET_FUND_MODE: "upiId/fundMode",
 
   ADD_FUND_MODE: "upiId/modeAdd",
 
   DELETE_FUND_MODE: "upiId/dlt_mode",
   CHANGE_STATUS_FUND_MODE: "upiId/disable_mode",
+
+  //FUND MODE 
+  GET_FUND_MODE:"upiId/fundMode",
+  DELETE_FUND_MODE:"upiId/dlt_mode",
+CHANGE_STATUS_FUND_MODE:"upiId/disable_mode",
+
+//notification apis
+GET_NOTIFICATION : "notification",
+ADD_NOTIFICATION : "notification/inserNotification",
+DELETE_NOTIFICATION : "notification",
+
+//news
+NEWS:"news",
+
+
 };
 
 export { Api };
