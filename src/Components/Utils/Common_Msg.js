@@ -69,10 +69,28 @@ export const PROVIDER_NAME_REQUIRED = "Provider Name is required";
 
 
 //for wallet export debit report
-export const REQUIRED_SEARCH_TYPE = "Please Enter Request Type";
-export const REQUIRED_REPORT_TYPE = "Plese Enter Report Type";
+
 export const REQUIRE_MODE = "Please Enter Fund Mode";
 export const URLWEB_MODE = "Please Enter URL";
+ export const OPEN_BID_TIME_IS_REQUIRED = "Open Bid Time is required";
+ export const CLOSE_BID_TIME_IS_REQUIRED = "Close Bid Time is required";
+ export const OPEN_BID_RESULT_TIME_IS_REQUIRED = "Open Bid Result Time is required";
+  export const CLOSE_BID_RESULT_TIME_IS_REQUIRED = "Close Bid Result Time is required";
+  export const PROFILE_NOTE_REQUIRE = "Please Enter Profile Note";
+
+  export const REQUIRE_MESSAGE = "Please Enter Message";
+  export const REQUIRE_AMOUNT = "Please Enter Request Amount";
+  export const REQUIRE_AMOUNT_VALID = "Please Enter Valid Request Amount";
+
+//for wallet export debit report
+export const REQUIRED_SEARCH_TYPE = "Please Enter Request Type";
+export const REQUIRED_REPORT_TYPE = "Plese Enter Report Type";
+
+//message for wallet module decline request
+export const REQUIRED_REASON = "Please Select Reason";
+
+//message for wallet module search account
+export const REQUIRED_ACCOUNT_NUMBER = "Please Enter User Account Number";
  export const OPEN_BID_TIME_IS_REQUIRED = "Open Bid Time is required";
  export const CLOSE_BID_TIME_IS_REQUIRED = "Close Bid Time is required";
  export const OPEN_BID_RESULT_TIME_IS_REQUIRED = "Open Bid Result Time is required";

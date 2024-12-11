@@ -17,6 +17,86 @@ const Api = {
   USER_PROFILE_GET: "/allUser/getProfile",
   BLOCK_USER: "/allUser/blockUser",
 
+  //GAME SETTING
+  // ADMIN_GAME_SETTING: "/admin/game/gameSetting",
+  ADMIN_GAME_SETTING: "mainGameSetting",
+  ADMIN_GAME_SETTING_ADD: "mainGameSetting/insertSettings",
+  ADMIN_GAME_SETTING_UPDATEALL: "mainGameSetting/updateAll",
+
+  
+
+  //MAIN GAME API'S
+  MAIN_GAME: "mainGames",
+  MAIN_GAME_ADD: "mainGames/insertGame",
+
+  // GAME RESULT
+  ADMIN_GAME_RESULT: "mainGameResult",
+  ADMIN_GAME_RESULT_DELETE: "mainGameResult/delete",
+  GET_GAME_RESULT_WITH_DATE: "mainGameResult/pastResult",
+  GET_REMAINING_WINNER_LIST: "winnerList/remaningWinnerList",
+  GET_MAIN_WINNER_LIST: "winnerList/mainWinnerList",
+
+  // GAME PROVIDER
+
+  STARLINE_GAME_PROVIDERS_LIST: "starlineProvider/getStarlineProvider",
+  STARLINE_GAME_PROVIDER_ADD: "starlineProvider/insertStarLineProvider",
+  STARLINE_GAME_PROVIDER_UPDATE: "starlineProvider/updateStarLineProvider",
+  STARLINE_GAME_PROVIDERS_DELETE: "starlineProvider/deleteStarLineProvider",
+  STARLINE_GAME_PROVIDERS_GET_BY_ID: "starlineProvider/starLineProviderById",
+
+  // GAME RATE
+
+  STARLINE_GAME_RATE_LIST: "starGameRate",
+  STARLINE_GAME_RATE_ADD: "starGameRate/insertGame",
+  STARLINE_GAME_RATE_UPDATE: "starGameRate/update",
+  STARLINE_GAME_RATE_REMOVE: "starGameRate",
+
+  // STARLINE GAME SETTING CRUD
+
+  STARLINE_GAME_PROVIDERS: "starGameSetting/addSetting",
+  STARLINE_GAME_SETTING_LIST: "starGameSetting",
+  STARLINE_GAME_SETTING_ADD: "starGameSetting/insertSettings",
+  STARLINE_GAME_SETTING_UPDATE_ALL: "starGameSetting/updateProviderSettings",
+  STARLINE_GAME_SETTING_UPDATE_ONE: "starGameSetting",
+
+  //   ADMIN_GAME_SETTING_ADD: "mainGameSetting/insertSettings",
+  //   ADMIN_GAME_SETTING_UPDATEALL: "mainGameSetting/updateAll"
+
+  //  STARLINE GAME RESULT -
+  STARLINE_GAME_MAIN_RESULT: "starGameResult",
+  STARLINE_GAME_MAIN_RESULT_ADD: "starGameResult",
+  STARLINE_GAME_PAST_RESULT: "starGameResult/pastResult",
+  STARLINE_GAME_WINNER_LIST: "starlineWinner/starLineWinnerList",
+  STARLINE_GAME_DISTIBUTE_FUND_WINNERS: "starlineWinner/starWinners",
+
+  //  STARLINE REVERT PAYMENT -
+  STARLINE_GAME_REVERT_PAYMENT: "starGameResult/revertPayment",
+  STARLINE_GAME_CONFIRM_REVERT_PAYMENT: "starGameResult/paymentRevert",
+
+  //  STARLINE REVERT PAYMENT -
+
+  STARLINE_GAME_REFUND_PAYMENT: "mainGameResult/refundPayment",
+  STARLINE_GAME_CONFIRM_REVERT_PAYMENT: "starGameResult/paymentRevert",
+
+  // JACKPOT GAME PROVIDER CRUD
+  JACKPOT_GAME_PROVIDER_LIST: "abGameSetting",
+  JACKPOT_GAME_PROVIDER_ADD: "abGameProvider/insertGame",
+  JACKPOT_GAME_PROVIDER_UPDATE: "abGameProvider",
+  JACKPOT_GAME_PROVIDERS_DELETE: "abGameProvider",
+
+  // JACKPOT GAME SETTING CRUD
+  JACKPOT_GAME_PROVIDERS: "abGameSetting/addSetting",
+  JACKPOT_GAME_SETTING_LIST: "abGameSetting",
+  JACKPOT_GAME_SETTING_ADD: "abGameSetting/insertSettings",
+  JACKPOT_GAME_SETTING_UPDATE_ALL: "abGameSetting/updateProviderSettings",
+  JACKPOT_GAME_SETTING_UPDATE_ONE: "abGameSetting",
+
+  // JACKPOT GAME RATE
+  JACKPOT_GAME_RATE_LIST: "abGameRate",
+  JACKPOT_GAME_RATE_ADD: "abGameRate/insertGame",
+  JACKPOT_GAME_RATE_UPDATE: "abGameRate/update",
+  JACKPOT_GAME_RATE_REMOVE: "abGameRate",
+
   // CUTTING GROUP
 
   CUTTING_GROUP_LIST: "cuttingGroups/getCutting",
@@ -30,6 +110,7 @@ const Api = {
   STARLINE_GAME_REPORT: "starSalesReport/userReportStar",
   JACKPOT_REPORT: "abSalesReport/userReportAB",
   JACKPOT_BIDS_REPORT: "totalBids/andarBaharBidsData",
+
   GET_FUND_REPORT_DETAILS: "fundReports",
   GET_FUND_REPORT: "fundReports",
   GET_UPI_FUND_REPORT_DETAILS: "upiFundReport/upiReport",
@@ -77,18 +158,6 @@ const Api = {
   BLOCK_EMPLOYEE: "master/employees/blockEmployee",
   DELETE_EMPLOYEE: "master/employees/deleteEmp",
 
-  //MAIN GAME API'S
-  MAIN_GAME: "mainGames",
-  MAIN_GAME_ADD: "mainGames/insertGame",
-
-  // GAME RESULT
-  ADMIN_GAME_RESULT: "mainGameResult",
-  ADMIN_GAME_RESULT_DELETE: "mainGameResult/delete",
-  GET_GAME_RESULT_WITH_DATE: "mainGameResult/pastResult",
-  GET_REMAINING_WINNER_LIST: "winnerList/remaningWinnerList",
-  GET_MAIN_WINNER_LIST: "winnerList/mainWinnerList",
-
-
   GET_VERSION: "/admin/appSetting/listVersionSetting",
   UPDATE_VERSION: "/admin/appSetting/updateVersionSetting",
   WALLET_CONTACT_LIST: "/admin/appSetting/walledContestList",
@@ -134,12 +203,23 @@ const Api = {
   APPROVED_FUND_REQUEST: "fundsRequest/approveManualPayment",
   DECLINED_FUND_REQUEST: "fundsRequest/declineManualPayment",
 
-  //wallet export debit report
-  GET_EXPORT_DEBIT_REPORT: "exportDebit",
-  //todayApproved
-  EXPORT_DEBIT_TODAY_APPROVED_REPORT: "exportDebit/todayApproved",
 
-  EXPORT_DEBIT_DECLINE_REPORT: "exportDebit/decline",
+    //wallet export debit report 
+    GET_EXPORT_DEBIT_REPORT:"exportDebit",
+
+    //todayApproved
+    EXPORT_DEBIT_TODAY_APPROVED_REPORT:"exportDebit/todayApproved",
+
+    EXPORT_DEBIT_DECLINE_REPORT:"exportDebit/decline",
+
+    //wallet /invoice/profileChange
+    GET_WALLET_INVOICE_PROFILE_CHANGE:"invoice/profileChange",
+
+ //wallet /searchAccount/getDetails
+ WALLET_GET_SEARCH_DETAILS :"searchAccount/getDetails",
+
+ //exportDebit/showCondition
+ WALLET_DOWNLOAD_DEBIT_REPORT : "exportDebit/showCondition",
 
   //FUND MODE
 

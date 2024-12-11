@@ -1,43 +1,158 @@
-import { useState } from "react";
+import React from "react";
 import PagesIndex from "../../PagesIndex";
-import DeleteSweetAlert from "../../../Helpers/DeleteSweetAlert";
-import TableWithCustomPeginationNew123 from "../../../Helpers/Table/TableWithCustomPeginationNew123";
 
 const EmployeeList = () => {
-  //get token and user_id in localstorage
   const token = localStorage.getItem("token");
 
   //navigate
   const navigate = PagesIndex.useNavigate();
-
-  //all state
-  const [data, setData] = PagesIndex.useState([]);
-  const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
   const [visible, setVisible] = PagesIndex.useState(false);
 
-  const [adminId, setAdminId] = useState();
-  //dynamic header keys for datatable
-  const visibleFields = ["id", "username", "name", "username", "loginStatus"];
+  const [adminId, setAdminId] = PagesIndex.useState();
 
-  //get employee data list
-  const getList = async () => {
+  const [Refresh, setRefresh] = PagesIndex.useState(false);
+
+  const fetchData = async (page, rowsPerPage, searchQuery = "") => {
     const payload = {
-      page: 1,
-      limit: 10,
-      searchQuery: SearchInTable,
+      page: page,
+      limit: rowsPerPage,
+      searchQuery,
     };
-    const res = await PagesIndex.admin_services.EMPLOYEE_GET_LIST_API(
-      payload,
-      token
-    );
-    setData(res?.data);
-  };
 
+    try {
+      const response = await PagesIndex.admin_services.EMPLOYEE_GET_LIST_API(
+        payload,
+        token
+      );
+      const totalRows = response?.recordsTotal || 5;
+      let mainRes = response.data;
+
+      return { mainRes, totalRows };
+    } catch {}
+  };
   PagesIndex.useEffect(() => {
-    getList();
+    fetchData();
   }, []);
 
-  //handle change password formik form
+  const visibleFields = [
+    {
+      name: "User Name",
+      value: "username",
+      sortable: true,
+    },
+    {
+      name: "Name",
+      value: "name",
+      sortable: false,
+    },
+    {
+      name: "Login Status",
+      value: "loginStatus",
+      sortable: true,
+    },
+    {
+      name: "Change Password",
+      value: "Change Password",
+      isButton: true,
+      buttonColor: (row) =>
+        "btn btn-dark btn-rounded width-xs waves-effect waves-light btn-sm",
+      Conditions: (row) => {
+        handleActionBtn(row, 0);
+      },
+    },
+    {
+      name: "Block Employee",
+      isButton: true,
+      value: (row) => (row.banned ? "Unblock" : "Block"),
+      buttonColor: (row) => (row.banned ? "success" : "danger"),
+      Conditions: (row) => {
+        handleActionBtn(row, 1);
+      },
+    },
+    {
+      name: "Edit Employee",
+      value: "Edit Employee",
+      isButton: true,
+      buttonColor: "info",
+      Conditions: (row) => {
+        handleActionBtn(row, 2);
+      },
+    },
+    {
+      name: "Delete Employee",
+      value: "Delete Emp",
+      isButton: true,
+      buttonColor: "danger",
+      Conditions: (row) => {
+        handleActionBtn(row, 3);
+      },
+    },
+  ];
+
+  const handleActionBtn = (row, buttonStatus) => {
+    switch (buttonStatus) {
+      case 0:
+        handleAdd(row);
+        break;
+      case 1:
+        handleStatusUpdate(row);
+        break;
+      case 2:
+        navigate(`edit?EmpId/${row._id}`, { state: { row } });
+        break;
+      case 3:
+        handleDelete(row);
+        break;
+      default:
+        break;
+    }
+  };
+
+  //handle block and unblock status function
+  const handleStatusUpdate = async (row) => {
+    console.log(row);
+    try {
+      let apidata = {
+        adminId: row._id,
+        status: row.banned === 1 ? 0 : 1,
+      };
+
+      const response = await PagesIndex.admin_services.BLOCK_EMPLOYEE_API(
+        apidata,
+        token
+      );
+
+      if (response?.status) {
+        setRefresh(!Refresh);
+        PagesIndex.toast.success(response.message);
+      }
+    } catch (error) {
+      PagesIndex.toast.error(error);
+    }
+  };
+
+  //delete fund mode list start
+  const handleDelete = async (row) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this Employee?"
+    );
+    if (!confirmDelete) return;
+    try {
+      const apidata = {
+        id: row?._id,
+      };
+      const res = await PagesIndex.admin_services.DELETE_EMPLOYEE(
+        apidata,
+        token
+      );
+
+      if (res.status) {
+        setRefresh(!Refresh);
+        PagesIndex.toast.success(res.message);
+      }
+    } catch (error) {}
+  };
+
   const formik = PagesIndex.useFormik({
     initialValues: {
       password: "",
@@ -103,7 +218,6 @@ const EmployeeList = () => {
     },
   ];
 
-  //handle add fn
   const handleAdd = (row) => {
     setAdminId(row?._id);
     formik.resetForm({
@@ -112,150 +226,27 @@ const EmployeeList = () => {
         confirmPassword: "",
       },
     });
-
     setVisible(true);
   };
 
-  //delete fund mode list start
-  const handleDelete = async (row) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this Employee?"
-    );
-    if (!confirmDelete) return;
-    try {
-      const apidata = {
-        id: row?._id,
-      };
-      const res = await PagesIndex.admin_services.DELETE_EMPLOYEE(
-        apidata,
-        token
-      );
-
-      if (res.status) {
-        getList();
-        alert(res?.message);
-      }
-    } catch (error) {}
-  };
-
-  //handle block and unblock status function
-  const handleStatusUpdate = async (row) => {
-    console.log(row);
-    try {
-      let apidata = {
-        adminId: row._id,
-        status: row.banned === 1 ? 0 : 1,
-      };
-
-      const response = await PagesIndex.admin_services.BLOCK_EMPLOYEE_API(
-        apidata,
-        token
-      );
-
-      if (response?.status) {
-        PagesIndex.toast.success(response.message);
-        getList();
-      }
-    } catch (error) {
-      PagesIndex.toast.error(error);
-    }
-  };
-
-  const handleActionBtn = (row, buttonStatus) => {
-    switch (buttonStatus) {
-      case 0:
-        handleAdd(row);
-
-        break;
-      case 1:
-        handleStatusUpdate(row);
-        break;
-      case 2:
-        navigate(`edit?EmpId/${row._id}`, { state: { row } });
-        break;
-      case 3:
-        handleDelete(row);
-        break;
-      default:
-        break;
-    }
-  };
-
-  //actions button
-  const UserFullButtonList = [
-    {
-      id: 0,
-      buttonName: "Change Password",
-      buttonColor:
-        "btn btn-dark btn-rounded width-xs waves-effect waves-light btn-sm",
-      Conditions: (row) => {
-        handleActionBtn(row, 0);
-      },
-      Visiblity: true,
-      type: "button",
-    },
-    {
-      id: 1,
-      buttonName: (row) => (row.banned === 1 ? "Unblock" : "Block"),
-      buttonColor: (row) => (row.banned === 1 ? "success" : "danger"),
-      Conditions: (row) => {
-        handleActionBtn(row, 1);
-      },
-      Visiblity: false,
-      type: "button",
-    },
-    {
-      id: 2,
-      buttonName: "Edit Employee",
-      buttonColor: "info",
-      route: "employee/edit",
-      Conditions: (row) => {
-        handleActionBtn(row, 2);
-      },
-      Visiblity: false,
-      type: "button",
-    },
-    {
-      id: 3,
-      buttonName: "Delete Emp",
-      buttonColor: "danger",
-      Conditions: (row) => {
-        handleActionBtn(row, 3);
-      },
-      Visiblity: false,
-      type: "button",
-    },
-  ];
-
   return (
-    <div>
-      <PagesIndex.Main_Containt add_button={false} title="Employee List ">
-        <PagesIndex.TableWitCustomPegination
-          data={data}
-          initialRowsPerPage={5}
-          SearchInTable={SearchInTable}
-          visibleFields={visibleFields}
-          UserFullButtonList={UserFullButtonList}
-          searchInput={
-            <input
-              type="text"
-              placeholder="Search..."
-              value={SearchInTable}
-              onChange={(e) => setSearchInTable(e.target.value)}
-              className="form-control ms-auto"
-            />
-          }
-        />
-        <PagesIndex.ModalComponent
-          visible={visible}
-          setVisible={setVisible}
-          fields={fields}
-          form_title="Change Password"
-          formik={formik}
-        />
-        <PagesIndex.Toast />
-      </PagesIndex.Main_Containt>
-    </div>
+    <PagesIndex.Main_Containt add_button={false} title="Employee List">
+      <PagesIndex.TableWithCustomPeginationNew
+        fetchData={fetchData}
+        columns={visibleFields}
+        showIndex={true}
+        Refresh={Refresh}
+      />
+
+      <PagesIndex.ModalComponent
+        visible={visible}
+        setVisible={setVisible}
+        fields={fields}
+        form_title="Change Password"
+        formik={formik}
+      />
+      <PagesIndex.Toast />
+    </PagesIndex.Main_Containt>
   );
 };
 

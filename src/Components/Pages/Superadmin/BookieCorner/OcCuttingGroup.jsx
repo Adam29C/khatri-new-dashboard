@@ -401,7 +401,7 @@ const SplitForm = () => {
       size: 12,
       body: (
         <div>
-          <PagesIndex.TableWithCustomPeginationNew
+          <PagesIndex.TableWithCustomPeginationNew123
             data={TableTwo && TableTwo}
             initialRowsPerPage={10}
             SearchInTable={SearchInTable}
@@ -430,7 +430,7 @@ const SplitForm = () => {
         // formik.values.gameSession === "Open" ||
         // formik.values.gameSession === "Close" ? (
         <div>
-          <PagesIndex.TableWithCustomPeginationNew
+          <PagesIndex.TableWithCustomPeginationNew123
             data={(TableThree && TableThree) || []}
             initialRowsPerPage={10}
             SearchInTable={SearchInTable}

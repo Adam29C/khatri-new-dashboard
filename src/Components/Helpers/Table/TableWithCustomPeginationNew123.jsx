@@ -73,19 +73,23 @@ const PaginatedTable = ({
 
   // Render buttons dynamically
   const renderButton = (field, row) => {
-    const buttonConfig = UserFullButtonList.find(
-      (btn) => btn.value === field.value
-    );
-    if (!buttonConfig) return null;
-
-    return (
-      <button
-        key={buttonConfig.buttonName}
-        className={`btn btn-${buttonConfig.buttonColor} btn-sm`}
-        onClick={() => buttonConfig.Conditions(row)}
-      >
-        {buttonConfig.buttonName}
-      </button>
+    const buttonText =
+    typeof field.value === "function" ? field.value(row) : field.value;
+  return (
+    <button
+      key={field.name}
+      // className={`btn btn-${field.buttonColor} btn-sm`}
+      onClick={() => field.Conditions(row)}
+      className={`btn ${
+        typeof field.buttonColor === "function"
+          ? `btn-${field.buttonColor(row)}`
+          : field.buttonColor
+          ? `btn-${field.buttonColor}`
+          : "unblock-btn"
+      } btn-sm me-2`}
+    >
+      {buttonText}
+    </button>
     );
   };
 
