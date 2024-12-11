@@ -20,7 +20,11 @@ const ViewWallet = () => {
   const [rowStatus, setRowStatus] = PagesIndex.useState(0);
   const [UserDetails, setUserDetails] = PagesIndex.useState([]);
 
-  console.log("UserDetails", UserDetails);
+
+
+
+  
+
 
   const visibleFields = [
     "id",
@@ -73,9 +77,12 @@ const ViewWallet = () => {
 
       console.log("resres", res);
 
-      if (res.status) {
+      if (res) {
         setModalStateHistory(true);
         setModalStateHistoryTable(res.data);
+      } else {
+        setModalStateHistoryTable([]);
+
       }
     } else if (number === 3) {
       const res = await PagesIndex.admin_services.WALLET_LIST_USER_PROFILE_API(
