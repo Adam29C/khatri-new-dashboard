@@ -2,6 +2,8 @@ import React from "react";
 import PagesIndex from "../../PagesIndex";
 import ReusableModal from "../../../Helpers/Modal/ModalComponent_main";
 import { useFormik } from "formik";
+import Toast from "../../../Helpers/Toast";
+import { toast } from "react-toastify";
 
 const ViewWallet = () => {
   const token = localStorage.getItem("token");
@@ -17,6 +19,8 @@ const ViewWallet = () => {
     PagesIndex.useState("");
   const [rowStatus, setRowStatus] = PagesIndex.useState(0);
   const [UserDetails, setUserDetails] = PagesIndex.useState([]);
+
+  console.log("UserDetails", UserDetails);
 
   const visibleFields = [
     "id",
@@ -41,7 +45,6 @@ const ViewWallet = () => {
   const getHistory = async (row, number) => {
     setRowStatus(number);
     setModalStateHistoryUserDetails(row);
-    setModalStateHistory(true);
 
     if (number === 1) {
       const payload = {
@@ -54,7 +57,6 @@ const ViewWallet = () => {
         payload,
         token
       );
-
       setModalStateHistoryTable(res.data);
     } else if (number === 2) {
       const payload = {
@@ -68,14 +70,25 @@ const ViewWallet = () => {
         payload,
         token
       );
-      setModalStateHistoryTable(res.data);
+
+      console.log("resres", res);
+
+      if (res.status) {
+        setModalStateHistory(true);
+        setModalStateHistoryTable(res.data);
+      }
     } else if (number === 3) {
       const res = await PagesIndex.admin_services.WALLET_LIST_USER_PROFILE_API(
         row._id,
         token
       );
+
       if (res.status) {
         setUserDetails(res.data);
+        setModalStateHistory(true);
+      } else {
+        // alert(res.response.data.message)
+        toast.error(res.response.data.message);
       }
     }
   };
@@ -89,7 +102,7 @@ const ViewWallet = () => {
 
     validate: (values) => {
       const errors = {};
-  if (!values.type) {
+      if (!values.type) {
         errors.type = "Please Select Type";
       }
       if (!values.amount) {
@@ -98,7 +111,7 @@ const ViewWallet = () => {
       if (parseInt(values.amount) > 510000) {
         errors.amount = "Max amount is 510000";
       }
-    
+
       if (!values.particular) {
         errors.particular = "Please Select particular";
       }
@@ -106,8 +119,6 @@ const ViewWallet = () => {
       return errors;
     },
     onSubmit: async (values) => {
-      console.log("ModalStateHistoryUserDetails", ModalStateHistoryUserDetails);
-
       const payload = {
         id: ModalStateHistoryUserDetails._id,
         amount: values.amount,
@@ -222,8 +233,6 @@ const ViewWallet = () => {
       buttonColor: "info",
       Conditions: (row) => {
         getHistory(row, 3);
-
-        // BlockUserAndRemoveUser(row, 2);
       },
 
       Visiblity: false,
@@ -246,6 +255,8 @@ const ViewWallet = () => {
   PagesIndex.useEffect(() => {
     getList();
   }, []);
+
+  console.log("UserDetails && UserDetails", UserDetails && UserDetails);
 
   const { userData1, userData2 } = UserDetails && UserDetails;
 
@@ -380,6 +391,7 @@ const ViewWallet = () => {
         showFooter={false}
         // onPrimaryAction={handleSave}
       />
+      <PagesIndex.Toast />
     </PagesIndex.Main_Containt>
   );
 };
