@@ -1078,3 +1078,74 @@ export const WALLET_DOWNLOAD_DEBIT_REPORT_API = async (data,token) => {
 
 
 // --------------------------APPROVED DEBIT REQUEST------------------------
+
+
+// --------------------------PENDING_DEBIT_BANK_REQUEST------------------------
+
+
+export const PENDING_DEBIT_BANK_REQUEST_API = async(data,token)=>{
+
+  try {
+    const res = await dataservice.post(`${BASE_URL}${Api.PENDING_DEBIT_BANK_REQUEST}`,data,{
+      headers: header(token),
+    })
+    return res?.data
+  } catch (error) {
+    return error
+  }
+}
+
+export const PENDING_DEBIT_GET_BALANCE_API = async(data,token)=>{
+
+  try {
+    const res = await dataservice.post(`${BASE_URL}${Api.PENDING_DEBIT_GET_BALANCE}`,data,{
+      headers: header(token),
+    })
+    return res?.data
+  } catch (error) {
+    return error
+  }
+}
+
+export const PENDING_DEBIT_UPDATE_WALLET_API = async(data,token)=>{
+
+  try {
+    const res = await dataservice.post(`${BASE_URL}${Api.PENDING_DEBIT_UPDATE_WALLET}`,data,{
+      headers: header(token),
+    })
+    return res?.data
+  } catch (error) {
+    return error?.response
+  }
+}
+
+
+export const PENDING_DEBIT_DECLINE_API = async(data,token)=>{
+
+  try {
+    const res = await dataservice.patch(`${BASE_URL}${Api.PENDING_DEBIT_DECLINE}`,data,{
+      headers: header(token),
+    })
+    return res?.data
+  } catch (error) {
+    return error?.response
+  }
+}
+
+
+export const PENDING_DEBIT_GETPROFILE_API = async(id,token)=>{
+
+  try {
+    const res = await dataservice.get(`${BASE_URL}${Api.PENDING_DEBIT_GETPROFILE}?userId=${id}`,{
+      headers: header(token),
+    })
+    return res?.data
+  } catch (error) {
+    return error?.response
+  }
+}
+
+
+// --------------------------PENDING_DEBIT_BANK_REQUEST------------------------
+
+
