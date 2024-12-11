@@ -253,6 +253,14 @@ PENDING_DEBIT_GET_BALANCE:"pendingDebit/getBal",
 PENDING_DEBIT_UPDATE_WALLET:"pendingDebit/updateWallet",
 PENDING_DEBIT_DECLINE:"pendingDebit/decline",
 PENDING_DEBIT_GETPROFILE:"pendingDebit/getProfile",
+
+//USER PROFILE APIS
+USER_PROFILE_UPDATE_PASSWORD : "master/employees/updatePassword",
+USER_PROFILE_GET_LIST:"master/employees/profileAdmin",
+USER_PROFILE_BLOCK:"master/employees/blockEmployee"
+
+
+
 };
 
 export { Api };
