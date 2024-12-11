@@ -123,15 +123,7 @@ const NoticeBoard = () => {
       label: "Section 1 Title",
       type: "text",
       label_size: 12,
-      col_size: 6,
-    },
-
-    {
-      name: "contect",
-      label: "Contact",
-      type: "number",
-      label_size: 12,
-      col_size: 6,
+      col_size: 12,
     },
     {
       name: "description1",
@@ -140,6 +132,15 @@ const NoticeBoard = () => {
       label_size: 12,
       col_size: 12,
     },
+
+    {
+      name: "contect",
+      label: "Contact",
+      type: "number",
+      label_size: 12,
+      col_size: 12,
+    },
+  
     {
       name: "title2",
       label: "Section 2 Title",

@@ -15878,13 +15878,6 @@ table.dataTable thead .sorting::after {
   border-color: #4540f7;
 }
 
-.btn-secondary:active,
-.btn-secondary:focus,
-.btn-secondary:hover {
-  background: #6f78b2;
-  color: #fff;
-  border-color: #6f78b2;
-}
 
 .btn-success:active,
 .btn-success:focus,

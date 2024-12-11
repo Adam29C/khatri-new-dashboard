@@ -433,3 +433,6 @@ input:checked + .slider:before {
   z-index: 10001 !important; 
   position: absolute; 
 }
+.custom-padding-for-label{
+  padding: 7px 0px !important;
+}

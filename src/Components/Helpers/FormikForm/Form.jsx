@@ -364,16 +364,21 @@ const ReusableForm = ({
                   <>
                     <div className={`col-lg-${field.col_size}`}>
                       <div className="row d-flex">
-                        <div
-                        // className={`col-lg-${field.col_size}`}
-                        >
+                 
                           <div class="mb-3">
-                            <label
+                            {/* <label
                               className={`custom-label col-lg-${field.label_size}`}
                               for={field.name}
                             >
                               {field.label}
-                            </label>
+                            </label> */}
+                             <label
+                          className={`custom-label custom-padding-for-label col-lg-${field.label_size} col-form-label `}
+                          htmlFor={field.name}
+                        >
+                          {field.label}
+                          <span className="text-danger">*</span>
+                        </label>
                             <textarea
                               class="form-control"
                               rows={field.row_size}
@@ -388,7 +393,7 @@ const ReusableForm = ({
                               </div>
                             )}
                           </div>
-                        </div>
+                    
                       </div>
                     </div>
                   </>

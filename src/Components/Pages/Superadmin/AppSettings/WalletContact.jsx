@@ -11,6 +11,7 @@ const WalletContact = () => {
   const [walletHeadlineData, setWalletHeadlineData] = PagesIndex.useState("");
   const [walletUpiData, setWalletUpiData] = PagesIndex.useState("");
 
+
   //get wallet contact api
   const getWalletContactData = async () => {
     const res = await PagesIndex.admin_services.GET_WALLET_CONTACT_API(token);
