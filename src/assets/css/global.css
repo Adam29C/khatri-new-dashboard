@@ -212,13 +212,11 @@ input:checked + .slider:before {
   border-radius: 5px;
 }
 .short-datatable-main {
-.short-datatable-main {
   width: 500px;
   display: flex;
   flex-direction: column;
   padding: 15px 0px 0px 20px;
 }
-.short-datatable-data {
 .short-datatable-data {
   font-size: 14px;
 }
@@ -250,18 +248,15 @@ input:checked + .slider:before {
 }
 
 .htp-card {
-.htp-card {
   border: 1px solid #e3e3e3;
   padding: 20px;
   margin-top: 10px;
 }
 
 .bbb {
-.bbb {
   border: 1px solid black;
 }
 
-.card-color {
 .card-color {
   /* background: #4a8c6b2e; */
   background: #3c7c8334;
@@ -271,10 +266,7 @@ input:checked + .slider:before {
 
 .edit-icon {
   color: var(--khatri-color);
-.edit-icon {
-  color: var(--khatri-color);
 }
-.edit-icon:hover {
 .edit-icon:hover {
   color: var(--khatri-color);
 }
@@ -284,35 +276,28 @@ input:checked + .slider:before {
 }
 
 .delete-icon:hover {
-.delete-icon:hover {
   color: var(--red);
 }
 
 /* set background image favicon css start*/
 #dynamic-background {
   background-image: url("../Images/back-image-2.jpg");
-  background-image: url("../Images/back-image-2.jpg");
 }
 
 #company-logo {
-  content: url("../Images/Khatri_Main_logo_white.svg");
   content: url("../Images/Khatri_Main_logo_white.svg");
 }
 
 #favicon {
   content: url("../Images/favicon.png");
-  content: url("../Images/favicon.png");
 }
 
-#sidebar-logo {
-  content: url("../Images/Khatri_Main_logo_white.svg");
 #sidebar-logo {
   content: url("../Images/Khatri_Main_logo_white.svg");
 }
 
 /* set background image favicon css end */
 
-.hideFieldCss {
 .hideFieldCss {
   display: none;
 }
@@ -396,18 +381,6 @@ input:checked + .slider:before {
   background-clip: padding-box;
   border: 1px solid #ced4da;
   border-radius: 0.2rem;
-}
-.news-header-title{
-  font-size: 1.3rem;
-  margin: 0 0 25px 0;
-  color: #343a40;
-  font-weight: 600;
-}
-
-
-.rc-time-picker-panel {
-  z-index: 10001 !important; 
-  position: absolute; 
 }
 
 /* css for pending request get user profile model  */
