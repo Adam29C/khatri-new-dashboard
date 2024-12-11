@@ -4,8 +4,12 @@ import { Formik, FieldArray, ErrorMessage, useFormik } from "formik";
 
 import { toast } from "react-toastify";
 
+
+
 const HowToPlay = () => {
+  //get token in localstorage
   const token = localStorage.getItem("token")
+  //all state
   const [htpData, setHtpData] = useState([]);
   const [loading, setLoading] = PagesIndex.useState(true);
 
@@ -23,19 +27,21 @@ const HowToPlay = () => {
     getHtpeData();
   }, []);
 
+
   const initialValues = {
     howtoplay: [],
   };
 
   const handleFormSubmit = async (values) => {
+  
     let apidata = {
       // htpId: htpData[0]?._id,
       howtoplay: values.howtoplay,
     };
 
     const res = await PagesIndex.admin_services.UPDATE_HTP_API(apidata,token);
-  
-    if (res.status === 200) {
+  console.log(res,50)
+    if (res.status) {
       toast.success(res.message);
       getHtpeData();
     } else {
@@ -45,51 +51,46 @@ const HowToPlay = () => {
 
   return (
     <PagesIndex.Main_Containt title="Update How To Play" col_size={12}>
-      {loading ? (
+         {loading ? (
         <PagesIndex.Loader lodersize={20} />
       ) : (
-        <Formik
-          initialValues={initialValues}
-          validate={(values) => {
-            const errors = {};
-            values.howtoplay.forEach((item, index) => {
-              if (!item.title) {
-                if (!errors.howtoplay) errors.howtoplay = [];
-                errors.howtoplay[index] = { title: "Title is required" };
-              }
-              if (!item.videoUrl) {
-                if (!errors.howtoplay) errors.howtoplay = [];
-                errors.howtoplay[index] = {
-                  ...errors.howtoplay[index],
-                  videoUrl: "Video URL is required",
-                };
-              }
-              if (!item.description) {
-                if (!errors.howtoplay) errors.howtoplay = [];
-                errors.howtoplay[index] = {
-                  ...errors.howtoplay[index],
-                  description: "Description is required",
-                };
-              }
-            });
-            return errors;
-          }}
-          onSubmit={handleFormSubmit}
-        >
-          {({
-            values,
-            handleChange,
-            handleBlur,
-            setFieldValue,
-            handleSubmit,
-            errors,
+      <Formik
+        initialValues={initialValues}
+        validate={(values) => {
+          const errors = {};
+          values.howtoplay.forEach((item, index) => {
+            if (!item.title) {
+              if (!errors.howtoplay) errors.howtoplay = [];
+              errors.howtoplay[index] = { title: 'Title is required' };
+            }
+            if (!item.videoUrl) {
+              if (!errors.howtoplay) errors.howtoplay = [];
+              errors.howtoplay[index] = { ...errors.howtoplay[index], videoUrl: 'Video URL is required' };
+            }
+            if (!item.description) {
+              if (!errors.howtoplay) errors.howtoplay = [];
+              errors.howtoplay[index] = { ...errors.howtoplay[index], description: 'Description is required' };
+            }
+          });
+          return errors;
+        }}
+        onSubmit={handleFormSubmit}
+
+      >
+        {({
+          values,
+          handleChange,
+          handleBlur,
+          setFieldValue,
+          handleSubmit,
+          errors,
 
           touched,
         }) => {
           useEffect(() => {
             if (htpData.length > 0) {
               // const formattedData = htpData[0].howtoplay?.map((data) => ({
-                const formattedData = htpData.map((data) => ({
+                const formattedData = htpData?.[0]?.howtoplay?.map((data) => ({
                 title: data?.title || "",
                 description: data?.description || "",
                 videoUrl: data?.videoUrl || "",
@@ -107,7 +108,7 @@ const HowToPlay = () => {
                     {values?.howtoplay?.length > 0 &&
                       values?.howtoplay?.map((row, index) => (
                         <div className="row htp-card" key={index}>
-                          <div className="col-lg-6">
+                          <div className="col-lg-12">
                             <label
                               className={`custom-label  `}
                               htmlFor={`howtoplay.${index}.title`}
@@ -137,7 +138,40 @@ const HowToPlay = () => {
                                 </p>
                               )}{" "}
                           </div>
-                          <div className="col-lg-6 ">
+                  
+
+                          <div className="col-lg-12 mt-3 ">
+                            <label
+                              className={`custom-label   `}
+                              htmlFor={`howtoplay.${index}.description`}
+                            >
+                              Description
+                              <span className="text-danger">*</span>
+                            </label>
+
+                            <textarea
+                              name={`howtoplay.${index}.description`}
+                              placeholder="Enter Description"
+                              type="text"
+                              className="form-control"
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={row.description}
+                              rows="5"
+                              />
+                              {errors.howtoplay &&
+                                errors.howtoplay[index] &&
+                                errors.howtoplay[index].description &&
+                                touched &&
+                                touched.howtoplay &&
+                                touched.howtoplay[index] &&
+                                touched.howtoplay[index].description && (
+                                  <p className="error-text">
+                                    {errors.howtoplay[index].description}
+                                  </p>
+                                )}{" "}
+                          </div>
+                          <div className="col-lg-12 mt-3">
                             <label
                               className={`custom-label  `}
                               htmlFor={`howtoplay.${index}.videoUrl`}
@@ -167,39 +201,8 @@ const HowToPlay = () => {
                                   </p>
                                 )}{" "}
                           </div>
-
-                          <div className="col-lg-12 mb-4 ">
-                            <label
-                              className={`custom-label   `}
-                              htmlFor={`howtoplay.${index}.description`}
-                            >
-                              Description
-                              <span className="text-danger">*</span>
-                            </label>
-
-                            <textarea
-                              name={`howtoplay.${index}.description`}
-                              placeholder="Enter Description"
-                              type="text"
-                              className="form-control"
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              value={row.description}
-                              />
-                              {errors.howtoplay &&
-                                errors.howtoplay[index] &&
-                                errors.howtoplay[index].description &&
-                                touched &&
-                                touched.howtoplay &&
-                                touched.howtoplay[index] &&
-                                touched.howtoplay[index].description && (
-                                  <p className="error-text">
-                                    {errors.howtoplay[index].description}
-                                  </p>
-                                )}{" "}
-                          </div>
-                          {index >= htpData[0].howtoplay?.length && (
-                            <div className="col ms-auto d-flex justify-content-end pl-2 mb-2">
+                          {index >= htpData?.[0]?.howtoplay?.length && (
+                            <div className="col ms-auto d-flex justify-content-end pl-2 mb-2 mt-3">
                               <button
                                 type="button"
                                 className="btn btn-danger"
@@ -216,11 +219,11 @@ const HowToPlay = () => {
                         type="submit"
                         className="btn  submitBtn "
                       >
-                        Update
+                        Submit
                       </button>
                       <button
                         type="button"
-                        className="btn  submitBtn "
+                        className="btn btn-secondary "
                         onClick={() =>
                           push({ title: "", description: "", videoUrl: "" })
                         }
@@ -242,3 +245,4 @@ const HowToPlay = () => {
 };
 
 export default HowToPlay;
+
