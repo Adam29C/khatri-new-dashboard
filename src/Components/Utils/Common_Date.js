@@ -62,7 +62,8 @@ export const getActualDateFormate = (d) => {
   return `${month}-${day}-${year}`;
 };
 
-export const abc = (d) => {
+
+export const getActualDateWithFormat = (d) => {
   const today = new Date(d);
   const year = today.getFullYear();
   let month = today.getMonth() + 1;
@@ -75,8 +76,9 @@ export const abc = (d) => {
     day = `0${day}`;
   }
 
-  return `${year}-${month}-${day}`;
+  return `${month}/${day}/${year}`;
 };
+
 export const today = (d) => {
   // Validate karein ki `d` valid date hai ya nahi
   let abc = new Date(d);

@@ -1,71 +1,59 @@
-import React from 'react'
+import React from "react";
 import PagesIndex from "../../PagesIndex";
+import Split_Main_Containt from "../../../Layout/Main/Split_Main_Content";
+import { getActualDateWithFormat } from "../../../Utils/Common_Date";
 const CreditRequest = () => {
 
+  //get token in local storage
+  const token = localStorage.getItem("token");
 
+  //set actual date
+  const actual_date_formet = getActualDateWithFormat(new Date());
 
-  const columns = [
-    {
-      name: "Username",
-      selector: (row) => row.title,
-    },
-    {
-      name: "Name",
-      selector: (row) => row.year,
-    },
-    {
-      name: "Mobile",
-      selector: (row) => row.year,
-    },
-    {
-      name: "Status",
-      selector: (row) => row.year,
-    },
-    {
-      name: "Time",
-      selector: (row) => row.year,
-    },
-    {
-      name: "Mode",
-      selector: (row) => row.year,
-    },
-    {
-      name: "Amount",
-      selector: (row) => row.year,
+  //dispatch
+  const dispatch = PagesIndex.useDispatch();
+
+  //all state
+  const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
+  const [tableData, setTableData] = PagesIndex.useState([]);
+
+  // get api credit request upi
+
+  const getCreditRequest = async (date = actual_date_formet) => {
+    const payload = {
+      date_cust: date,
+      page: 1,
+      limit: 10,
+      search: SearchInTable,
+    };
+    const res = await PagesIndex.admin_services.GET_CREDIT_REQUEST_UPI_API(
+      payload,
+      token
+    );
+    if (res?.status) {
+      setTableData(res?.approvedData);
     }
-   
-   
-  ];
+  };
 
-  const data = [
-    {
-      id: 1,
-      title: "Beetlejuice",
-      year: "1988",
-    },
-    {
-      id: 2,
-      title: "Ghostbusters",
-      year: "1984",
-    },
-  ];
+  PagesIndex.useEffect(() => {
+    getCreditRequest();
+  }, []);
 
   const formik = PagesIndex.useFormik({
     initialValues: {
-     
-      date: "",
+      date: actual_date_formet || null,
     },
-    validate: (values) => {
-   
-    },
+    validate: (values) => {},
 
     onSubmit: async (values) => {
-     
+      getCreditRequest(values.date)
     },
   });
 
+
+const totalAmount = tableData && tableData.reduce((acc,item)=>acc + (item?.reqAmount || 0),0)
+
   const fields = [
-  
     {
       name: "date",
       label: "Search By Approve Date",
@@ -74,10 +62,66 @@ const CreditRequest = () => {
       col_size: 12,
     },
   ];
-let amount = "Approved : 0"
+
+  const visibleFields = [
+    "id",
+    "username",
+    "fullname",
+    "mobile",
+    "reqStatus",
+    "reqDate",
+    "reqTime",
+    "paymentMode",
+    "reqAmount",
+  ];
+
+  const cardLayouts = [
+    {
+      size: 12,
+      body: (
+        <div>
+          <PagesIndex.Formikform
+            fieldtype={fields.filter((field) => !field.showWhen)}
+            show_submit={true}
+            formik={formik}
+            button_Size={"w-15"}
+            btn_name="Submit"
+          />
+        </div>
+      ),
+    },
+
+    {
+      size: 12,
+      body: (
+        <div>
+          <PagesIndex.TableWitCustomPegination
+            data={tableData}
+            initialRowsPerPage={5}
+            SearchInTable={SearchInTable}
+            visibleFields={visibleFields}
+            searchInput={
+              <input
+                type="text"
+                placeholder="Search..."
+                value={SearchInTable}
+                onChange={(e) => setSearchInTable(e.target.value)}
+                className="form-control ms-auto"
+              />
+            }
+          />
+          <h3 className="ml-3 mb-3 fw-bold">Total Amount {totalAmount}/-</h3>
+        </div>
+      ),
+    },
+  ];
   return (
     <>
-  <PagesIndex.WalletMain title="Declined Report" columns={columns} data={data} fields={fields} formik={formik}  totalAmount={true} showsubmitbtn={true} amount={amount}/>
+      <Split_Main_Containt
+        title="Credit Requests : UPI"
+        add_button={false}
+        cardLayouts={cardLayouts}
+      />
     </>
   );
 };

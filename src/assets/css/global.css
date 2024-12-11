@@ -390,3 +390,40 @@ input:checked + .slider:before {
   z-index: 10001 !important; 
   position: absolute; 
 }
+
+/* css for pending request get user profile model  */
+.user-profile-head{
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+}
+
+.model-cross-btn{
+  border: none;
+  background-color: transparent;
+  float: right;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: none;
+  opacity: .5;
+margin-bottom: 30px;
+}
+
+
+/* css for pending request get user profile model  */
+
+.news-header-title{
+  font-size: 1.3rem;
+  margin: 0 0 25px 0;
+  color: #343a40;
+  font-weight: 600;
+}
+
+
+.rc-time-picker-panel {
+  z-index: 10001 !important; 
+  position: absolute; 
+}
