@@ -273,13 +273,48 @@ const ExamplePage = ({
     }
   };
 
+  // const visibleFields = [
+  //   // "id",
+  //   "providerName",
+  //   "session",
+  //   "resultDate",
+  //   "winningDigit",
+  // ];
+
+
+
+  
   const visibleFields = [
-    // "id",
-    "providerName",
-    "session",
-    "resultDate",
-    "winningDigit",
-  ];
+    {
+      name: "provider Name",
+      value: "providerName",
+      sortable: true,
+    },
+    {
+      name: "Session",
+      value: "session",
+      sortable: true,
+    },
+    {
+      name: "Result Date",
+      value: "resultDate",
+      sortable: true,
+    },
+    // {
+    //   name: "winning Digit",
+    //   value: "winningDigit",
+    //   sortable: true,
+    // },
+  ]
+
+
+
+
+
+
+
+
+
 
   const UserFullButtonList = [
     {
@@ -338,7 +373,7 @@ const ExamplePage = ({
       size: 12,
       body: (
         <div>
-          <PagesIndex.TableWitCustomPegination
+          <PagesIndex.TableWithCustomPeginationNew123
             data={tableData}
             initialRowsPerPage={5}
             SearchInTable={SearchInTable}
@@ -358,6 +393,23 @@ const ExamplePage = ({
       ),
     },
   ];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   return (
     <>

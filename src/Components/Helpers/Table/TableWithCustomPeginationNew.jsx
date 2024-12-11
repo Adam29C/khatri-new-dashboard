@@ -84,6 +84,9 @@ const CustomTable = ({
   const renderButton = (field, row) => {
     const buttonText =
       typeof field.value === "function" ? field.value(row) : field.value;
+
+    console.log("field.classNamefield.className", field.className);
+
     return (
       <button
         key={field.name}
@@ -91,11 +94,11 @@ const CustomTable = ({
         onClick={() => field.Conditions(row)}
         className={`btn ${
           typeof field.buttonColor === "function"
-            ? `btn-${field.buttonColor(row)}`
+            ? `btn-${field.buttonColor(row)} ${field.className}`
             : field.buttonColor
-            ? `btn-${field.buttonColor}`
-            : "unblock-btn"
-        } btn-sm me-2`}
+            ? `btn-${field.buttonColor} ${field.className}`
+            : `unblock-btn ${field.className}`
+        } btn-sm me-2 ${field.className}`}
       >
         {buttonText}
       </button>
@@ -182,6 +185,7 @@ const CustomTable = ({
                 {showIndex && <td>{(page - 1) * rowsPerPage + index + 1}</td>}
                 {columns.map((field) => (
                   <td
+                    className={` ${field.className}`}
                     key={field.value}
                     style={field.style ? field.style(row) : {}}
                     onClick={() => {

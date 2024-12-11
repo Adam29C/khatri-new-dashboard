@@ -284,11 +284,13 @@ const GameProvider = ({
     },
 
     {
-      // name: "Profile",
-      name: "Block",
+      name: "Delete",
+      value: "Delete",
+      buttonColor: "danger",
+
       isButton: true,
-      value: (row) => (row.banned ? "Unblock" : "Block"),
-      buttonColor: (row) => (row.banned ? "success" : "danger"),
+      // value: (row) => (row.banned ? "Unblock" : "Block"),
+      // buttonColor: (row) => (row.banned ? "success" : "danger"),
       Conditions: (row) => {
         handleActionBtn(row, 2);
       },

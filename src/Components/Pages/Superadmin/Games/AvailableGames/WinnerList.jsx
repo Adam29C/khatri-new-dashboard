@@ -16,6 +16,123 @@ const WinnerList = () => {
   const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
   const [mainWinnerData, setMainWinnerData] = PagesIndex.useState([]);
   const [ModalState, setModalState] = useState(false);
+  const [Refresh, setRefresh] = PagesIndex.useState(false);
+
+  const fetchData = async (page, rowsPerPage, searchQuery = "") => {
+    const apidata = {
+      providerId: data.providerId,
+      date: data.resultDate,
+      session: data.session,
+      page: page,
+      limit: rowsPerPage,
+      searchQuery,
+    };
+
+    try {
+      const res1 =
+        await PagesIndex.admin_services.GAME_REMAINING_WINNER_LIST_API(
+          apidata,
+          token
+        );
+
+      if (res1.status) {
+        const nonEmptyCategories1 = [];
+
+        Object.entries(res1?.data?.winnerList).forEach(([key, value]) => {
+          if (value.length > 0) {
+            nonEmptyCategories1.push(...value);
+          }
+        });
+
+        const totalRows1 = res1.data.pagination.totalItems || 10;
+        let mainRes1 = nonEmptyCategories1;
+
+        return { mainRes1, totalRows1 };
+      }
+    } catch {}
+  };
+
+  const fetchData1 = async (page, rowsPerPage, searchQuery = "") => {
+    const apidata1 = {
+      digit: data.winningDigit,
+      provider: data.providerId,
+      gamedate: data.resultDate,
+      resultId: data._id,
+      resultStatus: String(data.status),
+      digitFamily: String(data.winningDigitFamily),
+      sessionType: data.session,
+      providerName: data.providerName,
+      page: page,
+      limit: rowsPerPage,
+      searchQuery,
+    };
+
+    try {
+      const res = await PagesIndex.admin_services.GAME_MAIN_WINNER_LIST_API(
+        apidata1,
+        token
+      );
+
+      if (res.status) {
+        const nonEmptyCategories = [];
+
+        Object.entries(res?.data?.winnerList).forEach(([key, value]) => {
+          if (value.length > 0) {
+            nonEmptyCategories.push(...value);
+          }
+        });
+
+        const totalRows = res.data.pagination.totalItems || 5;
+        let mainRes = nonEmptyCategories;
+
+        return { mainRes, totalRows };
+      }
+    } catch {}
+  };
+
+  PagesIndex.useEffect(() => {
+    fetchData();
+    fetchData1();
+  }, []);
+
+  const visibleFields = [
+    {
+      name: "Winner Name",
+      value: "userName",
+      sortable: false,
+    },
+    {
+      name: "Mobile Number",
+      value: "mobileNumber",
+      sortable: false,
+    },
+    {
+      name: "Game",
+      value: "gameTypeName",
+      sortable: false,
+    },
+    {
+      name: "Bid Digit",
+      value: "bidDigit",
+      sortable: false,
+      className: "badge badge-purple",
+    },
+    {
+      name: "Bid Date",
+      value: "gameDate",
+      sortable: false,
+    },
+    {
+      name: "Rate",
+      value: "gameTypePrice",
+      sortable: false,
+    },
+    {
+      name: "Total Amount",
+      value: "gameWinPoints",
+      sortable: false,
+    },
+  ];
 
   //get game winner list api
   const getGameWinnerListApi = async () => {
@@ -40,6 +157,9 @@ const WinnerList = () => {
         apidata1,
         token
       );
+
+      console.log("resres", res);
+
       const res1 =
         await PagesIndex.admin_services.GAME_REMAINING_WINNER_LIST_API(
           apidata,
@@ -59,55 +179,6 @@ const WinnerList = () => {
     getGameWinnerListApi();
   }, []);
 
-  const visibleFields = [
-    "id",
-    "userName",
-    "mobileNumber",
-    "gameTypeName",
-    "bidDigit",
-    "gameDate",
-    "biddingPoints",
-    "gameTypePrice",
-    "gameWinPoints",
-  ];
-
-  const visibleFields1 = [
-    "id",
-    "userName",
-    "mobileNumber",
-    "gameTypeName",
-    "bidDigit",
-    "gameDate",
-    "biddingPoints",
-    "gameTypePrice",
-    "gameWinPoints",
-  ];
-
-  const UserFullButtonList = [
-    {
-      id: 0,
-      buttonName: "Get Winners List",
-      buttonColor: "",
-      route: "",
-      Conditions: (row) => {
-        handleActionBtn(row, 1);
-      },
-      Visiblity: true,
-      type: "button",
-    },
-    {
-      id: 1,
-      buttonName: "Delete Result",
-      buttonColor: "danger",
-      route: "test",
-      Conditions: (row) => {
-        handleActionBtn(row, 2);
-      },
-      Visiblity: false,
-      type: "button",
-    },
-  ];
-
   const cardLayouts = [
     {
       size: 12,
@@ -126,21 +197,12 @@ const WinnerList = () => {
       size: 12,
       body: (
         <div>
-          <PagesIndex.TableWitCustomPegination
-            data={mainWinnerData}
-            initialRowsPerPage={5}
-            SearchInTable={SearchInTable}
-            visibleFields={visibleFields}
-            UserFullButtonList={UserFullButtonList}
-            searchInput={
-              <input
-                type="text"
-                placeholder="Search..."
-                value={SearchInTable}
-                onChange={(e) => setSearchInTable(e.target.value)}
-                className="form-control ms-auto"
-              />
-            }
+          <PagesIndex.TableWithCustomPeginationNew
+            fetchData={fetchData1}
+            columns={visibleFields}
+            // UserFullButtonList={UserFullButtonList}
+            showIndex={true}
+            Refresh={Refresh}
           />
         </div>
       ),
@@ -158,22 +220,12 @@ const WinnerList = () => {
               Confirm Payment
             </button>
           </div>
-
-          <PagesIndex.TableWitCustomPegination
-            data={remainingWinnerData}
-            initialRowsPerPage={5}
-            SearchInTable={SearchInTable}
-            visibleFields={visibleFields1}
-            UserFullButtonList={UserFullButtonList}
-            searchInput={
-              <input
-                type="text"
-                placeholder="Search..."
-                value={SearchInTable}
-                onChange={(e) => setSearchInTable(e.target.value)}
-                className="form-control ms-auto"
-              />
-            }
+          <PagesIndex.TableWithCustomPeginationNew
+            fetchData={fetchData}
+            columns={visibleFields}
+            // UserFullButtonList={UserFullButtonList}
+            showIndex={true}
+            Refresh={Refresh}
           />
         </div>
       ),
