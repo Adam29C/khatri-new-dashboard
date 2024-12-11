@@ -745,4 +745,433 @@ export const SINGLE_EMPLOYEE_GET_LIST_API = async (id,token) => {
     return error;
   }
 };
+
+// ----------------------------------  WALLET ---------------------------------------------------
+
+// -----------------  REQUEST ON OFF SECTION -------------------------------
+
+export const REQUEST_LIST_API = async (token) => {
+  try {
+    const res = await axios.get(`${BASE_URL}${Api.REQUEST_LIST}` ,data, {
+            headers: header(token),
+          });
+          return res?.data;
+        } catch (error) {
+          return error;
+        }
+      }
 // --------------------------   Employee Crud ------------------------
+
+
+// --------------------------   GET_CREDIT_REQUEST_UPI ------------------------
+
+export const GET_CREDIT_REQUEST_UPI_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.GET_CREDIT_REQUEST_UPI}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const REQUEST_LIST_UPDATE_API = async (data, token) => {
+  try {
+    const res = await axios.post(
+      `${BASE_URL}${Api.REQUEST_LIST_UPDATE}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const GET_REQUEST_LIST_API = async (token) => {
+  try {
+    const res = await axios.get(`${BASE_URL}${Api.GET_REQUEST_LIST}`, 
+      data,
+      {
+        headers: header(token),
+      }
+    );
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+// --------------------------   GET_CREDIT_REQUEST_UPI ------------------------
+
+
+// --------------------------  GET_DECLINED_REQUEST ---------------------------
+
+export const GET_DECLINED_REQUEST_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.GET_DECLINED_REQUEST}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const UPDATE_REQUEST_API = async (data, token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.UPDATE_REQUEST}`
+      ,data, {
+        headers: header(token),
+      });
+      return res?.data;
+    } catch (error) {
+      return error;
+    }
+  };
+// --------------------------  GET_DECLINED_REQUEST------------------------
+
+
+// --------------------------APPROVED DEBIT REQUEST------------------------
+export const APPROVED_DEBIT_BANK_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.APPROVED_DEBIT_BANK}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// -----------------  WALLET SECTION -------------------------------
+
+// -----------------  WALLET SECTION -------------------------------
+
+export const GET_WALLET_LIST = async (data, token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.WALLET_LIST}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+      export const APPROVED_DEBIT_BANK_MANUAL_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.APPROVED_DEBIT_BANK_MANUAL}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const WALLET_LIST_HISTORY_API = async (data, token) => {
+  try {
+    const res = await axios.post(
+      `${BASE_URL}${Api.WALLET_LIST_HISTORY}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const WALLET_LIST_CREDIT_API = async (data, token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.WALLET_LIST_CREDIT}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const WALLET_LIST_USER_PROFILE_API = async (id, token) => {
+  try {
+    const res = await axios.get(
+      `${BASE_URL}${Api.WALLET_LIST_USER_PROFILE}?userId=${id}`,
+      {
+        headers: header(token),
+      }
+    );
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+export const WALLET_LIST_UPDATE_WALLET_API = async (data, token) => {
+  try {
+    const res = await axios.post(
+      `${BASE_URL}${Api.WALLET_LIST_UPDATE_WALLET}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// -----------------  WALLET SECTION -------------------------------
+
+// ----------------- FUND REQUEST -------------------------------
+
+
+export const FUND_REQUEST_LIST_API = async (data,token) => {
+
+  try {
+    const res = await axios.get(`${BASE_URL}${Api.GET_FUND_REQUEST}?status=${data}`, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+// FUND REQUEST APPROVED_FUND_REQUEST
+
+export const APPROVED_FUND_REQUEST_API = async (data,token) => {
+
+  try {
+    const res = await axios.patch(`${BASE_URL}${Api.APPROVED_FUND_REQUEST}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// FUND REQUEST DECLINED_FUND_REQUEST
+export const DECLINED_FUND_REQUEST_API = async (data,token) => {
+
+  try {
+    const res = await axios.patch(`${BASE_URL}${Api.DECLINED_FUND_REQUEST}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+// -----------------  FUND REQUEST -------------------------------
+
+
+// ----------------- WALLET EXPORT DEBIT REPORT -------------------------------
+//GET_EXPORT_DEBIT_REPORT
+export const GET_EXPORT_DEBIT_REPORT_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.GET_EXPORT_DEBIT_REPORT}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+export const EXPORT_DEBIT_SEE_TODAY_REPORT_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.EXPORT_DEBIT_TODAY_APPROVED_REPORT}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+export const EXPORT_DEBIT_GET_REPORT_API = async (data,token,endpoint) => {
+  console.log(data)
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.GET_EXPORT_DEBIT_REPORT}/${endpoint}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const EXPORT_MKXLS_FILE_API = async (data,token) => {
+  console.log(data)
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.GET_EXPORT_DEBIT_REPORT}/mkxls`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+// EXPORT_DEBIT_DECLINE_REPORT
+
+export const EXPORT_DEBIT_DECLINE_REPORT_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.EXPORT_DEBIT_DECLINE_REPORT}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// ---------------------WALLET EXPORT DEBIT REPORT-------------------------------
+
+// ---------------------GET_WALLET_INVOICE_PROFILE_CHANGE-------------------------------
+
+export const GET_WALLET_INVOICE_PROFILE_CHANGE_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.GET_WALLET_INVOICE_PROFILE_CHANGE}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+
+
+
+
+// ---------------------GET_WALLET_INVOICE_PROFILE_CHANGE-------------------------------
+
+// ---------------------WALLET_GET_SEARCH_DETAILS-------------------------------
+
+export const WALLET_GET_SEARCH_DETAILS_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.WALLET_GET_SEARCH_DETAILS}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+// ---------------------WALLET_GET_SEARCH_DETAILS-------------------------------
+
+
+// ---------------------WALLET_DOWNLOAD_DEBIT_REPORT-------------------------------
+
+export const WALLET_DOWNLOAD_DEBIT_REPORT_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.WALLET_DOWNLOAD_DEBIT_REPORT}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+// ---------------------WALLET_DOWNLOAD_DEBIT_REPORT-------------------------------
+
+
+
+
+
+
+
+
+
+
+
+// --------------------------APPROVED DEBIT REQUEST------------------------
+
+// --------------------------PENDING_DEBIT_BANK_REQUEST------------------------
+
+
+export const PENDING_DEBIT_BANK_REQUEST_API = async(data,token)=>{
+
+  try {
+    const res = await dataservice.post(`${BASE_URL}${Api.PENDING_DEBIT_BANK_REQUEST}`,data,{
+      headers: header(token),
+    })
+    return res?.data
+  } catch (error) {
+    return error
+  }
+}
+
+export const PENDING_DEBIT_GET_BALANCE_API = async(data,token)=>{
+
+  try {
+    const res = await dataservice.post(`${BASE_URL}${Api.PENDING_DEBIT_GET_BALANCE}`,data,{
+      headers: header(token),
+    })
+    return res?.data
+  } catch (error) {
+    return error
+  }
+}
+
+export const PENDING_DEBIT_UPDATE_WALLET_API = async(data,token)=>{
+
+  try {
+    const res = await dataservice.post(`${BASE_URL}${Api.PENDING_DEBIT_UPDATE_WALLET}`,data,{
+      headers: header(token),
+    })
+    return res?.data
+  } catch (error) {
+    return error?.response
+  }
+}
+
+
+export const PENDING_DEBIT_DECLINE_API = async(data,token)=>{
+
+  try {
+    const res = await dataservice.patch(`${BASE_URL}${Api.PENDING_DEBIT_DECLINE}`,data,{
+      headers: header(token),
+    })
+    return res?.data
+  } catch (error) {
+    return error?.response
+  }
+}
+
+
+export const PENDING_DEBIT_GETPROFILE_API = async(id,token)=>{
+
+  try {
+    const res = await dataservice.get(`${BASE_URL}${Api.PENDING_DEBIT_GETPROFILE}?userId=${id}`,{
+      headers: header(token),
+    })
+    return res?.data
+  } catch (error) {
+    return error?.response
+  }
+}
+
+
+// --------------------------PENDING_DEBIT_BANK_REQUEST------------------------
+
+
