@@ -101,7 +101,6 @@ const PagesIndex = {
   TableWithCustomPeginationNew123,
   ModalComponent,
   game_service,
-  game_service,
   report_service,
   Split_Main_Containt
 };

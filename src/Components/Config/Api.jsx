@@ -74,9 +74,7 @@ const Api = {
   STARLINE_GAME_CONFIRM_REVERT_PAYMENT: "starGameResult/paymentRevert",
 
   //  STARLINE REVERT PAYMENT -
-
   STARLINE_GAME_REFUND_PAYMENT: "mainGameResult/refundPayment",
-  STARLINE_GAME_CONFIRM_REVERT_PAYMENT: "starGameResult/paymentRevert",
 
   // JACKPOT GAME PROVIDER CRUD
   JACKPOT_GAME_PROVIDER_LIST: "abGameSetting",
@@ -158,10 +156,10 @@ const Api = {
   BLOCK_EMPLOYEE: "master/employees/blockEmployee",
   DELETE_EMPLOYEE: "master/employees/deleteEmp",
 
-  GET_VERSION: "/admin/appSetting/listVersionSetting",
-  UPDATE_VERSION: "/admin/appSetting/updateVersionSetting",
-  WALLET_CONTACT_LIST: "/admin/appSetting/walledContestList",
-  UPDATE_WALLET_CONTACT: "/admin/appSetting/updateWalledContest",
+  // GET_VERSION: "/admin/appSetting/listVersionSetting",
+  // UPDATE_VERSION: "/admin/appSetting/updateVersionSetting",
+  // WALLET_CONTACT_LIST: "/admin/appSetting/walledContestList",
+  // UPDATE_WALLET_CONTACT: "/admin/appSetting/updateWalledContest",
 
   //APP SETTINGS APP VERSION API'S
   GET_VERSION: "versionSetting",
@@ -223,8 +221,6 @@ const Api = {
   //FUND MODE
   ADD_FUND_MODE: "upiId/modeAdd",
 
-  DELETE_FUND_MODE: "upiId/dlt_mode",
-  CHANGE_STATUS_FUND_MODE: "upiId/disable_mode",
 
   //FUND MODE
   GET_FUND_MODE: "upiId/fundMode",

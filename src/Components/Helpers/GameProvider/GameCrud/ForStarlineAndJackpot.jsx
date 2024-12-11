@@ -40,8 +40,6 @@ const ForStarlineAndJackpot = ({gametype,listpath , }) => {
           gameType:gametype,
           providerName: values.providerName,
           providerResult: values.providerResult,
-
-          activeStatus: values.activeStatus,
           mobile: "0",
           activeStatus: values.activeStatus,
           ...(location?.state?._id ? { providerId: location?.state?._id } : ""),
