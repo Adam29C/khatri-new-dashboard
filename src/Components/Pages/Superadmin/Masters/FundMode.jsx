@@ -1,26 +1,20 @@
-
-import React, { useState, useEffect } from "react";
 import Main_Containt from "../../../Layout/Main/Main_Containt";
 import ModalComponent from "../../../Helpers/Modal/ModalComponent";
 import PagesIndex from "../../PagesIndex";
-import DeleteSweetAlert from "../../../Helpers/DeleteSweetAlert";
-import { toast } from "react-toastify";
 
 const FundMode = () => {
   //get token in localstorage
   const token = localStorage.getItem("token");
 
   //all state
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
-  const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = PagesIndex.useState(false);
+  const [data, setData] = PagesIndex.useState([]);
+  const [visible, setVisible] = PagesIndex.useState(false);
 
-  let userDeleteReason = false;
   const getList = async () => {
     setLoading(true);
     try {
-      const res = await PagesIndex.admin_services.GET_UPI_LIST_API(token);
-
+      const res = await PagesIndex.admin_services.GET_FUND_MODE_API(token);
       setData(res?.data);
     } catch (error) {
     } finally {
@@ -28,70 +22,88 @@ const FundMode = () => {
     }
   };
 
-  useEffect(() => {
+  PagesIndex.useEffect(() => {
     getList();
   }, []);
 
-  const handleStatusUpdate = async (event, value) => {
+  //handle block and unblock status function
+  const handleStatusUpdate = async (row) => {
     try {
       let apidata = {
-      id:"",
-        upiId: value._id,
-        status: event,
+        id: row._id,
+        status: !row.disabled,
       };
 
-      const response = await PagesIndex.admin_services.UPDATE_UPI_LIST_API(
-        apidata
-      );
+      const response =
+        await PagesIndex.admin_services.CHANGE_STATUS_FUND_MODE_API(
+          apidata,
+          token
+        );
 
-      if (response?.status === 200) {
-        toast.success(response.message);
+      if (response?.status) {
+        PagesIndex.toast.success(response.message);
         getList();
-      } else {
-        alert(response.response.data.message);
       }
     } catch (error) {
       PagesIndex.toast.error(error);
     }
   };
 
+  //delete fund mode list start
+  const handleDelete = async (row) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this Fund Mode?"
+    );
+    if (!confirmDelete) return;
+
+    try {
+      const apidata = {
+        id: row?._id,
+      };
+
+      const res = await PagesIndex.admin_services.DELETE_FUND_MODE_API(
+        apidata,
+        token
+      );
+
+      if (res.status) {
+        getList();
+        alert(res?.message);
+      }
+    } catch (error) {}
+  };
+
   const columns = [
     {
-      name: "Name",
-      selector: (row) => row?.upiName,
+      name: "Mode",
+      selector: (row) => row?.mode,
     },
-
     {
-      name: "IsActive",
-      selector: (row) => (
-        <span
-          className={`badge fw-bold ${
-            row.status === "true" ? "bg-primary" : "bg-danger"
-          }`}
-        >
-          {row.status === "true" ? "Active" : "Disable"}
-        </span>
-      ),
+      name: "Redirect Url",
+      selector: (row) => row?.redirectURL,
     },
-
     {
       name: "Status",
+      selector: (row) => (row?.disabled ? "Disabled" : "Active"),
+    },
+    {
+      name: "Edit",
       selector: (row) => (
-        <div>
-          <select
-            className="form-select-upi"
-            aria-label="Default select example"
-            onChange={(e) => {
-              handleStatusUpdate(e.target.value, row);
-            }}
+        <span>
+          <button
+            onClick={() => handleStatusUpdate(row)}
+            class={`btn ${
+              row.disabled ? "btn-success" : "btn-danger"
+            } btn-sm me-2`}
           >
-            <option value="false" disbled selected>
-              {row.status === "true" ? "Active" : "Disable"}
-            </option>
-            <option value="true">Active</option>
-            <option value="false">Disable</option>
-          </select>
-        </div>
+         {/* <i className="fa-solid fa-user-slash mr-1 icon-fs"></i>
+         <i className="fa-solid fa-user mr-1 icon-fs"></i>
+            {row.disabled ? "Unblock" : "Block"} */}
+            {
+              row?.disabled ? (<><i className="fa-solid fa-user mr-1 icon-fs"></i>Unblock</>):(<> <i className="fa-solid fa-user-slash mr-1 icon-fs"></i>Block</>)
+            }
+          </button>
+        </span>
       ),
     },
 
@@ -100,37 +112,34 @@ const FundMode = () => {
       selector: (cell, row) => (
         <div style={{ width: "120px" }}>
           <div>
-            <PagesIndex.Link
-             className="delete-icon"
-              href="#"
-              onClick={() =>
-                DeleteSweetAlert(
-                  PagesIndex.admin_services.DELETE_UPI_LIST_API,
-                  cell?._id,
-                  getList,
-                  userDeleteReason
-                )
-              }
-            >
-              <span data-toggle="tooltip" data-placement="top" title="Delete">
-                <i class="ti-trash fs-5 mx-1 "></i>
-              </span>
-            </PagesIndex.Link>
+            <span>
+              <button
+                onClick={() => handleDelete(cell)}
+                class="btn btn-danger btn-sm me-2"
+              >  <i class="fa fa-trash mr-1 icon-fs" aria-hidden="true"></i>
+                Delete Mode
+              </button>
+            </span>
           </div>
         </div>
       ),
     },
   ];
 
+  //handle add formik form
   const formik = PagesIndex.useFormik({
     initialValues: {
-      upiName: "",
-      status:""
+      mode: "",
+      status: "",
+      urlWeb: "",
     },
     validate: (values) => {
       const errors = {};
-      if (!values.upiName) {
-        errors.upiName = PagesIndex.valid_err.EMPTY_UPI_ERROR;
+      if (!values.mode) {
+        errors.mode = PagesIndex.valid_err.REQUIRE_MODE;
+      }
+      if (!values.urlWeb) {
+        errors.urlWeb = PagesIndex.valid_err.URLWEB_MODE;
       }
       if (!values.status) {
         errors.status = PagesIndex.valid_err.STATUS_ERROR;
@@ -139,19 +148,25 @@ const FundMode = () => {
     },
 
     onSubmit: async (values) => {
-      console.log(values)
       try {
         let apidata = {
-          upiName: values.upiName,
+          mode: values.mode,
+          status: values.status === "true",
+          urlWeb: values.urlWeb,
         };
 
-        const res = await PagesIndex.admin_services.ADD_UPI_LIST_API(apidata);
+        const res = await PagesIndex.admin_services.ADD_FUND_MODE_API(
+          apidata,
+          token
+        );
 
-        if (res?.status === 200) {
+        if (res?.status) {
           PagesIndex.toast.success(res?.message);
           getList();
           setVisible(false);
-          formik.setFieldValue("upiName", "");
+          formik.setFieldValue("mode", "");
+          formik.setFieldValue("status", "");
+          formik.setFieldValue("urlWeb", "");
         } else {
           PagesIndex.toast.error(res.response.data.message);
         }
@@ -163,20 +178,20 @@ const FundMode = () => {
 
   const fields = [
     {
-      name: "paymentMode",
+      name: "mode",
       label: "Payment Mode",
       type: "text",
       label_size: 12,
       col_size: 12,
     },
     {
-        name: "paymentMode",
-        label: "Redirect URL(Only For WEB Payment)",
-        type: "text",
-        label_size: 12,
-        col_size: 12,
-      },
-   
+      name: "urlWeb",
+      label: "Redirect URL(Only For WEB Payment)",
+      type: "text",
+      label_size: 12,
+      col_size: 12,
+    },
+
     {
       name: "status",
       label: "Status",
@@ -196,12 +211,10 @@ const FundMode = () => {
     },
   ];
 
-    // Handle Add Button
-    const handleAdd = () => {
-    
-      setVisible(true);
-    };
-
+  // Handle Add Button
+  const handleAdd = () => {
+    setVisible(true);
+  };
 
   return (
     <Main_Containt

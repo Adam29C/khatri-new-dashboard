@@ -775,7 +775,7 @@ const SplitForm = () => {
       size: 12,
       body: (
         <div>
-          <PagesIndex.TableWithCustomPeginationNew123
+          <PagesIndex.TableWithCustomPeginationNew
             data={TableTwo && TableTwo}
             initialRowsPerPage={10}
             SearchInTable={SearchInTable}

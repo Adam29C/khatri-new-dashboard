@@ -61,7 +61,6 @@ const SplitForm = () => {
 
         // Add summary object at the end
         resultArray.push({ bidsum, amountsum });
-        console.log("Processed Data Array:", resultArray);
 
         settableData(resultArray);
 
@@ -115,7 +114,6 @@ const SplitForm = () => {
     },
   ];
 
-  console.log("tableData", tableData[tableData.length - 3]);
 
   const fields = [
     {

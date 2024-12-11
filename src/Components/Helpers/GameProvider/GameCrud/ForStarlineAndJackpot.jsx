@@ -40,8 +40,6 @@ const ForStarlineAndJackpot = ({gametype,listpath , }) => {
           gameType:gametype,
           providerName: values.providerName,
           providerResult: values.providerResult,
-
-          activeStatus: values.activeStatus,
           mobile: "0",
           activeStatus: values.activeStatus,
           ...(location?.state?._id ? { providerId: location?.state?._id } : ""),
@@ -70,9 +68,9 @@ const ForStarlineAndJackpot = ({gametype,listpath , }) => {
 
   const fields = [
     {
-      name: "providerName",
+      name: "providerName1212",
       label: "Provider Name",
-      type: "text",
+      type: "date",
       label_size: 6,
       col_size: 6,
     },

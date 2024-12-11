@@ -100,23 +100,14 @@ const AllReports = () => {
       ],
       fetchReportData: async (value) => {
         const payload = {
-          // dateStart: today(value.sdate) || today(new Date()),
-          // date: today(value.edate) || today(new Date()),
-          // id: value.bankName || '1',
-          // page: 1,
-          // limit: 10,
-          // search: "",
-          // {z
-          id: "1",
-          date: "11/29/2024",
-          dateStart: "10/29/2024",
+          dateStart: today(value.sdate) || today(new Date()),
+          date: today(value.edate) || today(new Date()),
+          id: value.bankName || '1',
           page: 1,
           limit: 10,
           search: "",
-          // }
         };
 
-        // console.log("payloadpayload", payload);
 
         try {
           // Call your API for report 1

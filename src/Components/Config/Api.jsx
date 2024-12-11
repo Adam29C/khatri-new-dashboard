@@ -14,59 +14,27 @@ const Api = {
 
   //USERS
   USERS_LIST: "allUser/getAllUsers",
-  DELETED_USERS: "/allUser/deleteUserByAdmin",
   USER_PROFILE_GET: "/allUser/getProfile",
   BLOCK_USER: "/allUser/blockUser",
+
+  //GAME SETTING
+  // ADMIN_GAME_SETTING: "/admin/game/gameSetting",
+  ADMIN_GAME_SETTING: "mainGameSetting",
+  ADMIN_GAME_SETTING_ADD: "mainGameSetting/insertSettings",
+  ADMIN_GAME_SETTING_UPDATEALL: "mainGameSetting/updateAll",
+
+  
 
   //MAIN GAME API'S
   MAIN_GAME: "mainGames",
   MAIN_GAME_ADD: "mainGames/insertGame",
 
-  // ADMIN_GAME_RATES: "admin/game/gameRate",
-  MAIN_GAME_RATE_LIST: "mainGameRate",
-  MAIN_GAME_RATE_ADD: "mainGameRate/insertGame",
-  MAIN_GAME_RATE_UPDATE: "mainGameRate",
-  MAIN_GAME_RATE_REMOVE: "mainGameRate",
-
-  //GAME SETTING
-  // ADMIN_GAME_SETTING: "/admin/game/gameSetting",
-  ADMIN_GAME_SETTING: "mainGameSetting",
-  ADMIN_GAME_SETTING_ADD: "mainGameSetting/insertSettings",
-  ADMIN_GAME_SETTING_UPDATEALL: "mainGameSetting/updateAll",
-
-  // GAME PROVIDER
-
-  STARLINE_GAME_PROVIDERS_LIST: "starlineProvider/getStarlineProvider",
-  STARLINE_GAME_PROVIDER_ADD: "starlineProvider/insertStarLineProvider",
-  STARLINE_GAME_PROVIDER_UPDATE: "starlineProvider/updateStarLineProvider",
-  STARLINE_GAME_PROVIDERS_DELETE: "starlineProvider/deleteStarLineProvider",
-  STARLINE_GAME_PROVIDERS_GET_BY_ID: "starlineProvider/starLineProviderById",
-
-  // GAME RATE
-  STARLINE_GAME_RATE_LIST: "starGameRate",
-  STARLINE_GAME_RATE_ADD: "starGameRate/insertGame",
-  STARLINE_GAME_RATE_UPDATE: "starGameRate/update",
-  STARLINE_GAME_RATE_REMOVE: "starGameRate",
-
-  // STARLINE GAME SETTING CRUD
-
-  STARLINE_GAME_PROVIDERS: "starGameSetting/addSetting",
-  STARLINE_GAME_SETTING_LIST: "starGameSetting",
-  STARLINE_GAME_SETTING_ADD: "starGameSetting/insertSettings",
-  STARLINE_GAME_SETTING_UPDATE_ALL: "starGameSetting/updateProviderSettings",
-  STARLINE_GAME_SETTING_UPDATE_ONE: "starGameSetting",
-
-  // ADMIN_GAME_RATES: "admin/game/gameRate",
-  MAIN_GAME_RATE_LIST: "mainGameRate",
-  MAIN_GAME_RATE_ADD: "mainGameRate/insertGame",
-  MAIN_GAME_RATE_UPDATE: "mainGameRate",
-  MAIN_GAME_RATE_REMOVE: "mainGameRate",
-
-  //GAME SETTING
-  // ADMIN_GAME_SETTING: "/admin/game/gameSetting",
-  ADMIN_GAME_SETTING: "mainGameSetting",
-  ADMIN_GAME_SETTING_ADD: "mainGameSetting/insertSettings",
-  ADMIN_GAME_SETTING_UPDATEALL: "mainGameSetting/updateAll",
+  // GAME RESULT
+  ADMIN_GAME_RESULT: "mainGameResult",
+  ADMIN_GAME_RESULT_DELETE: "mainGameResult/delete",
+  GET_GAME_RESULT_WITH_DATE: "mainGameResult/pastResult",
+  GET_REMAINING_WINNER_LIST: "winnerList/remaningWinnerList",
+  GET_MAIN_WINNER_LIST: "winnerList/mainWinnerList",
 
   // GAME PROVIDER
 
@@ -100,45 +68,19 @@ const Api = {
   STARLINE_GAME_PAST_RESULT: "starGameResult/pastResult",
   STARLINE_GAME_WINNER_LIST: "starlineWinner/starLineWinnerList",
   STARLINE_GAME_DISTIBUTE_FUND_WINNERS: "starlineWinner/starWinners",
-  // STARLINE_GAME_SETTING_ADD: "starGameSetting/insertSettings",
-  // STARLINE_GAME_SETTING_UPDATE_ALL: "starGameSetting/updateProviderSettings",
-  // STARLINE_GAME_SETTING_UPDATE_ONE: "starGameSetting",
 
   //  STARLINE REVERT PAYMENT -
   STARLINE_GAME_REVERT_PAYMENT: "starGameResult/revertPayment",
   STARLINE_GAME_CONFIRM_REVERT_PAYMENT: "starGameResult/paymentRevert",
 
   //  STARLINE REVERT PAYMENT -
-
   STARLINE_GAME_REFUND_PAYMENT: "mainGameResult/refundPayment",
-  STARLINE_GAME_CONFIRM_REVERT_PAYMENT: "starGameResult/paymentRevert",
 
   // JACKPOT GAME PROVIDER CRUD
   JACKPOT_GAME_PROVIDER_LIST: "abGameSetting",
   JACKPOT_GAME_PROVIDER_ADD: "abGameProvider/insertGame",
   JACKPOT_GAME_PROVIDER_UPDATE: "abGameProvider",
   JACKPOT_GAME_PROVIDERS_DELETE: "abGameProvider",
-
-  //  STARLINE GAME RESULT -
-  STARLINE_GAME_MAIN_RESULT: "starGameResult",
-  STARLINE_GAME_MAIN_RESULT_ADD: "starGameResult",
-  STARLINE_GAME_PAST_RESULT: "starGameResult/pastResult",
-  STARLINE_GAME_WINNER_LIST: "starlineWinner/starLineWinnerList",
-  STARLINE_GAME_DISTIBUTE_FUND_WINNERS: "starlineWinner/starWinners",
-  // STARLINE_GAME_SETTING_ADD: "starGameSetting/insertSettings",
-  // STARLINE_GAME_SETTING_UPDATE_ALL: "starGameSetting/updateProviderSettings",
-  // STARLINE_GAME_SETTING_UPDATE_ONE: "starGameSetting",
-
-  //  STARLINE REVERT PAYMENT -
-
-  STARLINE_GAME_PROVIDER_LIST: "starGameProfitLoss",
-  STARLINE_GAME_PROFIT_LOSS_LIST: "starGameProfitLoss/getResult",
-  STARLINE_GAME_PROFIT_LOSS_BID_DATA: "starGameProfitLoss/getBidData",
-
-  //  STARLINE REVERT PAYMENT -
-
-  STARLINE_GAME_REVERT_PAYMENT: "starGameResult",
-  STARLINE_GAME_CONFIRM_REVERT_PAYMENT: "starGameResult",
 
   // JACKPOT GAME SETTING CRUD
   JACKPOT_GAME_PROVIDERS: "abGameSetting/addSetting",
@@ -153,13 +95,20 @@ const Api = {
   JACKPOT_GAME_RATE_UPDATE: "abGameRate/update",
   JACKPOT_GAME_RATE_REMOVE: "abGameRate",
 
-  ADMIN_CHANGE_PASSWORD: "admin/changePassword",
+  // CUTTING GROUP
+
+  CUTTING_GROUP_LIST: "cuttingGroups/getCutting",
+  CUTTING_GROUP_OC_LIST: "cuttingGroups/getOC",
+  GET_BID_DATA: "cuttingGroups/getOC",
+  OC_CUTTING_GROUP_LIST: "ocCuttingGroup/getFinalCutting",
+  OC_CUTTING_GROUP_OC_LIST: "ocCuttingGroup/finalCloseCutingGroup",
 
   // REPORT
   MAIN_GAME_REPORT: "mainSalesReport/userReport",
   STARLINE_GAME_REPORT: "starSalesReport/userReportStar",
   JACKPOT_REPORT: "abSalesReport/userReportAB",
   JACKPOT_BIDS_REPORT: "totalBids/andarBaharBidsData",
+
   GET_FUND_REPORT_DETAILS: "fundReports",
   GET_FUND_REPORT: "fundReports",
   GET_UPI_FUND_REPORT_DETAILS: "upiFundReport/upiReport",
@@ -188,6 +137,10 @@ const Api = {
   WALLET_LIST_USER_PROFILE: "view_wallet/getProfile",
   WALLET_LIST_UPDATE_WALLET: "view_wallet/walletUpdate",
 
+  //DELETED USERS
+  DELETED_USER_GET_TIMEHISTORY: "deleteduser/getTimeHistory",
+  DELETED_USER_TIMEHISTORY: "deleteduser/timeHistory",
+  GET_DELETED_USERS: "deleteduser",
   // SYSTEM MODULE
   ADD_SYSTEM_INFO: "admin/addSystemInfo",
   LIST_SYSTEM_INFO: "common/systemInforList",
@@ -195,25 +148,18 @@ const Api = {
   ADMIN_PROFILE_GET: "admin/adminProfile",
 
   // EMPLOYEE MODULE
-  CREATE_EMPLOYEE: "admin/createEmployee",
-  UPDATE_EMPLOYEE: "admin/updateEmployeeInformition",
+  CREATE_EMPLOYEE: "master/employees/createEmployee",
+  UPDATE_EMPLOYEE: "master/employees/updateEmployee",
+  EMPLOYEE_CHANGE_PASSWORD: "master/employees/updatePassword",
+  SINGLE_EMPLOYEE_LIST: "master/employees/empById",
+  EMPLOYEE_LIST: "master/employees",
+  BLOCK_EMPLOYEE: "master/employees/blockEmployee",
+  DELETE_EMPLOYEE: "master/employees/deleteEmp",
 
-  EMPLOYEE_LIST: "admin/empList",
-  BLOCK_EMPLOYEE: "admin/blockEmployee",
-  DELETE_EMPLOYEE: "admin/deleteEmployee",
-
-  //MAIN GAME API'S
-  MAIN_GAME: "mainGames",
-  MAIN_GAME_ADD: "mainGames/insertGame",
-
-  // GAME RESULT
-  ADMIN_GAME_RESULT: "mainGameResult",
-  ADMIN_GAME_RESULT_DELETE: "mainGameResult/delete",
-  GET_GAME_RESULT_WITH_DATE: "mainGameResult/pastResult",
-  GET_REMAINING_WINNER_LIST: "winnerList/remaningWinnerList",
-  GET_MAIN_WINNER_LIST: "winnerList/mainWinnerList",
-
-  USERS_IDEAS: "/admin/UserIdea",
+  // GET_VERSION: "/admin/appSetting/listVersionSetting",
+  // UPDATE_VERSION: "/admin/appSetting/updateVersionSetting",
+  // WALLET_CONTACT_LIST: "/admin/appSetting/walledContestList",
+  // UPDATE_WALLET_CONTACT: "/admin/appSetting/updateWalledContest",
 
   //APP SETTINGS APP VERSION API'S
   GET_VERSION: "versionSetting",
@@ -250,18 +196,18 @@ const Api = {
   BLOCK_UPI_LIST: "upiId/disable_upi",
   DELETE_UPI_LIST: "upiId/dlt_upi",
 
-    //FUND REQUEST GET LIST AND APPROVED / DECLINED REQUEST APIS
-    GET_FUND_REQUEST : "fundsRequest/getManualPaymentList",
-    APPROVED_FUND_REQUEST : "fundsRequest/approveManualPayment",
-    DECLINED_FUND_REQUEST : "fundsRequest/declineManualPayment",
+  //FUND REQUEST GET LIST AND APPROVED / DECLINED REQUEST APIS
+  GET_FUND_REQUEST: "fundsRequest/getManualPaymentList",
+  APPROVED_FUND_REQUEST: "fundsRequest/approveManualPayment",
+  DECLINED_FUND_REQUEST: "fundsRequest/declineManualPayment",
 
-    //wallet export debit report 
-    GET_EXPORT_DEBIT_REPORT:"exportDebit",
+   //wallet export debit report 
+  GET_EXPORT_DEBIT_REPORT:"exportDebit",
 
-    //todayApproved
-    EXPORT_DEBIT_TODAY_APPROVED_REPORT:"exportDebit/todayApproved",
+  //todayApproved
+  EXPORT_DEBIT_TODAY_APPROVED_REPORT:"exportDebit/todayApproved",
 
-    EXPORT_DEBIT_DECLINE_REPORT:"exportDebit/decline",
+  EXPORT_DEBIT_DECLINE_REPORT:"exportDebit/decline",
 
     //wallet /invoice/profileChange
     GET_WALLET_INVOICE_PROFILE_CHANGE:"invoice/profileChange",
@@ -270,10 +216,43 @@ const Api = {
  WALLET_GET_SEARCH_DETAILS :"searchAccount/getDetails",
 
  //exportDebit/showCondition
- WALLET_DOWNLOAD_DEBIT_REPORT : "exportDebit/showCondition"
+ WALLET_DOWNLOAD_DEBIT_REPORT : "exportDebit/showCondition",
+
+  //FUND MODE
+  ADD_FUND_MODE: "upiId/modeAdd",
 
 
+  //FUND MODE
+  GET_FUND_MODE: "upiId/fundMode",
+  DELETE_FUND_MODE: "upiId/dlt_mode",
+  CHANGE_STATUS_FUND_MODE: "upiId/disable_mode",
+
+  //notification apis
+  GET_NOTIFICATION: "notification",
+  ADD_NOTIFICATION: "notification/inserNotification",
+  DELETE_NOTIFICATION: "notification",
+
+  //news
+  NEWS: "news",
+
+  //USER IDEA'S
+  USERS_IDEAS: "userIdea",
+//CREDIT REQUEST GET API
+GET_CREDIT_REQUEST_UPI:"creditRequest/creditUPI",
+
+//DECLINED REQUEST GET API
+GET_DECLINED_REQUEST:"declineReq/declined",
+
+//APPROVED DEBIT REQUEST BANK AND BANK MANUAL APIS
+APPROVED_DEBIT_BANK:"approveDebit/bank_ajax",
+APPROVED_DEBIT_BANK_MANUAL:"approveDebit/bankManual",
+
+//PENDING DEBIT BANK REQUEST 
+PENDING_DEBIT_BANK_REQUEST:"pendingDebit/pendingBank",
+PENDING_DEBIT_GET_BALANCE:"pendingDebit/getBal",
+PENDING_DEBIT_UPDATE_WALLET:"pendingDebit/updateWallet",
+PENDING_DEBIT_DECLINE:"pendingDebit/decline",
+PENDING_DEBIT_GETPROFILE:"pendingDebit/getProfile",
 };
-
 
 export { Api };

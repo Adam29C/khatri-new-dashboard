@@ -198,10 +198,7 @@ const PaginatedTable = ({
       </div>
 
       {/* Table */}
-      <table
-        id="myTable"
-        className="table table-striped table-bordered table-responsive "
-      >
+      <table className="table table-striped table-bordered table-responsive">
         <thead className="text-center table-header-backeground">
           {data && data?.length > 0 && (
             <tr>
@@ -215,13 +212,14 @@ const PaginatedTable = ({
                   )
               )}
 
-              {UserFullButtonList && UserFullButtonList?.map((items,index) => {
-                return (
-                  <>
-                    <th>{items.buttonName}</th>
-                  </>
-                );
-              })}
+              {UserFullButtonList &&
+                UserFullButtonList?.map((items, index) => {
+                  return (
+                    <>
+                      <th>{items.buttonName}</th>
+                    </>
+                  );
+                })}
             </tr>
           )}
         </thead>
@@ -236,11 +234,15 @@ const PaginatedTable = ({
                   {columns.map((column) =>
                     column.visible ? (
                       <td key={column.field}>
-                       {
-                        column.field === "activeStatus" ? row.activeStatus  ? "Market Is Active"
-                        : "Market Is Inactive" : column.field === "is_Active" ? row.is_Active ? "Active" : "Disabled" 
-                      : row[column.field]}
-                       
+                        {column.field === "activeStatus"
+                          ? row.activeStatus
+                            ? "Market Is Active"
+                            : "Market Is Inactive"
+                          : column.field === "is_Active"
+                          ? row.is_Active
+                            ? "Active"
+                            : "Disabled"
+                          : row[column.field]}
                       </td>
                     ) : null
                   )}
@@ -261,13 +263,17 @@ const PaginatedTable = ({
                             ) : items.type === "button" ? (
                               <button
                                 className={`btn ${
-                                  items.buttonColor
+                                  typeof items.buttonColor === "function"
+                                    ? `btn-${items.buttonColor(row)}`
+                                    : items.buttonColor
                                     ? `btn-${items.buttonColor}`
                                     : "unblock-btn"
                                 } btn-sm me-2`}
                                 onClick={() => items.Conditions(row)}
                               >
-                                {items.buttonName}
+                                {typeof items.buttonName === "function"
+                                  ? items.buttonName(row)
+                                  : items.buttonName}
                               </button>
                             ) : items.type === "check" ? (
                               <PagesIndex.ChangeStatus

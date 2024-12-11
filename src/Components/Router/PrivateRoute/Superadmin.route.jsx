@@ -65,6 +65,12 @@ import UpiIdList from "../../Pages/Superadmin/Masters/UpiIdList";
 import WinnerList from "../../Pages/Superadmin/Games/AvailableGames/WinnerList";
 import ProfileNote from "../../Pages/Superadmin/AppSettings/ProfileNote";
 import FundMode from "../../Pages/Superadmin/Masters/FundMode";
+import Notification from "../../Pages/Superadmin/Notification/Notification";
+import News from "../../Pages/Superadmin/News/News";
+import DeclinedRequest from "../../Pages/Superadmin/DeclinedRequest/DeclinedRequest";
+import ApproveReportBank from "../../Pages/Superadmin/ApproveDebitRequest/ApproveReportBank";
+import ApproveReportBankManual from "../../Pages/Superadmin/ApproveDebitRequest/ApproveReportBankManual";
+import PendingBankRequests from "../../Pages/Superadmin/PendingBankRequests/PendingBankRequests";
 
 // WALLET SECTION
 
@@ -128,11 +134,11 @@ const adminRoutes = [
         element: <PrivateRoute element={EmployeeList} />,
       },
       {
-        path: "employee/add",
+        path: "employees/add",
         element: <PrivateRoute element={Add_Edit_Employee} />,
       },
       {
-        path: "employee/edit",
+        path: "employees/edit",
         element: <PrivateRoute element={Add_Edit_Employee} />,
       },
       {
@@ -385,6 +391,10 @@ const adminRoutes = [
         element: <PrivateRoute element={CreditRequest} />,
       },
       {
+        path: "approvedReports/declined",
+        element: <PrivateRoute element={DeclinedRequest} />,
+      },
+      {
         path: "appSettings/versionSetting",
         element: <PrivateRoute element={AppVersion} />,
       },
@@ -411,7 +421,7 @@ const adminRoutes = [
         path: "appSettings/profileNote",
         element: <PrivateRoute element={ProfileNote} />,
       },
-     
+
       {
         path: "masters/UPI",
         element: <PrivateRoute element={UpiIdList} />,
@@ -420,7 +430,26 @@ const adminRoutes = [
         path: "masters/fundMode",
         element: <PrivateRoute element={FundMode} />,
       },
-  
+      {
+        path: "notification",
+        element: <PrivateRoute element={Notification} />,
+      },
+      {
+        path: "news",
+        element: <PrivateRoute element={News} />,
+      },
+      {
+        path: "approvedReports/bank",
+        element: <PrivateRoute element={ApproveReportBank} />,
+      },
+      {
+        path: "approvedReports/bankManual",
+        element: <PrivateRoute element={ApproveReportBankManual} />,
+      },
+      {
+        path: "fundRequest/pendingBank",
+        element: <PrivateRoute element={PendingBankRequests} />,
+      },
     ],
   },
 ];

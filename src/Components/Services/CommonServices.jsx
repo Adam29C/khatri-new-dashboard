@@ -67,7 +67,7 @@ export const PERMISSION_GET_API = async (id) => {
   }
 };
 
-export const PROFILE_GET_API = async (id) => {
+export const PROFILE_GET_API = async (id, token) => {
   try {
     const res = await dataservice.get(`${Api.USER_PROFILE_GET}?id=${id}`, {
       headers: header(token),
@@ -89,9 +89,12 @@ export const BLOCK_USER_API = async (request, token) => {
   }
 };
 
-export const DELETED_USERS_API = async (request, token) => {
+
+//NOTIFICATION APIS
+
+export const GET_NOTIFICATION_API = async (token) => {
   try {
-    const res = await dataservice.post(`${Api.DELETED_USERS}`, request, {
+    const res = await axios.get(`${BASE_URL}${Api.GET_NOTIFICATION}`, {
       headers: header(token),
     });
     return res?.data;
@@ -99,3 +102,66 @@ export const DELETED_USERS_API = async (request, token) => {
     return error;
   }
 };
+
+export const DELETE_NOTIFICATION_API = async(id,token)=>{
+  try {
+    const res = await axios.delete(`${BASE_URL}${Api.DELETE_NOTIFICATION}/${id}`,{
+      headers:header(token)
+    })
+    return res?.data;
+  } catch (error) {
+    return error
+  }
+}
+
+export const ADD_NOTIFICATION_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.ADD_NOTIFICATION}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+//NOTIFICATION APIS
+
+//NEWS APIS
+export const GET_NEWS_API = async (token) => {
+  try {
+    const res = await axios.get(`${BASE_URL}${Api.NEWS}`, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// --------------------------USER IDEA ------------------------
+
+export const GET_USERS_IDEAS = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.USERS_IDEAS}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+export const UPDATE_NEWS_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.NEWS}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+//NEWS APIS
+

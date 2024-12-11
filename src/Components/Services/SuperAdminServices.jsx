@@ -14,16 +14,6 @@ export const ADMIN_PROFILE_GET_API = async (id) => {
   }
 };
 
-export const ADMIN_CHANGE_PASSWORD_API = async (data) => {
-  try {
-    const res = await axios.post(Api.ADMIN_CHANGE_PASSWORD, data, {
-      headers: header(token),
-    });
-    return res?.data;
-  } catch (error) {
-    return error;
-  }
-};
 
 // -------------------------- DASHBOARD_COUNT ------------------------
 
@@ -96,6 +86,17 @@ export const DELETE_USER = async (ID) => {
   }
 };
 
+
+export const GET_USERS_IDEAS = async (id) => {
+  try {
+    const res = await axios.get(`${Api.USERS_IDEAS}?adminId=${id}`, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+  }
 export const GET_DELETED_USERS = async (id) => {
   try {
     const res = await axios.get(`${Api.DELETED_USERS}?adminId=${id}`, {
@@ -106,9 +107,13 @@ export const GET_DELETED_USERS = async (id) => {
     return error;
   }
 };
-export const GET_USERS_IDEAS = async (id) => {
+// --------------------------   USERS CRUD ------------------------
+
+// -------------------------- DELETED USERS ------------------------
+
+export const GET_DELETED_USERS_API = async (data,token) => {
   try {
-    const res = await axios.get(`${Api.USERS_IDEAS}?adminId=${id}`, {
+    const res = await axios.post(`${BASE_URL}${Api.GET_DELETED_USERS}`,data, {
       headers: header(token),
     });
     return res?.data;
@@ -116,9 +121,40 @@ export const GET_USERS_IDEAS = async (id) => {
     return error;
   }
 };
+
+
+export const DELETED_USERS_GET_TIMEHISTORY_API = async (token) => {
+  try {
+    const res = await axios.get(`${BASE_URL}${Api.DELETED_USER_GET_TIMEHISTORY}`, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const DELETED_USERS_TIMEHISTORY_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.DELETED_USER_TIMEHISTORY}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+// -------------------------- DELETED USERS ------------------------
+
+
+
+
+
 // --------------------------   USERS CRUD ------------------------
 
-// --------------------------  game provider api ------------------------
+// --------------------------  game provider api ------------------
 
 export const GAME_PROVIDER_GET_LIST_API = async (token) => {
   try {
@@ -329,6 +365,32 @@ export const GAME_MAIN_WINNER_LIST_API = async (data, token) => {
 // --------------------------   GAME SETTING CRUD ------------------------
 
 // -------------------------- APP_SETTINGS ------------------------
+
+//HTP LIST START
+export const GET_HTP_LIST_API = async (token) => {
+  console.log(token)
+  try {
+    const res = await axios.get(`${BASE_URL}${Api.HOW_TO_PLAY_GET_LIST}`, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const UPDATE_HTP_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.UPDATE_HTP}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+//HTP LIST END
 
 //VERSION CONTROL API START
 export const GET_VERSION_API = async (token) => {
@@ -542,13 +604,13 @@ export const DELETE_UPI_LIST_API = async (apidata,token) => {
     return error;
   }
 };
+
 //UPI LIST END
 
-//HTP LIST START
-export const GET_HTP_LIST_API = async (token) => {
-  console.log(token)
+// FUND MODE START
+export const GET_FUND_MODE_API = async (token) => {
   try {
-    const res = await axios.get(`${BASE_URL}${Api.HOW_TO_PLAY_GET_LIST}`, {
+    const res = await axios.get(`${BASE_URL}${Api.GET_FUND_MODE}`, {
       headers: header(token),
     });
     return res?.data;
@@ -557,9 +619,9 @@ export const GET_HTP_LIST_API = async (token) => {
   }
 };
 
-export const UPDATE_HTP_API = async (data,token) => {
+export const ADD_FUND_MODE_API = async (data,token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.UPDATE_HTP}`, data, {
+    const res = await axios.post(`${BASE_URL}${Api.ADD_FUND_MODE}`, data, {
       headers: header(token),
     });
     return res?.data;
@@ -568,25 +630,43 @@ export const UPDATE_HTP_API = async (data,token) => {
   }
 };
 
-//HTP LIST END
+export const DELETE_FUND_MODE_API = async (apidata,token) => {
+
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.DELETE_FUND_MODE}`, apidata, {
+     
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+// CHANGE_STATUS_FUND_MODE
+export const CHANGE_STATUS_FUND_MODE_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.CHANGE_STATUS_FUND_MODE}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+// FUND MODE END
 
 // -------------------------- MASTERS ------------------------
 
+
+
+
+
 // --------------------------   Employee Crud ------------------------
 
-export const CREATE_EMPLOYEE = async (data) => {
+
+export const EMPLOYEE_CHANGE_PASSWORD_API = async (data,token) => {
   try {
-    const res = await axios.post(Api.CREATE_EMPLOYEE, data, {
-      headers: header(token),
-    });
-    return res?.data;
-  } catch (error) {
-    return error;
-  }
-};
-export const UPDATE_EMPLOYEE = async (data) => {
-  try {
-    const res = await axios.put(Api.UPDATE_EMPLOYEE, data, {
+    const res = await axios.post(`${BASE_URL}${Api.EMPLOYEE_CHANGE_PASSWORD}`, data, {
       headers: header(token),
     });
     return res?.data;
@@ -595,9 +675,22 @@ export const UPDATE_EMPLOYEE = async (data) => {
   }
 };
 
-export const EMPLOYEE_GET_LIST_API = async (id) => {
+
+
+
+export const CREATE_EMPLOYEE = async (data,token) => {
   try {
-    const res = await axios.get(`${Api.EMPLOYEE_LIST}?adminId=${id}`, {
+    const res = await axios.post(`${BASE_URL}${Api.CREATE_EMPLOYEE}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+export const UPDATE_EMPLOYEE = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.UPDATE_EMPLOYEE}`, data, {
       headers: header(token),
     });
     return res?.data;
@@ -606,9 +699,9 @@ export const EMPLOYEE_GET_LIST_API = async (id) => {
   }
 };
 
-export const BLOCK_EMPLOYEE_API = async (data) => {
+export const EMPLOYEE_GET_LIST_API = async (data,token) => {
   try {
-    const res = await axios.patch(Api.BLOCK_EMPLOYEE, data, {
+    const res = await axios.post(`${BASE_URL}${Api.EMPLOYEE_LIST}`,data, {
       headers: header(token),
     });
     return res?.data;
@@ -617,15 +710,34 @@ export const BLOCK_EMPLOYEE_API = async (data) => {
   }
 };
 
-export const DELETE_EMPLOYEE = async (ID) => {
-  let apiData = {
-    adminId: ID.adminId,
-    empId: ID.deleteId,
-  };
+export const BLOCK_EMPLOYEE_API = async (data,token) => {
   try {
-    const res = await axios.delete(Api.DELETE_EMPLOYEE, {
-      data: apiData,
+    const res = await axios.post(`${BASE_URL}${Api.BLOCK_EMPLOYEE}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
 
+export const DELETE_EMPLOYEE = async (id,token) => {
+
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.DELETE_EMPLOYEE}`,id, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+
+export const SINGLE_EMPLOYEE_GET_LIST_API = async (id,token) => {
+  try {
+    const res = await axios.get(`${BASE_URL}${Api.SINGLE_EMPLOYEE_LIST}/${id}`, {
       headers: header(token),
     });
     return res?.data;
@@ -640,7 +752,22 @@ export const DELETE_EMPLOYEE = async (ID) => {
 
 export const REQUEST_LIST_API = async (token) => {
   try {
-    const res = await axios.get(`${BASE_URL}${Api.REQUEST_LIST}`, {
+    const res = await axios.get(`${BASE_URL}${Api.REQUEST_LIST}` ,data, {
+            headers: header(token),
+          });
+          return res?.data;
+        } catch (error) {
+          return error;
+        }
+      }
+// --------------------------   Employee Crud ------------------------
+
+
+// --------------------------   GET_CREDIT_REQUEST_UPI ------------------------
+
+export const GET_CREDIT_REQUEST_UPI_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.GET_CREDIT_REQUEST_UPI}`,data, {
       headers: header(token),
     });
     return res?.data;
@@ -666,7 +793,25 @@ export const REQUEST_LIST_UPDATE_API = async (data, token) => {
 
 export const GET_REQUEST_LIST_API = async (token) => {
   try {
-    const res = await axios.get(`${BASE_URL}${Api.GET_REQUEST_LIST}`, {
+    const res = await axios.get(`${BASE_URL}${Api.GET_REQUEST_LIST}`, 
+      data,
+      {
+        headers: header(token),
+      }
+    );
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+// --------------------------   GET_CREDIT_REQUEST_UPI ------------------------
+
+
+// --------------------------  GET_DECLINED_REQUEST ---------------------------
+
+export const GET_DECLINED_REQUEST_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.GET_DECLINED_REQUEST}`,data, {
       headers: header(token),
     });
     return res?.data;
@@ -677,7 +822,22 @@ export const GET_REQUEST_LIST_API = async (token) => {
 
 export const UPDATE_REQUEST_API = async (data, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.UPDATE_REQUEST}`, data, {
+    const res = await axios.post(`${BASE_URL}${Api.UPDATE_REQUEST}`
+      ,data, {
+        headers: header(token),
+      });
+      return res?.data;
+    } catch (error) {
+      return error;
+    }
+  };
+// --------------------------  GET_DECLINED_REQUEST------------------------
+
+
+// --------------------------APPROVED DEBIT REQUEST------------------------
+export const APPROVED_DEBIT_BANK_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.APPROVED_DEBIT_BANK}`,data, {
       headers: header(token),
     });
     return res?.data;
@@ -693,6 +853,17 @@ export const UPDATE_REQUEST_API = async (data, token) => {
 export const GET_WALLET_LIST = async (data, token) => {
   try {
     const res = await axios.post(`${BASE_URL}${Api.WALLET_LIST}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+      export const APPROVED_DEBIT_BANK_MANUAL_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.APPROVED_DEBIT_BANK_MANUAL}`,data, {
       headers: header(token),
     });
     return res?.data;
@@ -933,5 +1104,74 @@ export const WALLET_DOWNLOAD_DEBIT_REPORT_API = async (data,token) => {
 
 
 
+// --------------------------APPROVED DEBIT REQUEST------------------------
+
+// --------------------------PENDING_DEBIT_BANK_REQUEST------------------------
+
+
+export const PENDING_DEBIT_BANK_REQUEST_API = async(data,token)=>{
+
+  try {
+    const res = await dataservice.post(`${BASE_URL}${Api.PENDING_DEBIT_BANK_REQUEST}`,data,{
+      headers: header(token),
+    })
+    return res?.data
+  } catch (error) {
+    return error
+  }
+}
+
+export const PENDING_DEBIT_GET_BALANCE_API = async(data,token)=>{
+
+  try {
+    const res = await dataservice.post(`${BASE_URL}${Api.PENDING_DEBIT_GET_BALANCE}`,data,{
+      headers: header(token),
+    })
+    return res?.data
+  } catch (error) {
+    return error
+  }
+}
+
+export const PENDING_DEBIT_UPDATE_WALLET_API = async(data,token)=>{
+
+  try {
+    const res = await dataservice.post(`${BASE_URL}${Api.PENDING_DEBIT_UPDATE_WALLET}`,data,{
+      headers: header(token),
+    })
+    return res?.data
+  } catch (error) {
+    return error?.response
+  }
+}
+
+
+export const PENDING_DEBIT_DECLINE_API = async(data,token)=>{
+
+  try {
+    const res = await dataservice.patch(`${BASE_URL}${Api.PENDING_DEBIT_DECLINE}`,data,{
+      headers: header(token),
+    })
+    return res?.data
+  } catch (error) {
+    return error?.response
+  }
+}
+
+
+export const PENDING_DEBIT_GETPROFILE_API = async(id,token)=>{
+
+  try {
+    const res = await dataservice.get(`${BASE_URL}${Api.PENDING_DEBIT_GETPROFILE}?userId=${id}`,{
+      headers: header(token),
+    })
+    return res?.data
+  } catch (error) {
+    return error?.response
+  }
+}
+
+
+// --------------------------PENDING_DEBIT_BANK_REQUEST------------------------
 
 

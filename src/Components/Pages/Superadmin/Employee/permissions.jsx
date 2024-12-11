@@ -279,48 +279,48 @@ export const makePermissions = [
     checked: false,
     Nasted: [],
   },
-  // {
-  //   id: 16,
-  //   labelName:"News Permission",
-  //   name: "Delete User",
-  //   checked: false,
-  //   Nasted: [],
-  // },
-  // {
-  //   id: 16,
-  //   labelName:"App Settings Permissions",
-  //   name: "App Settings",
-  //   checked: false,
-  //   Nasted: [
-  //     {
-  //       id: 1,
-  //       name: "How To Play",
-  //       checked: false,
-  //     },
-  //     {
-  //       id: 2,
-  //       name: "Withdraw Screen",
-  //       checked: false,
-  //     },
-  //     {
-  //       id: 3,
-  //       name: "Notice Board",
-  //       checked: false,
-  //     },
-  //     {
-  //       id: 4,
-  //       name: "Wallet Contact",
-  //       checked: false,
-  //     },
-  //     {
-  //       id: 5,
-  //       name: "App Version",
-  //       checked: false,
-  //     },
-  //   ],
-  // },
   {
     id: 16,
+    labelName:"News Permission",
+    name: "Delete User",
+    checked: false,
+    Nasted: [],
+  },
+  {
+    id: 17,
+    labelName:"App Settings Permissions",
+    name: "App Settings",
+    checked: false,
+    Nasted: [
+      {
+        id: 1,
+        name: "How To Play",
+        checked: false,
+      },
+      {
+        id: 2,
+        name: "Withdraw Screen",
+        checked: false,
+      },
+      {
+        id: 3,
+        name: "Notice Board",
+        checked: false,
+      },
+      {
+        id: 4,
+        name: "Wallet Contact",
+        checked: false,
+      },
+      {
+        id: 5,
+        name: "App Version",
+        checked: false,
+      },
+    ],
+  },
+  {
+    id: 18,
     labelName:"Masters Permissions",
     name: "Masters",
     checked: false,
@@ -348,7 +348,7 @@ export const makePermissions = [
     ],
   },
   {
-    id: 17,
+    id: 19,
     labelName:"Reports Permissions",
     name: "Reports",
     checked: false,

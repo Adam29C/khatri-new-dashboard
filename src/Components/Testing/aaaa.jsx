@@ -45,6 +45,16 @@ const UsersIdeas = () => {
       value: "createdAt",
       sortable: true,
     },
+    {
+      name: "test",
+      value: "username",
+      isButton: true,
+      // value: (row) => (row.banned ? "Unblock" : "Block"),
+      buttonColor: (row) => (row.banned ? "success" : "danger"),
+      Conditions: (row) => {
+        // BlockUserAndRemoveUser(row, 1);
+      },
+    },
   ];
 
   return (
