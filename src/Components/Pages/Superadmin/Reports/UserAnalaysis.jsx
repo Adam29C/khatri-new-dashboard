@@ -11,13 +11,27 @@ const AllReports = () => {
   const [GetDetails, setGetDetails] = PagesIndex.useState([]);
   const [GetBankDetails, setGetBankDetails] = PagesIndex.useState([]);
 
+  const [Refresh, setRefresh] = PagesIndex.useState(false);
+
+  const [UserPagenateData, setUserPagenateData ] = PagesIndex.useState({
+    pageno: 1,
+    limit: 10,
+  });
+
+  const [TotalPages, setTotalPages] = PagesIndex.useState(1);
+
   const getReportDetails = async () => {
     const res = await PagesIndex.report_service.GET_REPORT_DETAILS_API(
-      `${Api.GET_USER_ANALAYSIS_REPORT}?userName=all&limit=${10}&page=${1}`,
+      `${Api.GET_USER_ANALAYSIS_REPORT}?userName=all&limit=${UserPagenateData.limit}&page=${UserPagenateData.pageno}`,
       token
     );
-
-    setGetBankDetails(res.data);
+    if (res.status) {
+      setTotalPages(res.totalPages);
+      setRefresh(!Refresh);
+      toast.success(res.message);
+      setGetBankDetails(res.data);
+    } 
+    
   };
 
   PagesIndex.useEffect(() => {
@@ -76,10 +90,11 @@ const AllReports = () => {
           }),
         },
       ],
+ 
       fetchReportData: async (value) => {
         const payload = `${Api.GET_USER_ANALAYSIS_REPORT}?userName=${
           value.userName ? value.userName : "all"
-        }&limit=${10}&page=${1}`;
+        }&limit=${UserPagenateData.limit}&page=${UserPagenateData.pageno}`;
 
         try {
           // Call your API for report 1
@@ -87,6 +102,11 @@ const AllReports = () => {
             payload,
             token
           );
+          if (res.status) {
+            setTotalPages(res.totalPages);
+            setRefresh(!Refresh);
+            toast.success(res.message);
+          } 
           return res;
         } catch (error) {
           const errorMessage =
@@ -108,6 +128,9 @@ const AllReports = () => {
           config={config}
           fetchReportData={config.fetchReportData}
           onloadData={GetBankDetails && GetBankDetails}
+          setUserPagenateData={setUserPagenateData}
+          TotalPagesCount={(TotalPages && TotalPages) || []}
+          Refresh={Refresh}
         />
       ))}
       <PagesIndex.Toast />

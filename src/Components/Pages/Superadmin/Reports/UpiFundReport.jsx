@@ -9,7 +9,6 @@ const AllReports = () => {
   const token = localStorage.getItem("token");
 
   const [GetBankDetails, setGetBankDetails] = PagesIndex.useState([]);
-  const [GetAdminDetails, setGetAdminsDetails] = PagesIndex.useState([]);
 
 
   const [Refresh, setRefresh] = PagesIndex.useState(false);
@@ -107,8 +106,8 @@ const AllReports = () => {
           dateStart: today(value.sdate) || today(new Date()),
           date: today(value.edate) || today(new Date()),
           id: value.bankName || "1",
-          page: 1,
-          limit: 10,
+          page: UserPagenateData.pageno,
+          limit: UserPagenateData.limit,
           search: "",
         };
 
@@ -122,6 +121,8 @@ const AllReports = () => {
           console.log("resres", res);
 
           if (res.status) {
+            setTotalPages(res.totalPages);
+            setRefresh(!Refresh)
             toast.success(res.message);
           } else {
             toast.error(res.response.data.message);
@@ -147,6 +148,9 @@ const AllReports = () => {
           title={config.title}
           config={config}
           fetchReportData={config.fetchReportData}
+          setUserPagenateData={setUserPagenateData}
+          TotalPagesCount={(TotalPages && TotalPages) || []}
+          Refresh={Refresh}
         />
       ))}
       <PagesIndex.Toast />

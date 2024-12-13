@@ -8,6 +8,15 @@ import { toast } from "react-toastify";
 const AllReports = () => {
   const token = localStorage.getItem("token");
 
+  const [Refresh, setRefresh] = PagesIndex.useState(false);
+
+  const [UserPagenateData, setUserPagenateData ] = PagesIndex.useState({
+    pageno: 1,
+    limit: 10,
+  });
+
+  const [TotalPages, setTotalPages] = PagesIndex.useState(1);
+
   const FIELDS = [
     {
       title: "Trak Pay Fund Report",
@@ -75,12 +84,12 @@ const AllReports = () => {
           id: "1",
           date: "11/29/2024",
           dateStart: "10/29/2024",
-          page: 1,
-          limit: 10,
+          page: UserPagenateData.pageno,
+          limit: UserPagenateData.limit,
           search: "",
           // }
         };
-        return
+       
 
         try {
           // Call your API for report 1
@@ -91,6 +100,8 @@ const AllReports = () => {
           );
       
           if (res.status) {
+            setTotalPages(res.totalPages);
+            setRefresh(!Refresh);
             toast.success(res.message);
           } else {
             toast.error(res.response.data.message);
@@ -116,6 +127,9 @@ const AllReports = () => {
           title={config.title}
           config={config}
           fetchReportData={config.fetchReportData}
+          setUserPagenateData={setUserPagenateData}
+          TotalPagesCount={(TotalPages && TotalPages) || []}
+          Refresh={Refresh}
         />
       ))}
          <PagesIndex.Toast />

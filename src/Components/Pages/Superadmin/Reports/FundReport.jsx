@@ -13,7 +13,7 @@ const AllReports = () => {
 
   const [Refresh, setRefresh] = PagesIndex.useState(false);
 
-  const [UserPagenateData,  ] = PagesIndex.useState({
+  const [UserPagenateData, setUserPagenateData ] = PagesIndex.useState({
     pageno: 1,
     limit: 10,
   });
