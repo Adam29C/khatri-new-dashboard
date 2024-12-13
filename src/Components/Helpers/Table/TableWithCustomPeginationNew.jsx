@@ -3,15 +3,19 @@ import React, { useState, useEffect } from "react";
 const CustomTable = ({
   fetchData,
   columns,
-  UserFullButtonList,
   showIndex,
   Refresh,
+  setUserPagenateData = () => {},
+  TotalPagesCount,
+  tableData,
+  show_additional,
+  additional,
 }) => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [TotalPages, setTotalPages] = useState(10);
+  const [TotalPages, setTotalPages] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -19,17 +23,18 @@ const CustomTable = ({
   const [isResponsive, setIsResponsive] = useState(window.innerWidth < 425);
   const [Refresh1, setRefresh1] = useState(false);
 
+
   const fetchTableData = async () => {
     setLoading(true);
     setError(null);
 
     try {
       const result = await fetchData(page, rowsPerPage);
+
       setRefresh1(!Refresh1);
       setData(result.mainRes || []);
       setFilteredData(result.mainRes || []);
       setTotalPages(result.totalRows);
-      // setRefresh1();
     } catch (err) {
       setError("Failed to fetch data.");
     } finally {
@@ -41,7 +46,33 @@ const CustomTable = ({
     fetchTableData();
   }, [Refresh, page, rowsPerPage]);
 
+  let abc = () => {
+    if (tableData && tableData != undefined) {
+      setData(tableData && tableData);
+      setUserPagenateData((prev) => ({
+        ...prev,
+        pageno: page,
+        limit: rowsPerPage,
+      }));
+      setLoading(false);
+      setError(null);
+      setTotalPages(TotalPagesCount);
+    } else {
+      setData([]);
+    }
+  };
+
   useEffect(() => {
+    abc();
+  }, [tableData, page, rowsPerPage]);
+
+  // const handleFetchData = () => {};
+
+  // useEffect(() => {
+  //   handleFetchData();
+  // }, []);
+
+  const sordata = () => {
     let sortedData = [...data];
 
     // Apply sorting
@@ -68,6 +99,9 @@ const CustomTable = ({
     );
 
     setFilteredData(searchResults);
+  };
+  useEffect(() => {
+    sordata();
   }, [data, sortConfig, searchQuery]);
 
   const handleSort = (key) => {
@@ -84,8 +118,6 @@ const CustomTable = ({
   const renderButton = (field, row) => {
     const buttonText =
       typeof field.value === "function" ? field.value(row) : field.value;
-
-    console.log("field.classNamefield.className", field.className);
 
     return (
       <button
@@ -117,6 +149,7 @@ const CustomTable = ({
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
   return (
     <div className="container">
       <div className="row d-flex">
@@ -151,36 +184,37 @@ const CustomTable = ({
           />
         </div>
       </div>
-      {loading ? (
+      {/* {loading ? (
         <p>Loading...</p>
       ) : error ? (
         <p>{error}</p>
-      ) : (
-        <table
-          id="myTable"
-          className={`table table-striped table-bordered  ${
-            isResponsive ? "table-responsive" : ""
-          }`}
-        >
-          <thead className="primary-color text-center table-header-backeground">
-            <tr>
-              {showIndex && <th>#</th>}
-              {columns.map((col) => (
-                <th
-                  key={col.key}
-                  onClick={() => handleSort(col.value)}
-                  style={{ cursor: col.sortable ? "pointer" : "default" }}
-                >
-                  {col.name}
-                  {sortConfig.key === col.value && (
-                    <span>{sortConfig.direction === "asc" ? " ↑" : " ↓"}</span>
-                  )}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="text-center">
-            {filteredData.map((row, index) => (
+      ) : ( */}
+      <table
+        id="myTable"
+        className={`table table-striped table-bordered  ${
+          isResponsive ? "table-responsive" : ""
+        }`}
+      >
+        <thead className="primary-color text-center table-header-backeground">
+          <tr>
+            {showIndex && <th>#</th>}
+            {columns?.map((col) => (
+              <th
+                key={col.key}
+                onClick={() => handleSort(col.value)}
+                style={{ cursor: col.sortable ? "pointer" : "default" }}
+              >
+                {col.name}
+                {sortConfig.key === col.value && (
+                  <span>{sortConfig.direction === "asc" ? " ↑" : " ↓"}</span>
+                )}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody className="text-center">
+          {filteredData &&
+            filteredData.map((row, index) => (
               <tr key={index}>
                 {showIndex && <td>{(page - 1) * rowsPerPage + index + 1}</td>}
                 {columns.map((field) => (
@@ -205,9 +239,15 @@ const CustomTable = ({
                 ))}
               </tr>
             ))}
-          </tbody>
-        </table>
-      )}
+          {!show_additional && (
+            <tr>
+              <td colSpan={columns.length + 1}>{additional}</td>
+            </tr>
+          )}
+  
+        </tbody>
+      </table>
+      {/* )} */}
 
       <nav>
         <ul className="pagination justify-content-end">

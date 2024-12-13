@@ -269,9 +269,8 @@
 
 //     console.log("mainDatamainData", mainData);
 
-   
 //       setTableData(mainData);
-   
+
 //     let total = 0;
 
 //     if (mainData.length > 0) {
@@ -458,9 +457,6 @@
 
 // export default DynamicReport;
 
-
-
-
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
@@ -475,6 +471,9 @@ const DynamicReport = ({
   btnTitle,
   route,
   onloadData,
+  setUserPagenateData,
+  TotalPagesCount,
+  Refresh,
 }) => {
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
@@ -494,7 +493,7 @@ const DynamicReport = ({
   const handleInputChange = (e, field) => {
     setFormData({ ...formData, [field.name]: e.target.value });
     if (errors[field.name]) {
-      setErrors({ ...errors, [field.name]: "" }); // Clear error when input changes
+      setErrors({ ...errors, [field.name]: "" });
     }
   };
 
@@ -603,7 +602,9 @@ const DynamicReport = ({
                           htmlFor={field.name}
                         >
                           {field.label}
-                          {field.required && <span className="text-danger">*</span>}
+                          {field.required && (
+                            <span className="text-danger">*</span>
+                          )}
                         </label>
                         {field.type === "text" && (
                           <input
@@ -632,7 +633,9 @@ const DynamicReport = ({
                             onChange={(e) => handleInputChange(e, field)}
                             className="form-control"
                           >
-                            <option value="">{field.label}</option>
+                            <option value="" selected disabled>
+                              {field.label}
+                            </option>
                             {field.options.map((option, idx) => (
                               <option value={option.value} key={idx}>
                                 {option.label}
@@ -641,7 +644,9 @@ const DynamicReport = ({
                           </select>
                         )}
                         {errors[field.name] && (
-                          <span className="text-danger">{errors[field.name]}</span>
+                          <span className="text-danger">
+                            {errors[field.name]}
+                          </span>
                         )}
                       </div>
                     ))}
@@ -664,8 +669,12 @@ const DynamicReport = ({
             <div className="card">
               <div className="card-body">
                 <PagesIndex.TableWithCustomPeginationNew
-                  data={tableData}
-                  visibleFields={config.visibleFields}
+                  tableData={tableData && tableData}
+                  TotalPagesCount={(TotalPagesCount && TotalPagesCount) || []}
+                  showIndex={true}
+                  Refresh={Refresh}
+                  setUserPagenateData={setUserPagenateData}
+                  columns={config.visibleFields}
                   additional={
                     config.show_additional && (
                       <td className="fw-bold h4" colSpan={7}>
@@ -673,7 +682,6 @@ const DynamicReport = ({
                       </td>
                     )
                   }
-                  showIndex={true}
                 />
               </div>
             </div>
