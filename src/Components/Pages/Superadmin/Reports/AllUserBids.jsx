@@ -220,7 +220,19 @@ const SplitForm = () => {
       size: 12,
       body: (
         <div>
-          <PagesIndex.TableWithCustomPeginationNew
+               <PagesIndex.TableWithCustomPeginationNew
+            // fetchData={handleFetchDataManually}
+            // handleFetchDataManually={handleFetchDataManually}
+            tableData={tableData && tableData}
+            TotalPagesCount={(TotalPages && TotalPages) || []}
+            columns={visibleFields}
+            showIndex={true}
+            Refresh={Refresh}
+            setUserPagenateData={setUserPagenateData}
+          />
+
+
+          {/* <PagesIndex.TableWithCustomPeginationNew
             data={MaintableData && MaintableData}
             initialRowsPerPage={5}
             SearchInTable={SearchInTable}
@@ -235,7 +247,7 @@ const SplitForm = () => {
                 className="form-control ms-auto"
               />
             }
-          />
+          /> */}
         </div>
       ),
     },

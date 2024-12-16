@@ -25,6 +25,9 @@ const AllReports = () => {
       `${Api.GET_USER_ANALAYSIS_REPORT}?userName=all&limit=${UserPagenateData.limit}&page=${UserPagenateData.pageno}`,
       token
     );
+
+  
+    
     if (res.status) {
       setTotalPages(res.totalPages);
       setRefresh(!Refresh);
@@ -92,16 +95,20 @@ const AllReports = () => {
       ],
  
       fetchReportData: async (value) => {
+
+
         const payload = `${Api.GET_USER_ANALAYSIS_REPORT}?userName=${
           value.userName ? value.userName : "all"
         }&limit=${UserPagenateData.limit}&page=${UserPagenateData.pageno}`;
 
+        console.log("res" ,payload);
         try {
           // Call your API for report 1
           const res = await PagesIndex.report_service.GET_REPORT_DETAILS_API(
             payload,
             token
           );
+          
           if (res.status) {
             setTotalPages(res.totalPages);
             setRefresh(!Refresh);
