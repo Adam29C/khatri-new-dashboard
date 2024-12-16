@@ -8,7 +8,7 @@ import DeleteSweetAlert from "../../DeleteSweetAlert";
 import { Games_Settings_List } from "../../../Redux/slice/CommonSlice";
 import { convertTo12HourFormat } from "../../../Utils/Valid_Rejex";
 
-const GameProvider = ({ path, title, gameType }) => {
+const GameProvider = ({ path, title, gameType, api_Route }) => {
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
   const navigate = PagesIndex.useNavigate();
@@ -17,15 +17,57 @@ const GameProvider = ({ path, title, gameType }) => {
 
   const { gameSettings } = PagesIndex.useSelector((state) => state.CommonSlice);
 
-  const getStarLineSettingList = () => {
-    let apiData = {
-      userId: userId,
-      gameType: gameType,
-    };
+  const [GameSettingList, setGameSettingList] = PagesIndex.useState([]);
 
-    
 
-    dispatch(Games_Settings_List({data : apiData , token :token}));
+  console.log("GameSettingListGameSettingListGameSettingList" ,GameSettingList);
+  
+
+  // const getStarLineSettingList = async () => {
+  //   if (gameType === "StarLine" || gameType === "JackPot") {
+  //     const res =
+  //       await PagesIndex.game_service.FOR_STARLINE_AND_JACPOT_PROVIDER_LIST_API(
+  //         api_Route,
+  //         token
+  //       );
+
+  //     setGameSettingList(res.data);
+  //   } else {
+  //     let apiData = {
+  //       userId: userId,
+  //       gameType: gameType,
+  //     };
+
+  //     dispatch(Games_Settings_List({ data: apiData, token: token }));
+  //   }
+  // };
+
+  // PagesIndex.useEffect(() => {
+  //   getStarLineSettingList();
+  // }, []);
+
+  const getStarLineSettingList = async () => {
+    if (gameType === "StarLine" || gameType === "JackPot") {
+      const res =
+        await PagesIndex.game_service.FOR_STARLINE_AND_JACPOT_PROVIDER_LIST_API(
+          api_Route,
+          token
+        );
+
+      // Response ko store karna
+      setGameSettingList(res.data);
+    } else {
+      let apiData = {
+        userId: userId,
+        gameType: gameType,
+      };
+
+      // Agar gameType "StarLine" ya "JackPot" nahi hai, to gameSettings ko set karna
+      dispatch(Games_Settings_List({ data: apiData, token: token }));
+
+      // UseEffect ke baad update karna
+      setGameSettingList(gameSettings);
+    }
   };
 
   PagesIndex.useEffect(() => {
@@ -310,7 +352,7 @@ const GameProvider = ({ path, title, gameType }) => {
                   </PagesIndex.Link>
                 </>
               ) : (
-                " No Record"
+                "No Record"
               )}
             </div>
           </div>
@@ -363,7 +405,7 @@ const GameProvider = ({ path, title, gameType }) => {
                   </PagesIndex.Link>
                 </>
               ) : (
-                " No Record"
+                "No Record"
               )}
             </div>
           </div>
@@ -416,7 +458,7 @@ const GameProvider = ({ path, title, gameType }) => {
                   </PagesIndex.Link>
                 </>
               ) : (
-                " No Record"
+                "No Record"
               )}
             </div>
           </div>
@@ -433,7 +475,7 @@ const GameProvider = ({ path, title, gameType }) => {
         title={title}
         btnTitle="Add"
       >
-        <PagesIndex.Data_Table columns={columns} data={gameSettings} />
+        <PagesIndex.Data_Table columns={columns} data={GameSettingList && GameSettingList} />
       </PagesIndex.Main_Containt>
     </div>
   );

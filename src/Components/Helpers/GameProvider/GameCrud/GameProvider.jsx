@@ -45,6 +45,16 @@ const GameProvider = ({
     getGameProviderList();
   }, []);
 
+
+
+
+
+
+
+
+
+  
+
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this game?"
@@ -114,8 +124,7 @@ const GameProvider = ({
   };
   // Formik Configuration
 
-  ``;
-  console.log("selectedRow", selectedRow);
+
 
   const formik = PagesIndex.useFormik({
     enableReinitialize: true,
@@ -327,6 +336,10 @@ const GameProvider = ({
       ? GetProviderData && GetProviderData
       : gameProviders;
 
+
+
+      console.log("PROVIDERDATA" ,PROVIDERDATA); 
+      
   return (
     <>
       <div>
