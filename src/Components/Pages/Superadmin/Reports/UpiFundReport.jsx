@@ -10,7 +10,6 @@ const AllReports = () => {
 
   const [GetBankDetails, setGetBankDetails] = PagesIndex.useState([]);
 
-
   const [Refresh, setRefresh] = PagesIndex.useState(false);
 
   const [UserPagenateData, setUserPagenateData] = PagesIndex.useState({
@@ -20,6 +19,8 @@ const AllReports = () => {
 
   const [TotalPages, setTotalPages] = PagesIndex.useState(1);
 
+
+  
 
   const getReportDetails = async () => {
     const res = await PagesIndex.report_service.GET_REPORT_DETAILS_API(
@@ -118,11 +119,12 @@ const AllReports = () => {
             payload,
             token
           );
-          console.log("resres", res);
-
+    
+          
           if (res.status) {
-            setTotalPages(res.totalPages);
-            setRefresh(!Refresh)
+            console.log('resresresresresres' , res);
+            setTotalPages(res.pagination.totalPages);
+            setRefresh(!Refresh);
             toast.success(res.message);
           } else {
             toast.error(res.response.data.message);

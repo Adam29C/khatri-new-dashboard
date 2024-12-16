@@ -128,37 +128,37 @@ const AllReports = () => {
         },
       ],
       fetchReportData: async (value) => {
-        if (!value.bankName) {
-          toast.error("Please select a Credit/.");
-          return;
-        }
-        if (!value.reqType) {
-          toast.error("Please select Credit or Debit.");
-          return;
-        }
-        if (value.reqType === "Credit" && !value.bankName) {
-          toast.error("Please select Particuler Also.");
-          return;
-        }
-        if (value.reqType === "Debit" && !value.bankName && !value.admin_id) {
-          toast.error("Please select Particuler and admin also.");
-          return;
-        }
+        // if (!value.bankName) {
+        //   toast.error("Please select a Credit/.");
+        //   return;
+        // }
+        // if (!value.reqType) {
+        //   toast.error("Please select Credit or Debit.");
+        //   return;
+        // }
+        // if (value.reqType === "Credit" && !value.bankName) {
+        //   toast.error("Please select Particuler Also.");
+        //   return;
+        // }
+        // if (value.reqType === "Debit" && !value.bankName && !value.admin_id) {
+        //   toast.error("Please select Particuler and admin also.");
+        //   return;
+        // }
 
         const payload = {
-          sdate: today(value.sdate),
-          edate: today(value.edate),
-          bankName: value.bankName || "1",
-          reqType: value.reqType || "Credit",
-          admin_id: value.admin_id || "1",
+          // sdate: today(value.sdate),
+          // edate: today(value.edate),
+          // bankName: value.bankName || "1",
+          // reqType: value.reqType || "Credit",
+          // admin_id: value.admin_id || "1",
           page: UserPagenateData.pageno,
           limit: UserPagenateData.limit,
 
-          // sdate: "12/11/2024",
-          // edate: "12/11/2024",
-          // bankName: "1",
-          // reqType: "Debit",
-          // admin_id: "1",
+          sdate: "12/11/2024",
+          edate: "12/11/2024",
+          bankName: "1",
+          reqType: "Debit",
+          admin_id: "1",
         };
 
         try {
@@ -168,6 +168,11 @@ const AllReports = () => {
             token
           );
 
+
+          
+
+          console.log("resres" ,res);
+          
           if (res.status) {
             setTotalPages(res.totalPages);
             setRefresh(!Refresh);

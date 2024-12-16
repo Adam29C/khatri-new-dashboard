@@ -13,33 +13,31 @@ const AllReports = () => {
 
   const [Refresh, setRefresh] = PagesIndex.useState(false);
 
-  const [UserPagenateData, setUserPagenateData ] = PagesIndex.useState({
+  const [UserPagenateData, setUserPagenateData] = PagesIndex.useState({
     pageno: 1,
     limit: 10,
   });
 
   const [TotalPages, setTotalPages] = PagesIndex.useState(1);
 
-  const getReportDetails = async () => {
-    const res = await PagesIndex.report_service.GET_REPORT_DETAILS_API(
-      `${Api.GET_USER_ANALAYSIS_REPORT}?userName=all&limit=${UserPagenateData.limit}&page=${UserPagenateData.pageno}`,
-      token
-    );
+  // const getReportDetails = async () => {
+  //   const res = await PagesIndex.report_service.GET_REPORT_DETAILS_API(
+  //     `${Api.GET_USER_ANALAYSIS_REPORT}?userName=all&limit=${UserPagenateData.limit}&page=${UserPagenateData.pageno}`,
+  //     token
+  //   );
 
-  
-    
-    if (res.status) {
-      setTotalPages(res.totalPages);
-      setRefresh(!Refresh);
-      toast.success(res.message);
-      setGetBankDetails(res.data);
-    } 
-    
-  };
+  //   if (res.status) {
+  //     setTotalPages(res.totalPages);
+  //     setRefresh(!Refresh);
+  //     toast.success(res.message);
+  //     setGetBankDetails(res.data);
+  //   }
 
-  PagesIndex.useEffect(() => {
-    getReportDetails();
-  }, []);
+  // };
+
+  // PagesIndex.useEffect(() => {
+  //   getReportDetails();
+  // }, []);
 
   const FIELDS = [
     {
@@ -93,27 +91,24 @@ const AllReports = () => {
           }),
         },
       ],
- 
+
       fetchReportData: async (value) => {
-
-
         const payload = `${Api.GET_USER_ANALAYSIS_REPORT}?userName=${
           value.userName ? value.userName : "all"
         }&limit=${UserPagenateData.limit}&page=${UserPagenateData.pageno}`;
 
-        console.log("res" ,payload);
         try {
           // Call your API for report 1
           const res = await PagesIndex.report_service.GET_REPORT_DETAILS_API(
             payload,
             token
           );
-          
+
           if (res.status) {
             setTotalPages(res.totalPages);
             setRefresh(!Refresh);
             toast.success(res.message);
-          } 
+          }
           return res;
         } catch (error) {
           const errorMessage =

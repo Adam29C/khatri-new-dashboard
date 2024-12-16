@@ -13,13 +13,12 @@ const AllReports = () => {
 
   const [Refresh, setRefresh] = PagesIndex.useState(false);
 
-  const [UserPagenateData, setUserPagenateData ] = PagesIndex.useState({
+  const [UserPagenateData, setUserPagenateData] = PagesIndex.useState({
     pageno: 1,
     limit: 10,
   });
 
   const [TotalPages, setTotalPages] = PagesIndex.useState(1);
-
 
   const getReportDetails = async () => {
     const res = await PagesIndex.report_service.GET_REPORT_DETAILS_API(
@@ -37,7 +36,7 @@ const AllReports = () => {
 
   const FIELDS = [
     {
-      title: "Detailed Bidding Report",
+      title: "Bidding Report",
       fields: [
         {
           name: "providerName",
@@ -122,7 +121,6 @@ const AllReports = () => {
           return;
         }
 
-        
         const payload = {
           provider: value.providerName,
           gameType: value.gameType,
@@ -131,6 +129,14 @@ const AllReports = () => {
           userName: "",
           page: UserPagenateData.pageno,
           limit: UserPagenateData.limit,
+
+          provider: "668d41e0211a65d88600f68f",
+          gameType: "6690701918732c8c3c427b09",
+          session: "Open",
+          date: "12/16/2024",
+          userName: "",
+          page: 1,
+          limit: 10,
         };
 
         try {
@@ -141,8 +147,9 @@ const AllReports = () => {
             token
           );
 
+
           if (res.status) {
-            setTotalPages(res.totalPages);
+            setTotalPages(res.pagination.totalPages);
             setRefresh(!Refresh);
             toast.success(res.message);
           } else {

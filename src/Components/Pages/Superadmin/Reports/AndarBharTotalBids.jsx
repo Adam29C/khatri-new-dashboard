@@ -285,7 +285,7 @@ const AndarBharTotalBids = ({ gameType, report_api, starandjackProvider }) => {
         Api.JACKPOT_GAME_PROVIDERS,
         token
       );
-    console.log("res", res);
+    // console.log("res", res);
 
     setProviderList(res.data);
   };

@@ -13,7 +13,7 @@ const AllReports = () => {
 
   const [Refresh, setRefresh] = PagesIndex.useState(false);
 
-  const [UserPagenateData, setUserPagenateData ] = PagesIndex.useState({
+  const [UserPagenateData, setUserPagenateData] = PagesIndex.useState({
     pageno: 1,
     limit: 10,
   });
@@ -114,30 +114,38 @@ const AllReports = () => {
         },
       ],
       fetchReportData: async (value) => {
+        // if (!value.providerName) {
+        //   toast.error("Provider Name is required");
+        //   return;
+        // }
+        // if (!value.gameType) {
+        //   toast.error("gameType  is required ");
+        //   return;
+        // }
+        // if (!value.session) {
+        //   toast.error("session  is required");
+        //   return;
+        // }
 
-        if (!value.providerName) {
-          toast.error("Provider Name is required");
-          return;
-        }
-        if (!value.gameType) {
-          toast.error("gameType  is required ");
-          return;
-        }
-        if (!value.session) {
-          toast.error("session  is required");
-          return;
-        }
-
-        
         const payload = {
-          providerName: value.providerName,
-          gameType: value.gameType,
-          session: value.session,
-          date: today(value.date) || today(new Date()),
+          // providerName: value.providerName,
+          // gameType: value.gameType,
+          // session: value.session,
+          // date: today(value.date) || today(new Date()),
+          // userName: "",
+          // page: UserPagenateData.pageno,
+          // limit: UserPagenateData.limit,
+
+          provider: "668d41e0211a65d88600f68f",
+          gameType: "6690701918732c8c3c427b09",
+          session: "Open",
+          date: "12/16/2024",
           userName: "",
-          page: UserPagenateData.pageno,
-          limit: UserPagenateData.limit,
+          page: 1,
+          limit: 10,
         };
+
+        console.log("payload", payload);
 
         try {
           // Call your API for report 1
@@ -180,7 +188,7 @@ const AllReports = () => {
           Refresh={Refresh}
         />
       ))}
-         <PagesIndex.Toast />
+      <PagesIndex.Toast />
     </div>
   );
 };

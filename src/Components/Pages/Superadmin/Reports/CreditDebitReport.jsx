@@ -121,6 +121,9 @@ const AllReports = () => {
             token
           );
 
+
+          console.log("resresres" ,res);
+          
           if (res.status) {
             setTotalPages(res.totalPages);
             setRefresh(!Refresh);
