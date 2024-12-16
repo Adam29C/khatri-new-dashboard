@@ -134,18 +134,18 @@ const PaginatedTable = ({
               <th
                 key={field.value}
                 onClick={() => handleSort(field.value)}
-                // style={
-                //   field.notheader
-                //     ? {
-                //         color: "white", // Default color when notheader
-                //         cursor: "pointer",
-                //         ...(field.style ? field.style(field) : {}),
-                //       }
-                //     : {
-                //         cursor: "pointer",
-                //         ...(field.style ? field.style(field) : {}),
-                //       }
-                // }
+                style={
+                  field.notheader
+                    ? {
+                        color: "white", // Default color when notheader
+                        cursor: "pointer",
+                        // ...(field.style ? field.style(field) : {}),
+                      }
+                    : {
+                        cursor: "pointer",
+                        ...(field.style ? field.style(field) : {}),
+                      }
+                }
               >
                 {field.name}
                 {sortConfig.key === field.value && (

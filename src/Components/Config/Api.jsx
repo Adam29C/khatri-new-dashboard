@@ -99,7 +99,7 @@ const Api = {
 
   CUTTING_GROUP_LIST: "cuttingGroups/getCutting",
   CUTTING_GROUP_OC_LIST: "cuttingGroups/getOC",
-  GET_BID_DATA: "cuttingGroups/getOC",
+  GET_BID_DATA: "cuttingGroups/getBidData",
   OC_CUTTING_GROUP_LIST: "ocCuttingGroup/getFinalCutting",
   OC_CUTTING_GROUP_OC_LIST: "ocCuttingGroup/finalCloseCutingGroup",
 
