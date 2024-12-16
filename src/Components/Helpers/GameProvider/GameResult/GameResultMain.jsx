@@ -245,7 +245,7 @@ const ExamplePage = ({
 
   //handle actions button function
   const handleActionBtn = (row, buttonStatus) => {
-    // console.log("row", row.providerId);
+
     var locationData = {
       row: row,
       route: winner_list,
@@ -281,9 +281,6 @@ const ExamplePage = ({
   //   "winningDigit",
   // ];
 
-
-
-  
   const visibleFields = [
     {
       name: "provider Name",
@@ -300,21 +297,7 @@ const ExamplePage = ({
       value: "resultDate",
       sortable: true,
     },
-    // {
-    //   name: "winning Digit",
-    //   value: "winningDigit",
-    //   sortable: true,
-    // },
-  ]
-
-
-
-
-
-
-
-
-
+  ];
 
   const UserFullButtonList = [
     {
@@ -393,23 +376,6 @@ const ExamplePage = ({
       ),
     },
   ];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   return (
     <>
