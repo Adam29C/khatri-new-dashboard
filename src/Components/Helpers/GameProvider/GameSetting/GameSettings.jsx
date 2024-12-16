@@ -20,7 +20,6 @@ const GameProvider = ({ path, title, gameType, api_Route }) => {
   const [GameSettingList, setGameSettingList] = PagesIndex.useState([]);
 
 
-  console.log("GameSettingListGameSettingListGameSettingList" ,GameSettingList);
   
 
   // const getStarLineSettingList = async () => {
@@ -74,6 +73,12 @@ const GameProvider = ({ path, title, gameType, api_Route }) => {
     getStarLineSettingList();
   }, []);
 
+
+  let amc  =  gameType === "StarLine" || gameType === "JackPot" ? GameSettingList : gameSettings
+
+  console.log("GameSettingListGameSettingListGameSettingList" ,GameSettingList);
+
+
   const columns = [
     {
       name: "Game Name",
@@ -82,13 +87,13 @@ const GameProvider = ({ path, title, gameType, api_Route }) => {
 
         return (
           <div className="">
-            <div className="break-text">{row.providerName}</div>
+            <div className="break-text mb-2">{row.providerName}</div>
             <PagesIndex.Link
               to={`${path}/edit`}
               state={{ row: row, rowData: rowData, edit: "multiple" }}
-              className="update-button"
+              className="update-button primary-color primary-color"
             >
-              update
+              Edit Multiple
             </PagesIndex.Link>
           </div>
         );
@@ -133,7 +138,7 @@ const GameProvider = ({ path, title, gameType, api_Route }) => {
                 <PagesIndex.Link
                   to={`${path}/edit`}
                   state={{ row: row, rowData: rowData, edit: "single" }}
-                  className="update-button"
+                  className="update-button primary-color"
                 >
                   update
                 </PagesIndex.Link>
@@ -185,7 +190,7 @@ const GameProvider = ({ path, title, gameType, api_Route }) => {
                   <PagesIndex.Link
                     to={`${path}/edit`}
                     state={{ row: row, rowData: rowData, edit: "single" }}
-                    className="update-button"
+                    className="update-button primary-color"
                   >
                     update
                   </PagesIndex.Link>
@@ -239,7 +244,7 @@ const GameProvider = ({ path, title, gameType, api_Route }) => {
                   <PagesIndex.Link
                     to={`${path}/edit`}
                     state={{ row: row, rowData: rowData, edit: "single" }}
-                    className="update-button"
+                    className="update-button primary-color"
                   >
                     update
                   </PagesIndex.Link>
@@ -293,7 +298,7 @@ const GameProvider = ({ path, title, gameType, api_Route }) => {
                   <PagesIndex.Link
                     to={`${path}/edit`}
                     state={{ row: row, rowData: rowData, edit: "single" }}
-                    className="update-button"
+                    className="update-button primary-color"
                   >
                     update
                   </PagesIndex.Link>
@@ -346,7 +351,7 @@ const GameProvider = ({ path, title, gameType, api_Route }) => {
                   <PagesIndex.Link
                     to={`${path}/edit`}
                     state={{ row: row, rowData: rowData, edit: "single" }}
-                    className="update-button"
+                    className="update-button primary-color"
                   >
                     update
                   </PagesIndex.Link>
@@ -399,7 +404,7 @@ const GameProvider = ({ path, title, gameType, api_Route }) => {
                   <PagesIndex.Link
                     to={`${path}/edit`}
                     state={{ row: row, rowData: rowData, edit: "single" }}
-                    className="update-button"
+                    className="update-button primary-color"
                   >
                     update
                   </PagesIndex.Link>
@@ -452,7 +457,7 @@ const GameProvider = ({ path, title, gameType, api_Route }) => {
                   <PagesIndex.Link
                     to={`${path}/edit`}
                     state={{ row: row, rowData: rowData, edit: "single" }}
-                    className="update-button"
+                    className="update-button primary-color"
                   >
                     update
                   </PagesIndex.Link>
@@ -475,7 +480,7 @@ const GameProvider = ({ path, title, gameType, api_Route }) => {
         title={title}
         btnTitle="Add"
       >
-        <PagesIndex.Data_Table columns={columns} data={GameSettingList && GameSettingList} />
+        <PagesIndex.Data_Table columns={columns} data={amc} />
       </PagesIndex.Main_Containt>
     </div>
   );
