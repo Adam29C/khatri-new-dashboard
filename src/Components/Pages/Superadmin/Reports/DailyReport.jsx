@@ -105,7 +105,7 @@ const AllReports = () => {
           );
 
           if (res.status) {
-            setTotalPages(res.totalPages);
+            setTotalPages(res.pagination.totalItems);
             setRefresh(!Refresh);
             // toast.success(res.message);
             var abcded = [];
@@ -183,6 +183,7 @@ const AllReports = () => {
           config={config}
           fetchReportData={config.fetchReportData}
           setUserPagenateData={setUserPagenateData}
+          UserPagenateData={UserPagenateData}
           TotalPagesCount={(TotalPages && TotalPages) || []}
           Refresh={Refresh}
         />

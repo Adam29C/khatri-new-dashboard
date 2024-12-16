@@ -128,21 +128,21 @@ const AllReports = () => {
         // }
 
         const payload = {
-          // providerName: value.providerName,
-          // gameType: value.gameType,
-          // session: value.session,
-          // date: today(value.date) || today(new Date()),
-          // userName: "",
-          // page: UserPagenateData.pageno,
-          // limit: UserPagenateData.limit,
-
-          provider: "668d41e0211a65d88600f68f",
-          gameType: "6690701918732c8c3c427b09",
-          session: "Open",
-          date: "12/16/2024",
+          providerName: value.providerName,
+          gameType: value.gameType,
+          session: value.session,
+          date: today(value.date) || today(new Date()),
           userName: "",
-          page: 1,
-          limit: 10,
+          page: UserPagenateData.pageno,
+          limit: UserPagenateData.limit,
+
+          // providerName: "668d41e0211a65d88600f68f",
+          // gameType: "6690701918732c8c3c427b09",
+          // session: "Open",
+          // date: "12/16/2024",
+          // userName: "",
+          // page: 1,
+          // limit: 10,
         };
 
         console.log("payload", payload);
@@ -184,6 +184,7 @@ const AllReports = () => {
           config={config}
           fetchReportData={config.fetchReportData}
           setUserPagenateData={setUserPagenateData}
+          UserPagenateData={UserPagenateData}
           TotalPagesCount={(TotalPages && TotalPages) || []}
           Refresh={Refresh}
         />

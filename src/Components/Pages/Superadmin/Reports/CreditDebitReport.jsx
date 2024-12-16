@@ -125,7 +125,7 @@ const AllReports = () => {
           console.log("resresres" ,res);
           
           if (res.status) {
-            setTotalPages(res.totalPages);
+            setTotalPages(res.pagination.total);
             setRefresh(!Refresh);
             toast.success(res.message);
           } else {
@@ -153,6 +153,7 @@ const AllReports = () => {
           config={config}
           fetchReportData={config.fetchReportData}
           setUserPagenateData={setUserPagenateData}
+          UserPagenateData={UserPagenateData}
           TotalPagesCount={(TotalPages && TotalPages) || []}
           Refresh={Refresh}
         />

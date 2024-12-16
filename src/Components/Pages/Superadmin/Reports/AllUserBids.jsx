@@ -230,24 +230,6 @@ const SplitForm = () => {
             Refresh={Refresh}
             setUserPagenateData={setUserPagenateData}
           />
-
-
-          {/* <PagesIndex.TableWithCustomPeginationNew
-            data={MaintableData && MaintableData}
-            initialRowsPerPage={5}
-            SearchInTable={SearchInTable}
-            visibleFields={visibleFields}
-            showIndex={true}
-            searchInput={
-              <input
-                type="text"
-                placeholder="Search..."
-                value={SearchInTable}
-                onChange={(e) => setSearchInTable(e.target.value)}
-                className="form-control ms-auto"
-              />
-            }
-          /> */}
         </div>
       ),
     },

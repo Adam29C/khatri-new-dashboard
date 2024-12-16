@@ -130,13 +130,13 @@ const AllReports = () => {
           page: UserPagenateData.pageno,
           limit: UserPagenateData.limit,
 
-          provider: "668d41e0211a65d88600f68f",
-          gameType: "6690701918732c8c3c427b09",
-          session: "Open",
-          date: "12/16/2024",
-          userName: "",
-          page: 1,
-          limit: 10,
+          // provider: "668d41e0211a65d88600f68f",
+          // gameType: "6690701918732c8c3c427b09",
+          // session: "Open",
+          // date: "12/16/2024",
+          // userName: "",
+          // page: 1,
+          // limit: 10,
         };
 
         try {
@@ -149,7 +149,7 @@ const AllReports = () => {
 
 
           if (res.status) {
-            setTotalPages(res.pagination.totalPages);
+            setTotalPages(res.pagination.totalRecords);
             setRefresh(!Refresh);
             toast.success(res.message);
           } else {
@@ -176,6 +176,7 @@ const AllReports = () => {
           title={config.title}
           config={config}
           fetchReportData={config.fetchReportData}
+          UserPagenateData={UserPagenateData}
           setUserPagenateData={setUserPagenateData}
           TotalPagesCount={(TotalPages && TotalPages) || []}
           Refresh={Refresh}

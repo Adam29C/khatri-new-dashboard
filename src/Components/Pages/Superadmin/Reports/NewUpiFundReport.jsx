@@ -12,7 +12,7 @@ const AllReports = () => {
 
   const [Refresh, setRefresh] = PagesIndex.useState(false);
 
-  const [UserPagenateData, setUserPagenateData ] = PagesIndex.useState({
+  const [UserPagenateData, setUserPagenateData] = PagesIndex.useState({
     pageno: 1,
     limit: 10,
   });
@@ -117,7 +117,7 @@ const AllReports = () => {
           );
 
           if (res.status) {
-            setTotalPages(res.totalPages);
+            setTotalPages(res.totalItems);
             setRefresh(!Refresh);
             toast.success(res.message);
           } else {
@@ -145,6 +145,7 @@ const AllReports = () => {
           config={config}
           fetchReportData={config.fetchReportData}
           setUserPagenateData={setUserPagenateData}
+          UserPagenateData={UserPagenateData}
           TotalPagesCount={(TotalPages && TotalPages) || []}
           Refresh={Refresh}
         />

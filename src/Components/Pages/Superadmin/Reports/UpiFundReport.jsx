@@ -19,9 +19,6 @@ const AllReports = () => {
 
   const [TotalPages, setTotalPages] = PagesIndex.useState(1);
 
-
-  
-
   const getReportDetails = async () => {
     const res = await PagesIndex.report_service.GET_REPORT_DETAILS_API(
       Api.GET_UPI_FUND_REPORT_DETAILS,
@@ -119,11 +116,9 @@ const AllReports = () => {
             payload,
             token
           );
-    
-          
+
           if (res.status) {
-            console.log('resresresresresres' , res);
-            setTotalPages(res.pagination.totalPages);
+            setTotalPages(res.pagination.totalRecords);
             setRefresh(!Refresh);
             toast.success(res.message);
           } else {
@@ -137,8 +132,8 @@ const AllReports = () => {
             "Something went wrong. Please try again.";
           PagesIndex.toast.error(errorMessage);
         }
-        F;
       },
+      show_additional: true,
     },
   ];
 
@@ -151,6 +146,7 @@ const AllReports = () => {
           config={config}
           fetchReportData={config.fetchReportData}
           setUserPagenateData={setUserPagenateData}
+          UserPagenateData={UserPagenateData}
           TotalPagesCount={(TotalPages && TotalPages) || []}
           Refresh={Refresh}
         />
