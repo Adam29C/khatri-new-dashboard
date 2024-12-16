@@ -93,6 +93,7 @@ const PaginatedTable = ({
       window.removeEventListener("resize", toggleResponsiveTable);
     };
   }, []);
+
   return (
     <div className="container">
       <div className="d-flex justify-content-between align-items-center mb-3">
@@ -112,7 +113,8 @@ const PaginatedTable = ({
       {/* Table */}
       <table
         id="myTable"
-        className="table table-striped table-bordered table-responsive"
+
+        className={`table table-striped table-bordered table-responsive  ${visibleFields?.length >= 10 ? "d-block" : ""}`}
       >
         <thead className="text-center table-header-backeground">
           {data && data?.length > 0 && (

@@ -67,6 +67,7 @@ const App = () => {
       value: "deviceId",
       sortable: true,
     },
+    
     {
       name: "Created At",
       value: "CreatedAt",

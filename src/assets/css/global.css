@@ -258,8 +258,7 @@ input:checked + .slider:before {
 }
 
 .card-color {
-  /* background: #4a8c6b2e; */
-  background: #3c7c8334;
+  background: rgb(60 124 131 / 44%);
   box-shadow: rgba(21, 152, 156, 0.25) 0px 30px 50px -12px inset,
     rgba(21, 84, 95, 0.3) 0px 18px 26px -18px inset;
 }
@@ -281,7 +280,7 @@ input:checked + .slider:before {
 
 /* set background image favicon css start*/
 #dynamic-background {
-  background-image: url("../Images/back-image-2.jpg");
+  background-image: url("../Images/bg1.jpeg");
 }
 
 #company-logo {
@@ -436,3 +435,38 @@ input:checked + .slider:before {
 .custom-padding-for-label{
   padding: 7px 0px !important;
 }
+
+/* css for make responsive all modules start */
+
+/* d-flex justify-content-between align-items-center  mb-3 */
+.table-header-fields-main{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.table-responsive thead, tbody {
+  width: 100%;    /* Match the parent table width */
+}
+
+.table-responsive thead th, .table-responsive tbody td {
+  white-space: nowrap; /* Prevent wrapping and ensure proper alignment */
+}
+
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.form-control {
+  width: 100%;
+}
+
+
+.dashboard-main-title{
+  margin: 0;
+  padding: 20px;
+}
+
+/* css for make responsive all modules end */
+

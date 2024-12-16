@@ -75,6 +75,8 @@ const PaginatedTable = ({
   const renderButton = (field, row) => {
     const buttonText =
     typeof field.value === "function" ? field.value(row) : field.value;
+
+
   return (
     <button
       key={field.name}
@@ -126,7 +128,7 @@ const PaginatedTable = ({
       </div>
 
       {/* Table */}
-      <table className="table table-striped table-bordered">
+      <table className="table table-striped table-bordered make-responsive-table ">
         <thead className="primary-color text-center">
           <tr>
             {showIndex && <th>#</th>}

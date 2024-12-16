@@ -22,7 +22,7 @@ const CustomTable = ({
   const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
   const [isResponsive, setIsResponsive] = useState(window.innerWidth < 425);
   const [Refresh1, setRefresh1] = useState(false);
-
+console.log(columns)
 
   const fetchTableData = async () => {
     setLoading(true);
@@ -149,7 +149,7 @@ const CustomTable = ({
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
+console.log(columns)
   return (
     <div className="container">
       <div className="row d-flex">
@@ -191,9 +191,10 @@ const CustomTable = ({
       ) : ( */}
       <table
         id="myTable"
-        className={`table table-striped table-bordered  ${
+        // className={`table table-striped table-bordered table-responsive  ${columns?.length >= 10 ? "d-block" : ""}`}
+        className={`table table-striped table-bordered make-responsive-table ${
           isResponsive ? "table-responsive" : ""
-        }`}
+        }` }
       >
         <thead className="primary-color text-center table-header-backeground">
           <tr>

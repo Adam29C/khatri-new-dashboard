@@ -152,13 +152,13 @@ const AppVersion = () => {
           btn_name="Update Version"
           after_submit_button={
             <>
-              <div className="col-md-6 mt-4">
+              <div className="col-md-6 mt-4 app-ver-btn">
                 <h4>App Is Not Under Maintanance</h4>
                 <button onClick={toggleMaintenance} className="btn submitBtn">
                   Turn {isMaintanance} Maintanance
                 </button>
               </div>
-              <div className="col-md-6 mt-4">
+              <div className="col-md-6 mt-4 app-ver-btn">
                 <h4>Force Update Is Disabled</h4>
                 <button onClick={toggleForceUpdate} className="btn submitBtn">
                   Turn {isForceUpdate} Force Update

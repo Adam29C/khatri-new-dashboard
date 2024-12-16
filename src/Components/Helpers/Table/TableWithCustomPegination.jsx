@@ -167,10 +167,11 @@ const PaginatedTable = ({
       window.removeEventListener("resize", toggleResponsiveTable);
     };
   }, [window]);
+
   return (
     <div className="container">
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <div className="d-flex align-items-center">
+      <div className="table-header-fields-main">
+        <div className="d-flex align-items-center table-header-fields">
           <label htmlFor="rowsPerPage" className="form-label me-2">
             Show:
           </label>
@@ -186,7 +187,7 @@ const PaginatedTable = ({
             <option value="50">50</option>
           </select>
         </div>
-        <div>
+        <div className="table-header-fields">
           <input
             type="text"
             className="form-control"
@@ -198,7 +199,10 @@ const PaginatedTable = ({
       </div>
 
       {/* Table */}
-      <table className="table table-striped table-bordered table-responsive">
+      <table 
+      // className="table table-striped table-bordered table-responsive "
+      className={`table table-striped table-bordered table-responsive  ${visibleFields?.length >= 10 ? "d-block" : ""}`}
+      >
         <thead className="text-center table-header-backeground">
           {data && data?.length > 0 && (
             <tr>

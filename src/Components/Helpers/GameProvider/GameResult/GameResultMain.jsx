@@ -394,23 +394,6 @@ const ExamplePage = ({
     },
   ];
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   return (
     <>
       <Split_Main_Containt

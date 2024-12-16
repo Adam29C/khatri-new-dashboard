@@ -72,9 +72,9 @@ const Header = () => {
 
         <div className="header-right">
           <ul className="clearfix">
-            <li className="icons dropdown">
+        {/* <li className="icons dropdown">
               <ToggleDark />
-            </li>
+            </li>  */}
             <li className="icons dropdown">
               <div
                 className="user-img c-pointer position-relative"

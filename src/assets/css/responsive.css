@@ -35,8 +35,7 @@
   .Date-picker-control {
     width: 19.3rem;
   }
-  .custom-card-body{
-
+  .custom-card-body {
     padding: 20px 20px 20px 20px !important;
   }
 }
@@ -74,3 +73,74 @@
     font-size: 12px;
   }
 }
+
+/* css for make responsive all modules start */
+
+@media (max-width: 450px) {
+  .profile-note-title {
+    font-size: 1rem;
+    margin: 0 0 25px 0;
+    font-weight: 600;
+    color: #343a40;
+  }
+  .card {
+    padding: 10px 10px 10px 10px;
+  }
+
+  .app-ver-btn {
+    text-align: left;
+    margin-top: 30px !important;
+    margin-left: 10px;
+  }
+
+  .table-header-fields-main {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 15px;
+  }
+  .table-header-fields {
+    margin-top: 10px;
+  }
+
+  .winner-list-text-main {
+    color: rgb(141, 128, 128);
+    font-size: 15px;
+    text-align: center;
+  }
+
+  .dashboard-main-title {
+    margin: 0;
+    padding: 0px;
+  }
+}
+@media (max-width: 1024px) {
+  .make-responsive-table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
+
+  .make-responsive-table thead,
+  tbody {
+    width: 100%; /* Match the parent table width */
+  }
+  .table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
+}
+
+@media (max-width: 768px) {
+  .react-datepicker-wrapper {
+    width: 100%;
+  }
+}
+
+/* css for make responsive all modules end */

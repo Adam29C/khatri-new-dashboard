@@ -20,7 +20,7 @@ const Main_Containt = ({
         <div className="row">
           <div className={`card`}>
             <div className="d-flex align-items-center justify-content-between">
-              <h4 className="m-0 p-3">{title}</h4>
+              <h4 className="dashboard-main-title">{title}</h4>
               {btn_modal ? (
                 <button
                   onClick={handleAdd}
