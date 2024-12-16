@@ -8,6 +8,7 @@ const SalesReports = () => {
       <MainGameReports
         gameType={"mainGame"}
         report_api={Api.MAIN_GAME_REPORT}
+        title="Sales Report"
       />
     </div>
   );

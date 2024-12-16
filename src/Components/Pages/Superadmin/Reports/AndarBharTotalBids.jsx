@@ -344,9 +344,9 @@ const AndarBharTotalBids = ({ gameType, report_api, starandjackProvider }) => {
         setRefresh(!Refresh); // Trigger refresh to update the table
       } else {
         setTableData([]);
-        // PagesIndex.toast.error(
-        //   response?.response?.data?.message || "Failed to fetch data"
-        // );
+        PagesIndex.toast.error(
+          response?.response?.data?.message || "Failed to fetch data"
+        );
       }
     } catch (error) {
       // PagesIndex.toast.error(
