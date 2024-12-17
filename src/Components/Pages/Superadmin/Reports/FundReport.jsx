@@ -10,13 +10,22 @@ const AllReports = () => {
 
   const [GetBankDetails, setGetBankDetails] = PagesIndex.useState([]);
   const [GetAdminDetails, setGetAdminsDetails] = PagesIndex.useState([]);
+  const [first, setfirst] = PagesIndex.useState([]);
+
+  const [Refresh, setRefresh] = PagesIndex.useState(false);
+
+  const [UserPagenateData, setUserPagenateData] = PagesIndex.useState({
+    pageno: 1,
+    limit: 10,
+  });
+
+  const [TotalPages, setTotalPages] = PagesIndex.useState(1);
 
   const getReportDetails = async () => {
     const res = await PagesIndex.report_service.GET_REPORT_DETAILS_API(
       Api.GET_FUND_REPORT_DETAILS,
       token
     );
-
     setGetBankDetails(res.data);
     setGetAdminsDetails(res.adminName);
   };
@@ -24,6 +33,7 @@ const AllReports = () => {
   PagesIndex.useEffect(() => {
     getReportDetails();
   }, []);
+
   const FIELDS = [
     {
       title: "Fund Report",
@@ -89,7 +99,7 @@ const AllReports = () => {
           value: "reqUpdatedAt",
           sortable: true,
           transform: (item) => {
-            return item || "null";
+            return item || "-";
           },
         },
         {
@@ -97,7 +107,7 @@ const AllReports = () => {
           value: "withdrawalMode",
           sortable: true,
           transform: (item) => {
-            return item || "null";
+            return item || "-";
           },
         },
 
@@ -106,7 +116,7 @@ const AllReports = () => {
           value: "reqAmount",
           sortable: true,
           transform: (item) => {
-            return item || "null";
+            return item || "-";
           },
         },
         {
@@ -119,32 +129,58 @@ const AllReports = () => {
         },
       ],
       fetchReportData: async (value) => {
-        if (!value.bankName) {
-          toast.error("Please select a Payment Type.");
-          return;
-        }
-        if (!value.reqType) {
-          toast.error("Please select Credit or Debit.");
-          return;
-        }
+        // await abdced(value);
+
+        // console.log("value.bankName", value);
+
+        // if (!value.reqType) {
+        //   toast.error("Please select a Credit/Debit.");
+        //   return;
+        // }
+        // if (value.reqType === "Credit" && !value.bankName) {
+        //   toast.error("Please select Particuler Also.");
+        //   return;
+        // }
+        // if (value.reqType === "Debit" && !value.bankName && !value.admin_id) {
+        //   toast.error("Please select Particuler and admin also.");
+        //   return;
+        // }
+
+        // if (!value.bankName) {
+        //   toast.error("Please select Perticular.");
+        //   return;
+        // }
 
         const payload = {
           sdate: today(value.sdate),
           edate: today(value.edate),
-          bankName: value.bankName,
+          bankName: value.bankName || "1",
           reqType: value.reqType || "Credit",
-          admin_id: value.admin_id,
+          admin_id: value.admin_id || "1",
+          page: UserPagenateData.pageno,
+          limit: UserPagenateData.limit,
+          // sdate: "12/11/2024",
+          // edate: "12/11/2024",
+          // bankName: "1",
+          // reqType: "Debit",
+          // admin_id: "1",
         };
-
         try {
+          // return await abdced(value);
           const res = await PagesIndex.report_service.GET_FUND_REPORT_API(
             Api.GET_FUND_REPORT,
             payload,
             token
           );
 
+          console.log("res", res);
+
           if (res.status) {
-            toast.success(res.message);
+            setTotalPages(res.totalRecords);
+            setfirst(res.data);
+
+            setRefresh(!Refresh);
+            // toast.success(res.message);
           } else {
             toast.error(res.response.data.message);
           }
@@ -161,6 +197,47 @@ const AllReports = () => {
     },
   ];
 
+  // const abdced = async (value) => {
+  //   const payload = {
+  //     // sdate: today(value.sdate),
+  //     // edate: today(value.edate),
+  //     // bankName: value.bankName || "1",
+  //     // reqType: value.reqType || "Credit",
+  //     // admin_id: value.admin_id || "1",
+
+  //     sdate: "12/11/2024",
+  //     edate: "12/11/2024",
+  //     bankName: "1",
+  //     reqType: "Debit",
+  //     admin_id: "1",
+  //     page: UserPagenateData.pageno,
+  //     limit: UserPagenateData.limit,
+  //   };
+
+  //   try {
+  //     const res = await PagesIndex.report_service.GET_FUND_REPORT_API(
+  //       Api.GET_FUND_REPORT,
+  //       payload,
+  //       token
+  //     );
+
+  //     console.log("res", res);
+
+  //     if (res.status) {
+  //       setfirst(res.data);
+  //       setTotalPages(res.totalRecords);
+  //       setRefresh(!Refresh);
+  //     }
+  //   } catch {}
+  // };
+
+  // console.log("UserPagenateData.pageno", UserPagenateData.pageno);
+  // console.log("TotalPagesc", TotalPages);
+
+  // PagesIndex.useEffect(() => {
+  //   abdced();
+  // }, [UserPagenateData.pageno, UserPagenateData.limit]);
+
   return (
     <div>
       {FIELDS.map((config, idx) => (
@@ -169,9 +246,13 @@ const AllReports = () => {
           title={config.title}
           config={config}
           fetchReportData={config.fetchReportData}
+          setUserPagenateData={setUserPagenateData}
+          UserPagenateData={UserPagenateData}
+          TotalPagesCount={(TotalPages && TotalPages) || []}
+          Refresh={Refresh}
         />
       ))}
-   <PagesIndex.Toast />
+      <PagesIndex.Toast />
     </div>
   );
 };

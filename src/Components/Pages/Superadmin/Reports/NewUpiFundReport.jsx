@@ -10,6 +10,15 @@ const AllReports = () => {
 
   const [GetBankDetails, setGetBankDetails] = PagesIndex.useState([]);
 
+  const [Refresh, setRefresh] = PagesIndex.useState(false);
+
+  const [UserPagenateData, setUserPagenateData] = PagesIndex.useState({
+    pageno: 1,
+    limit: 10,
+  });
+
+  const [TotalPages, setTotalPages] = PagesIndex.useState(1);
+
   const getReportDetails = async () => {
     const res = await PagesIndex.report_service.GET_REPORT_DETAILS_API(
       Api.GET_UPI_FUND_REPORT_DETAILS,
@@ -95,8 +104,8 @@ const AllReports = () => {
           dateStart: today(value.sdate) || today(new Date()),
           date: today(value.edate) || today(new Date()),
           id: value.bankName || "1",
-          page: 1,
-          limit: 10,
+          page: UserPagenateData.pageno,
+          limit: UserPagenateData.limit,
           search: "",
         };
 
@@ -108,7 +117,9 @@ const AllReports = () => {
           );
 
           if (res.status) {
-            // toast.success(res.message);
+            setTotalPages(res.totalItems);
+            setRefresh(!Refresh);
+            toast.success(res.message);
           } else {
             toast.error(res.response.data.message);
           }
@@ -133,6 +144,10 @@ const AllReports = () => {
           title={config.title}
           config={config}
           fetchReportData={config.fetchReportData}
+          setUserPagenateData={setUserPagenateData}
+          UserPagenateData={UserPagenateData}
+          TotalPagesCount={(TotalPages && TotalPages) || []}
+          Refresh={Refresh}
         />
       ))}
       <PagesIndex.Toast />

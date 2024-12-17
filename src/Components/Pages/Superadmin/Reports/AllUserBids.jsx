@@ -9,6 +9,15 @@ const SplitForm = () => {
   const [tableData, settableData] = PagesIndex.useState([]);
   const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
 
+  const [Refresh, setRefresh] = PagesIndex.useState(false);
+
+  const [UserPagenateData, setUserPagenateData ] = PagesIndex.useState({
+    pageno: 1,
+    limit: 10,
+  });
+
+  const [TotalPages, setTotalPages] = PagesIndex.useState(1);
+
   const [MaintableData, setMaintableData] = PagesIndex.useState([]);
   const formik = useFormik({
     initialValues: {
@@ -33,8 +42,8 @@ const SplitForm = () => {
       const payload = {
         market: parseInt(values.market) || 1,
         username: values.username || "rock",
-        page: 1,
-        limit: 10,
+         page: UserPagenateData.pageno,
+          limit: UserPagenateData.limit,
         search: "",
       };
       const res = await PagesIndex.report_service.GET_FUND_REPORT_API(
@@ -44,6 +53,7 @@ const SplitForm = () => {
       );
 
       if (res.status) {
+        
         let bidsum = 0;
         let amountsum = 0;
 
@@ -64,7 +74,8 @@ const SplitForm = () => {
 
         settableData(resultArray);
 
-        setMaintableData(res.data.allData);
+        setTotalPages(res.totalPages);
+        setRefresh(!Refresh);
       }
     },
   });
@@ -209,21 +220,15 @@ const SplitForm = () => {
       size: 12,
       body: (
         <div>
-          <PagesIndex.TableWithCustomPeginationNew
-            data={MaintableData && MaintableData}
-            initialRowsPerPage={5}
-            SearchInTable={SearchInTable}
-            visibleFields={visibleFields}
+               <PagesIndex.TableWithCustomPeginationNew
+            // fetchData={handleFetchDataManually}
+            // handleFetchDataManually={handleFetchDataManually}
+            tableData={tableData && tableData}
+            TotalPagesCount={(TotalPages && TotalPages) || []}
+            columns={visibleFields}
             showIndex={true}
-            searchInput={
-              <input
-                type="text"
-                placeholder="Search..."
-                value={SearchInTable}
-                onChange={(e) => setSearchInTable(e.target.value)}
-                className="form-control ms-auto"
-              />
-            }
+            Refresh={Refresh}
+            setUserPagenateData={setUserPagenateData}
           />
         </div>
       ),

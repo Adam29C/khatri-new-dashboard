@@ -11,6 +11,15 @@ const AllReports = () => {
   const [GetDetails, setGetDetails] = PagesIndex.useState([]);
   const [GetBankDetails, setGetBankDetails] = PagesIndex.useState([]);
 
+  const [Refresh, setRefresh] = PagesIndex.useState(false);
+
+  const [UserPagenateData, setUserPagenateData] = PagesIndex.useState({
+    pageno: 1,
+    limit: 10,
+  });
+
+  const [TotalPages, setTotalPages] = PagesIndex.useState(1);
+
   const getReportDetails = async () => {
     const res = await PagesIndex.report_service.GET_REPORT_DETAILS_API(
       Api.TOTAL_BIDS_LIST_DETAILS,
@@ -27,7 +36,7 @@ const AllReports = () => {
 
   const FIELDS = [
     {
-      title: "Detailed Bidding Report",
+      title: "Bidding Report",
       fields: [
         {
           name: "providerName",
@@ -112,15 +121,22 @@ const AllReports = () => {
           return;
         }
 
-        
         const payload = {
           provider: value.providerName,
           gameType: value.gameType,
           session: value.session,
           date: today(value.date) || today(new Date()),
           userName: "",
-          page: 1,
-          limit: 10,
+          page: UserPagenateData.pageno,
+          limit: UserPagenateData.limit,
+
+          // provider: "668d41e0211a65d88600f68f",
+          // gameType: "6690701918732c8c3c427b09",
+          // session: "Open",
+          // date: "12/16/2024",
+          // userName: "",
+          // page: 1,
+          // limit: 10,
         };
 
         try {
@@ -131,7 +147,10 @@ const AllReports = () => {
             token
           );
 
+
           if (res.status) {
+            setTotalPages(res.pagination.totalRecords);
+            setRefresh(!Refresh);
             toast.success(res.message);
           } else {
             toast.error(res.response.data.message);
@@ -157,6 +176,10 @@ const AllReports = () => {
           title={config.title}
           config={config}
           fetchReportData={config.fetchReportData}
+          UserPagenateData={UserPagenateData}
+          setUserPagenateData={setUserPagenateData}
+          TotalPagesCount={(TotalPages && TotalPages) || []}
+          Refresh={Refresh}
         />
       ))}
       <PagesIndex.Toast />

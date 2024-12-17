@@ -45,6 +45,16 @@ const GameProvider = ({
     getGameProviderList();
   }, []);
 
+
+
+
+
+
+
+
+
+  
+
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this game?"
@@ -114,8 +124,7 @@ const GameProvider = ({
   };
   // Formik Configuration
 
-  ``;
-  console.log("selectedRow", selectedRow);
+
 
   const formik = PagesIndex.useFormik({
     enableReinitialize: true,
@@ -284,11 +293,13 @@ const GameProvider = ({
     },
 
     {
-      // name: "Profile",
-      name: "Block",
+      name: "Delete",
+      value: "Delete",
+      buttonColor: "danger",
+
       isButton: true,
-      value: (row) => (row.banned ? "Unblock" : "Block"),
-      buttonColor: (row) => (row.banned ? "success" : "danger"),
+      // value: (row) => (row.banned ? "Unblock" : "Block"),
+      // buttonColor: (row) => (row.banned ? "success" : "danger"),
       Conditions: (row) => {
         handleActionBtn(row, 2);
       },
@@ -325,6 +336,10 @@ const GameProvider = ({
       ? GetProviderData && GetProviderData
       : gameProviders;
 
+
+
+      console.log("PROVIDERDATA" ,PROVIDERDATA); 
+      
   return (
     <>
       <div>

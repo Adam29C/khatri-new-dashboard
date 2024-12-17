@@ -10839,8 +10839,9 @@ svg.pulse-svg .third-circle {
   top: -7px;
 }
 .header-right .icons .user-img img {
-  height: 40px;
-  width: 40px;
+  background-color: black;
+  height: 25px;
+  width: 25px;
   border: 3px solid #fff;
   border-radius: 50%;
   margin: 0;
@@ -15877,13 +15878,6 @@ table.dataTable thead .sorting::after {
   border-color: #4540f7;
 }
 
-.btn-secondary:active,
-.btn-secondary:focus,
-.btn-secondary:hover {
-  background: #6f78b2;
-  color: #fff;
-  border-color: #6f78b2;
-}
 
 .btn-success:active,
 .btn-success:focus,
@@ -22109,4 +22103,12 @@ color: #fff;
   font-size: .9rem;
   line-height: 1.5;
   border-radius: .15rem;
+}
+
+.badge-purple{
+
+  color: #fff !important;
+  background-color: #5b69bc  !important;
+  padding: 7px !important;
+  font-size: 12px;
 }

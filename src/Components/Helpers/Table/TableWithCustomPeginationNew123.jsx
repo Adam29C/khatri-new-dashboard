@@ -139,7 +139,7 @@ const PaginatedTable = ({
                     ? {
                         color: "white", // Default color when notheader
                         cursor: "pointer",
-                        ...(field.style ? field.style(field) : {}),
+                        // ...(field.style ? field.style(field) : {}),
                       }
                     : {
                         cursor: "pointer",

@@ -242,9 +242,9 @@ const MainGameReports = ({
       size: 12,
       body: (
         <div>
-          <PagesIndex.TableWithCustomPeginationNew
+          <PagesIndex.TableWithCustomPeginationNew123
             data={tableData}
-            initialRowsPerPage={5}
+            initialRowsPerPage={10}
             SearchInTable={SearchInTable}
             visibleFields={visibleFields}
             additional={

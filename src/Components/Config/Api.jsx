@@ -99,7 +99,7 @@ const Api = {
 
   CUTTING_GROUP_LIST: "cuttingGroups/getCutting",
   CUTTING_GROUP_OC_LIST: "cuttingGroups/getOC",
-  GET_BID_DATA: "cuttingGroups/getOC",
+  GET_BID_DATA: "cuttingGroups/getBidData",
   OC_CUTTING_GROUP_LIST: "ocCuttingGroup/getFinalCutting",
   OC_CUTTING_GROUP_OC_LIST: "ocCuttingGroup/finalCloseCutingGroup",
 
@@ -253,6 +253,14 @@ PENDING_DEBIT_GET_BALANCE:"pendingDebit/getBal",
 PENDING_DEBIT_UPDATE_WALLET:"pendingDebit/updateWallet",
 PENDING_DEBIT_DECLINE:"pendingDebit/decline",
 PENDING_DEBIT_GETPROFILE:"pendingDebit/getProfile",
+
+//USER PROFILE APIS
+USER_PROFILE_UPDATE_PASSWORD : "master/employees/updatePassword",
+USER_PROFILE_GET_LIST:"master/employees/profileAdmin",
+USER_PROFILE_BLOCK:"master/employees/blockEmployee"
+
+
+
 };
 
 export { Api };

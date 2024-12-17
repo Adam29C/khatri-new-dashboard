@@ -33,11 +33,13 @@
   line-height: 64px;
   margin-bottom: 40px;
   color: var(--khatri-color);
+  color: var(--khatri-color);
 }
 .buttons-con .action-link-wrap {
   margin: 40px 0px 0px 20px;
 }
 .buttons-con .action-link-wrap a {
+  background: var(--khatri-color);
   background: var(--khatri-color);
   padding: 12px 25px;
   border-radius: 4px;
@@ -56,6 +58,7 @@
 
 .message-box p {
   font-size: 20px;
+  color: var(--khatri-color);
   color: var(--khatri-color);
 
   font-weight: bold;
@@ -110,6 +113,7 @@
 
 input:checked + .slider {
   background-color: var(--khatri-color);
+  background-color: var(--khatri-color);
 }
 
 .error-text {
@@ -158,6 +162,7 @@ input:checked + .slider:before {
 }
 
 .update-button {
+  background: #478767;
   background: #478767;
   color: #fff;
   height: 24px;
@@ -350,56 +355,43 @@ input:checked + .slider:before {
   color: #343a40;
 }
 
-.delete-user-main{
+.delete-user-main {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 .eYzbsH:not(:last-of-type) {
-  border-bottom-style: none !important; 
-  border-bottom-width: 0 !important; 
-   border-bottom-color: none !important;
+  border-bottom-style: none !important;
+  border-bottom-width: 0 !important;
+  border-bottom-color: none !important;
 }
 
 /* data table css end */
 
-.deleted-user-field{
+.deleted-user-field {
   display: block;
   width: 100%;
-  height: calc(1.5em + .9rem + 2px);
-  padding: .45rem .9rem;
-  font-size: .9rem;
+  height: calc(1.5em + 0.9rem + 2px);
+  padding: 0.45rem 0.9rem;
+  font-size: 0.9rem;
   font-weight: 400;
   line-height: 1.5;
   color: #6c757d;
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #ced4da;
-  border-radius: .2rem;
-}
-
-.news-header-title{
-  font-size: 1.3rem;
-  margin: 0 0 25px 0;
-  color: #343a40;
-  font-weight: 600;
-}
-
-
-.rc-time-picker-panel {
-  z-index: 10001 !important; 
-  position: absolute; 
+  border-radius: 0.2rem;
 }
 
 /* css for pending request get user profile model  */
-.user-profile-head{
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
+.user-profile-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.model-cross-btn{
+.model-cross-btn {
   border: none;
   background-color: transparent;
   float: right;
@@ -408,12 +400,26 @@ justify-content: center;
   line-height: 1;
   color: #000;
   text-shadow: none;
-  opacity: .5;
-margin-bottom: 30px;
+  opacity: 0.5;
+  margin-bottom: 30px;
 }
 
-
 /* css for pending request get user profile model  */
+
+/* user profile css start */
+
+.main-user-profile-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.user-profile-list-first{
+  display: flex;
+}
+/* user profile css end */
 
 .news-header-title{
   font-size: 1.3rem;
@@ -426,4 +432,7 @@ margin-bottom: 30px;
 .rc-time-picker-panel {
   z-index: 10001 !important; 
   position: absolute; 
+}
+.custom-padding-for-label{
+  padding: 7px 0px !important;
 }

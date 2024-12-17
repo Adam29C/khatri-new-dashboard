@@ -90,9 +90,11 @@ const DeleteUsers = () => {
 
   // Submit handler
   const handleSubmit = async () => {
+    console.log(updatedData)
     const timeList = timehistoryData.map((item) => ({
       _id: item._id,
       deleteTime: updatedData[item._id]?.deleteTime || item.deleteTime,
+      description: updatedData[item._id]?.description || item.description,
       isActive: updatedData[item._id]?.isActive || item.isActive,
       name: item.name,
     }));
@@ -129,6 +131,21 @@ const DeleteUsers = () => {
             value={updatedData[row._id]?.deleteTime || row.deleteTime}
             onChange={(e) => {
               handleFieldChange("deleteTime", e.target.value, row);
+            }}
+          />
+        </div>
+      ),
+    },
+    {
+      name: "description",
+      selector: (row) => (
+        <div>
+           <textarea
+            class="deleted-user-field"
+            type="textarea"
+            value={updatedData[row._id]?.description || row.description}
+            onChange={(e) => {
+              handleFieldChange("description", e.target.value, row);
             }}
           />
         </div>
@@ -197,7 +214,7 @@ const DeleteUsers = () => {
         <div>
           <div className="delete-user-main">
             <h4 class="profile-note-title mt-0 mb-4">Delete All Users Data</h4>
-            <button className="btn btn-dark" onClick={handleSubmit}>
+            <button className="btn btn-info" onClick={handleSubmit}>
               Submit
             </button>
           </div>

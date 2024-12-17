@@ -9,16 +9,21 @@ const AllReports = () => {
   const token = localStorage.getItem("token");
 
   const [GetBankDetails, setGetBankDetails] = PagesIndex.useState([]);
-  const [GetAdminDetails, setGetAdminsDetails] = PagesIndex.useState([]);
+
+  const [Refresh, setRefresh] = PagesIndex.useState(false);
+
+  const [UserPagenateData, setUserPagenateData] = PagesIndex.useState({
+    pageno: 1,
+    limit: 10,
+  });
+
+  const [TotalPages, setTotalPages] = PagesIndex.useState(1);
 
   const getReportDetails = async () => {
     const res = await PagesIndex.report_service.GET_REPORT_DETAILS_API(
       Api.GET_UPI_FUND_REPORT_DETAILS,
       token
     );
-
-    console.log("res", res);
-
     setGetBankDetails(res.data);
   };
 
@@ -61,7 +66,6 @@ const AllReports = () => {
           name: "Amount Added",
           value: "reqAmount",
           sortable: true,
-        
         },
         {
           name: "Time",
@@ -76,15 +80,13 @@ const AllReports = () => {
           value: "transaction_id",
           sortable: true,
           transform: (item, row) => {
-            return item || 'null'
+            return item || "null";
           },
-         
         },
         {
           name: "Upi Name",
           value: "upi_name",
           sortable: true,
-        
         },
         {
           name: "App Name",
@@ -95,19 +97,17 @@ const AllReports = () => {
           name: "Status",
           value: "reqStatus",
           sortable: true,
-         
         },
       ],
       fetchReportData: async (value) => {
         const payload = {
           dateStart: today(value.sdate) || today(new Date()),
           date: today(value.edate) || today(new Date()),
-          id: value.bankName || '1',
-          page: 1,
-          limit: 10,
+          id: value.bankName || "1",
+          page: UserPagenateData.pageno,
+          limit: UserPagenateData.limit,
           search: "",
         };
-
 
         try {
           // Call your API for report 1
@@ -116,9 +116,10 @@ const AllReports = () => {
             payload,
             token
           );
-          console.log("resres", res);
 
           if (res.status) {
+            setTotalPages(res.pagination.totalRecords);
+            setRefresh(!Refresh);
             toast.success(res.message);
           } else {
             toast.error(res.response.data.message);
@@ -131,8 +132,8 @@ const AllReports = () => {
             "Something went wrong. Please try again.";
           PagesIndex.toast.error(errorMessage);
         }
-        F;
       },
+      show_additional: true,
     },
   ];
 
@@ -144,9 +145,13 @@ const AllReports = () => {
           title={config.title}
           config={config}
           fetchReportData={config.fetchReportData}
+          setUserPagenateData={setUserPagenateData}
+          UserPagenateData={UserPagenateData}
+          TotalPagesCount={(TotalPages && TotalPages) || []}
+          Refresh={Refresh}
         />
       ))}
-         <PagesIndex.Toast />
+      <PagesIndex.Toast />
     </div>
   );
 };

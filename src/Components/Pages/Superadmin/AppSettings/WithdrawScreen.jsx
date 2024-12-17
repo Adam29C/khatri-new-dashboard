@@ -105,14 +105,14 @@ const token =  localStorage.getItem("token")
       label: "Number",
       type: "number",
       label_size: 12,
-      col_size: 6,
+      col_size: 12,
     },
     {
       name: "Timing",
       label: "Timing",
       type: "text",
       label_size: 12,
-      col_size: 6,
+      col_size: 12,
     },
   ];
 

@@ -11,6 +11,15 @@ const AllReports = () => {
   const [GetDetails, setGetDetails] = PagesIndex.useState([]);
   const [GetBankDetails, setGetBankDetails] = PagesIndex.useState([]);
 
+  const [Refresh, setRefresh] = PagesIndex.useState(false);
+
+  const [UserPagenateData, setUserPagenateData] = PagesIndex.useState({
+    pageno: 1,
+    limit: 10,
+  });
+
+  const [TotalPages, setTotalPages] = PagesIndex.useState(1);
+
   const getReportDetails = async () => {
     const res = await PagesIndex.report_service.GET_REPORT_DETAILS_API(
       Api.TOTAL_BIDS_LIST_DETAILS,
@@ -105,30 +114,38 @@ const AllReports = () => {
         },
       ],
       fetchReportData: async (value) => {
+        // if (!value.providerName) {
+        //   toast.error("Provider Name is required");
+        //   return;
+        // }
+        // if (!value.gameType) {
+        //   toast.error("gameType  is required ");
+        //   return;
+        // }
+        // if (!value.session) {
+        //   toast.error("session  is required");
+        //   return;
+        // }
 
-        if (!value.providerName) {
-          toast.error("Provider Name is required");
-          return;
-        }
-        if (!value.gameType) {
-          toast.error("gameType  is required ");
-          return;
-        }
-        if (!value.session) {
-          toast.error("session  is required");
-          return;
-        }
-
-        
         const payload = {
           providerName: value.providerName,
           gameType: value.gameType,
           session: value.session,
           date: today(value.date) || today(new Date()),
           userName: "",
-          page: 1,
-          limit: 10,
+          page: UserPagenateData.pageno,
+          limit: UserPagenateData.limit,
+
+          // providerName: "668d41e0211a65d88600f68f",
+          // gameType: "6690701918732c8c3c427b09",
+          // session: "Open",
+          // date: "12/16/2024",
+          // userName: "",
+          // page: 1,
+          // limit: 10,
         };
+
+        console.log("payload", payload);
 
         try {
           // Call your API for report 1
@@ -139,6 +156,8 @@ const AllReports = () => {
           );
 
           if (res.status) {
+            setTotalPages(res.totalPages);
+            setRefresh(!Refresh);
             toast.success(res.message);
           } else {
             toast.error(res.response.data.message);
@@ -164,9 +183,13 @@ const AllReports = () => {
           title={config.title}
           config={config}
           fetchReportData={config.fetchReportData}
+          setUserPagenateData={setUserPagenateData}
+          UserPagenateData={UserPagenateData}
+          TotalPagesCount={(TotalPages && TotalPages) || []}
+          Refresh={Refresh}
         />
       ))}
-         <PagesIndex.Toast />
+      <PagesIndex.Toast />
     </div>
   );
 };

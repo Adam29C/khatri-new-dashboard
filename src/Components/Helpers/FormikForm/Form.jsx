@@ -68,8 +68,8 @@ const ReusableForm = ({
                   <>
                     <div
                       className={`col-lg-${field.col_size} ${
-                        field.hideField ? "hideFieldCss" : ""
-                      }`}
+                        field.Visiblity === "hidden" ? "d-none" : "d-block"
+                      } ${field.hideField ? "hideFieldCss" : ""}`}
                     >
                       <div className="mb-1 row">
                         <label
@@ -315,30 +315,33 @@ const ReusableForm = ({
                   <>
                     <div className={`col-lg-${field.col_size}`}>
                       <div className="row d-flex">
-                        <div
-                        // className={`col-lg-${field.col_size}`}
-                        >
-                          <div class="mb-3">
-                            <label
+                        <div class="mb-3">
+                          {/* <label
                               className={`custom-label col-lg-${field.label_size}`}
                               for={field.name}
                             >
                               {field.label}
-                            </label>
-                            <textarea
-                              class="form-control"
-                              rows={field.row_size}
-                              id={field.name}
-                              name={field.name}
-                              {...formik.getFieldProps(field.name)}
-                              placeholder={field.label}
-                            ></textarea>
-                            {formik.errors[field.name] && (
-                              <div className="error-text">
-                                {formik.errors[field.name]}
-                              </div>
-                            )}
-                          </div>
+                            </label> */}
+                          <label
+                            className={`custom-label custom-padding-for-label col-lg-${field.label_size} col-form-label `}
+                            htmlFor={field.name}
+                          >
+                            {field.label}
+                            <span className="text-danger">*</span>
+                          </label>
+                          <textarea
+                            class="form-control"
+                            rows={field.row_size}
+                            id={field.name}
+                            name={field.name}
+                            {...formik.getFieldProps(field.name)}
+                            placeholder={field.label}
+                          ></textarea>
+                          {formik.errors[field.name] && (
+                            <div className="error-text">
+                              {formik.errors[field.name]}
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -490,7 +493,9 @@ const ReusableForm = ({
                   </>
                 ) : (
                   <>
-                    <div className={`col-lg-${field.col_size}`}>
+                    <div className={`col-lg-${field.col_size} ${
+                      field.Visiblity === "hidden" ? "d-none" : "d-block"
+                    }`}>
                       <div className="mb-3 row flex-column">
                         <label
                           className={`custom-label col-lg-${field.label_size}`}
