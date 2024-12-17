@@ -752,7 +752,7 @@ export const SINGLE_EMPLOYEE_GET_LIST_API = async (id,token) => {
 
 export const REQUEST_LIST_API = async (token) => {
   try {
-    const res = await axios.get(`${BASE_URL}${Api.REQUEST_LIST}` ,data, {
+    const res = await axios.get(`${BASE_URL}${Api.REQUEST_LIST}` , {
             headers: header(token),
           });
           return res?.data;
@@ -794,7 +794,7 @@ export const REQUEST_LIST_UPDATE_API = async (data, token) => {
 export const GET_REQUEST_LIST_API = async (token) => {
   try {
     const res = await axios.get(`${BASE_URL}${Api.GET_REQUEST_LIST}`, 
-      data,
+      
       {
         headers: header(token),
       }

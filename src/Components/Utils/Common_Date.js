@@ -62,8 +62,6 @@ export const getActualDateFormate = (d) => {
   return `${month}-${day}-${year}`;
 };
 
-
-
 export const abc = (d) => {
   const today = new Date(d);
   const year = today.getFullYear();
@@ -114,7 +112,6 @@ export const today = (d) => {
 
   return full;
 };
-
 
 export const convert_string_to_month = (expiry) => {
   const day_expiry = expiry.substring(0, 2);
@@ -176,9 +173,27 @@ export const dateFormate = (date) => {
 };
 
 export const convertTo12HourFormat = (time) => {
-  let [hours, minutes] = time.split(":");
-  hours = parseInt(hours, 10);
-  const ampm = hours >= 12 ? "PM" : "AM";
-  hours = hours % 12 || 12; // Convert 0 to 12 for 12 AM
-  return `${hours}:${minutes}`;
+  const timeParts = time.split(" ");
+  // Return the first part, which is the time
+  return timeParts[0] || null;
 };
+
+export const convertTo12HourFormat123 = (timeStr) => {
+  let [hours, minutes] = timeStr.split(":");
+  hours = parseInt(hours); // Convert hours to integer
+  let period = hours >= 12 ? "PM" : "AM";
+  
+  // Convert to 12-hour format
+  if (hours > 12) {
+    hours -= 12;
+  } else if (hours === 0) {
+    hours = 12; // Handle midnight case (00:00)
+  }
+
+  // Ensure the hour is always two digits
+  hours = hours < 10 ? `0${hours}` : hours;
+
+  return `${hours}:${minutes} ${period}`;
+}
+
+
