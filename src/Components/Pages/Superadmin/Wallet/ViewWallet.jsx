@@ -111,7 +111,6 @@ const ViewWallet = () => {
       }
     } else if (number === 4) {
       setModalStateHistory(true);
-
     }
   };
 
@@ -153,14 +152,11 @@ const ViewWallet = () => {
         payload,
         token
       );
-      
-      if(res.status){
+
+      if (res.status) {
         toast.success("update sucessfully");
-      setModalStateHistory(false);
-
-
+        setModalStateHistory(false);
       }
-
     },
   });
 
@@ -283,6 +279,7 @@ const ViewWallet = () => {
 
   const { userData1, userData2 } = UserDetails && UserDetails;
 
+  console.log("ModalStateHistoryUserDetails", ModalStateHistoryUserDetails);
 
   return (
     <PagesIndex.Main_Containt

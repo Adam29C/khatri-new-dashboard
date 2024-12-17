@@ -171,12 +171,12 @@ const DownloadDebitReport = () => {
       size: 12,
       body: (
         <div>
-          <button
+          {/* <button
             onClick={() => handleBtnStatus("approve-all")}
             className="approve-btn"
           >
             Approve All
-          </button>
+          </button> */}
           <PagesIndex.TableWitCustomPegination
             data={TableData}
             initialRowsPerPage={5}

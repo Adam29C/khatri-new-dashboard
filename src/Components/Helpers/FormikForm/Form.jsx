@@ -26,6 +26,7 @@ const ReusableForm = ({
   show_submit,
   label_size,
   show_preview,
+  after_submit_button1
 }) => {
   const location = useLocation();
 
@@ -493,9 +494,11 @@ const ReusableForm = ({
                   </>
                 ) : (
                   <>
-                    <div className={`col-lg-${field.col_size} ${
-                      field.Visiblity === "hidden" ? "d-none" : "d-block"
-                    }`}>
+                    <div
+                      className={`col-lg-${field.col_size} ${
+                        field.Visiblity === "hidden" ? "d-none" : "d-block"
+                      }`}
+                    >
                       <div className="mb-3 row flex-column">
                         <label
                           className={`custom-label col-lg-${field.label_size}`}
@@ -574,6 +577,7 @@ const ReusableForm = ({
               ) : (
                 ""
               )}
+              {after_submit_button1}
             </div>
           </div>
         </div>
