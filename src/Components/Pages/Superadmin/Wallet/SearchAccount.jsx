@@ -57,31 +57,6 @@ const SearchAccount = () => {
     },
   ];
 
-  const columns = [
-    {
-      name: "Username",
-      selector: (row) => row?.username,
-    },
-    {
-      name: "Acc Holder	",
-      selector: (row) => row?.account_holder_name,
-    },
-
-    {
-      name: "A/C NO	",
-      selector: (row) => row?.account_no,
-    },
-
-    {
-      name: "Bank",
-      selector: (row) => row?.bank_name,
-    },
-
-    {
-      name: "IFSC",
-      selector: (row) => row?.ifsc_code,
-    },
-  ];
 
   const visibleFields = [
     {
@@ -111,35 +86,32 @@ const SearchAccount = () => {
     },
   ];
 
+
   const visibleFields1 = [
     {
       name: "Username",
-      value: "username",
+      value: "old_acc_name",
       sortable: true,
     },
     {
       name: "Old Acc No",
-      value: "UPI_ID",
+      value: "old_acc_no",
       sortable: true,
     },
     {
       name: "Old Bank Name",
-      value: "UPI_ID",
+      value: "old_bank_name",
       sortable: true,
     },
     {
       name: "Old IFSC",
-      value: "UPI_ID",
+      value: "old_ifsc",
       sortable: true,
     },
-    {
-      name: "Old Acc Name",
-      value: "UPI_ID",
-      sortable: true,
-    },
+   
     {
       name: "Changed On",
-      value: "UPI_ID",
+      value: "changeDate",
       sortable: true,
     },
   ];

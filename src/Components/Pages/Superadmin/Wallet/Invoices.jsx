@@ -36,8 +36,6 @@ const Invoices = () => {
       value: "paytm_number",
       sortable: false,
       transform: (item) => {
-        console.log("item", item);
-
         return item ? item : " null";
       },
     },

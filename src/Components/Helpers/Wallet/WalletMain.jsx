@@ -21,7 +21,6 @@ const WalletMain = ({
   formik1,
   fields1,
 }) => {
-
   const totalAmount = useMemo(
     () => TableData.reduce((acc, item) => acc + (item?.reqAmount || 0), 0),
     [TableData]
@@ -53,31 +52,23 @@ const WalletMain = ({
     {
       size: 12,
       body: (
-        <div>
+        <>
           <button
             onClick={() => handleBtnStatus("approve-all")}
             className="approve-btn"
           >
             Approve All
           </button>
-          <PagesIndex.TableWitCustomPegination
+
+          <PagesIndex.TableWithCustomPeginationNew123
             data={TableData}
-            initialRowsPerPage={5}
-            SearchInTable={SearchInTable}
+            initialRowsPerPage={10}
+            SearchInTable={""}
             visibleFields={visibleFields}
-            UserFullButtonList={UserFullButtonList}
-            searchInput={
-              <input
-                type="text"
-                placeholder="Search..."
-                value={SearchInTable}
-                onChange={(e) => setSearchInTable(e.target.value)}
-                className="form-control ms-auto"
-              />
-            }
+            showIndex={true}
           />
           <h3 className="ml-3 mb-3 fw-bold">Total Amount {totalAmount}/-</h3>
-        </div>
+        </>
       ),
     },
   ];
@@ -118,22 +109,33 @@ const WalletMain = ({
                 </div>
               </div>
             ) : btnStatus === "see-report" ? (
-              <PagesIndex.TableWitCustomPegination
-                data={todayReportData}
-                UserFullButtonList={UserFullButtonList1}
-                initialRowsPerPage={5}
-                SearchInTable={SearchInTable}
-                visibleFields={visibleFields1}
-                searchInput={
-                  <input
-                    type="text"
-                    placeholder="Search..."
-                    value={SearchInTable}
-                    onChange={(e) => setSearchInTable(e.target.value)}
-                    className="form-control ms-auto"
-                  />
-                }
-              />
+
+              <PagesIndex.TableWithCustomPeginationNew123
+              data={todayReportData}
+              initialRowsPerPage={10}
+              SearchInTable={""}
+              visibleFields={visibleFields1}
+              showIndex={true}
+            />
+
+
+
+              // <PagesIndex.TableWitCustomPegination
+              //   data={todayReportData}
+              //   UserFullButtonList={UserFullButtonList1}
+              //   initialRowsPerPage={5}
+              //   SearchInTable={SearchInTable}
+              //   visibleFields={visibleFields1}
+              //   searchInput={
+              //     <input
+              //       type="text"
+              //       placeholder="Search..."
+              //       value={SearchInTable}
+              //       onChange={(e) => setSearchInTable(e.target.value)}
+              //       className="form-control ms-auto"
+              //     />
+              //   }
+              // />
             ) : btnStatus === "decline-report" ? (
               <PagesIndex.Formikform
                 fieldtype={fields1.filter((field) => !field.showWhen)}

@@ -1,5 +1,5 @@
 import PagesIndex from "../../PagesIndex";
-import { getActualDateFormate } from "../../../Utils/Common_Date";
+import { getActualDateWithFormat } from "../../../Utils/Common_Date";
 import { handleTextFile } from "../../../Utils/ConvertFile";
 
 const DownloadDebitReport = () => {
@@ -7,7 +7,7 @@ const DownloadDebitReport = () => {
   const token = localStorage.getItem("token");
 
   //set actual date
-  const actual_date_formet = getActualDateFormate(new Date());
+  const actual_date_formet = getActualDateWithFormat(new Date());
 
   //all state
   const [SearchInTable, setSearchInTable] = PagesIndex.useState("");

@@ -1,10 +1,13 @@
 import { useEffect } from "react";
 import PagesIndex from "../../PagesIndex";
 import { getActualDateFormate } from "../../../Utils/Common_Date";
-import { handleCSVFile, handleTextFile, normalizeData } from "../../../Utils/ConvertFile";
+import {
+  handleCSVFile,
+  handleTextFile,
+  normalizeData,
+} from "../../../Utils/ConvertFile";
 
 const ExportDebitReport = () => {
-  
   //get token in localstorage
   const token = localStorage.getItem("token");
   const userdetails = JSON.parse(localStorage.getItem("userdetails"));
@@ -20,10 +23,6 @@ const ExportDebitReport = () => {
   const [btnStatus, setBtnStatus] = PagesIndex.useState(null);
   const [declineData, setDeclineData] = PagesIndex.useState();
 
-
-
-  console.log("TableData" ,TableData);
-  
   const handleBtnStatus = (status) => {
     setBtnStatus(status);
     setModalState(true);
@@ -66,42 +65,30 @@ const ExportDebitReport = () => {
   }, []);
 
   const handleDeclineReport = async (row) => {
-    setDeclineData(row)
+    setDeclineData(row);
     setBtnStatus("decline-report");
     setModalState(true);
   };
 
-  const UserFullButtonList = [
-    {
-      id: 0,
-      buttonName: "Decline user request",
-      buttonColor: "info",
-      route: "",
-      Conditions: (row) => {
-        handleDeclineReport(row);
-      },
-      Visiblity: true,
-      type: "button",
-    },
-  ];
-
-  const handleDownloadFiles = async(row)=>{
-
+  const handleDownloadFiles = async (row) => {
     const data = {
       reportDate: actual_date_formet,
       searchType: "Pending",
     };
-    
-    const res = await PagesIndex.admin_services.EXPORT_MKXLS_FILE_API(data,token);
-    console.log(res)
+
+    const res = await PagesIndex.admin_services.EXPORT_MKXLS_FILE_API(
+      data,
+      token
+    );
+    console.log(res);
     if (res?.status) {
-      const { filename, writeString} = res;
+      const { filename, writeString } = res;
       if (writeString) {
         // Handle plain text format
         handleTextFile(writeString, filename || `MKTTC.txt`);
       }
     }
-  }
+  };
 
   const UserFullButtonList1 = [
     // {
@@ -119,7 +106,7 @@ const ExportDebitReport = () => {
       buttonColor: "dark",
       route: "",
       Conditions: (row) => {
-        handleDownloadFiles(row)
+        handleDownloadFiles(row);
       },
       Visiblity: true,
       type: "button",
@@ -145,22 +132,135 @@ const ExportDebitReport = () => {
   ];
 
   const visibleFields = [
-    "id",
-    "username",
-    "mobile",
-    "withdrawalMode",
-    "name",
-    "bank_name",
-    "ifsc",
-    "account_no",
-    "walletBal",
-    "reqAmount",
-    "reqDate",
-    "address",
-    "city"
+    {
+      name: "User Name",
+      value: "username",
+      sortable: true,
+    },
+    {
+      name: "Mobile",
+      value: "mobile",
+      sortable: true,
+    },
+    {
+      name: "Withdrawal Mode",
+      value: "withdrawalMode",
+      sortable: true,
+    },
+    {
+      name: "Name",
+      value: "name",
+      sortable: true,
+      transform: (item) => {
+        return item ? item : " null";
+      },
+    },
+    {
+      name: " Bank Name",
+      value: "bank_name",
+      sortable: true,
+      transform: (item) => {
+        return item ? item : " null";
+      },
+    },
+    {
+      name: "IFSC",
+      value: "ifsc",
+      sortable: true,
+      transform: (item) => {
+        return item ? item : " null";
+      },
+    },
+    {
+      name: "Account No",
+      value: "account_no",
+      sortable: true,
+      transform: (item) => {
+        return item ? item : " null";
+      },
+    },
+    {
+      name: "Wallet Balence",
+      value: "walletBal",
+      sortable: true,
+      transform: (item) => {
+        return item ? item : " null";
+      },
+    },
+    {
+      name: "Requested Amount",
+      value: "reqAmount",
+      sortable: true,
+      transform: (item) => {
+        return item ? item : " null";
+      },
+    },
+    {
+      name: "Requested Date",
+      value: "reqDate",
+      sortable: true,
+      transform: (item) => {
+        return item ? item : " null";
+      },
+    },
+    {
+      name: "Address",
+      value: "address",
+      sortable: true,
+      transform: (item) => {
+        return item ? item : " null";
+      },
+    },
+    {
+      name: "City",
+      value: "city",
+      sortable: true,
+      transform: (item) => {
+        return item ? item : " null";
+      },
+    },
+    {
+      // name: "Profile",
+      name: "Decline request",
+      isButton: true,
+      value: "Decline request",
+      className: "color-primary",
+      Conditions: (row) => {
+        handleDeclineReport(row);
+      },
+    },
   ];
 
-  const visibleFields1 = ["id", "ReportName", "ReportTime", "adminName"];
+  const visibleFields1 = [
+    {
+      name: "Report Time",
+      value: "ReportTime",
+      sortable: true,
+    },
+    {
+      name: "Report Name",
+      value: "ReportName",
+      sortable: true,
+    },
+    {
+      name: "Admin Name",
+      value: "adminName",
+      sortable: true,
+    },
+
+    {
+      // name: "Profile",
+      name: "Download MK.txt Report",
+      isButton: true,
+      value: "Download MK.txt Report",
+      className: "color-primary",
+      Conditions: (row) => {
+        handleDownloadFiles(row);
+      },
+    },
+  ];
+
+  // const visibleFields1 = ["id", "ReportName", "ReportTime", "adminName"];
 
   const formik = PagesIndex.useFormik({
     initialValues: {
@@ -234,15 +334,18 @@ const ExportDebitReport = () => {
         reason: values.reason,
         amountDecline: declineData?.reqAmount,
       };
-      const res = await PagesIndex.admin_services.EXPORT_DEBIT_DECLINE_REPORT_API(data,token)
-      if(res?.status){
-        PagesIndex.toast.success(res?.message)
-        setModalState(false)
-        getExportDebitList()
+      const res =
+        await PagesIndex.admin_services.EXPORT_DEBIT_DECLINE_REPORT_API(
+          data,
+          token
+        );
+      if (res?.status) {
+        PagesIndex.toast.success(res?.message);
+        setModalState(false);
+        getExportDebitList();
       }
     },
   });
-
 
   const fields = [
     {
@@ -323,9 +426,7 @@ const ExportDebitReport = () => {
         },
       ],
     },
-
   ];
-
 
   return (
     <>
@@ -334,7 +435,7 @@ const ExportDebitReport = () => {
         TableData={TableData}
         fields={fields}
         formik={formik}
-        UserFullButtonList={UserFullButtonList}
+        // UserFullButtonList={UserFullButtonList}
         visibleFields={visibleFields}
         setSearchInTable={setSearchInTable}
         SearchInTable={SearchInTable}

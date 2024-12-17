@@ -283,7 +283,6 @@ const ViewWallet = () => {
 
   const { userData1, userData2 } = UserDetails && UserDetails;
 
-  console.log("rowStatusrowStatus", rowStatus);
 
   return (
     <PagesIndex.Main_Containt
