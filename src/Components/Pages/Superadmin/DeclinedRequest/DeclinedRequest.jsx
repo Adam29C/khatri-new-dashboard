@@ -14,31 +14,8 @@ const DeclinedRequest = () => {
   const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
   const [tableData, setTableData] = PagesIndex.useState([]);
 
-  const title = "Declined Report"
-  const subtitle = "Declined Debit Requests"
-
-  // get api decline request 
-
-  const getDeclinedRequest = async (date = actual_date_formet) => {
-    const payload = {
-      date_cust: date,
-      page: 1,
-      limit: 10,
-      search: SearchInTable,
-    };
-    const res = await PagesIndex.admin_services.GET_DECLINED_REQUEST_API(
-      payload,
-      token
-    );
-
-    if (res?.status) {
-      setTableData(res?.data);
-    }
-  };
-
-  PagesIndex.useEffect(() => {
-    getDeclinedRequest();
-  }, []);
+  const title = "Declined Report";
+  const subtitle = "Declined Debit Requests";
 
   const formik = PagesIndex.useFormik({
     initialValues: {
@@ -47,11 +24,9 @@ const DeclinedRequest = () => {
     validate: (values) => {},
 
     onSubmit: async (values) => {
-        getDeclinedRequest(values.date);
+      getDeclinedRequest(values.date);
     },
   });
-
-  
 
   const fields = [
     {
@@ -64,21 +39,56 @@ const DeclinedRequest = () => {
   ];
 
   const visibleFields = [
-    "id",
-    "username",
-    "fullname",
-    "mobile",
-    "reqDate",
-    "reqTime",
-    "withdrawalMode",
-    "reqAmount",
-    "reqUpdatedAt"
+    { name: "User Name", value: "username", sortable: true },
+    { name: "Name", value: "fullname", sortable: false },
+    { name: "Mobile", value: "mobile", sortable: true },
+    { name: "Request Date", value: "reqDate", sortable: true },
+    { name: "Request Time", value: "reqTime", sortable: true },
+    { name: "Withdrawal Mode", value: "withdrawalMode", sortable: true },
+    { name: "Update", value: "reqUpdatedAt", sortable: true },
+    { name: "Request mount", value: "reqAmount", sortable: true },
   ];
 
+  const fetchData = async (
+    page,
+    rowsPerPage,
+    searchQuery = "",
+    date = actual_date_formet
+  ) => {
+    const payload = {
+      page: page,
+      limit: rowsPerPage,
+      date_cust: date,
+      searchQuery,
+    };
+
+    try {
+      const response = await PagesIndex.admin_services.GET_DECLINED_REQUEST_API(
+        payload,
+        token
+      );
+
+      const totalRows = response?.total || 5;
+      let mainRes = response?.data;
+      setTableData(mainRes);
+
+      return { mainRes, totalRows };
+    } catch {}
+  };
 
   return (
     <>
-      <CreditDeclinedRequest fields={fields} formik={formik} tableData={tableData} SearchInTable={SearchInTable} setSearchInTable={setSearchInTable} visibleFields={visibleFields} title={title} subtitle={subtitle}/>
+      <CreditDeclinedRequest
+        fields={fields}
+        fetchData={fetchData}
+        formik={formik}
+        tableData={tableData}
+        SearchInTable={SearchInTable}
+        setSearchInTable={setSearchInTable}
+        visibleFields={visibleFields}
+        title={title}
+        subtitle={subtitle}
+      />
     </>
   );
 };
