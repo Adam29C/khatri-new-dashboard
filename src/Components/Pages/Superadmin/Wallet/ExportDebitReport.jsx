@@ -21,6 +21,9 @@ const ExportDebitReport = () => {
   const [declineData, setDeclineData] = PagesIndex.useState();
 
 
+
+  console.log("TableData" ,TableData);
+  
   const handleBtnStatus = (status) => {
     setBtnStatus(status);
     setModalState(true);

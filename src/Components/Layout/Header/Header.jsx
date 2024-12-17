@@ -4,14 +4,13 @@ import ToggleDark from "./ToggleDark";
 import PagesIndex from "../../Pages/PagesIndex";
 import { Remove_Space_Character } from "../../Utils/Valid_Rejex";
 import { GetExpired } from "../../Utils/UserExpired";
-import profileImage from "../../../assets/Images/profile-image.png"
+import profileImage from "../../../assets/Images/profile-image.png";
 const Header = () => {
   const { toggleSidebar } = useMyContext();
   const navigate = PagesIndex.useNavigate();
   const dispatch = PagesIndex.useDispatch();
 
   const token = localStorage.getItem("token");
-
 
   //get userdetails in localstorage
   let userdetails = JSON.parse(localStorage.getItem("userdetails"));
@@ -25,39 +24,38 @@ const Header = () => {
     // let favIcon = res1?.data?.details?.[0]?.favIcon;
     // let shortIcon = Remove_Space_Character(res1?.data?.details?.[0]?.title);
 
-  // $("#dynamic-background").css("background-image", `url(${image && image})`);
-  // $("#company-logo").attr("src", logo);
-  // $("#favicon").attr("href", favIcon);
-  // $("#sidebar-logo").attr("src", logo);
-  // $("#sidebar-logo-short").html(shortIcon);
-  // };
+    // $("#dynamic-background").css("background-image", `url(${image && image})`);
+    // $("#company-logo").attr("src", logo);
+    // $("#favicon").attr("href", favIcon);
+    // $("#sidebar-logo").attr("src", logo);
+    // $("#sidebar-logo-short").html(shortIcon);
+    // };
 
-  // PagesIndex.useEffect(() => {
-  //   generateToken();
-  // }, []);
-
-}
+    // PagesIndex.useEffect(() => {
+    //   generateToken();
+    // }, []);
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userdetails");
     PagesIndex.toast.success("Logged Out Successfully");
-    setTimeout(() => {
-      navigate("/");
-    }, 2000);
+    // setTimeout(() => {
+    //   navigate("/");
+    // }, 2000);
   };
 
   const abcd = () => {
-    const checkTokenExpiry = () => {
-      GetExpired(token, navigate);
-    };
-    const interval = setInterval(checkTokenExpiry, 5000);
-    return () => clearInterval(interval);
+    // const checkTokenExpiry = () => {
+    GetExpired(token, navigate);
+    // };
+    // const interval = setInterval(checkTokenExpiry, 5000);
+    // return () => clearInterval(interval);
   };
 
   PagesIndex.useEffect(() => {
     abcd();
-  }, [navigate]);
+  }, []);
 
   return (
     <div className="header">
@@ -80,10 +78,7 @@ const Header = () => {
                 className="user-img c-pointer position-relative"
                 data-toggle="dropdown"
               >
-                <img
-                  src={profileImage}
-                  alt=""
-                />
+                <img src={profileImage} alt="" />
                 <span className="pro-user-name ml-1">
                   {userdetails?.name} <i className="mdi mdi-chevron-down" />
                 </span>
