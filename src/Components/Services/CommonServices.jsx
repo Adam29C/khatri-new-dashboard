@@ -67,7 +67,7 @@ export const PERMISSION_GET_API = async (id) => {
   }
 };
 
-export const PROFILE_GET_API = async (id) => {
+export const PROFILE_GET_API = async (id, token) => {
   try {
     const res = await dataservice.get(`${Api.USER_PROFILE_GET}?id=${id}`, {
       headers: header(token),
@@ -126,4 +126,42 @@ export const ADD_NOTIFICATION_API = async (data,token) => {
 };
 //NOTIFICATION APIS
 
+//NEWS APIS
+export const GET_NEWS_API = async (token) => {
+  try {
+    const res = await axios.get(`${BASE_URL}${Api.NEWS}`, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+// --------------------------USER IDEA ------------------------
+
+export const GET_USERS_IDEAS = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.USERS_IDEAS}`,data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+export const UPDATE_NEWS_API = async (data,token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}${Api.NEWS}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+//NEWS APIS
 

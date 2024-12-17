@@ -91,7 +91,7 @@ const token = localStorage.getItem("token");
   const fields = [
     {
       name: "employeeName",
-      label: "name",
+      label: "Employee Name",
       type: "text",
       label_size: 12,
       col_size: 6,
@@ -122,7 +122,7 @@ const token = localStorage.getItem("token");
     },
     {
       name: "loginPermission",
-      label: "Dashboard/App Permission",
+      label: "Select Login Permission",
       type: "select",
       label_size: 12,
       col_size: 6,
@@ -240,7 +240,7 @@ const token = localStorage.getItem("token");
 
   return (
     <Main_Containt
-      title={userData ? "Edit Employee" : "Add Employee"}
+      title={userData ? "Edit Employee" : "Register New Employee"}
       col_size={12}
       add_button={true}
       route="/admin/employees"

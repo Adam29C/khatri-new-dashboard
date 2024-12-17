@@ -14,22 +14,30 @@ import EmployeeList from "../../Pages/Superadmin/Employee/EmployeeList";
 import Add_Edit_Employee from "../../Pages/Superadmin/Employee/Add_Edit_Employee";
 import System from "../../Pages/Superadmin/PenalInfo/System";
 import Games from "../../Pages/Superadmin/Games/AvailableGames/Games";
-import GameProviderAdd from "../../Helpers/GameProvider/GameCrud/GameProviderAdd";
+// import GameProviderAdd from "../../Helpers/GameProvider/GameCrud/GameProviderAdd";
 import GameRates from "../../Pages/Superadmin/Games/AvailableGames/GameRates/GameRates";
-import GameRatesAdd from "../../Helpers/GameProvider/GameRates/GameRatesAdd";
+// import GameRatesAdd from "../../Helpers/GameProvider/GameRates/GameRatesAdd";
 import GameSetting from "../../Pages/Superadmin/Games/AvailableGames/GameSettingList";
 import GameSettingAdd from "../../Helpers/GameProvider/GameSetting/GameSettingAdd";
 import CuttingGroup from "../../Pages/Superadmin/CuttingGroup/CuttingGroup";
 import GameResult from "../../Pages/Superadmin/Games/AvailableGames/GameRasult";
+
+// starline game result
+import StarlineGameResult from "../../Pages/Superadmin/Games/Starline/Result/Result";
+import Winnerlist from "../../Helpers/GameProvider/GameResult/WinnerList";
+
+// Revert Payment
+import RevertPayment from "../../Pages/Superadmin/Games/Starline/RevertPayment/RevertPayment";
+
+// Starline Refund List
+import StarlineRefundList from "../../Pages/Superadmin/Games/Starline/StarlineRefundList/StarlineRefundList";
+
+// starline ProfitLost
+import ProfitLoss from "../../Pages/Superadmin/Games/Starline/ProfitLoss/ProfitLoss";
+
 import MultiTabs from "../../Helpers/MultiTabs";
 import OcCuttingGroup from "../../Pages/Superadmin/BookieCorner/OcCuttingGroup";
 import FinalOcCuttingGroup from "../../Pages/Superadmin/BookieCorner/FinalOcCuttingGroup";
-import ManualRequest from "../../Pages/Superadmin/Wallet/ManualRequest";
-import ExportDebitReport from "../../Pages/Superadmin/Wallet/ExportDebitReport";
-import DownloadDebitReport from "../../Pages/Superadmin/Wallet/DownloadDebitReport";
-import SearchAccount from "../../Pages/Superadmin/Wallet/SearchAccount";
-import Invoices from "../../Pages/Superadmin/Wallet/Invoices";
-import ViewWallet from "../../Pages/Superadmin/Wallet/ViewWallet";
 import WithdrawRequest from "../../Pages/Superadmin/Wallet/WithdrawRequest";
 import CreditRequest from "../../Pages/Superadmin/CreditRequest/CreditRequest";
 import UsersIdeas from "../../Pages/Superadmin/Users/UsersIdeas";
@@ -42,23 +50,56 @@ import StarLineSettingsList from "../../Pages/Superadmin/Games/Starline/StarLine
 import ForStarlineJackpotAdd from "../../Helpers/GameProvider/GameSetting/ForStarline&JackpotAdd";
 import StarLineSettingsAddEdit from "../../Pages/Superadmin/Games/Starline/StarLineSettings/StarLineSettingsAddEdit";
 import StarLineGameRate from "../../Pages/Superadmin/Games/Starline/StarLineRates/StarLineGameRate";
-import StarLineRatesAddEdit from "../../Pages/Superadmin/Games/Starline/StarLineRates/StarLineRatesAddEdit";
-import GameRatesAddEdit from "../../Pages/Superadmin/Games/AvailableGames/GameRates/GameRatesAddEdit";
+// import StarLineRatesAddEdit from "../../Pages/Superadmin/Games/Starline/StarLineRates/StarLineRatesAddEdit";
+// import GameRatesAddEdit from "../../Pages/Superadmin/Games/AvailableGames/GameRates/GameRatesAddEdit";
 import JackpotProvider from "../../Pages/Superadmin/Games/Jackpot/JackPotProvider/JackpotProvider";
 import JackPotProviderAddEdit from "../../Pages/Superadmin/Games/Jackpot/JackPotProvider/JackPotProviderAddEdit";
 import JackPotRates from "../../Pages/Superadmin/Games/Jackpot/JackPotRates/JackPotRates";
-import JackPotRatesAddEdit from "../../Pages/Superadmin/Games/Jackpot/JackPotRates/JackPotRatesAddEdit";
+// import JackPotRatesAddEdit from "../../Pages/Superadmin/Games/Jackpot/JackPotRates/JackPotRatesAddEdit";
 import NoticeBoard from "../../Pages/Superadmin/AppSettings/NoticeBoard";
 import JackPotSettings from "../../Pages/Superadmin/Games/Jackpot/JackPotSettings/JackPotSettings";
 import JackPotAddEdit from "../../Pages/Superadmin/Games/Jackpot/JackPotSettings/JackPotAddEdit";
 import WithdrawScreen from "../../Pages/Superadmin/AppSettings/WithdrawScreen";
 import HowToPlay from "../../Pages/Superadmin/AppSettings/HowToPlay";
 import UpiIdList from "../../Pages/Superadmin/Masters/UpiIdList";
+import WinnerList from "../../Pages/Superadmin/Games/AvailableGames/WinnerList";
 import ProfileNote from "../../Pages/Superadmin/AppSettings/ProfileNote";
 import FundMode from "../../Pages/Superadmin/Masters/FundMode";
 import Notification from "../../Pages/Superadmin/Notification/Notification";
+import News from "../../Pages/Superadmin/News/News";
 import DeclinedRequest from "../../Pages/Superadmin/DeclinedRequest/DeclinedRequest";
+import ApproveReportBank from "../../Pages/Superadmin/ApproveDebitRequest/ApproveReportBank";
+import ApproveReportBankManual from "../../Pages/Superadmin/ApproveDebitRequest/ApproveReportBankManual";
+import PendingBankRequests from "../../Pages/Superadmin/PendingBankRequests/PendingBankRequests";
 
+// WALLET SECTION
+
+import RequestOnOff from "../../Pages/Superadmin/Wallet/RequestOnOff";
+import ManualRequest from "../../Pages/Superadmin/Wallet/ManualRequest";
+import ExportDebitReport from "../../Pages/Superadmin/Wallet/ExportDebitReport";
+import DownloadDebitReport from "../../Pages/Superadmin/Wallet/DownloadDebitReport";
+import SearchAccount from "../../Pages/Superadmin/Wallet/SearchAccount";
+import Invoices from "../../Pages/Superadmin/Wallet/Invoices";
+import ViewWallet from "../../Pages/Superadmin/Wallet/ViewWallet";
+
+// REPORT  SECTION
+
+import AndarBaharSalesReport from "../../Pages/Superadmin/Reports/AndarBaharSalesReport";
+import AndarBharTotalBids from "../../Pages/Superadmin/Reports/AndarBharTotalBids";
+import SalesReports from "../../Pages/Superadmin/Reports/SalesReports";
+import StarlineSalesReport from "../../Pages/Superadmin/Reports/StarlineSalesReport";
+import FundReport from "../../Pages/Superadmin/Reports/FundReport";
+import UpiFundReport from "../../Pages/Superadmin/Reports/UpiFundReport";
+import NewUpiFundReport from "../../Pages/Superadmin/Reports/NewUpiFundReport";
+import TrakPayFundReport from "../../Pages/Superadmin/Reports/TrakPayFundReport";
+import RazorPayReport from "../../Pages/Superadmin/Reports/RazorPayReport";
+import TotalBIds from "../../Pages/Superadmin/Reports/TotalBIds";
+import CreditDebitReport from "../../Pages/Superadmin/Reports/CreditDebitReport";
+import DailyReport from "../../Pages/Superadmin/Reports/DailyReport";
+import BidingReport from "../../Pages/Superadmin/Reports/BidingReport";
+import UserAnalaysis from "../../Pages/Superadmin/Reports/UserAnalaysis";
+import CustomerBalence from "../../Pages/Superadmin/Reports/CustomerBalence";
+import AllUserBids from "../../Pages/Superadmin/Reports/AllUserBids";
 
 // Mock authentication status
 
@@ -113,24 +154,8 @@ const adminRoutes = [
         element: <PrivateRoute element={Games} />,
       },
       {
-        path: "game/add",
-        element: <PrivateRoute element={GameProviderAdd} />,
-      },
-      {
-        path: "game/edit",
-        element: <PrivateRoute element={GameProviderAdd} />,
-      },
-      {
         path: "game/rates",
         element: <PrivateRoute element={GameRates} />,
-      },
-      {
-        path: "game/rate/add",
-        element: <PrivateRoute element={GameRatesAddEdit} />,
-      },
-      {
-        path: "game/rate/edit",
-        element: <PrivateRoute element={GameRatesAddEdit} />,
       },
       {
         path: "game/settings",
@@ -144,8 +169,6 @@ const adminRoutes = [
         path: "game/setting/edit",
         element: <PrivateRoute element={GameSettingAdd} />,
       },
-
-
       {
         path: "game-rates",
         element: <PrivateRoute element={GameRates} />,
@@ -154,7 +177,12 @@ const adminRoutes = [
         path: "game/results",
         element: <PrivateRoute element={GameResult} />,
       },
-      
+
+      {
+        path: "game/results/winners",
+        element: <PrivateRoute element={WinnerList} />,
+      },
+
       {
         path: "games/starlineProvider",
         element: <PrivateRoute element={StarLineProvider} />,
@@ -180,18 +208,43 @@ const adminRoutes = [
         path: "games/starlinegamesetting/edit",
         element: <PrivateRoute element={StarLineSettingsAddEdit} />,
       },
-      
+
       {
         path: "games/starlinegamerates",
         element: <PrivateRoute element={StarLineGameRate} />,
       },
+
       {
-        path: "games/starlinegamerates/add",
-        element: <PrivateRoute element={StarLineRatesAddEdit} />,
+        path: "starline/results",
+        element: <PrivateRoute element={StarlineGameResult} />,
       },
       {
-        path: "games/starlinegamerates/edit",
-        element: <PrivateRoute element={StarLineRatesAddEdit} />,
+        path: "starline/winnerlist/:id",
+        element: <PrivateRoute element={Winnerlist} />,
+      },
+      {
+        path: "starline/revertpayment",
+        element: <PrivateRoute element={RevertPayment} />,
+      },
+      {
+        path: "starline/refundlist",
+        element: <PrivateRoute element={StarlineRefundList} />,
+      },
+      {
+        path: "starline/results",
+        element: <PrivateRoute element={StarlineGameResult} />,
+      },
+      {
+        path: "starline/winnerlist/:id",
+        element: <PrivateRoute element={Winnerlist} />,
+      },
+      {
+        path: "starline/revertpayment",
+        element: <PrivateRoute element={RevertPayment} />,
+      },
+      {
+        path: "starline/profitloss",
+        element: <PrivateRoute element={ProfitLoss} />,
       },
       {
         path: "games/jackpotProvider",
@@ -209,14 +262,14 @@ const adminRoutes = [
         path: "games/jackpotRates",
         element: <PrivateRoute element={JackPotRates} />,
       },
-      {
-        path: "games/jackpotRates/add",
-        element: <PrivateRoute element={JackPotRatesAddEdit} />,
-      },
-      {
-        path: "games/jackpotRates/edit",
-        element: <PrivateRoute element={JackPotRatesAddEdit} />,
-      },
+      // {
+      //   path: "games/jackpotRates/add",
+      //   element: <PrivateRoute element={JackPotRatesAddEdit} />,
+      // },
+      // {
+      //   path: "games/jackpotRates/edit",
+      //   element: <PrivateRoute element={JackPotRatesAddEdit} />,
+      // },
       {
         path: "games/jackpotGameSetting",
         element: <PrivateRoute element={JackPotSettings} />,
@@ -250,7 +303,7 @@ const adminRoutes = [
         element: <PrivateRoute element={ExportDebitReport} />,
       },
       {
-        path: "wallet/moneycheck",
+        path: "wallet/debitReport/moneyCheck",
         element: <PrivateRoute element={DownloadDebitReport} />,
       },
       {
@@ -267,7 +320,71 @@ const adminRoutes = [
       },
       {
         path: "wallet/reqOnOff",
-        element: <PrivateRoute element={WithdrawRequest} />,
+        element: <PrivateRoute element={RequestOnOff} />,
+      },
+      {
+        path: "report/salesreport",
+        element: <PrivateRoute element={SalesReports} />,
+      },
+      {
+        path: "report/absalesreport",
+        element: <PrivateRoute element={AndarBaharSalesReport} />,
+      },
+      {
+        path: "report/abtotalbids",
+        element: <PrivateRoute element={AndarBharTotalBids} />,
+      },
+      {
+        path: "report/starlinesalesreport",
+        element: <PrivateRoute element={StarlineSalesReport} />,
+      },
+      {
+        path: "report/fundreport",
+        element: <PrivateRoute element={FundReport} />,
+      },
+      {
+        path: "report/upifundreport",
+        element: <PrivateRoute element={UpiFundReport} />,
+      },
+      {
+        path: "report/newupifundreport",
+        element: <PrivateRoute element={NewUpiFundReport} />,
+      },
+      {
+        path: "report/trakpayreport",
+        element: <PrivateRoute element={TrakPayFundReport} />,
+      },
+      {
+        path: "report/razorpayreport",
+        element: <PrivateRoute element={RazorPayReport} />,
+      },
+      {
+        path: "report/totalbids",
+        element: <PrivateRoute element={TotalBIds} />,
+      },
+      {
+        path: "report/debitreport",
+        element: <PrivateRoute element={CreditDebitReport} />,
+      },
+      {
+        path: "report/dailyreport",
+        element: <PrivateRoute element={DailyReport} />,
+      },
+      {
+        path: "report/bidingreport",
+        element: <PrivateRoute element={BidingReport} />,
+      },
+      {
+        path: "report/useranalaysis",
+        element: <PrivateRoute element={UserAnalaysis} />,
+      },
+      {
+        path: "report/customerbids",
+        element: <PrivateRoute element={ViewWallet} />,
+      },
+      {
+        path: "report/alluserbids",
+        element: <PrivateRoute element={AllUserBids} />,
       },
       {
         path: "creditUPI",
@@ -281,7 +398,7 @@ const adminRoutes = [
         path: "appSettings/versionSetting",
         element: <PrivateRoute element={AppVersion} />,
       },
-      
+
       {
         path: "appSettings/walletContact",
         element: <PrivateRoute element={WalletContact} />,
@@ -290,7 +407,7 @@ const adminRoutes = [
         path: "appSettings/noticeBoard",
         element: <PrivateRoute element={NoticeBoard} />,
       },
-      
+
       {
         path: "appSettings/withDraw",
         element: <PrivateRoute element={WithdrawScreen} />,
@@ -299,11 +416,12 @@ const adminRoutes = [
         path: "appSettings/howToPlay",
         element: <PrivateRoute element={HowToPlay} />,
       },
+
       {
         path: "appSettings/profileNote",
         element: <PrivateRoute element={ProfileNote} />,
       },
-     
+
       {
         path: "masters/UPI",
         element: <PrivateRoute element={UpiIdList} />,
@@ -316,7 +434,22 @@ const adminRoutes = [
         path: "notification",
         element: <PrivateRoute element={Notification} />,
       },
-  
+      {
+        path: "news",
+        element: <PrivateRoute element={News} />,
+      },
+      {
+        path: "approvedReports/bank",
+        element: <PrivateRoute element={ApproveReportBank} />,
+      },
+      {
+        path: "approvedReports/bankManual",
+        element: <PrivateRoute element={ApproveReportBankManual} />,
+      },
+      {
+        path: "fundRequest/pendingBank",
+        element: <PrivateRoute element={PendingBankRequests} />,
+      },
     ],
   },
 ];

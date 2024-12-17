@@ -1,11 +1,12 @@
 import React from "react";
 import PagesIndex from "../../../Pages/PagesIndex";
 
-const ForStarlineAndJackpot = ({gametype,listpath}) => {
+const ForStarlineAndJackpot = ({gametype,listpath , }) => {
 
   const userId = localStorage.getItem("userId");
   const navigate = PagesIndex.useNavigate();
   const location = PagesIndex.useLocation();
+
   const formik = PagesIndex.useFormik({
     initialValues: {
       providerName: location?.state ? location?.state?.providerName : "",
@@ -39,8 +40,6 @@ const ForStarlineAndJackpot = ({gametype,listpath}) => {
           gameType:gametype,
           providerName: values.providerName,
           providerResult: values.providerResult,
-
-          activeStatus: values.activeStatus,
           mobile: "0",
           activeStatus: values.activeStatus,
           ...(location?.state?._id ? { providerId: location?.state?._id } : ""),
@@ -69,9 +68,9 @@ const ForStarlineAndJackpot = ({gametype,listpath}) => {
 
   const fields = [
     {
-      name: "providerName",
+      name: "providerName1212",
       label: "Provider Name",
-      type: "text",
+      type: "date",
       label_size: 6,
       col_size: 6,
     },
@@ -113,7 +112,7 @@ const ForStarlineAndJackpot = ({gametype,listpath}) => {
     <PagesIndex.Main_Containt
       add_button={true}
       route={listpath}
-      title={location?.state ? `Edit ${gametype}` : `Add ${gametype}`}
+      title={location?.state ? `Edit ${gametype}` : `Add1231 ${gametype}`}
       btnTitle="Back"
     >
       <PagesIndex.Formikform

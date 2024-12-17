@@ -27,7 +27,6 @@ const CommonSlice = createSlice({
         return {
           ...state,
           getEmployeeListState: [],
-
           isLoading: true,
         };
       })

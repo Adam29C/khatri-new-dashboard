@@ -1,69 +1,63 @@
-import React from 'react'
-import PagesIndex from '../../PagesIndex'
-import { show } from '../../../Utils/Common_Date';
+import React from "react";
+import PagesIndex from "../../PagesIndex";
+// import { show } from "../../../Utils/Common_Date";
 
 const UsersIdeas = () => {
-  const [loading, setLoading] = PagesIndex.useState(false);
-  const [data, setData] = PagesIndex.useState([]);
+  const token = localStorage.getItem("token");
 
-  const userId = localStorage.getItem("userId");
+  const [Refresh, setRefresh] = PagesIndex.useState(false);
 
-  const getList = async () => {
-    setLoading(true);
+  const fetchData = async (page, rowsPerPage, searchQuery = "") => {
+    const payload = {
+      page: page,
+      limit: rowsPerPage,
+      searchQuery,
+    };
+
     try {
-      const res = await PagesIndex.admin_services.GET_USERS_IDEAS(userId);
-      setData(res?.data);
-    } catch (error) {
-    } finally {
-      setLoading(false);
-    }
-  };
+      const response = await PagesIndex.common_services.GET_USERS_IDEAS(
+        payload,
+        token
+      );
+      const totalRows = response?.recordsTotal || 5;
+      let mainRes = response.data;
 
+      return { mainRes, totalRows };
+    } catch {}
+  };
   PagesIndex.useEffect(() => {
-    getList();
+    fetchData();
   }, []);
 
-
-  const columns = [
+  const visibleFields = [
     {
       name: "Idea",
-      selector: (row) => row?.idea,
+      value: "idea",
+      sortable: false,
     },
     {
       name: "User Name",
-      selector: (row) => row?.username,
-    },
-
-    {
-      name: "Is Approved Idea",
-      selector: (row) => (
-        <span
-          className={`badge fw-bold ${
-            row.approveIdea ? "bg-primary" : "bg-danger"
-          }`}
-        >
-          {row.approveIdea ? "Approved" : "Not-Approved"}
-        </span>
-      ),
+      value: "username",
+      sortable: true,
     },
     {
-      name: "Submitted At",
-      selector: (row) => show(row?.createdAt),
+      name: "Created-At",
+      value: "createdAt",
+      sortable: true,
     },
-
   ];
 
   return (
-    <PagesIndex.Main_Containt add_button={false} 
-    title="Users Idea's">
- <PagesIndex.Data_Table
-      isLoading={loading}
-      columns={columns}
-      data={data}
+    <PagesIndex.Main_Containt add_button={false} title="Users Idea's">
+      <PagesIndex.TableWithCustomPeginationNew
+        fetchData={fetchData}
+        columns={visibleFields}
+        // UserFullButtonList={UserFullButtonList}
+        showIndex={true}
+        Refresh={Refresh}
+      />
+    </PagesIndex.Main_Containt>
+  );
+};
 
-    />
-  </PagesIndex.Main_Containt>
-  )
-}
-
-export default UsersIdeas
+export default UsersIdeas;

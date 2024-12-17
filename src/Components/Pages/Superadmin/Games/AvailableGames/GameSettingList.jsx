@@ -6,7 +6,6 @@ const GameSettingList = () => {
     <>
       <GameSettings
         path={"/admin/game/setting"}
-   
         title="Game Setting "
         gameType="MainGame"
       />

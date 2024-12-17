@@ -1,19 +1,37 @@
+import Swal from "sweetalert2";
 import PagesIndex from "../../../Pages/PagesIndex";
 
-
-const GameRatesProvider = ({title}) => {
+const GameRatesProvider = ({
+  gameType,
+  path,
+  title,
+  GameRate_list,
+  GameRate_delete,
+  GameRate_update,
+  GameRate_add,
+}) => {
   const token = localStorage.getItem("token");
+
   const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
-  const [modalType, setModalType] = PagesIndex.useState(""); 
-  const [selectedRow, setSelectedRow] = PagesIndex.useState(null); 
+  const [modalType, setModalType] = PagesIndex.useState("");
+  const [selectedRow, setSelectedRow] = PagesIndex.useState(null);
   const [visible, setVisible] = PagesIndex.useState(false);
   const [data, getData] = PagesIndex.useState([]);
+  const [getGameRateList, setgetGameRateList] = PagesIndex.useState([]);
 
   //get game list start
   const getGameRatesList = async () => {
-    const res = await PagesIndex.admin_services.GAME_RATES_GET_LIST_API(token);
-
-    getData(res?.data);
+    if (gameType === "StarLine" || gameType === "JackPot") {
+      const res =
+        await PagesIndex.game_service.STARLINE_AND_JACKPOT_GAME_RATE_LIST_API(
+          GameRate_list,
+          token
+        );
+      setgetGameRateList(res.data);
+    } else {
+      const res = await PagesIndex.game_service.GAME_RATES_GET_LIST_API(token);
+      getData(res?.data);
+    }
   };
 
   PagesIndex.useEffect(() => {
@@ -29,22 +47,31 @@ const GameRatesProvider = ({title}) => {
     if (!confirmDelete) return;
 
     try {
-      const res = await PagesIndex.admin_services.GAME_RATES_DELETE_API(id,token);
-      if (res.status) {
-        getGameRatesList;
-        alert(res?.message);
+      let res;
+      if (gameType === "StarLine" || gameType === "JackPot") {
+        res =
+          await PagesIndex.game_service.STARLINE__AND_JACKPOT_GAME_RATE_DELETE_API(
+            GameRate_delete,
+            id,
+            token
+          );
+      } else {
+        res = await PagesIndex.game_service.GAME_RATES_DELETE_API(id, token);
       }
-
-      getGameRatesList();
+      if (res.status) {
+        getGameRatesList();
+        PagesIndex.toast.success(res?.message);
+      } else {
+        PagesIndex.toast.error(res?.response?.data?.message);
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
-  //delete game list end
-
   // Handle Edit Button
   const handleEdit = (row) => {
+  
     setModalType("Edit");
     setSelectedRow(row);
     setVisible(true);
@@ -57,26 +84,26 @@ const GameRatesProvider = ({title}) => {
     setVisible(true);
   };
 
-  const handleActionBtn = (row, buttonStatus) => {
-    if (buttonStatus === 1) {
-      setModalType("Edit");
-      setSelectedRow(row);
-      formik.resetForm({
-        values: {
-          gamename: row.providerName,
-          result: row.providerResult,
-          mobile: row.mobile,
-          activeStatus: row.activeStatus,
-        },
-      });
+  // const handleActionBtn = (row, buttonStatus) => {
+  //   if (buttonStatus === 1) {
+  //     setModalType("Edit");
+  //     setSelectedRow(row);
+  //     formik.resetForm({
+  //       values: {
+  //         gamename: row.providerName,
+  //         result: row.providerResult,
+  //         mobile: row.mobile,
+  //         activeStatus: row.activeStatus,
+  //       },
+  //     });
 
-      setVisible(true);
-    } else if (buttonStatus === 2) {
-      handleDelete(row?._id);
-    } else {
-      return "";
-    }
-  };
+  //     setVisible(true);
+  //   } else if (buttonStatus === 2) {
+  //     handleDelete(row?._id);
+  //   } else {
+  //     return "";
+  //   }
+  // };
 
   // Formik Configuration
   const formik = PagesIndex.useFormik({
@@ -94,32 +121,55 @@ const GameRatesProvider = ({title}) => {
       return errors;
     },
     onSubmit: async (values) => {
-      // userId, gamename, price
       try {
-        const payload = {
-          gamename: values.gameName,
-          price: values.gamePrice,
-          ...(modalType === "Edit" && { userId: selectedRow._id }),
-        };
+        let res = "";
+        if (gameType === "StarLine" || gameType === "JackPot") {
+          const payload = {
+            gameName: values.gameName,
+            gamePrice: values.gamePrice,
+            ...(modalType === "Edit" && { gameRateId: selectedRow._id }),
+          };
+          res =
+            modalType === "Edit"
+              ? await PagesIndex.game_service.STARLINE__AND_JACKPOT_GAME_RATE_UPDATE_API(
+                  GameRate_update,
+                  payload,
 
-        const res =
-          modalType === "Edit"
-            ? await PagesIndex.admin_services.GAME_RATES_UPDATE_API(payload,token)
-            : await PagesIndex.admin_services.GAME_RATES_ADD_API(payload,token);
+                  token
+                )
+              : await PagesIndex.game_service.STARLINE__AND_JACKPOT_GAME_RATE_ADD_API(
+                  GameRate_add,
+                  payload,
+                  token
+                );
+        } else {
+          const payload = {
+            gamename: values.gameName,
+            price: values.gamePrice,
+            ...(modalType === "Edit" && { userId: selectedRow._id }),
+          };
+
+          res =
+            modalType === "Edit"
+              ? await PagesIndex.game_service.GAME_RATES_UPDATE_API(
+                  payload,
+                  token
+                )
+              : await PagesIndex.game_service.GAME_RATES_ADD_API(
+                  payload,
+                  token
+                );
+        }
 
         if (res.status) {
           PagesIndex.toast.success(res?.message);
           getGameRatesList();
           setVisible(false); // Close modal
         } else {
-          PagesIndex.toast.error(
-            res?.response?.data?.message 
-          );
+          PagesIndex.toast.error(res?.response?.data?.message);
         }
       } catch (error) {
-        PagesIndex.toast.error(
-          error?.response?.data?.message 
-        );
+        PagesIndex.toast.error(error?.response?.data?.message);
       }
     },
   });
@@ -129,25 +179,27 @@ const GameRatesProvider = ({title}) => {
   const UserFullButtonList = [
     {
       id: 0,
-      buttonName: "Update",
-      buttonColor: "",
-      route: "",
+      buttonName: "Edit",
+      buttonColor: "sucess",
+      route: "edit",
       Conditions: (row) => {
-        handleActionBtn(row, 1);
+        handleEdit(row);
       },
       Visiblity: false,
       type: "button",
+      // onClick: handleEdit,
     },
     {
       id: 1,
       buttonName: "Delete",
       buttonColor: "danger",
-      route: "",
+      route: "users/deleted",
       Conditions: (row) => {
-        handleActionBtn(row, 2);
+        handleDelete(row._id);
       },
       Visiblity: false,
       type: "button",
+      // onClick: handleDelete,
     },
   ];
 
@@ -168,6 +220,11 @@ const GameRatesProvider = ({title}) => {
     },
   ];
 
+  var GAME_RATE_DATA =
+    gameType === "StarLine" || gameType === "JackPot"
+      ? getGameRateList && getGameRateList
+      : data;
+
   return (
     <div>
       <PagesIndex.Main_Containt
@@ -179,7 +236,7 @@ const GameRatesProvider = ({title}) => {
         btnTitle="Add"
       >
         <PagesIndex.TableWitCustomPegination
-          data={data}
+          data={GAME_RATE_DATA}
           initialRowsPerPage={5}
           SearchInTable={SearchInTable}
           visibleFields={visibleFields}

@@ -59,9 +59,24 @@ export const getActualDateFormate = (d) => {
     day = `0${day}`;
   }
 
-  return `${year}-${month}-${day}`;
+  return `${month}-${day}-${year}`;
 };
 
+export const abc = (d) => {
+  const today = new Date(d);
+  const year = today.getFullYear();
+  let month = today.getMonth() + 1;
+  let day = today.getDate();
+
+  if (month < 10) {
+    month = `0${month}`;
+  }
+  if (day < 10) {
+    day = `0${day}`;
+  }
+
+  return `${year}-${month}-${day}`;
+};
 
 export const getActualDateWithFormat = (d) => {
   const today = new Date(d);
@@ -80,13 +95,21 @@ export const getActualDateWithFormat = (d) => {
 };
 
 export const today = (d) => {
+  // Validate karein ki `d` valid date hai ya nahi
   let abc = new Date(d);
+  if (isNaN(abc.getTime())) {
+    abc = new Date(); // Agar `d` invalid hai, toh current date lein
+  }
+
   let month = abc.getMonth() + 1;
   let date = abc.getDate();
   let year = abc.getFullYear();
-  let full = `${parseInt(month) < 10 ? "0" + month : month}/${
-    parseInt(date) < 10 ? "0" + date : date
+
+  // Format karein date ko MM/DD/YYYY
+  let full = `${month < 10 ? "0" + month : month}/${
+    date < 10 ? "0" + date : date
   }/${year}`;
+
   return full;
 };
 
@@ -148,3 +171,29 @@ export const dateFormate = (date) => {
   const ccdate = dt.format("Y-m-d");
   return ccdate;
 };
+
+export const convertTo12HourFormat = (time) => {
+  const timeParts = time.split(" ");
+  // Return the first part, which is the time
+  return timeParts[0] || null;
+};
+
+export const convertTo12HourFormat123 = (timeStr) => {
+  let [hours, minutes] = timeStr.split(":");
+  hours = parseInt(hours); // Convert hours to integer
+  let period = hours >= 12 ? "PM" : "AM";
+  
+  // Convert to 12-hour format
+  if (hours > 12) {
+    hours -= 12;
+  } else if (hours === 0) {
+    hours = 12; // Handle midnight case (00:00)
+  }
+
+  // Ensure the hour is always two digits
+  hours = hours < 10 ? `0${hours}` : hours;
+
+  return `${hours}:${minutes} ${period}`;
+}
+
+

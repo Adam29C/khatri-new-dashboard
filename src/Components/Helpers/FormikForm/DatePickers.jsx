@@ -1,26 +1,20 @@
 // src/components/CustomDatePicker.js
-import React from 'react';
-import DatePicker from 'react-datepicker';
+import React from "react";
+import DatePicker from "react-datepicker";
+import { today } from "../../Utils/Common_Date";
+
 
 const CustomDatePicker = ({ field, formik, setDateStates, dateStates }) => {
-  // const handleDateChange = (date, name) => {
-  //   console.log(date)
-  //   // const formattedTime = date
-  //   //   ? date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
-  //   //   : "";
-  //   setDateStates((prevStates) => ({
-  //     ...prevStates,
-  //     [field.name]: date,
-  //   }));
-  //   formik.setFieldValue(name, date);
-  // };
+
+
+  
   const handleDateChange = (date) => {
     const formattedDate = date
-    ? `${(date.getMonth() + 1).toString().padStart(2, "0")}/${date
-        .getDate()
-        .toString()
-        .padStart(2, "0")}/${date.getFullYear()}`
-    : "";
+      ? `${(date.getMonth() + 1).toString().padStart(2, "0")}/${date
+          .getDate()
+          .toString()
+          .padStart(2, "0")}/${date.getFullYear()}`
+      : "";
     setDateStates((prevStates) => ({
       ...prevStates,
       [field.name]: date, // Store the selected date
@@ -39,26 +33,24 @@ const CustomDatePicker = ({ field, formik, setDateStates, dateStates }) => {
         </label>
         <div className="d-flex">
           <DatePicker
+            className="form-control w-100"
+            value={dateStates[field.name]}
+            selected={dateStates[field.name] || today(new Date())} // Ensure a valid date object or null
             // className={`form-control`}
             // name={field.name}
             // selected={dateStates[field.name]}
             // onChange={(date) => handleDateChange(date, field.name)}
             // {...formik.getFieldProps(field.name)}
             // dateFormat="mm/dd/yyyy"
-            className="form-control"
-            selected={dateStates[field.name] || formik.values.date} // Ensure a valid date object or null
+            // className="form-control"
+            // selected={dateStates[field.name] || formik.values.date} // Ensure a valid date object or null
             onChange={handleDateChange} // Handle date changes
             onBlur={() => formik.setFieldTouched(field.name, true)} // Mark field as touched
-            dateFormat="MM/dd/yyyy"
           />
-          <div className="invalid-feedback">
-            Please enter {field.label}
-          </div>
+          <div className="invalid-feedback">Please enter {field.label}</div>
         </div>
         {formik.errors[field.name] && (
-          <div className="error-text">
-            {formik.errors[field.name]}
-          </div>
+          <div className="error-text">{formik.errors[field.name]}</div>
         )}
       </div>
     </div>

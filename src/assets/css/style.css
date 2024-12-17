@@ -2531,7 +2531,7 @@ fieldset:disabled a.btn {
 }
 
 .btn-secondary {
-  color: #212529;
+  color: #fff;
   background-color: #9097c4;
   border-color: #9097c4;
 }
@@ -2546,7 +2546,7 @@ fieldset:disabled a.btn {
 }
 .btn-secondary.disabled,
 .btn-secondary:disabled {
-  color: #212529;
+  color: #fff;
   background-color: #9097c4;
   border-color: #9097c4;
 }
@@ -5394,6 +5394,7 @@ button.close {
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 0.3rem;
   outline: 0;
+  padding: 6px ;
 }
 
 .modal-backdrop {
@@ -10838,8 +10839,9 @@ svg.pulse-svg .third-circle {
   top: -7px;
 }
 .header-right .icons .user-img img {
-  height: 40px;
-  width: 40px;
+  background-color: black;
+  height: 25px;
+  width: 25px;
   border: 3px solid #fff;
   border-radius: 50%;
   margin: 0;
@@ -15876,13 +15878,6 @@ table.dataTable thead .sorting::after {
   border-color: #4540f7;
 }
 
-.btn-secondary:active,
-.btn-secondary:focus,
-.btn-secondary:hover {
-  background: #6f78b2;
-  color: #fff;
-  border-color: #6f78b2;
-}
 
 .btn-success:active,
 .btn-success:focus,
@@ -16246,7 +16241,8 @@ table.dataTable thead .sorting::after {
   margin-bottom: 30px;
   border: 0px;
   border-radius: 0.625rem;
-  box-shadow: 6px 11px 41px -28px #a99de7;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
+  /* box-shadow: 6px 11px 41px -28px #a99de7; */
 }
 .card-title {
   font-size: 18px;
@@ -21808,7 +21804,7 @@ a:hover {
 .border-bottom-text {
   border-bottom: 1px solid #ced4da;
   padding-bottom: 10px;
-  width: 92%;
+  /* width: 92%; */
 }
 
 .modal-container {
@@ -21855,6 +21851,7 @@ a:hover {
   padding: 10px 0;
   background-color: white;
   width: 100%;
+  padding: 14px;
 }
 
 .close-btn {
@@ -21879,7 +21876,7 @@ a:hover {
   font-size: 13px;
 }
 
-.approve-btn {
+/* .approve-btn {
   padding: 10px 25px;
   border-radius: 25px;
   font-weight: 500;
@@ -21891,7 +21888,7 @@ a:hover {
   color: #000;
   text-decoration: none;
   text-align: center;
-}
+} */
 
 .icon-size {
   font-size: 19px;
@@ -22052,4 +22049,66 @@ a:hover {
 .table-header-backeground{
   background: var(--primary-color) !important;
 color: #fff;
+}
+
+
+.xxx{
+  display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+
+.rc-time-picker-input {
+  border: none !important;
+  font-size: 14px !important;
+}
+
+
+
+.red {
+  color: #bb2124;
+}
+
+.green {
+  color: #4BB543;
+}
+
+
+
+/* css for approve btn for wallet export debit report  */
+.approve-btn {
+  font-weight: 500;
+  display: inline-block;
+  margin: 20px;
+  text-decoration: none;
+  text-align: center;
+  background-color:var(--khatri-color) ;
+  color: var(--white) ;
+  min-width: 120px;
+  border: 1px solid transparent;
+  padding: .45rem .9rem;
+  font-size: .9rem;
+  line-height: 1.5;
+  border-radius: .15rem;
+}
+
+.badge-purple{
+
+  color: #fff !important;
+  background-color: #5b69bc  !important;
+  padding: 7px !important;
+  font-size: 12px;
 }

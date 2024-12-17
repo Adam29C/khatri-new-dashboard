@@ -1,72 +1,158 @@
-import React from 'react'
-import PagesIndex from '../../PagesIndex'
+import React from "react";
+import PagesIndex from "../../PagesIndex";
+import ReusableModal from "../../../Helpers/Modal/ReusableModal";
 
 const Invoices = () => {
-  
-  const columns = [
-    {
-      name: "Username",
-      selector: (row) => row.title,
-    },
-    {
-      name: "Bank",
-      selector: (row) => row.year,
-    },
-    {
-      name: "Account",
-      selector: (row) => row.year,
-    },
-    {
-      name: "IFSC",
-      selector: (row) => row.year,
-    },
-    {
-      name: "Acc Holder",
-      selector: (row) => row.year,
-    },
-    {
-      name: "Paytm",
-      selector: (row) => row.year,
-    },
-    {
-      name: "History",
-      selector: (cell, row) => (
-        <div style={{ width: "120px" }}>
-          <div>
-            <PagesIndex.Link to="#" >
-              <span data-toggle="tooltip" data-placement="top" title="Edit">
-                <i class="ti-eye fs-5 mx-1 "></i>
-              </span>
-            </PagesIndex.Link>
+  const token = localStorage.getItem("token");
 
-    
-          </div>
-        </div>
-      ),
-    },
+  const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
+  const [viewHistory, setViewHistory] = PagesIndex.useState([]);
+  const [modalState, setModalState] = PagesIndex.useState(false);
+  const [Refresh, setRefresh] = PagesIndex.useState(false);
 
-   
-  ];
-
-  const data = [
+  const visibleFields = [
     {
-      id: 1,
-      title: "Beetlejuice",
-      year: "1988",
+      name: "User Name",
+      value: "username",
+      sortable: false,
     },
     {
-      id: 2,
-      title: "Ghostbusters",
-      year: "1984",
+      name: "Bank Name",
+      value: "bank_name",
+      sortable: false,
+    },
+    {
+      name: "Account No",
+      value: "account_no",
+      sortable: false,
+    },
+    {
+      name: "Account Holder Name",
+      value: "account_holder_name",
+      sortable: false,
+    },
+    {
+      name: "Paytm Number",
+      value: "paytm_number",
+      sortable: false,
+      transform: (item) => {
+        return item ? item : " null";
+      },
+    },
+    {
+      // name: "Profile",
+      name: "View Chnage History",
+      isButton: true,
+      className : 'color-primary' ,
+      value: (row) => "View Chnage History",
+      // buttonColor: "success",
+      Conditions: (row) => {
+        handleViewHistory(row);
+      },
     },
   ];
 
+  const visibleFields1 = [
+    {
+      name: "Old Bank Name",
+      value: "old_bank_name",
+      sortable: false,
+    },
+    {
+      name: "Old Account No",
+      value: "old_acc_no",
+      sortable: false,
+    },
+    {
+      name: "Account No",
+      value: "account_no",
+      sortable: false,
+    },
+    {
+      name: "Old IFSC",
+      value: "old_ifsc",
+      sortable: false,
+    },
+    {
+      name: "Old Paytm Number",
+      value: "old_paytm_no",
+      sortable: false,
+      transform: (item) => {
+        return item ? item : " null";
+      },
+    },
+    {
+      name: "Change Date",
+      value: "changeDate",
+      sortable: false,
+    },
+  ];
 
+  const handleViewHistory = (row) => {
+    setViewHistory(row?.changeDetails);
+    setModalState(true);
+  };
 
+  const fetchData = async (page, rowsPerPage, searchQuery = "") => {
+    const payload = {
+      page: page,
+      limit: rowsPerPage,
+      searchQuery,
+    };
+
+    try {
+      const response =
+        await PagesIndex.admin_services.GET_WALLET_INVOICE_PROFILE_CHANGE_API(
+          payload,
+          token
+        );
+
+      const totalRows = response?.count || 10;
+      let mainRes = response.records;
+
+      return { mainRes, totalRows };
+    } catch {}
+  };
+  PagesIndex.useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
-    <PagesIndex.WalletMain title="Profile Change History" columns={columns} data={data}    showForm={true}/>
-  )
-}
+    <PagesIndex.Main_Containt add_button={false} title="Profile Change History">
+      <PagesIndex.TableWithCustomPeginationNew
+        fetchData={fetchData}
+        columns={visibleFields}
+        showIndex={true}
+        Refresh={Refresh}
+      />
 
-export default Invoices
+      <ReusableModal
+        ModalTitle={"Change History"}
+        ModalState={modalState}
+        setModalState={setModalState}
+        ModalBody={
+          <>
+            <PagesIndex.TableWithCustomPeginationNew123
+              data={viewHistory}
+              initialRowsPerPage={5}
+              SearchInTable={SearchInTable}
+              visibleFields={visibleFields1}
+              searchInput={
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  value={SearchInTable}
+                  onChange={(e) => setSearchInTable(e.target.value)}
+                  className="form-control ms-auto"
+                />
+              }
+            />
+          </>
+        }
+      />
+      <PagesIndex.Toast />
+    </PagesIndex.Main_Containt>
+  );
+};
+
+export default Invoices;

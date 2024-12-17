@@ -11,21 +11,55 @@ const DeleteUsers = () => {
   const [timehistoryData, setTimehistoryData] = PagesIndex.useState([]);
   const [updatedData, setUpdatedData] = PagesIndex.useState({});
 
-  //get deleted user api
-  const getDeletedUserList = async () => {
+  const [Refresh, setRefresh] = PagesIndex.useState(false);
+
+  const fetchData = async (page, rowsPerPage, searchQuery = "") => {
     const payload = {
-      page: 1,
-      limit: 20,
-      searchQuery: SearchInTable,
+      page: page,
+      limit: rowsPerPage,
+      searchQuery,
     };
-    const res = await PagesIndex.admin_services.GET_DELETED_USERS_API(
-      payload,
-      token
-    );
-    if (res?.status) {
-      setDeletedUserData(res?.data);
-    }
+
+    try {
+      const response = await PagesIndex.admin_services.GET_DELETED_USERS_API(
+        payload,
+        token
+      );
+      const totalRows = response?.recordsTotal || 5;
+      let mainRes = response.data;
+
+      return { mainRes, totalRows };
+    } catch {}
   };
+  PagesIndex.useEffect(() => {
+    fetchData();
+  }, []);
+
+  const visibleFields = [
+    {
+      name: "Name",
+      value: "name",
+      sortable: false,
+    },
+    {
+      name: "User Name",
+      value: "username",
+      sortable: true,
+    },
+    {
+      name: "Mobile",
+      value: "mobile",
+      sortable: true,
+    },
+  ];
+
+  
+
+
+
+
+
+
 
   //get deleted user with time history
   const getDeletedUserTimeHistoryList = async () => {
@@ -38,11 +72,8 @@ const DeleteUsers = () => {
 
   //call getDeletedUserList in useeffect
   PagesIndex.useEffect(() => {
-    getDeletedUserList();
     getDeletedUserTimeHistoryList();
   }, []);
-
-  const visibleFields = ["id", "name", "username", "mobile"];
 
   const UserFullButtonList = [];
 
@@ -59,9 +90,11 @@ const DeleteUsers = () => {
 
   // Submit handler
   const handleSubmit = async () => {
+    console.log(updatedData)
     const timeList = timehistoryData.map((item) => ({
       _id: item._id,
       deleteTime: updatedData[item._id]?.deleteTime || item.deleteTime,
+      description: updatedData[item._id]?.description || item.description,
       isActive: updatedData[item._id]?.isActive || item.isActive,
       name: item.name,
     }));
@@ -103,6 +136,21 @@ const DeleteUsers = () => {
         </div>
       ),
     },
+    {
+      name: "description",
+      selector: (row) => (
+        <div>
+           <textarea
+            class="deleted-user-field"
+            type="textarea"
+            value={updatedData[row._id]?.description || row.description}
+            onChange={(e) => {
+              handleFieldChange("description", e.target.value, row);
+            }}
+          />
+        </div>
+      ),
+    },
 
     {
       name: "Is Active",
@@ -132,7 +180,16 @@ const DeleteUsers = () => {
           <div>
             <h4 class="profile-note-title mt-0 mb-4">View All Users</h4>
           </div>
-          <PagesIndex.TableWitCustomPegination
+
+          <PagesIndex.TableWithCustomPeginationNew
+            fetchData={fetchData}
+            columns={visibleFields}
+            // UserFullButtonList={UserFullButtonList}
+            showIndex={true}
+            Refresh={Refresh}
+          />
+
+          {/* <PagesIndex.TableWitCustomPegination
             data={deletedUserData}
             initialRowsPerPage={5}
             SearchInTable={SearchInTable}
@@ -147,7 +204,7 @@ const DeleteUsers = () => {
                 className="form-control ms-auto"
               />
             }
-          />
+          /> */}
         </div>
       ),
     },
@@ -157,7 +214,7 @@ const DeleteUsers = () => {
         <div>
           <div className="delete-user-main">
             <h4 class="profile-note-title mt-0 mb-4">Delete All Users Data</h4>
-            <button className="btn btn-dark" onClick={handleSubmit}>
+            <button className="btn btn-info" onClick={handleSubmit}>
               Submit
             </button>
           </div>

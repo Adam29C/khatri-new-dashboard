@@ -26,7 +26,6 @@ const ReusableForm = ({
   show_submit,
   label_size,
   show_preview,
-
 }) => {
   const location = useLocation();
 
@@ -52,8 +51,6 @@ const ReusableForm = ({
     }
   };
 
-
-
   return (
     <>
       <form onSubmit={formik.handleSubmit}>
@@ -69,8 +66,11 @@ const ReusableForm = ({
               <>
                 {field.type === "select" ? (
                   <>
-               
-                    <div className={`col-lg-${field.col_size} ${field.hideField ? "hideFieldCss":""}`}>
+                    <div
+                      className={`col-lg-${field.col_size} ${
+                        field.Visiblity === "hidden" ? "d-none" : "d-block"
+                      } ${field.hideField ? "hideFieldCss" : ""}`}
+                    >
                       <div className="mb-1 row">
                         <label
                           className={`custom-label col-lg-${field.label_size}`}
@@ -119,20 +119,18 @@ const ReusableForm = ({
                   <>
                     {field.options &&
                       field.options.map((option) => (
-                        
                         <div
                           className={`mb-3 col-lg-${field.col_size}`}
                           key={option.id}
                         >
-                      
                           <label
-                          className={`custom-label col-lg-12`}
-                          htmlFor={option.labelName}
-                        >
-                          {/* {field.label} */}
-                          {option.labelName}
-                          <span className="text-danger">*</span>
-                        </label>
+                            className={`custom-label col-lg-12`}
+                            htmlFor={option.labelName}
+                          >
+                            {/* {field.label} */}
+                            {option.labelName}
+                            <span className="text-danger">*</span>
+                          </label>
                           <div className="form-check custom-checkbox mb-2 ">
                             <input
                               type={field.type}
@@ -140,7 +138,7 @@ const ReusableForm = ({
                               id={option.name}
                               {...formik.getFieldProps(option.name)}
                               defaultChecked={option.checked}
-                              checked={formik.values[option.name] || false} 
+                              checked={formik.values[option.name] || false}
                             />
                             <label
                               className="form-check-label fw-bolder "
@@ -293,55 +291,6 @@ const ReusableForm = ({
                   </>
                 ) : field.type === "time" ? (
                   <>
-                    {/* <div className={`col-lg-${field.col_size}`}>
-                      <div className=" row flex-column">
-                        <label
-                          className={`custom-label col-lg-${field.label_size}`}
-                          htmlFor={field.name}
-                        >
-                          {field.label}
-                          <span className="text-danger">*</span>
-                        </label>
-                        <div className={`d-flex`}>
-                          <DatePicker
-                            className={`col-lg-${field.col_size} form-control Date-picker-control`}
-                            name={field.name}
-                            selected={dateStates[field.name]}
-                            onChange={(date) =>
-                              handleDateChange(date, field.name)
-                            }
-                            {...formik.getFieldProps(field.name)} */}
-                    {/* // value={dateStates[field.name]}
-                            showTimeSelect
-                            showTimeSelectOnly
-                            timeIntervals={5}
-                            timeCaption="Time"
-                            dateFormat="h:mm aa"
-                          /> */}
-                    {/* <input
-                          type={field.type}
-                          name={field.name}
-                          className="form-control"
-                          id={field.name}
-                          {...formik.getFieldProps(field.name)}
-                          min={
-                            field.name === "todate"
-                              ? fromDate
-                              : getCurrentDate()
-                          }
-                        /> */}
-
-                    {/* <div className="invalid-feedback">
-                            Please enter {field.label}
-                          </div>
-                        </div>
-                        {formik.errors[field.name] && (
-                          <div className="error-text">
-                            {formik.errors[field.name]}
-                          </div>
-                        )}
-                      </div>
-                    </div> */}
                     <div className={`col-lg-${field.col_size} mb-3`}>
                       <label
                         className={`custom-label col-lg-${field.label_size}`}
@@ -366,30 +315,33 @@ const ReusableForm = ({
                   <>
                     <div className={`col-lg-${field.col_size}`}>
                       <div className="row d-flex">
-                        <div
-                        // className={`col-lg-${field.col_size}`}
-                        >
-                          <div class="mb-3">
-                            <label
+                        <div class="mb-3">
+                          {/* <label
                               className={`custom-label col-lg-${field.label_size}`}
                               for={field.name}
                             >
                               {field.label}
-                            </label>
-                            <textarea
-                              class="form-control"
-                              rows={field.row_size}
-                              id={field.name}
-                              name={field.name}
-                              {...formik.getFieldProps(field.name)}
-                              placeholder={field.label}
-                            ></textarea>
-                            {formik.errors[field.name] && (
-                              <div className="error-text">
-                                {formik.errors[field.name]}
-                              </div>
-                            )}
-                          </div>
+                            </label> */}
+                          <label
+                            className={`custom-label custom-padding-for-label col-lg-${field.label_size} col-form-label `}
+                            htmlFor={field.name}
+                          >
+                            {field.label}
+                            <span className="text-danger">*</span>
+                          </label>
+                          <textarea
+                            class="form-control"
+                            rows={field.row_size}
+                            id={field.name}
+                            name={field.name}
+                            {...formik.getFieldProps(field.name)}
+                            placeholder={field.label}
+                          ></textarea>
+                          {formik.errors[field.name] && (
+                            <div className="error-text">
+                              {formik.errors[field.name]}
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -409,7 +361,7 @@ const ReusableForm = ({
                               {field.label}
                               <span className="text-danger">*</span>
                             </label>
-                            
+
                             <input
                               type="file"
                               id={field.name}
@@ -541,7 +493,9 @@ const ReusableForm = ({
                   </>
                 ) : (
                   <>
-                    <div className={`col-lg-${field.col_size}`}>
+                    <div className={`col-lg-${field.col_size} ${
+                      field.Visiblity === "hidden" ? "d-none" : "d-block"
+                    }`}>
                       <div className="mb-3 row flex-column">
                         <label
                           className={`custom-label col-lg-${field.label_size}`}
@@ -553,7 +507,7 @@ const ReusableForm = ({
                         <div className={`d-flex`}>
                           <input
                             type="text"
-                            autocomplete="off"
+                            autoComplete="off"
                             className="form-control"
                             style={{
                               background: field.disable ? "#eeeeee" : "",
