@@ -507,7 +507,7 @@ const ReusableForm = ({
                         <div className={`d-flex`}>
                           <input
                             type="text"
-                            autocomplete="off"
+                            autoComplete="off"
                             className="form-control"
                             style={{
                               background: field.disable ? "#eeeeee" : "",
