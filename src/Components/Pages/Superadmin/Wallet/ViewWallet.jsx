@@ -18,13 +18,32 @@ const ViewWallet = () => {
   const [ModalStateHistoryUserDetails, setModalStateHistoryUserDetails] =
     PagesIndex.useState("");
   const [rowStatus, setRowStatus] = PagesIndex.useState(0);
-  const [UserDetails, setUserDetails] = PagesIndex.useState([]);
+  const [UserDetails, setUserDetails] = PagesIndex.useState({
+    userData1: {},
+    userData2: {},
+  });
 
+  const [Refresh, setRefresh] = PagesIndex.useState(false);
 
+  const [UserPagenateData, setUserPagenateData] = PagesIndex.useState({
+    pageno: 1,
+    limit: 10,
+  });
 
+  const [TotalPages, setTotalPages] = PagesIndex.useState(1);
 
-  
-
+  const visibleFields1 = [
+    { name: "Previous Amount", value: "Previous_Amount", sortable: true },
+    {
+      name: "Transaction Amount",
+      value: "Transaction_Amount",
+      sortable: false,
+    },
+    { name: "Current Amount", value: "Current_Amount", sortable: true },
+    { name: "Description ", value: "Description", sortable: true },
+    { name: "Transaction Date", value: "Transaction_Date", sortable: true },
+    { name: "Added by", value: "Added_by", sortable: true },
+  ];
 
   const visibleFields = [
     "id",
@@ -35,17 +54,6 @@ const ViewWallet = () => {
     "wallet_bal_updated_at",
   ];
 
-  const visibleFields1 = [
-    "id",
-    "Previous_Amount",
-    "Transaction_Amount",
-    "Current_Amount",
-    "Description",
-    "Transaction_Date",
-    "Transaction_Status",
-    "Added_by",
-  ];
-
   const getHistory = async (row, number) => {
     setRowStatus(number);
     setModalStateHistoryUserDetails(row);
@@ -53,20 +61,26 @@ const ViewWallet = () => {
     if (number === 1) {
       const payload = {
         id: row._id,
-        page: 1,
-        limit: 10,
+        page: UserPagenateData.pageno,
+        limit: UserPagenateData.limit,
         search: SearchInTable,
       };
       const res = await PagesIndex.admin_services.WALLET_LIST_CREDIT_API(
         payload,
         token
       );
-      setModalStateHistoryTable(res.data);
+      if (res) {
+        setModalStateHistory(true);
+        setModalStateHistoryTable(res.data);
+        setTotalPages(res.recordsTotal);
+      } else {
+        setModalStateHistoryTable([]);
+      }
     } else if (number === 2) {
       const payload = {
         id: row._id,
-        page: 1,
-        limit: 10,
+        page: UserPagenateData.pageno,
+        limit: UserPagenateData.limit,
         search: SearchInTable,
       };
 
@@ -75,14 +89,12 @@ const ViewWallet = () => {
         token
       );
 
-      console.log("resres", res);
-
       if (res) {
         setModalStateHistory(true);
+        setTotalPages(res.recordsTotal);
         setModalStateHistoryTable(res.data);
       } else {
         setModalStateHistoryTable([]);
-
       }
     } else if (number === 3) {
       const res = await PagesIndex.admin_services.WALLET_LIST_USER_PROFILE_API(
@@ -97,6 +109,9 @@ const ViewWallet = () => {
         // alert(res.response.data.message)
         toast.error(res.response.data.message);
       }
+    } else if (number === 4) {
+      setModalStateHistory(true);
+
     }
   };
 
@@ -138,11 +153,14 @@ const ViewWallet = () => {
         payload,
         token
       );
-      if (res.status) {
-        setUserDetails(res.data);
+      
+      if(res.status){
+        toast.success("update sucessfully");
+      setModalStateHistory(false);
+
+
       }
 
-      console.log("payloadpayload", payload);
     },
   });
 
@@ -205,7 +223,7 @@ const ViewWallet = () => {
       buttonColor: "info",
       route: "",
       Conditions: (row) => {
-        // setGetBannedData(row.banned);
+        //setGetBannedData(row.banned);
         getHistory(row, 1);
       },
       Visiblity: true,
@@ -213,7 +231,7 @@ const ViewWallet = () => {
     },
     {
       id: 1,
-      buttonName: "Edit",
+      buttonName: "Update Wallet",
       buttonColor: "info",
       route: "test",
       Conditions: (row) => {
@@ -263,9 +281,9 @@ const ViewWallet = () => {
     getList();
   }, []);
 
-  console.log("UserDetails && UserDetails", UserDetails && UserDetails);
-
   const { userData1, userData2 } = UserDetails && UserDetails;
+
+  console.log("rowStatusrowStatus", rowStatus);
 
   return (
     <PagesIndex.Main_Containt
@@ -305,21 +323,28 @@ const ViewWallet = () => {
         body={
           <>
             {rowStatus === 1 || rowStatus === 2 ? (
-              <PagesIndex.TableWitCustomPegination
-                data={ModalStateHistoryTable}
-                // columns={columns}
-                initialRowsPerPage={5}
-                SearchInTable={SearchInTable}
-                visibleFields={visibleFields1}
-                searchInput={
-                  <input
-                    type="text"
-                    placeholder="Search..."
-                    value={SearchInTable}
-                    onChange={(e) => setSearchInTable(e.target.value)}
-                    className="form-control ms-auto"
-                  />
-                }
+              <PagesIndex.TableWithCustomPeginationNew
+                tableData={ModalStateHistoryTable && ModalStateHistoryTable}
+                TotalPagesCount={(TotalPages && TotalPages) || []}
+                columns={visibleFields1}
+                showIndex={true}
+                Refresh={Refresh}
+                setUserPagenateData={setUserPagenateData}
+
+                // data={ModalStateHistoryTable}
+                // // columns={columns}
+                // initialRowsPerPage={5}
+                // SearchInTable={SearchInTable}
+                // visibleFields={visibleFields1}
+                // searchInput={
+                //   <input
+                //     type="text"
+                //     placeholder="Search..."
+                //     value={SearchInTable}
+                //     onChange={(e) => setSearchInTable(e.target.value)}
+                //     className="form-control ms-auto"
+                //   />
+                // }
               />
             ) : rowStatus === 3 ? (
               <div className="main">
@@ -380,7 +405,7 @@ const ViewWallet = () => {
                   </div>
                 </div>
               </div>
-            ) : (
+            ) : rowStatus === 4 ? (
               <>
                 <PagesIndex.Formikform
                   fieldtype={fields.filter((field) => !field.showWhen)}
@@ -390,6 +415,8 @@ const ViewWallet = () => {
                   show_submit={true}
                 />
               </>
+            ) : (
+              ""
             )}
           </>
         }
