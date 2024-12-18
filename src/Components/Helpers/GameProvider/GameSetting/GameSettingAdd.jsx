@@ -1,6 +1,11 @@
 import React from "react";
 import PagesIndex from "../../../Pages/PagesIndex";
-import { convertTo12HourFormat } from "../../../Utils/Common_Date";
+// import { convertTo12HourFormat } from "../../../Utils/Common_Date";
+
+import {
+  convertTo12HourFormat,
+  convertTo12HourFormat123,
+} from "../../../Utils/Common_Date";
 
 const GameProviderAdd = () => {
   const userId = localStorage.getItem("userId");
@@ -25,6 +30,9 @@ const GameProviderAdd = () => {
     getGameProviderList();
   }, []);
 
+
+  console.log("location?.state?.rowData.OBT" ,location?.state?.rowData.OBT);
+  
   const formik = PagesIndex.useFormik({
     initialValues: {
       providerId: location?.state?.row ? location?.state?.row?._id : null,
@@ -42,19 +50,19 @@ const GameProviderAdd = () => {
     },
     validate: (values) => {
       const errors = {};
-      if (!values.providerId && formik.touched.providerId) {
+      if (!values.providerId) {
         errors.providerId = PagesIndex.valid_err.PROVIDER_NAME_REQUIRED;
       }
-      if (!values.OBT && formik.touched.OBT) {
+      if (!values.OBT) {
         errors.OBT = PagesIndex.valid_err.OPEN_BID_TIME_IS_REQUIRED;
       }
-      if (!values.CBT && formik.touched.CBT) {
+      if (!values.CBT) {
         errors.CBT = PagesIndex.valid_err.CLOSE_BID_TIME_IS_REQUIRED;
       }
-      if (!values.OBRT && formik.touched.OBRT) {
+      if (!values.OBRT) {
         errors.OBRT = PagesIndex.valid_err.OPEN_BID_RESULT_TIME_IS_REQUIRED;
       }
-      if (!values.CBRT && formik.touched.CBRT) {
+      if (!values.CBRT) {
         errors.CBRT = PagesIndex.valid_err.CLOSE_BID_RESULT_TIME_IS_REQUIRED;
       }
 
@@ -72,8 +80,6 @@ const GameProviderAdd = () => {
       };
 
       if (location?.state?.edit === "single") {
-      
-
         data.gameid = location?.state?.rowData?._id;
       } else if (location?.state?.edit === "multiple") {
         // data.providerId = values.providerId;

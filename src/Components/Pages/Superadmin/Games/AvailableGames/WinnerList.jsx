@@ -17,6 +17,7 @@ const WinnerList = () => {
   const [mainWinnerData, setMainWinnerData] = PagesIndex.useState([]);
   const [ModalState, setModalState] = useState(false);
   const [Refresh, setRefresh] = PagesIndex.useState(false);
+  const [GetResultStatus, setGetResultStatus] = PagesIndex.useState(0);
 
   const fetchData = async (page, rowsPerPage, searchQuery = "") => {
     const apidata = {
@@ -73,7 +74,10 @@ const WinnerList = () => {
         token
       );
 
+      console.log("resresres", res.data.resultStatus);
+
       if (res.status) {
+        setGetResultStatus(res.data.resultStatus);
         const nonEmptyCategories = [];
 
         Object.entries(res?.data?.winnerList).forEach(([key, value]) => {
@@ -89,6 +93,8 @@ const WinnerList = () => {
       }
     } catch {}
   };
+
+  console.log("GetResultStatus", GetResultStatus && GetResultStatus);
 
   PagesIndex.useEffect(() => {
     fetchData();
@@ -135,49 +141,49 @@ const WinnerList = () => {
   ];
 
   //get game winner list api
-  const getGameWinnerListApi = async () => {
-    const apidata = {
-      providerId: data.providerId,
-      date: data.resultDate,
-      session: data.session,
-    };
-    const apidata1 = {
-      digit: data.winningDigit,
-      provider: data.providerId,
-      gamedate: data.resultDate,
-      resultId: data._id,
-      resultStatus: String(data.status),
-      digitFamily: String(data.winningDigitFamily),
-      sessionType: data.session,
-      providerName: data.providerName,
-    };
+  // const getGameWinnerListApi = async () => {
+  //   const apidata = {
+  //     providerId: data.providerId,
+  //     date: data.resultDate,
+  //     session: data.session,
+  //   };
+  //   const apidata1 = {
+  //     digit: data.winningDigit,
+  //     provider: data.providerId,
+  //     gamedate: data.resultDate,
+  //     resultId: data._id,
+  //     resultStatus: String(data.status),
+  //     digitFamily: String(data.winningDigitFamily),
+  //     sessionType: data.session,
+  //     providerName: data.providerName,
+  //   };
 
-    try {
-      const res = await PagesIndex.admin_services.GAME_MAIN_WINNER_LIST_API(
-        apidata1,
-        token
-      );
+  //   try {
+  //     const res = await PagesIndex.admin_services.GAME_MAIN_WINNER_LIST_API(
+  //       apidata1,
+  //       token
+  //     );
 
-      console.log("resres", res);
+  //     console.log("resres", res);
 
-      const res1 =
-        await PagesIndex.admin_services.GAME_REMAINING_WINNER_LIST_API(
-          apidata,
-          token
-        );
+  //     const res1 =
+  //       await PagesIndex.admin_services.GAME_REMAINING_WINNER_LIST_API(
+  //         apidata,
+  //         token
+  //       );
 
-      if (res.status) {
-        setMainWinnerData(res?.data?.winnerList["Single Digit"]);
-      }
-      if (res1.status) {
-        setRemainingWinnerData(res1?.data?.winnerList["Single Digit"]);
-      }
-    } catch (error) {}
-  };
+  //     if (res.status) {
+  //       setMainWinnerData(res?.data?.winnerList["Single Digit"]);
+  //     }
+  //     if (res1.status) {
+  //       setRemainingWinnerData(res1?.data?.winnerList["Single Digit"]);
+  //     }
+  //   } catch (error) {}
+  // };
 
-  useEffect(() => {
-    getGameWinnerListApi();
-  }, []);
+  // useEffect(() => {
+  //   getGameWinnerListApi();
+  // }, []);
 
   const cardLayouts = [
     {
@@ -197,6 +203,18 @@ const WinnerList = () => {
       size: 12,
       body: (
         <div>
+          {GetResultStatus === 0 ? (
+            <div class="d-flex justify-content-end mb-3">
+              <button
+                onClick={() => setModalState(true)}
+                className="btn btn-dark"
+              >
+                Confirm Payment
+              </button>
+            </div>
+          ) : (
+            ""
+          )}
           <PagesIndex.TableWithCustomPeginationNew
             fetchData={fetchData1}
             columns={visibleFields}
@@ -212,14 +230,18 @@ const WinnerList = () => {
       size: 12,
       body: (
         <div>
-          <div class="d-flex justify-content-end mb-3">
-            <button
-              onClick={() => setModalState(true)}
-              className="btn btn-dark"
-            >
-              Confirm Payment
-            </button>
-          </div>
+          {GetResultStatus === 0 ? (
+            <div class="d-flex justify-content-end mb-3">
+              <button
+                onClick={() => setModalState(true)}
+                className="btn btn-dark"
+              >
+                Confirm Payment
+              </button>
+            </div>
+          ) : (
+            ""
+          )}
           <PagesIndex.TableWithCustomPeginationNew
             fetchData={fetchData}
             columns={visibleFields}
