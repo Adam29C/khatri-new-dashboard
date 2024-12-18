@@ -19,6 +19,8 @@ const GameRatesProvider = ({
   const [data, getData] = PagesIndex.useState([]);
   const [getGameRateList, setgetGameRateList] = PagesIndex.useState([]);
 
+  console.log("data", data);
+
   //get game list start
   const getGameRatesList = async () => {
     if (gameType === "StarLine" || gameType === "JackPot") {
@@ -30,6 +32,9 @@ const GameRatesProvider = ({
       setgetGameRateList(res.data);
     } else {
       const res = await PagesIndex.game_service.GAME_RATES_GET_LIST_API(token);
+
+      console.log("resresres", res);
+
       getData(res?.data);
     }
   };
@@ -71,7 +76,6 @@ const GameRatesProvider = ({
 
   // Handle Edit Button
   const handleEdit = (row) => {
-  
     setModalType("Edit");
     setSelectedRow(row);
     setVisible(true);
@@ -174,34 +178,82 @@ const GameRatesProvider = ({
     },
   });
 
-  const visibleFields = ["id", "gameName", "gamePrice"];
+  // const visibleFields = ["id", "gameName", "gamePrice"];
 
-  const UserFullButtonList = [
+  const visibleFields = [
     {
-      id: 0,
-      buttonName: "Edit",
-      buttonColor: "sucess",
-      route: "edit",
-      Conditions: (row) => {
-        handleEdit(row);
-      },
-      Visiblity: false,
-      type: "button",
-      // onClick: handleEdit,
+      name: "Game Name",
+      value: "gameName",
+      sortable: true,
     },
     {
-      id: 1,
-      buttonName: "Delete",
+      name: "provider Result",
+      value: "gamePrice",
+      sortable: true,
+    },
+    // {
+    //   name: "active Status",
+    //   value: "activeStatus",
+    //   sortable: false,
+    //   transform: (row, items) => {
+    //     return row ? "Market is active " : " Market Is Inactive";
+    //   },
+    // },
+    // {
+    //   name: "modifiedAt",
+    //   value: "modifiedAt",
+    //   sortable: true,
+    // },
+    {
+      name: "Edit",
+      value: "Update",
+      buttonColor: "info",
+      sortable: true,
+      isButton: true,
+      Conditions: (row) => {
+        handleEdit(row, 1);
+      },
+    },
+
+    {
+      name: "Delete",
+      value: "Delete",
       buttonColor: "danger",
-      route: "users/deleted",
+
+      isButton: true,
+      // value: (row) => (row.banned ? "Unblock" : "Block"),
+      // buttonColor: (row) => (row.banned ? "success" : "danger"),
       Conditions: (row) => {
         handleDelete(row._id);
       },
-      Visiblity: false,
-      type: "button",
-      // onClick: handleDelete,
     },
   ];
+  // const UserFullButtonList = [
+  //   {
+  //     id: 0,
+  //     buttonName: "Edit",
+  //     buttonColor: "sucess",
+  //     route: "edit",
+  //     Conditions: (row) => {
+  //       handleEdit(row);
+  //     },
+  //     Visiblity: false,
+  //     type: "button",
+  //     // onClick: handleEdit,
+  //   },
+  //   {
+  //     id: 1,
+  //     buttonName: "Delete",
+  //     buttonColor: "danger",
+  //     route: "users/deleted",
+  //     Conditions: (row) => {
+  //       handleDelete(row._id);
+  //     },
+  //     Visiblity: false,
+  //     type: "button",
+  //     // onClick: handleDelete,
+  //   },
+  // ];
 
   const fields = [
     {
@@ -235,12 +287,12 @@ const GameRatesProvider = ({
         title={title}
         btnTitle="Add"
       >
-        <PagesIndex.TableWitCustomPegination
+        <PagesIndex.TableWithCustomPeginationNew123
           data={GAME_RATE_DATA}
           initialRowsPerPage={5}
           SearchInTable={SearchInTable}
           visibleFields={visibleFields}
-          UserFullButtonList={UserFullButtonList}
+          // UserFullButtonList={UserFullButtonList}
           searchInput={
             <input
               type="text"

@@ -93,18 +93,6 @@ const ExamplePage = ({
         winningDigit: values.winningDigit,
       };
 
-      //   console.log("payload", payload);
-
-      //   return;
-
-      //   const req = {
-      //     winningDigit: values.winningDigit,
-      //     resultDate: today(values.resultDate),
-      //     session: values.session,
-      //     providerId: values.providerId,
-      //     providerName: values.providerName,
-      //   };
-
       try {
         const res = await PagesIndex.game_service.ALL_GAME_RESULTS_ADD_API(
           main_result_add,
@@ -113,10 +101,12 @@ const ExamplePage = ({
         );
 
         // const res = await PagesIndex.admin_services.ADD_GAME_RESULT(req, token);
-        // console.log(res);
+        console.log(res.response);
         if (res.status) {
           PagesIndex.toast.success(res?.data?.message || res?.message);
           getGameResultApi();
+        } else {
+          PagesIndex.toast.error(res.response.data.message);
         }
       } catch (error) {
         console.log(error);
@@ -281,9 +271,6 @@ const ExamplePage = ({
   //   "winningDigit",
   // ];
 
-
-
-  
   const visibleFields = [
     {
       name: "provider Name",
@@ -305,16 +292,7 @@ const ExamplePage = ({
     //   value: "winningDigit",
     //   sortable: true,
     // },
-  ]
-
-
-
-
-
-
-
-
-
+  ];
 
   const UserFullButtonList = [
     {
@@ -393,23 +371,6 @@ const ExamplePage = ({
       ),
     },
   ];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   return (
     <>
