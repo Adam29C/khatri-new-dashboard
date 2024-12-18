@@ -496,7 +496,7 @@ const CustomTable = ({
       <table
         id="myTable"
         className={`table table-striped table-bordered  ${
-          isResponsive ? "table-responsive" : ""
+          isResponsive ? "table-responsive" : "table-responsive"
         }`}
       >
         <thead className="primary-color text-center table-header-backeground">

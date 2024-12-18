@@ -20,6 +20,7 @@ const WalletMain = ({
   visibleFields1,
   formik1,
   fields1,
+  confirmPayment,
 }) => {
   const totalAmount = useMemo(
     () => TableData.reduce((acc, item) => acc + (item?.reqAmount || 0), 0),
@@ -38,12 +39,12 @@ const WalletMain = ({
             show_submit={true}
             after_submit_button1={
               // <div className="report-btn-main mt-3">
-                <button
-                  onClick={() => handleBtnStatus("see-report")}
-                  className="approve-btn"
-                >
-                  See Report
-                </button>
+              <button
+                onClick={() => handleBtnStatus("see-report")}
+                className="approve-btn"
+              >
+                See Report
+              </button>
               // </div>
             }
           />
@@ -104,7 +105,12 @@ const WalletMain = ({
                   Are You Sure Want To Confirm Payment?
                 </h1>
                 <div className="d-flex justify-content-end">
-                  <button className="btn btn-dark  mx-2">Confirm</button>
+                  <button
+                    className="btn btn-dark  mx-2"
+                    onClick={() => confirmPayment()}
+                  >
+                    Confirm
+                  </button>
                   <button
                     onClick={() => setModalState(false)}
                     className="btn btn-dark  mx-2"

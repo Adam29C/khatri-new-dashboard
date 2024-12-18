@@ -13,6 +13,7 @@ const PaginatedTable = ({
   const [filteredData, setFilteredData] = useState(data || []);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortConfig, setSortConfig] = useState({ key: null, direction: null });
+  const [isResponsive, setIsResponsive] = useState(window.innerWidth < 425);
 
   const maxPagesToShow = 10;
 
@@ -74,24 +75,37 @@ const PaginatedTable = ({
   // Render buttons dynamically
   const renderButton = (field, row) => {
     const buttonText =
-    typeof field.value === "function" ? field.value(row) : field.value;
-  return (
-    <button
-      key={field.name}
-      // className={`btn btn-${field.buttonColor} btn-sm`}
-      onClick={() => field.Conditions(row)}
-      className={`btn ${
-        typeof field.buttonColor === "function"
-          ? `btn-${field.buttonColor(row)}`
-          : field.buttonColor
-          ? `btn-${field.buttonColor}`
-          : "unblock-btn"
-      } btn-sm me-2`}
-    >
-      {buttonText}
-    </button>
+      typeof field.value === "function" ? field.value(row) : field.value;
+    return (
+      <button
+        key={field.name}
+        // className={`btn btn-${field.buttonColor} btn-sm`}
+        onClick={() => field.Conditions(row)}
+        className={`btn ${
+          typeof field.buttonColor === "function"
+            ? `btn-${field.buttonColor(row)}`
+            : field.buttonColor
+            ? `btn-${field.buttonColor}`
+            : "unblock-btn"
+        } btn-sm me-2`}
+      >
+        {buttonText}
+      </button>
     );
   };
+
+  const handleResize = () => {
+    setIsResponsive(window.innerWidth < 425);
+  };
+
+  useEffect(() => {
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <div className="container">
@@ -126,7 +140,11 @@ const PaginatedTable = ({
       </div>
 
       {/* Table */}
-      <table className="table table-striped table-bordered">
+      <table
+        className={`table table-striped table-bordered  ${
+          isResponsive ? "table-responsive" : "table-responsive"
+        }`}
+      >
         <thead className="primary-color text-center">
           <tr>
             {showIndex && <th>#</th>}
@@ -169,12 +187,12 @@ const PaginatedTable = ({
                       style={field.style ? field.style(row) : {}}
                       onClick={() => {
                         if (field.onClick) {
-                          field.onClick(row); 
+                          field.onClick(row);
                         }
                       }}
                     >
                       {field.render
-                        ? field.render(row) 
+                        ? field.render(row)
                         : field.transform
                         ? field.transform(row[field.value], row) // Custom transformation
                         : field.isButton

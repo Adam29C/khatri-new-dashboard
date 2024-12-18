@@ -23,11 +23,65 @@ const ExportDebitReport = () => {
   const [btnStatus, setBtnStatus] = PagesIndex.useState(null);
   const [declineData, setDeclineData] = PagesIndex.useState();
 
+  const [Payload, setPayload] = PagesIndex.useState("");
+
   const handleBtnStatus = (status) => {
+    console.log("status", status);
+
     setBtnStatus(status);
     setModalState(true);
     if (status === "see-report") {
       getTodayReport();
+    } else if (status === "approve-all") {
+      ApprovedAll();
+    }
+  };
+
+  const ApprovedAll = async () => {
+    const payload = {
+      ids: [], // To store rowIds
+      userData: [], // To store user details
+      userplusIds: {}, // To map userId to rowId
+      adminName: userdetails.username,
+    };
+
+    // Loop through the data array and construct payload
+    TableData.forEach((item) => {
+      // Push rowId into ids array
+      if (item.rowId) payload.ids.push(item.rowId);
+
+      // Add user details to userData array
+      payload.userData.push({
+        userId: item.userId || null,
+        updateWallet: item.updateWallet || 0,
+        walletBal: item.walletBal || 0,
+        req_amt: item.reqAmount || 0,
+        username: item.username || "",
+        mobile: item.mobile || "",
+      });
+
+      // Map userId to rowId in userplusIds
+      if (item.userId && item.rowId) {
+        payload.userplusIds[item.userId] = {
+          userid: item.userId,
+          rowId: item.rowId,
+        };
+      }
+    });
+    setPayload(payload);
+  };
+
+  const confirmPayment = async () => {
+    const res =
+      await PagesIndex.admin_services.EXPORT_DEBIT_APPROVE_ALL_REQUEST_API(
+        Payload,
+        token
+      );
+
+    if (res.status) {
+      PagesIndex.toast.success(res.message);
+    } else {
+      PagesIndex.toast.error(res.response.data.message);
     }
   };
 
@@ -40,6 +94,7 @@ const ExportDebitReport = () => {
         apidata,
         token
       );
+
     if (res?.status) {
       setTodayReportData(res?.data);
     }
@@ -55,6 +110,7 @@ const ExportDebitReport = () => {
       apidata,
       token
     );
+
     if (res?.status) {
       setTableData(res?.data);
     }
@@ -260,8 +316,6 @@ const ExportDebitReport = () => {
     },
   ];
 
-  // const visibleFields1 = ["id", "ReportName", "ReportTime", "adminName"];
-
   const formik = PagesIndex.useFormik({
     initialValues: {
       searchType: "",
@@ -448,6 +502,8 @@ const ExportDebitReport = () => {
         UserFullButtonList1={UserFullButtonList1}
         formik1={formik1}
         fields1={fields1}
+        ApprovedAll={ApprovedAll}
+        confirmPayment={confirmPayment}
       />
     </>
   );
