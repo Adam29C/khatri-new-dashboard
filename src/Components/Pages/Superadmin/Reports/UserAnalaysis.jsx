@@ -18,6 +18,10 @@ const AllReports = () => {
     limit: 10,
   });
 
+
+
+  console.log("");
+  
   const [TotalPages, setTotalPages] = PagesIndex.useState(1);
 
   // const getReportDetails = async () => {

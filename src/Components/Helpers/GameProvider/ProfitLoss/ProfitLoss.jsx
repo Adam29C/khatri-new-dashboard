@@ -1,337 +1,368 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Split_Main_Containt from "../../../Layout/Main/Split_Main_Content";
+import { useFormik } from "formik";
 import PagesIndex from "../../../Pages/PagesIndex";
-import { getActualDateFormate, today } from "../../../Utils/Common_Date";
-import ReusableModal from "../../Modal/ReusableModal";
+import { Api } from "../../../Config/Api";
+import { today } from "../../../Utils/Common_Date";
+import { spArray } from "./data";
 
-const ProfitLoss = ({ gameType, getProfiLoss, providersList, getBidData }) => {
+const SplitForm = () => {
   const token = localStorage.getItem("token");
 
-  const [GetProvider, setGetProvider] = PagesIndex.useState([]);
-  const [PanaList, setPanaList] = PagesIndex.useState([]);
-  const [PanaList1, setPanaList1] = PagesIndex.useState([]);
-  const [SingleDigit, setSingleDigit] = PagesIndex.useState([]);
-  const [SingleDigit1, setSingleDigit1] = PagesIndex.useState([]);
-  const [Calulations, setCalulations] = PagesIndex.useState([]);
-  const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
-  const [UserList, setUserList] = PagesIndex.useState([]);
-  const [visible, setVisible] = PagesIndex.useState(false);
+  const [GetTotal, setGetTotal] = PagesIndex.useState([]);
 
-  const getGameResultApi = async () => {
-    const res = await PagesIndex.game_service.ALL_GAME_PROFIT_LOSS_API(
-      providersList,
-      token
-    );
-    if (res.status) {
-      setGetProvider(res?.data);
+  const [TableTwo, setTableTwo] = PagesIndex.useState([]);
+  const [TableThree, setTableThree] = PagesIndex.useState([]);
+  const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
+  const [GetProviders, setGetProviders] = PagesIndex.useState([]);
+
+
+  console.log("TableTwo" ,TableTwo); 
+  
+  const getProviders = async () => {
+    const response1 =
+      await PagesIndex.game_service.STARLINE_AND_JACKPOT_GAME_PROVIDERS_LIST_API(
+        Api.STARLINE_GAME_PROVIDERS_LIST,
+        token
+      );
+
+    if (response1.status) {
+      setGetProviders(response1.data);
     }
   };
-
-  useEffect(() => {
-    getGameResultApi();
+  PagesIndex.useEffect(() => {
+    getProviders();
   }, []);
 
-
-  // console.log("todaytoday" ,today(new Date()));
-  
-  var sumdigit = 0;
-  const formik = PagesIndex.useFormik({
+  const formik = useFormik({
     initialValues: {
-      provider: "",
-      date: today(new Date()),
+      gameDate: "",
+      // gameSession: "",
+      providerId: "",
     },
+
     validate: (values) => {
       const errors = {};
-      if (!values.provider) {
-        errors.provider = PagesIndex.valid_err.GAME_PROVIDER_ERROR;
+
+      // if (!values.gameSession) {
+      //   errors.gameSession = "Please Select Game Session";
+      // }
+
+      if (!values.providerId) {
+        errors.providerId = "Please Select Provider";
       }
-      if (!values.date) {
-        errors.date = PagesIndex.valid_err.DOMAIN_ERROR;
-      }
+
       return errors;
     },
     onSubmit: async (values) => {
-      const req = {
+      const payload = {
+        date: values.gameDate || today(new Date()),
+        // // session: values.gameSession,
+        provider: values.providerId,
+        // {
         // provider: "668d4382211a65d88600fa7e",
-        // date: "11/22/2024",
-
-        provider: values.provider,
-        date: values.date,
+        // date: "12/19/2024",
+        // }
       };
-      try {
-        const res =
-          await PagesIndex.game_service.STARLINE_GAME_PROFIT_LOSS_LIST_API(
-            getProfiLoss,
-            req,
-            token
-          );
-        if (res.status) {
-          let totalPanaSum = 0,
-            totalBidPanaSum = 0;
-          let totalSum = 0,
-            totalBidSum = 0;
 
-          let resultArray = [];
+      let pannaArr = [];
+      const singleArr = [];
 
-          // Calculate Pana totals
-          res.data.data1.forEach((e) => {
-            if (e.bidDigit.length === 3) {
-              totalPanaSum += e.sumdigit;
-              totalBidPanaSum += e.countBid;
+      // if (values.gameSession === "Open") {
+      const response1 = await PagesIndex.report_service.ALL_GAME_REPORT_API(
+        Api.STARLINE_GAME_PROFIT_LOSS_LIST,
+        payload,
+        token
+      );
+
+      if (response1.status) {
+        let panaTotal = 0;
+        let panaBidDigit = 0;
+        let singleDigitTotal = 0;
+        let singleDigitBidDigit = 0;
+
+        response1.data.data1.forEach((item) => {
+          if (item.gameTypeName.includes("Pana")) {
+            panaTotal += item.countBid;
+            panaBidDigit += parseInt(item.sumdigit);
+          } else if (item.gameTypeName === "Single Digit") {
+            singleDigitTotal += item.countBid;
+            singleDigitBidDigit += parseInt(item.sumdigit);
+          }
+        });
+
+        // Calculate grand total
+        const grandTotal = panaTotal + singleDigitTotal;
+        const grandTotalBid = panaBidDigit + singleDigitBidDigit;
+
+        // Create totals array
+        const totals = [
+          { name: "Pana", values: panaTotal, values1: panaBidDigit },
+          {
+            name: "Single Digit",
+            values: singleDigitTotal,
+            values1: singleDigitBidDigit,
+          },
+          { name: "Grand Total", values: grandTotal, values1: grandTotalBid },
+        ];
+
+        setGetTotal(totals);
+
+        let singleDigitB = totals[1].values;
+        let panaB = totals[0].values;
+
+        let singleDigitAm = totals[1].values1;
+        let panaAm = totals[0].values1;
+
+        let pannaArr = [];
+        let singleArr = [];
+        let allSingle = [
+          { Digit: 0 },
+          { Digit: 1 },
+          { Digit: 2 },
+          { Digit: 3 },
+          { Digit: 4 },
+          { Digit: 5 },
+          { Digit: 6 },
+          { Digit: 7 },
+          { Digit: 8 },
+          { Digit: 9 },
+        ];
+
+
+        let resultArray = [];
+        response1.data.data2.forEach(function (e) {
+          let str = e._id;
+
+          console.log("str", str);
+
+          if (str.length === 1) {
+            let total = 0;
+            let loss = 0;
+            let profit = 0;
+            let pl = e.sumdigit * e.gamePrice;
+
+            if (pl > singleDigitAm) {
+              // loss
+              loss = pl - singleDigitAm;
+            } else {
+              // profit
+              profit = singleDigitAm - pl;
             }
-          });
 
-          resultArray.push({
-            type: "Pana",
-            totalBids: totalBidPanaSum,
-            totalSum: totalPanaSum,
-          });
+            // Pushing the data into the singleArr array
+            singleArr.push({
+              _id: e._id,
+              countBid: e.countBid,
+              sumDigit: e.sumdigit,
+              amountToPay: pl,
+              Profit: profit,
+              Loss: loss,
+            });
+          } else {
+            let total = 0;
+            let loss = 0;
+            let profit = 0;
+            let pl = e.sumdigit * e.gamePrice;
 
-          res.data.data1.forEach((e) => {
-            if (e.bidDigit.length === 1) {
-              resultArray.push({
-                type: e.gameTypeName,
-                totalBids: e.countBid,
-                totalSum: e.sumdigit,
-              });
-              sumdigit += e.sumdigit;
-              totalSum = totalPanaSum + sumdigit;
-              totalBidSum = totalBidPanaSum + e.countBid;
+            if (pl > panaAm) {
+              // loss
+              loss = pl - panaAm;
+            } else {
+              // profit
+              profit = panaAm - pl;
             }
-          });
 
-          resultArray.push({
-            type: "Grand Total",
-            totalBids: totalBidSum,
-            totalSum: totalSum,
-          });
+            pannaArr.push({
+              digit: e._id,
+              bidCount: e.countBid, // Keeping the bid count
+              sumDigit: e.sumdigit,
+              amountToPay: pl,
+              profit: profit,
+              Loss: loss,
+            });
+          }
+        });
 
-          setCalulations(resultArray);
-          setPanaList(res.data.pana);
-          setSingleDigit(res.data.data2);
+        singleArr.sort(function (a, b) {
+          return a._id - b._id;
+        });
 
-          let singleDigit = "";
-        }
-      } catch (error) {
-        const errorMessage =
-          error.response?.data?.message ||
-          "Something went wrong. Please try again.";
-        PagesIndex.toast.error(errorMessage);
+        pannaArr.sort(function (a, b) {
+          return a.digit - b.digit;
+        });
+        setTableTwo(singleArr);
+
+        let array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+        Object.keys(spArray).forEach((digit, index) => {
+          const arrayValue = array[index % array.length];
+          const match = pannaArr.find((item) => item.digit === digit);
+
+          if (match) {
+            match._id = `${digit}-${arrayValue}`;
+            resultArray.push(match);
+          } else {
+            resultArray.push({
+              _id: digit + "-" + arrayValue,
+              bidCount: 0,
+              sumDigit: 0,
+              amountToPay: 0,
+              profit: panaAm,
+              Loss: 0,
+            });
+          }
+        });
+
+        setTableThree(resultArray);
+
+        return;
+      } else {
+        PagesIndex.toast.error(response1.message);
       }
     },
   });
 
-  PagesIndex.useEffect(() => {
-    let PanaProfit = Calulations && Calulations[0]?.totalSum;
-    let sumdigit = Calulations && Calulations[1]?.totalSum;
-    let pannaArr = [];
-    let singleArr = [];
-    let allSingle = [
-      { Digit: 0 },
-      { Digit: 1 },
-      { Digit: 2 },
-      { Digit: 3 },
-      { Digit: 4 },
-      { Digit: 5 },
-      { Digit: 6 },
-      { Digit: 7 },
-      { Digit: 8 },
-      { Digit: 9 },
-    ];
-
-    SingleDigit &&
-      SingleDigit.map((e) => {
-        let str = e._id;
-        let total = 0;
-        let loss = 0;
-        let profit = 0;
-        let pl = e.sumdigit * e.gamePrice;
-
-        if (str.length === 1) {
-          if (pl > sumdigit) {
-            loss = pl - sumdigit;
-          } else {
-            profit = sumdigit - pl;
-          }
-
-          singleArr[e._id] = {
-            digit: e._id,
-            TotalBidsAmount: e.sumdigit,
-            amountToPay: pl,
-            profit: profit,
-            Loss: loss,
-          };
-        } else {
-          if (pl > PanaProfit) {
-            loss = pl - PanaProfit;
-          } else {
-            profit = PanaProfit - pl;
-          }
-
-          pannaArr[e._id] = {
-            digit: e._id,
-
-            TotalBidsAmount: e.sumdigit,
-            amountToPay: pl,
-            profit: profit,
-            Loss: loss,
-          };
-        }
-      });
-
-    setSingleDigit1(singleArr);
-    let dataArray = [];
-
-    PanaList &&
-      PanaList.map(function (e) {
-        let tabDigit = e.Digit;
-        let bidCount = "No Bids";
-        let amountToPay = 0;
-        let SumDigit = 0;
-
-        let profit = PanaProfit;
-        let loss = 0;
-        if (pannaArr[tabDigit]) {
-          bidCount = pannaArr[tabDigit].bidCount;
-          amountToPay = pannaArr[tabDigit].amountToPay;
-          SumDigit = pannaArr[tabDigit].TotalBidsAmount;
-          profit = pannaArr[tabDigit].profit;
-          loss = pannaArr[tabDigit].Loss;
-        }
-
-        dataArray.push({
-          Digit: `${tabDigit}-${e.DigitFamily}`,
-          tabDigit: tabDigit,
-          DigitFamily: e.DigitFamily,
-          bidCount: bidCount,
-          SumDigit: SumDigit,
-          amountToPay: amountToPay,
-          TotalBidsAmount: SumDigit,
-          profit: profit,
-          loss: loss,
-        });
-
-        dataArray.sort((a, b) => {
-          return parseInt(a.tabDigit) - parseInt(b.tabDigit);
-        });
-      });
-
-    setPanaList1(dataArray);
-
-    // ---------------------
-
-    // allSingle.forEach(function (e) {
-    //   let tabDigit = e.Digit;
-    //   let bidCount = "No Bids";
-    //   let amountToPay = 0;
-    //   let SumDigit = 0;
-    //   let profit = sumdigit;
-    //   let loss = 0;
-    //   if (singleArr[tabDigit]) {
-    //     bidCount = singleArr[tabDigit].bidCount;
-    //     amountToPay = singleArr[tabDigit].amountToPay;
-    //     SumDigit = singleArr[tabDigit].sumDigit;
-    //     profit = singleArr[tabDigit].profit;
-    //     loss = singleArr[tabDigit].Loss;
-    //   }
-    // });
-  }, [SingleDigit, sumdigit, Calulations]);
-
   const fields = [
     {
-      name: "provider",
-      label: "Provider Name",
+      name: "gameDate",
+      label: "Start Date",
+      type: "date",
+      label_size: 12,
+      col_size: 4,
+    },
+    {
+      name: "providerId",
+      label: "Provider",
       type: "select",
+      label_size: 12,
+
+      col_size: 8,
       options:
-        (GetProvider &&
-          GetProvider.map((item) => ({
+        (GetProviders &&
+          GetProviders.map((item) => ({
             label: item.providerName,
             value: item._id,
           }))) ||
         [],
-      label_size: 12,
-      col_size: 6,
     },
-    {
-      name: "date",
-      label: "Result Date",
-      type: "date",
-      label_size: 12,
-      col_size: 6,
-    },
+    // {
+    //   name: "gameSession",
+    //   label: "Session",
+    //   type: "select",
+    //   label_size: 12,
+
+    //   col_size: 4,
+    //   options: [
+    //     {
+    //       label: "Open",
+    //       value: "Open",
+    //     },
+    //     {
+    //       label: "Close",
+    //       value: "Close",
+    //     },
+    //   ],
+    // },
   ];
 
   const visibleFields = [
-    "digit",
-    "TotalBidsAmount",
-    "amountToPay",
-    "profit",
-    "Loss",
-    "gamePrice",
-  ];
-
-  const visibleFields1 = [
-    "Digit",
-    "TotalBidsAmount",
-    "amountToPay",
-    "profit",
-    "loss",
-    "gamePrice",
-  ];
-
-  const handleActionBtn = async (row) => {
-    const req = {
-      date: formik?.values?.date,
-      bidDigit: row?.tabDigit || row?.digit,
-      id: formik?.values?.provider,
-    };
-    const res =
-      await PagesIndex.game_service.STARLINE_GAME_PROFIT_LOSS_BID_DATA_API(
-        getBidData,
-        req,
-        token
-      );
-    if (res.status) {
-      setUserList(res.data);
-    } else {
-      setUserList([]);
-    }
-  };
-
-  const UserFullButtonList = [
     {
-      id: 0,
-      buttonName: "View Bids Info",
-      buttonColor: "",
-      route: "",
-      Conditions: (row) => {
-        setVisible(true);
-        handleActionBtn(row, 1);
+      name: "Digit",
+      value: "_id",
+      sortable: true,
+    },
+    {
+      name: "countBid",
+      value: "countBid",
+      sortable: true,
+      transform: (item, row) => {
+        return `View Bids Info (${row.countBid})`;
       },
-      Visiblity: true,
-      type: "ankertag",
+    },
+
+    {
+      name: "Total Bid Count",
+      value: "sumDigit",
+      sortable: true,
+    },
+    {
+      name: "Amount To Pay",
+      value: "amountToPay",
+      sortable: true,
+    },
+    {
+      name: "Profit",
+      value: "Profit",
+      notheader: true,
+
+      sortable: true,
+      style: (row) => ({
+        color: "green",
+        fontWeight: "bold",
+      }),
+    },
+    {
+      name: "Loss",
+      value: "Loss",
+      sortable: true,
+      notheader: true,
+      style: (row) => ({
+        color: "red",
+        fontWeight: "bold",
+      }),
     },
   ];
 
-  const UserFullButtonList1 = [
+  const visibleFields1 = [
     {
-      id: 0,
-      buttonName: "View Bids Info",
-      buttonColor: "",
-      route: "",
-      Conditions: (row) => {
-        console.log("test", row);
-        setVisible(true);
-
-        handleActionBtn(row, 1);
+      name: "Digit",
+      value: "_id",
+      sortable: true,
+    },
+    {
+      name: "countBid",
+      value: "countBid",
+      sortable: true,
+      transform: (item, row) => {
+        return `View Bids Info (${row.bidCount})`;
       },
-      Visiblity: true,
-      type: "ankertag",
+    },
+
+    {
+      name: "Total Bid Count",
+      value: "sumDigit",
+      sortable: true,
+    },
+    {
+      name: "Amount To Pay",
+      value: "amountToPay",
+      sortable: true,
+    },
+    {
+      name: "Profit",
+      value: "profit",
+      notheader: true,
+
+      sortable: true,
+      style: (row) => ({
+        color: "green",
+        fontWeight: "bold",
+      }),
+    },
+    {
+      name: "Loss",
+      value: "Loss",
+      sortable: true,
+      notheader: true,
+      style: (row) => ({
+        color: "red",
+        fontWeight: "bold",
+      }),
     },
   ];
   const cardLayouts = [
     {
-      size: 8,
+      size: 7,
       body: (
         <div>
           <PagesIndex.Formikform
@@ -344,45 +375,36 @@ const ProfitLoss = ({ gameType, getProfiLoss, providersList, getBidData }) => {
       ),
     },
     {
-      size: 4,
+      size: 5,
       body: (
         <div>
-          <div>
-            <table
-              className="tablesaw table mb-0 tablesaw-swipe"
-              data-tablesaw-mode="swipe"
-              data-tablesaw-mode-switch=""
-              data-tablesaw-minimap=""
-              id="tablesaw-5771"
-            >
+          <div className="table-responsive ">
+            <table className="table  ">
               <thead className="primary-color">
                 <tr>
-                  <th scope="col">Type</th>
-                  <th scope="col">Bids</th>
-                  <th scope="col">Amount</th>
+                  <th>Type</th>
+                  <th>Bids</th>
+                  <th>Amount</th>
                 </tr>
               </thead>
-              <tbody style={{ fontSize: 12 }} id="groupData">
-                {Calulations.length > 0 &&
-                  Calulations.map((item, index) => (
-                    <tr key={index}>
-                      <td
-                        className={index === 2 ? " primary-color fw-bold" : ""}
-                      >
-                        {item.type}
-                      </td>
-                      <td
-                        className={index === 2 ? " primary-color fw-bold" : ""}
-                      >
-                        {item.totalBids}
-                      </td>
-                      <td
-                        className={index === 2 ? " primary-color fw-bold" : ""}
-                      >
-                        {item.totalSum}
-                      </td>
-                    </tr>
-                  ))}
+              <tbody id="groupData">
+                {GetTotal &&
+                  GetTotal.map((item, index) => {
+                    const isLastItem = index === GetTotal.length - 1;
+                    return (
+                      <tr className={isLastItem ? "fw-bold" : ""}>
+                        <td>{item.name}</td>
+                        <td>{item.values}</td>
+                        <td>{item.values1}</td>
+                      </tr>
+                    );
+                  })}
+
+                {/* <tr>
+                  <td>2</td>
+                  <td className="fw-bold"> Pana</td>
+                  <td>{GetTotal && GetTotal.Pana}</td>
+                </tr> */}
               </tbody>
             </table>
           </div>
@@ -393,83 +415,12 @@ const ProfitLoss = ({ gameType, getProfiLoss, providersList, getBidData }) => {
       size: 12,
       body: (
         <div>
-          <h5>Single Digit</h5>
-          <PagesIndex.TableWitCustomPegination
-            data={SingleDigit1}
-            initialRowsPerPage={5}
+          <PagesIndex.TableWithCustomPeginationNew123
+            data={TableTwo && TableTwo}
+            initialRowsPerPage={10}
             SearchInTable={SearchInTable}
             visibleFields={visibleFields}
-            UserFullButtonList={UserFullButtonList}
-            searchInput={
-              <input
-                type="text"
-                placeholder="Search..."
-                value={SearchInTable}
-                onChange={(e) => setSearchInTable(e.target.value)}
-                className="form-control ms-auto"
-              />
-            }
-          />
-        </div>
-      ),
-    },
-    {
-      size: 12,
-      body: (
-        <div>
-          <h5>Pana Digit</h5>
-          <PagesIndex.TableWitCustomPegination
-            data={PanaList1 && PanaList1}
-            initialRowsPerPage={5}
-            SearchInTable={SearchInTable}
-            visibleFields={visibleFields1}
-            UserFullButtonList={UserFullButtonList1}
-            searchInput={
-              <input
-                type="text"
-                placeholder="Search..."
-                value={SearchInTable}
-                onChange={(e) => setSearchInTable(e.target.value)}
-                className="form-control ms-auto"
-              />
-            }
-          />
-        </div>
-      ),
-    },
-  ];
-
-  const visibleFields2 = [
-    "id",
-    "userName",
-    "bidDigit",
-    "biddingPoints",
-    "winStatus",
-    "createdAt",
-  ];
-
-  return (
-    <div>
-      <Split_Main_Containt
-        title="Starline Profit/Loss Calculations"
-        add_button={false}
-        btnTitle="Add"
-        route="/add"
-        cardLayouts={cardLayouts}
-      />
-
-      <ReusableModal
-        ModalState={visible}
-        setModalState={setVisible}
-        ModalTitle={"test"}
-        ModalBody={
-          <PagesIndex.TableWitCustomPegination
-            data={UserList && UserList}
-            initialRowsPerPage={5}
-            SearchInTable={SearchInTable}
-            visibleFields={visibleFields2}
-            showIndex={true}
-
+            // UserFullButtonList={UserFullButtonList}
             // searchInput={
             //   <input
             //     type="text"
@@ -480,10 +431,43 @@ const ProfitLoss = ({ gameType, getProfiLoss, providersList, getBidData }) => {
             //   />
             // }
           />
-        }
+        </div>
+      ),
+    },
+    {
+      size: 12,
+      // visiblity:
+      //   formik.values.gameSession === "Open" ||
+      //   formik.values.gameSession === "Close",
+
+      body: (
+        // formik.values.gameSession === "Open" ||
+        // formik.values.gameSession === "Close" ? (
+        <div>
+          <PagesIndex.TableWithCustomPeginationNew123
+            data={(TableThree && TableThree) || []}
+            initialRowsPerPage={10}
+            SearchInTable={SearchInTable}
+            visibleFields={visibleFields1}
+          />
+        </div>
+      ),
+      // ) : null,
+    },
+  ];
+
+  return (
+    <div>
+      <Split_Main_Containt
+        title="Starline Profit Loss"
+        add_button={false}
+        btnTitle="Add"
+        route="/add"
+        cardLayouts={cardLayouts}
       />
+      <PagesIndex.Toast />
     </div>
   );
 };
 
-export default ProfitLoss;
+export default SplitForm;

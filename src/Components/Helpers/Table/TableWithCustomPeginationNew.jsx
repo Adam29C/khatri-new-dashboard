@@ -23,7 +23,6 @@
 //   const [isResponsive, setIsResponsive] = useState(window.innerWidth < 425);
 //   const [Refresh1, setRefresh1] = useState(false);
 
-
 //   const fetchTableData = async () => {
 //     setLoading(true);
 //     setError(null);
@@ -46,8 +45,6 @@
 //     fetchTableData();
 //   }, [Refresh, page, rowsPerPage]);
 
-
-  
 //   let abc = () => {
 //     if (tableData && tableData != undefined) {
 //       setData(tableData && tableData);
@@ -246,7 +243,7 @@
 //               <td colSpan={columns.length + 1}>{additional}</td>
 //             </tr>
 //           )}
-  
+
 //         </tbody>
 //       </table>
 //       {/* )} */}
@@ -297,8 +294,6 @@
 
 // export default CustomTable;
 
-
-
 import React, { useState, useEffect } from "react";
 
 const CustomTable = ({
@@ -324,15 +319,14 @@ const CustomTable = ({
   const [isResponsive, setIsResponsive] = useState(window.innerWidth < 425);
   const [Refresh1, setRefresh1] = useState(false);
 
+  // console.log("setUserPagenateData", setUserPagenateData);
 
-  
   const fetchTableData = async () => {
     setLoading(true);
     setError(null);
 
     try {
       const result = await fetchData(page, rowsPerPage);
-
       setRefresh1(!Refresh1);
       setData(result.mainRes || []);
       setFilteredData(result.mainRes || []);
@@ -347,8 +341,6 @@ const CustomTable = ({
   useEffect(() => {
     fetchTableData();
   }, [Refresh, page, rowsPerPage]);
-
-  
 
   let abc = () => {
     if (tableData && tableData != undefined) {
@@ -369,6 +361,8 @@ const CustomTable = ({
   useEffect(() => {
     abc();
   }, [tableData, page, rowsPerPage]);
+
+  console.log("tableDatatableData", tableData);
 
   // const handleFetchData = () => {};
 
@@ -548,7 +542,6 @@ const CustomTable = ({
               <td colSpan={columns.length + 1}>{additional}</td>
             </tr>
           )}
-  
         </tbody>
       </table>
       {/* )} */}

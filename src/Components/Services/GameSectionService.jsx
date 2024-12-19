@@ -360,6 +360,21 @@ export const STARLINE_GAME_DISTIBUTE_FUND_WINNERS_API = async (
   }
 };
 
+export const REMOVE_WINNER_LIST = async (
+  api_Route,
+  data,
+  token
+) => {
+  try {
+    const res = await axios.delete(`${BASE_URL}${api_Route}`, data, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 // export const FOR_STARLINE_AND_JACPOT_UPDATE_ONE_GAME_SETTING_API = async (
 //   api_Route,
 //   data,

@@ -77,13 +77,20 @@ const Api = {
   STARLINE_GAME_PAST_RESULT: "starGameResult/pastResult",
   STARLINE_GAME_WINNER_LIST: "starlineWinner/starLineWinnerList",
   STARLINE_GAME_DISTIBUTE_FUND_WINNERS: "starlineWinner/starWinners",
+  STARLINE_REMOVE_RESULT: "starGameResult/delete",
 
   //  STARLINE REVERT PAYMENT -
+  STARLINE_GAME_PROFIT_LOSS_LIST: "starGameProfitLoss/getResult",
+  STARLINE_GAME_PROFIT_LOSS_BID_DATA: "starGameProfitLoss/getBidData",
+
+  //  STARLINE REVERT PAYMENT -
+
   STARLINE_GAME_REVERT_PAYMENT: "starGameResult/revertPayment",
   STARLINE_GAME_CONFIRM_REVERT_PAYMENT: "starGameResult/paymentRevert",
 
   //  STARLINE REVERT PAYMENT -
-  STARLINE_GAME_REFUND_PAYMENT: "mainGameResult/refundPayment",
+  STARLINE_GAME_REFUND_PAYMENT: "starGameResult/refundList",
+  STARLINE_GAME_CONFIRM_REFUND_PAYMENT_: "starGameResult/refundAll",
 
   // JACKPOT GAME PROVIDER CRUD
   JACKPOT_GAME_PROVIDER_LIST: "abGameSetting",

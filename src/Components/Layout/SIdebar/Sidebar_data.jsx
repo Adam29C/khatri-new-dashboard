@@ -394,18 +394,18 @@ export const admin_Sidebar = [
         route: "report/newupifundreport",
         permission: "upiReport",
       },
-      {
-        id: 8,
-        title: "Trak Pay Fund Report",
-        route: "report/trakpayreport",
-        permission: "upiReport",
-      },
-      {
-        id: 9,
-        title: "RazorPay Fund Report",
-        route: "report/razorpayreport",
-        permission: "upiReport",
-      },
+      // {
+      //   id: 8,
+      //   title: "Trak Pay Fund Report",
+      //   route: "report/trakpayreport",
+      //   permission: "upiReport",
+      // },
+      // {
+      //   id: 9,
+      //   title: "RazorPay Fund Report",
+      //   route: "report/razorpayreport",
+      //   permission: "upiReport",
+      // },
 
       {
         id: 10,

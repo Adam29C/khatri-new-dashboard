@@ -150,15 +150,19 @@ const RefundPayment = ({
   const [ModalState, setModalState] = PagesIndex.useState(false);
   const [BtnVisiably, setBtnVisiably] = PagesIndex.useState(false);
   const [RowData, setRowData] = PagesIndex.useState("");
+  const [IsSUbmitted, setIsSUbmitted] = PagesIndex.useState(false);
+
   const [UserPagenateData, setUserPagenateData] = PagesIndex.useState({
     pageno: 1,
     limit: 10,
   });
 
+  console.log("UserPagenateData", UserPagenateData);
+
   const [TotalPages, setTotalPages] = PagesIndex.useState(1);
 
   const getGameProviderList = async () => {
-    console.log("provider_list ", provider_list);
+    // console.log("provider_list ", provider_list);
 
     // if (gametype === "StarLine" || gametype === "JackPot") {
     const res =
@@ -175,19 +179,19 @@ const RefundPayment = ({
   PagesIndex.useEffect(() => {
     getGameProviderList();
   }, [Refresh]);
-
+  today(new Date());
   const formik = useFormik({
     initialValues: {
       providerId: "",
-      date: "",
+      date: today(new Date()),
     },
 
     validate: (values) => {
       const errors = {};
 
-      if (!values.date) {
-        errors.date = "Please Select Date";
-      }
+      // if (!values.date) {
+      //   errors.date = "Please Select Date";
+      // }
       if (!values.providerId && formik.touched.providerId) {
         errors.providerId = "Please Select Provide Name";
       }
@@ -195,6 +199,7 @@ const RefundPayment = ({
       return errors;
     },
     onSubmit: async (values) => {
+      setIsSUbmitted(true);
       const payload = {
         providerId: values.providerId,
         resultDate: today(values.date),
@@ -225,6 +230,42 @@ const RefundPayment = ({
       }
     },
   });
+
+  const test = async () => {
+    if (IsSUbmitted) {
+      const payload = {
+        providerId: formik.values.providerId,
+        resultDate: today(formik.values.date),
+        page: UserPagenateData.pageno,
+        limit: UserPagenateData.limit,
+      };
+
+      try {
+        const res = await PagesIndex.game_service.ALL_GAME_RESULTS_ADD_API(
+          refund_list,
+          payload,
+          token
+        );
+
+        if (res.status) {
+          setTotalPages(res.pagination.totalCount);
+          setTableData(res.data);
+          // PagesIndex.toast.success(res?.data?.message || res?.message);
+        } else {
+          PagesIndex.toast.error(res.response.data.message);
+        }
+      } catch (error) {
+        console.log(error);
+        const errorMessage =
+          error.response?.data?.message ||
+          "Something went wrong. Please try again.";
+        PagesIndex.toast.error(errorMessage);
+      }
+    }
+  };
+  PagesIndex.useEffect(() => {
+    test();
+  }, [UserPagenateData.pageno, UserPagenateData.limit]);
 
   const fields = [
     {
@@ -275,19 +316,20 @@ const RefundPayment = ({
       try {
         let apidata = {};
 
-        if (gametype === "maingame") {
-          const abc =
-            GetProviderData?.filter(
-              (i) => i._id === formik.values.providerId
-            ) || [];
+        // if (gametype === "maingame") {
+        const abc =
+          GetProviderData?.filter((i) => i._id === formik.values.providerId) ||
+          [];
 
-          apidata = {
-            providerId: abc[0]?._id,
-            resultDate: formik.values.date,
-            type: staus,
-            providerName: abc[0]?.providerName,
-          };
-        }
+        console.log("abc", abc);
+
+        apidata = {
+          providerId: abc[0]?._id,
+          resultDate: formik.values.date,
+          type: staus,
+          providerName: abc[0]?.providerName,
+        };
+        // }
         const res =
           await PagesIndex.game_service.STARLINE_GAME_CONFIRM_REVERT_PAYMENT_API(
             refund_payment,
@@ -315,7 +357,6 @@ const RefundPayment = ({
 
       setBtnVisiably(true);
 
-      
       if (gametype === "maingame") {
         apidata = {
           userid: RowData.userId,
@@ -373,6 +414,11 @@ const RefundPayment = ({
             Refund All
           </button>
           <PagesIndex.TableWithCustomPeginationNew
+            // fetchData={fetchData1}
+            // columns={visibleFields}
+            // // UserFullButtonList={UserFullButtonList}
+            // showIndex={true}
+            // Refresh={Refresh}
             // fetchData={handleFetchDataManually}
             // handleFetchDataManually={handleFetchDataManually}
             tableData={tableData && tableData}
@@ -381,6 +427,7 @@ const RefundPayment = ({
             showIndex={true}
             Refresh={Refresh}
             setUserPagenateData={setUserPagenateData}
+            UserPagenateData={UserPagenateData}
           />
         </div>
       ),
