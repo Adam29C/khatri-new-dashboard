@@ -295,6 +295,8 @@ const SplitForm = () => {
     {
       name: "Profit",
       value: "Profit",
+      notheader: true,
+
       sortable: true,
       style: (row) => ({
         color: "green",
@@ -336,6 +338,8 @@ const SplitForm = () => {
     {
       name: "Profit",
       value: "Profit",
+      notheader: true,
+
       sortable: true,
       style: (row) => ({
         color: "green",
@@ -345,6 +349,8 @@ const SplitForm = () => {
     {
       name: "Loss",
       value: "Loss",
+      notheader: true,
+
       sortable: true,
       style: (row) => ({
         color: "red",

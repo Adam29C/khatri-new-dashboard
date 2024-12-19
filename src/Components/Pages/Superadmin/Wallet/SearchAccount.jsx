@@ -7,8 +7,13 @@ const SearchAccount = () => {
   const token = localStorage.getItem("token");
   //all state
   const [currentData, setCurrentData] = PagesIndex.useState([]);
+
+
+  
+  const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
+
   const [oldData, setOldData] = PagesIndex.useState([]);
-console.log(oldData)
+  console.log(oldData);
   //formik form
   const formik = PagesIndex.useFormik({
     initialValues: {
@@ -24,7 +29,7 @@ console.log(oldData)
 
     onSubmit: async (values) => {
       try {
-        console.log(values)
+        console.log(values);
         let apidata = {
           acc_num: values.acc_num,
         };
@@ -33,11 +38,9 @@ console.log(oldData)
             apidata,
             token
           );
-   
-        setCurrentData(res?.data)
-        setOldData(res.data?.[0]?.changeDetails)
-        
 
+        setCurrentData(res?.data);
+        setOldData(res.data?.[0]?.changeDetails);
       } catch (error) {
         PagesIndex.toast.error(error);
       }
@@ -54,66 +57,64 @@ console.log(oldData)
     },
   ];
 
-  const columns = [
+
+  const visibleFields = [
     {
       name: "Username",
-      selector: (row) => row?.username,
+      value: "username",
+      sortable: true,
     },
     {
-      name: "Acc Holder	",
-      selector: (row) => row?.account_holder_name,
+      name: "Acc Holder",
+      value: "account_holder_name",
+      sortable: true,
     },
-
     {
-      name: "A/C NO	",
-      selector: (row) => row?.account_no,
+      name: "A/C NO",
+      value: "account_no",
+      sortable: true,
     },
-
     {
       name: "Bank",
-      selector: (row) => row?.bank_name,
+      value: "bank_name",
+      sortable: true,
     },
-
     {
       name: "IFSC",
-      selector: (row) => row?.ifsc_code,
+      value: "ifsc_code",
+      sortable: true,
     },
   ];
 
-  const columns1 = [
+
+  const visibleFields1 = [
     {
       name: "Username",
-      selector: (row) => row?.username,
+      value: "old_acc_name",
+      sortable: true,
     },
     {
       name: "Old Acc No",
-      selector: (row) => row?.UPI_ID,
+      value: "old_acc_no",
+      sortable: true,
     },
-
     {
       name: "Old Bank Name",
-      selector: (row) => row?.UPI_ID,
+      value: "old_bank_name",
+      sortable: true,
     },
-
     {
       name: "Old IFSC",
-      selector: (row) => row?.UPI_ID,
+      value: "old_ifsc",
+      sortable: true,
     },
-
-    {
-      name: "Old Acc Name	",
-      selector: (row) => row?.UPI_ID,
-    },
-
+   
     {
       name: "Changed On",
-      selector: (row) => row?.UPI_ID,
+      value: "changeDate",
+      sortable: true,
     },
-
-
-
   ];
-
 
   const cardLayouts = [
     {
@@ -139,7 +140,14 @@ console.log(oldData)
               Current Details
             </h4>
           </div>
-          <PagesIndex.Data_Table columns={columns} data={currentData} />
+          <PagesIndex.TableWithCustomPeginationNew123
+            data={currentData && currentData}
+            initialRowsPerPage={10}
+            SearchInTable={SearchInTable}
+            visibleFields={visibleFields}
+            showIndex={true}
+          />
+          {/* <PagesIndex.Data_Table columns={columns} data={currentData} /> */}
         </div>
       ),
     },
@@ -152,7 +160,14 @@ console.log(oldData)
               Old Details
             </h4>
           </div>
-          <PagesIndex.Data_Table columns={columns1} data={oldData} />
+
+          <PagesIndex.TableWithCustomPeginationNew123
+            data={oldData && oldData}
+            initialRowsPerPage={10}
+            SearchInTable={SearchInTable}
+            visibleFields={visibleFields1}
+          />
+          {/* <PagesIndex.Data_Table columns={columns1} data={oldData} /> */}
         </div>
       ),
     },

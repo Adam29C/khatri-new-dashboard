@@ -23,8 +23,6 @@ const Api = {
   ADMIN_GAME_SETTING_ADD: "mainGameSetting/insertSettings",
   ADMIN_GAME_SETTING_UPDATEALL: "mainGameSetting/updateAll",
 
-  
-
   //MAIN GAME API'S
   MAIN_GAME: "mainGames",
   MAIN_GAME_ADD: "mainGames/insertGame",
@@ -99,7 +97,7 @@ const Api = {
 
   CUTTING_GROUP_LIST: "cuttingGroups/getCutting",
   CUTTING_GROUP_OC_LIST: "cuttingGroups/getOC",
-  GET_BID_DATA: "cuttingGroups/getOC",
+  GET_BID_DATA: "cuttingGroups/getBidData",
   OC_CUTTING_GROUP_LIST: "ocCuttingGroup/getFinalCutting",
   OC_CUTTING_GROUP_OC_LIST: "ocCuttingGroup/finalCloseCutingGroup",
 
@@ -201,26 +199,26 @@ const Api = {
   APPROVED_FUND_REQUEST: "fundsRequest/approveManualPayment",
   DECLINED_FUND_REQUEST: "fundsRequest/declineManualPayment",
 
-   //wallet export debit report 
-  GET_EXPORT_DEBIT_REPORT:"exportDebit",
+  //wallet export debit report
+  GET_EXPORT_DEBIT_REPORT: "exportDebit",
+  APPROVE_EXPORT_DEBIT_REPORT: "exportDebit/approveReq",
 
   //todayApproved
-  EXPORT_DEBIT_TODAY_APPROVED_REPORT:"exportDebit/todayApproved",
+  EXPORT_DEBIT_TODAY_APPROVED_REPORT: "exportDebit/todayApproved",
 
-  EXPORT_DEBIT_DECLINE_REPORT:"exportDebit/decline",
+  EXPORT_DEBIT_DECLINE_REPORT: "exportDebit/decline",
 
-    //wallet /invoice/profileChange
-    GET_WALLET_INVOICE_PROFILE_CHANGE:"invoice/profileChange",
+  //wallet /invoice/profileChange
+  GET_WALLET_INVOICE_PROFILE_CHANGE: "invoice/profileChange",
 
- //wallet /searchAccount/getDetails
- WALLET_GET_SEARCH_DETAILS :"searchAccount/getDetails",
+  //wallet /searchAccount/getDetails
+  WALLET_GET_SEARCH_DETAILS: "searchAccount/getDetails",
 
- //exportDebit/showCondition
- WALLET_DOWNLOAD_DEBIT_REPORT : "exportDebit/showCondition",
+  //exportDebit/showCondition
+  WALLET_DOWNLOAD_DEBIT_REPORT: "exportDebit/showCondition",
 
   //FUND MODE
   ADD_FUND_MODE: "upiId/modeAdd",
-
 
   //FUND MODE
   GET_FUND_MODE: "upiId/fundMode",
@@ -237,30 +235,27 @@ const Api = {
 
   //USER IDEA'S
   USERS_IDEAS: "userIdea",
-//CREDIT REQUEST GET API
-GET_CREDIT_REQUEST_UPI:"creditRequest/creditUPI",
+  //CREDIT REQUEST GET API
+  GET_CREDIT_REQUEST_UPI: "creditRequest/creditUPI",
 
-//DECLINED REQUEST GET API
-GET_DECLINED_REQUEST:"declineReq/declined",
+  //DECLINED REQUEST GET API
+  GET_DECLINED_REQUEST: "declineReq/declined",
 
-//APPROVED DEBIT REQUEST BANK AND BANK MANUAL APIS
-APPROVED_DEBIT_BANK:"approveDebit/bank_ajax",
-APPROVED_DEBIT_BANK_MANUAL:"approveDebit/bankManual",
+  //APPROVED DEBIT REQUEST BANK AND BANK MANUAL APIS
+  APPROVED_DEBIT_BANK: "approveDebit/bank_ajax",
+  APPROVED_DEBIT_BANK_MANUAL: "approveDebit/bankManual",
 
-//PENDING DEBIT BANK REQUEST 
-PENDING_DEBIT_BANK_REQUEST:"pendingDebit/pendingBank",
-PENDING_DEBIT_GET_BALANCE:"pendingDebit/getBal",
-PENDING_DEBIT_UPDATE_WALLET:"pendingDebit/updateWallet",
-PENDING_DEBIT_DECLINE:"pendingDebit/decline",
-PENDING_DEBIT_GETPROFILE:"pendingDebit/getProfile",
+  //PENDING DEBIT BANK REQUEST
+  PENDING_DEBIT_BANK_REQUEST: "pendingDebit/pendingBank",
+  PENDING_DEBIT_GET_BALANCE: "pendingDebit/getBal",
+  PENDING_DEBIT_UPDATE_WALLET: "pendingDebit/updateWallet",
+  PENDING_DEBIT_DECLINE: "pendingDebit/decline",
+  PENDING_DEBIT_GETPROFILE: "pendingDebit/getProfile",
 
-//USER PROFILE APIS
-USER_PROFILE_UPDATE_PASSWORD : "master/employees/updatePassword",
-USER_PROFILE_GET_LIST:"master/employees/profileAdmin",
-USER_PROFILE_BLOCK:"master/employees/blockEmployee"
-
-
-
+  //USER PROFILE APIS
+  USER_PROFILE_UPDATE_PASSWORD: "master/employees/updatePassword",
+  USER_PROFILE_GET_LIST: "master/employees/profileAdmin",
+  USER_PROFILE_BLOCK: "master/employees/blockEmployee",
 };
 
 export { Api };

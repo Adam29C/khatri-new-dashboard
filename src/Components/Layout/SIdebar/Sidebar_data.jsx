@@ -426,7 +426,7 @@ export const admin_Sidebar = [
         permission: "dailyReport",
       },
       {
-        id: 14,
+        id: 13,
         title: "Bidding Report",
         route: "report/bidingreport",
         permission: "biddingReport",

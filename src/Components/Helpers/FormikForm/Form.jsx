@@ -26,6 +26,7 @@ const ReusableForm = ({
   show_submit,
   label_size,
   show_preview,
+  after_submit_button1
 }) => {
   const location = useLocation();
 
@@ -291,55 +292,6 @@ const ReusableForm = ({
                   </>
                 ) : field.type === "time" ? (
                   <>
-                    {/* <div className={`col-lg-${field.col_size}`}>
-                      <div className=" row flex-column">
-                        <label
-                          className={`custom-label col-lg-${field.label_size}`}
-                          htmlFor={field.name}
-                        >
-                          {field.label}
-                          <span className="text-danger">*</span>
-                        </label>
-                        <div className={`d-flex`}>
-                          <DatePicker
-                            className={`col-lg-${field.col_size} form-control Date-picker-control`}
-                            name={field.name}
-                            selected={dateStates[field.name]}
-                            onChange={(date) =>
-                              handleDateChange(date, field.name)
-                            }
-                            {...formik.getFieldProps(field.name)} */}
-                    {/* // value={dateStates[field.name]}
-                            showTimeSelect
-                            showTimeSelectOnly
-                            timeIntervals={5}
-                            timeCaption="Time"
-                            dateFormat="h:mm aa"
-                          /> */}
-                    {/* <input
-                          type={field.type}
-                          name={field.name}
-                          className="form-control"
-                          id={field.name}
-                          {...formik.getFieldProps(field.name)}
-                          min={
-                            field.name === "todate"
-                              ? fromDate
-                              : getCurrentDate()
-                          }
-                        /> */}
-
-                    {/* <div className="invalid-feedback">
-                            Please enter {field.label}
-                          </div>
-                        </div>
-                        {formik.errors[field.name] && (
-                          <div className="error-text">
-                            {formik.errors[field.name]}
-                          </div>
-                        )}
-                      </div>
-                    </div> */}
                     <div className={`col-lg-${field.col_size} mb-3`}>
                       <label
                         className={`custom-label col-lg-${field.label_size}`}
@@ -542,9 +494,11 @@ const ReusableForm = ({
                   </>
                 ) : (
                   <>
-                    <div className={`col-lg-${field.col_size} ${
-                      field.Visiblity === "hidden" ? "d-none" : "d-block"
-                    }`}>
+                    <div
+                      className={`col-lg-${field.col_size} ${
+                        field.Visiblity === "hidden" ? "d-none" : "d-block"
+                      }`}
+                    >
                       <div className="mb-3 row flex-column">
                         <label
                           className={`custom-label col-lg-${field.label_size}`}
@@ -556,7 +510,7 @@ const ReusableForm = ({
                         <div className={`d-flex`}>
                           <input
                             type="text"
-                            autocomplete="off"
+                            autoComplete="off"
                             className="form-control"
                             style={{
                               background: field.disable ? "#eeeeee" : "",
@@ -623,6 +577,7 @@ const ReusableForm = ({
               ) : (
                 ""
               )}
+              {after_submit_button1}
             </div>
           </div>
         </div>
