@@ -5,7 +5,6 @@ import dataservice, { BASE_URL } from "../Config/DataService";
 import { header } from "../Config/Header";
 
 export const GET_DASHBOARD_REGISTRED_USERS = async (request, token) => {
-
   try {
     const res = await axios.post(
       `${BASE_URL}${Api.GET_DASHBOARD_REGISTRED_USERS}`,
@@ -89,6 +88,16 @@ export const BLOCK_USER_API = async (request, token) => {
   }
 };
 
+export const DELETED_USERS_API = async (request, token) => {
+  try {
+    const res = await dataservice.post(`${Api.DELETE_USER}`, request, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
 
 //NOTIFICATION APIS
 
@@ -103,18 +112,21 @@ export const GET_NOTIFICATION_API = async (token) => {
   }
 };
 
-export const DELETE_NOTIFICATION_API = async(id,token)=>{
+export const DELETE_NOTIFICATION_API = async (id, token) => {
   try {
-    const res = await axios.delete(`${BASE_URL}${Api.DELETE_NOTIFICATION}/${id}`,{
-      headers:header(token)
-    })
+    const res = await axios.delete(
+      `${BASE_URL}${Api.DELETE_NOTIFICATION}/${id}`,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
-    return error
+    return error;
   }
-}
+};
 
-export const ADD_NOTIFICATION_API = async (data,token) => {
+export const ADD_NOTIFICATION_API = async (data, token) => {
   try {
     const res = await axios.post(`${BASE_URL}${Api.ADD_NOTIFICATION}`, data, {
       headers: header(token),
@@ -140,9 +152,9 @@ export const GET_NEWS_API = async (token) => {
 
 // --------------------------USER IDEA ------------------------
 
-export const GET_USERS_IDEAS = async (data,token) => {
+export const GET_USERS_IDEAS = async (data, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.USERS_IDEAS}`,data, {
+    const res = await axios.post(`${BASE_URL}${Api.USERS_IDEAS}`, data, {
       headers: header(token),
     });
     return res?.data;
@@ -151,8 +163,7 @@ export const GET_USERS_IDEAS = async (data,token) => {
   }
 };
 
-
-export const UPDATE_NEWS_API = async (data,token) => {
+export const UPDATE_NEWS_API = async (data, token) => {
   try {
     const res = await axios.post(`${BASE_URL}${Api.NEWS}`, data, {
       headers: header(token),
@@ -164,4 +175,3 @@ export const UPDATE_NEWS_API = async (data,token) => {
 };
 
 //NEWS APIS
-

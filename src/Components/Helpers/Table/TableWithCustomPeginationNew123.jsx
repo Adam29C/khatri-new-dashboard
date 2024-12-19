@@ -142,7 +142,7 @@ const PaginatedTable = ({
       {/* Table */}
       <table
         className={`table table-striped table-bordered  ${
-          isResponsive ? "table-responsive" : "table-responsive"
+          isResponsive ? "table-responsive" : ""
         }`}
       >
         <thead className="primary-color text-center">

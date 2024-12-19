@@ -73,13 +73,13 @@ export const admin_Sidebar = [
         id: 5,
         title: "Revert Result Payment",
         permission: "0",
-        route: "#",
+        route: "game/revertpayment",
       },
       {
         id: 6,
         title: "Refund User Points",
         permission: "0",
-        route: "#",
+        route: "game/refundpayment",
       },
     ],
   },
@@ -485,7 +485,7 @@ export const admin_Sidebar = [
   {
     id: 17,
     route: "users/deleted",
- 
+
     title: "Deleted Users",
     permission: "delete",
     Icon: "fa-regular fa-bell",
@@ -519,7 +519,7 @@ export const admin_Sidebar = [
         route: "appSettings/noticeBoard",
         permission: "noticeBoard",
       },
- 
+
       {
         id: 4,
         title: "Profile Note",
@@ -549,7 +549,6 @@ export const admin_Sidebar = [
     title: "Masters",
     Icon: "ti-money",
     NestedElement: [
-      
       {
         id: 1,
         title: "UPI Id",

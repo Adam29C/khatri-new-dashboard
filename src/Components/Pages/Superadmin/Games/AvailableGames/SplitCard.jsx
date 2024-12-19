@@ -103,6 +103,8 @@ const ExamplePage = () => {
         console.log(res);
         if (res.status) {
           PagesIndex.toast.success(res?.data?.message || res?.message);
+        } else {
+          PagesIndex.toast.error(res.response.data.message);
         }
       } catch (error) {
         console.log(error);
@@ -227,7 +229,6 @@ const ExamplePage = () => {
     }
   };
 
-
   const winnerList = (rowdata) => {
     navigate(`winners?providerId=${rowdata.providerId}`, {
       state: { rowdata },
@@ -286,7 +287,6 @@ const ExamplePage = () => {
       },
     },
   ];
-
 
   const cardLayouts = [
     {

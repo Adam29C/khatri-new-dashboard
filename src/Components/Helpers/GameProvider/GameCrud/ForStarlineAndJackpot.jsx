@@ -112,7 +112,7 @@ const ForStarlineAndJackpot = ({gametype,listpath , }) => {
     <PagesIndex.Main_Containt
       add_button={true}
       route={listpath}
-      title={location?.state ? `Edit ${gametype}` : `Add1231 ${gametype}`}
+      title={location?.state ? `Edit ${gametype}` : `Add ${gametype}`}
       btnTitle="Back"
     >
       <PagesIndex.Formikform

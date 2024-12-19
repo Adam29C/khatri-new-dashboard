@@ -141,6 +141,11 @@ const App = () => {
     onSubmit: async (values) => {
       let res;
       if (ManageModalStatus === 1) {
+        if (!values.blockReason) {
+          PagesIndex.toast.error("Please Enter Reason For Block ");
+          return;
+        }
+
         const req = {
           id: GetRowData.id,
           blockStatus: GetRowData.banned ? false : true,
@@ -151,7 +156,7 @@ const App = () => {
 
         if (res.status) {
           setRefresh(!Refresh);
-          //   window.location.reload();
+          formik.setFieldValue("blockReason", "");
           PagesIndex.toast.success(res.message);
           setModalStateForRemoveAndBlock(!ModalStateForRemoveAndBlock);
         } else {
@@ -160,9 +165,13 @@ const App = () => {
           PagesIndex.toast.error(res.response.data.message);
         }
       } else if (ManageModalStatus === 2) {
+        if (!values.blockReason) {
+          PagesIndex.toast.error("Please Enter Reason For Delete User ");
+          return;
+        }
         const req = {
           id: GetRowData.id,
-          blockReason: values.blockReason,
+          ression: values.blockReason,
         };
 
         res = await PagesIndex.common_services.DELETED_USERS_API(req, token);

@@ -117,6 +117,8 @@ const ExamplePage = ({
         if (res.status) {
           PagesIndex.toast.success(res?.data?.message || res?.message);
           getGameResultApi();
+        } else {
+          PagesIndex.toast.error(res.response.data.message);
         }
       } catch (error) {
         console.log(error);
@@ -281,9 +283,6 @@ const ExamplePage = ({
   //   "winningDigit",
   // ];
 
-
-
-  
   const visibleFields = [
     {
       name: "provider Name",
@@ -305,16 +304,7 @@ const ExamplePage = ({
     //   value: "winningDigit",
     //   sortable: true,
     // },
-  ]
-
-
-
-
-
-
-
-
-
+  ];
 
   const UserFullButtonList = [
     {
@@ -393,23 +383,6 @@ const ExamplePage = ({
       ),
     },
   ];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   return (
     <>

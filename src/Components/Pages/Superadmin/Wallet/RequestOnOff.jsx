@@ -3,7 +3,10 @@ import PagesIndex from "../../PagesIndex";
 import Split_Main_Containt from "../../../Layout/Main/Split_Main_Content";
 import ReusableModal from "../../../Helpers/Modal/ModalComponent_main";
 // import { convertTo12HourFormat } from "../../../Utils/Valid_Rejex";
-import { convertTo12HourFormat  , convertTo12HourFormat123} from "../../../Utils/Common_Date";
+import {
+  convertTo12HourFormat,
+  convertTo12HourFormat123,
+} from "../../../Utils/Common_Date";
 
 const RequestOnOff = () => {
   const token = localStorage.getItem("token");
@@ -27,11 +30,6 @@ const RequestOnOff = () => {
     const res1 = await PagesIndex.admin_services.GET_REQUEST_LIST_API(token);
 
     let aaa = res1.data.endTime;
-
-    console.log(
-      "convertTo12HourFormat(res1.data.endTime)",
-      convertTo12HourFormat(res1.data.endTime)
-    );
 
     if (res1.status) {
       formik.setFieldValue(
@@ -195,8 +193,6 @@ const RequestOnOff = () => {
         endDate: convertTo12HourFormat123(values.endDate),
         startDate: convertTo12HourFormat123(values.startDate),
       };
-
-   
 
       const res = await PagesIndex.admin_services.UPDATE_REQUEST_API(
         payload,

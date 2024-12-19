@@ -71,7 +71,6 @@ const GameRatesProvider = ({
 
   // Handle Edit Button
   const handleEdit = (row) => {
-  
     setModalType("Edit");
     setSelectedRow(row);
     setVisible(true);
@@ -174,32 +173,35 @@ const GameRatesProvider = ({
     },
   });
 
-  const visibleFields = ["id", "gameName", "gamePrice"];
 
-  const UserFullButtonList = [
+  const visibleFields = [
     {
-      id: 0,
-      buttonName: "Edit",
-      buttonColor: "sucess",
-      route: "edit",
+      name: "Game Name",
+      value: "gameName",
+      sortable: true,
+    },
+    {
+      name: "Game Price",
+      value: "gamePrice",
+      sortable: false,
+    },
+    {
+      name: "Edit",
+      value: "Edit",
+      isButton: true,
+      buttonColor: "success",
       Conditions: (row) => {
         handleEdit(row);
       },
-      Visiblity: false,
-      type: "button",
-      // onClick: handleEdit,
     },
     {
-      id: 1,
-      buttonName: "Delete",
+      name: "Delete",
+      value: "Delete",
+      isButton: true,
       buttonColor: "danger",
-      route: "users/deleted",
       Conditions: (row) => {
         handleDelete(row._id);
       },
-      Visiblity: false,
-      type: "button",
-      // onClick: handleDelete,
     },
   ];
 
@@ -235,12 +237,12 @@ const GameRatesProvider = ({
         title={title}
         btnTitle="Add"
       >
-        <PagesIndex.TableWitCustomPegination
+        <PagesIndex.TableWithCustomPeginationNew123
           data={GAME_RATE_DATA}
           initialRowsPerPage={5}
           SearchInTable={SearchInTable}
           visibleFields={visibleFields}
-          UserFullButtonList={UserFullButtonList}
+          // UserFullButtonList={UserFullButtonList}
           searchInput={
             <input
               type="text"

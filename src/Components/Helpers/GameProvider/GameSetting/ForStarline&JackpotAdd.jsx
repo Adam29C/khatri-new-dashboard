@@ -234,7 +234,7 @@ const ForStarlineJackpotAdd = ({
       route={path}
       title={
         location?.state
-          ? `${gameType} Game Setting Update`
+          ? `${gameType} Game Setting Update111`
           : `${gameType} Game Setting Add`
       }
     >

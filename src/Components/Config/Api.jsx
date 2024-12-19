@@ -16,6 +16,7 @@ const Api = {
   USERS_LIST: "allUser/getAllUsers",
   USER_PROFILE_GET: "/allUser/getProfile",
   BLOCK_USER: "/allUser/blockUser",
+  DELETE_USER: "/allUser/deleteUserByAdmin",
 
   //GAME SETTING
   // ADMIN_GAME_SETTING: "/admin/game/gameSetting",
@@ -33,7 +34,17 @@ const Api = {
   GET_GAME_RESULT_WITH_DATE: "mainGameResult/pastResult",
   GET_REMAINING_WINNER_LIST: "winnerList/remaningWinnerList",
   GET_MAIN_WINNER_LIST: "winnerList/mainWinnerList",
+  CONFIRM_PAYMENT_API: "winnerList/gameWinner",
+  REMENAINING_CONFIRM_PAYMENT_API: "winnerList/remainingGameWinner",
 
+  //  MAIN GAME REVERT PAYMENT -
+  MAIN_GAME_REVERT_PAYMENT: "mainGameResult/revertPayment",
+  MAIN_GAME_CONFIRM_REVERT_PAYMENT: "mainGameResult/paymentRevert",
+
+  //  MAIN GAME REFUND PAYMENT -
+  MAIN_GAME_GET_REFUND_LIST: "mainGameResult/refundList",
+  MAIN_GAME_CONFIRM_REVERT_PAYMENT: "mainGameResult/paymentRevert",
+  MAIN_GAME_CONFIRM_REVERT_PAYMENT_All: "mainGameResult/refundAll",
   // GAME PROVIDER
 
   STARLINE_GAME_PROVIDERS_LIST: "starlineProvider/getStarlineProvider",

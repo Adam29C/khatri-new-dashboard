@@ -30,9 +30,6 @@ const GameProviderAdd = () => {
     getGameProviderList();
   }, []);
 
-
-  console.log("location?.state?.rowData.OBT" ,location?.state?.rowData.OBT);
-  
   const formik = PagesIndex.useFormik({
     initialValues: {
       providerId: location?.state?.row ? location?.state?.row?._id : null,
@@ -40,10 +37,18 @@ const GameProviderAdd = () => {
         location?.state?.edit === "single"
           ? location?.state?.rowData.gameDay
           : "all",
-      OBT: location?.state?.rowData ? location?.state?.rowData.OBT : "",
-      CBT: location?.state?.rowData ? location?.state?.rowData.CBT : "",
-      OBRT: location?.state?.rowData ? location?.state?.rowData.OBRT : "",
-      CBRT: location?.state?.rowData ? location?.state?.rowData.CBRT : "",
+      OBT: location?.state?.rowData
+        ? convertTo12HourFormat(location?.state?.rowData.OBT)
+        : "",
+      CBT: location?.state?.rowData
+        ? convertTo12HourFormat(location?.state?.rowData.CBT)
+        : "",
+      OBRT: location?.state?.rowData
+        ? convertTo12HourFormat(location?.state?.rowData.OBRT)
+        : "",
+      CBRT: location?.state?.rowData
+        ? convertTo12HourFormat(location?.state?.rowData.CBRT)
+        : "",
       isClosed: location?.state?.rowData
         ? location?.state?.rowData.isClosed
         : "1",
@@ -72,10 +77,10 @@ const GameProviderAdd = () => {
     onSubmit: async (values) => {
       let data = {
         gameDay: values.gameDay,
-        game1: convertTo12HourFormat(values.OBT),
-        game2: convertTo12HourFormat(values.CBT),
-        game3: convertTo12HourFormat(values.OBRT),
-        game4: convertTo12HourFormat(values.CBRT),
+        game1: convertTo12HourFormat123(values.OBT),
+        game2: convertTo12HourFormat123(values.CBT),
+        game3: convertTo12HourFormat123(values.OBRT),
+        game4: convertTo12HourFormat123(values.CBRT),
         status: values.isClosed.toString(),
       };
 

@@ -486,8 +486,8 @@ const SplitForm = () => {
       id: formik.values.providerId,
       bidDigit: rowdata._id,
       gameSession: rowdata.session,
-      page: UserPagenateData.limit,
-      limit: UserPagenateData.pageno,
+      page: UserPagenateData.pageno,
+      limit: UserPagenateData.limit,
     };
     const response1 = await PagesIndex.report_service.ALL_GAME_REPORT_API(
       Api.GET_BID_DATA,
