@@ -2,6 +2,11 @@ import React from "react";
 import PagesIndex from "../../PagesIndex";
 import Split_Main_Containt from "../../../Layout/Main/Split_Main_Content";
 import ReusableModal from "../../../Helpers/Modal/ModalComponent_main";
+// import { convertTo12HourFormat } from "../../../Utils/Valid_Rejex";
+import {
+  convertTo12HourFormat,
+  convertTo12HourFormat123,
+} from "../../../Utils/Common_Date";
 
 const RequestOnOff = () => {
   const token = localStorage.getItem("token");
@@ -17,13 +22,20 @@ const RequestOnOff = () => {
     if (res.status) {
       setTableData(res.reqdata);
     }
+
   };
 
   const RequestList1 = async () => {
     const res1 = await PagesIndex.admin_services.GET_REQUEST_LIST_API(token);
+
+    let aaa = res1.data.endTime;
+
     if (res1.status) {
-      formik.setFieldValue("startDate", res1.data.startTime);
-      formik.setFieldValue("endDate", res1.data.endTime);
+      formik.setFieldValue(
+        "startDate",
+        convertTo12HourFormat(res1.data.startTime)
+      );
+      formik.setFieldValue("endDate", convertTo12HourFormat(res1.data.endTime));
       formik.setFieldValue("requestCount", res1.data.requestCount);
     }
   };
@@ -177,8 +189,8 @@ const RequestOnOff = () => {
     onSubmit: async (values) => {
       const payload = {
         requestCount: values.requestCount,
-        endDate: values.endDate,
-        startDate: values.startDate,
+        endDate: convertTo12HourFormat123(values.endDate),
+        startDate: convertTo12HourFormat123(values.startDate),
       };
 
       const res = await PagesIndex.admin_services.UPDATE_REQUEST_API(
@@ -215,14 +227,13 @@ const RequestOnOff = () => {
       size: 12,
       body: (
         <div>
-          <PagesIndex.TableWithCustomPeginationNew
+          <PagesIndex.TableWithCustomPeginationNew123
             data={TableData}
             // columns={columns}
             initialRowsPerPage={5}
             SearchInTable={SearchInTable}
             visibleFields={visibleFields}
             UserFullButtonList={UserFullButtonList}
-           
             showIndex={true}
             searchInput={
               <input

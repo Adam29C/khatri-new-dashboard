@@ -197,47 +197,6 @@ const AllReports = () => {
     },
   ];
 
-  // const abdced = async (value) => {
-  //   const payload = {
-  //     // sdate: today(value.sdate),
-  //     // edate: today(value.edate),
-  //     // bankName: value.bankName || "1",
-  //     // reqType: value.reqType || "Credit",
-  //     // admin_id: value.admin_id || "1",
-
-  //     sdate: "12/11/2024",
-  //     edate: "12/11/2024",
-  //     bankName: "1",
-  //     reqType: "Debit",
-  //     admin_id: "1",
-  //     page: UserPagenateData.pageno,
-  //     limit: UserPagenateData.limit,
-  //   };
-
-  //   try {
-  //     const res = await PagesIndex.report_service.GET_FUND_REPORT_API(
-  //       Api.GET_FUND_REPORT,
-  //       payload,
-  //       token
-  //     );
-
-  //     console.log("res", res);
-
-  //     if (res.status) {
-  //       setfirst(res.data);
-  //       setTotalPages(res.totalRecords);
-  //       setRefresh(!Refresh);
-  //     }
-  //   } catch {}
-  // };
-
-  // console.log("UserPagenateData.pageno", UserPagenateData.pageno);
-  // console.log("TotalPagesc", TotalPages);
-
-  // PagesIndex.useEffect(() => {
-  //   abdced();
-  // }, [UserPagenateData.pageno, UserPagenateData.limit]);
-
   return (
     <div>
       {FIELDS.map((config, idx) => (

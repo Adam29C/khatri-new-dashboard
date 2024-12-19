@@ -1,6 +1,11 @@
 import React from "react";
 import PagesIndex from "../../../Pages/PagesIndex";
-import { convertTo12HourFormat } from "../../../Utils/Common_Date";
+// import { convertTo12HourFormat } from "../../../Utils/Common_Date";
+
+import {
+  convertTo12HourFormat,
+  convertTo12HourFormat123,
+} from "../../../Utils/Common_Date";
 
 const GameProviderAdd = () => {
   const userId = localStorage.getItem("userId");
@@ -32,29 +37,37 @@ const GameProviderAdd = () => {
         location?.state?.edit === "single"
           ? location?.state?.rowData.gameDay
           : "all",
-      OBT: location?.state?.rowData ? location?.state?.rowData.OBT : "",
-      CBT: location?.state?.rowData ? location?.state?.rowData.CBT : "",
-      OBRT: location?.state?.rowData ? location?.state?.rowData.OBRT : "",
-      CBRT: location?.state?.rowData ? location?.state?.rowData.CBRT : "",
+      OBT: location?.state?.rowData
+        ? convertTo12HourFormat(location?.state?.rowData.OBT)
+        : "",
+      CBT: location?.state?.rowData
+        ? convertTo12HourFormat(location?.state?.rowData.CBT)
+        : "",
+      OBRT: location?.state?.rowData
+        ? convertTo12HourFormat(location?.state?.rowData.OBRT)
+        : "",
+      CBRT: location?.state?.rowData
+        ? convertTo12HourFormat(location?.state?.rowData.CBRT)
+        : "",
       isClosed: location?.state?.rowData
         ? location?.state?.rowData.isClosed
         : "1",
     },
     validate: (values) => {
       const errors = {};
-      if (!values.providerId && formik.touched.providerId) {
+      if (!values.providerId) {
         errors.providerId = PagesIndex.valid_err.PROVIDER_NAME_REQUIRED;
       }
-      if (!values.OBT && formik.touched.OBT) {
+      if (!values.OBT) {
         errors.OBT = PagesIndex.valid_err.OPEN_BID_TIME_IS_REQUIRED;
       }
-      if (!values.CBT && formik.touched.CBT) {
+      if (!values.CBT) {
         errors.CBT = PagesIndex.valid_err.CLOSE_BID_TIME_IS_REQUIRED;
       }
-      if (!values.OBRT && formik.touched.OBRT) {
+      if (!values.OBRT) {
         errors.OBRT = PagesIndex.valid_err.OPEN_BID_RESULT_TIME_IS_REQUIRED;
       }
-      if (!values.CBRT && formik.touched.CBRT) {
+      if (!values.CBRT) {
         errors.CBRT = PagesIndex.valid_err.CLOSE_BID_RESULT_TIME_IS_REQUIRED;
       }
 
@@ -64,16 +77,14 @@ const GameProviderAdd = () => {
     onSubmit: async (values) => {
       let data = {
         gameDay: values.gameDay,
-        game1: convertTo12HourFormat(values.OBT),
-        game2: convertTo12HourFormat(values.CBT),
-        game3: convertTo12HourFormat(values.OBRT),
-        game4: convertTo12HourFormat(values.CBRT),
+        game1: convertTo12HourFormat123(values.OBT),
+        game2: convertTo12HourFormat123(values.CBT),
+        game3: convertTo12HourFormat123(values.OBRT),
+        game4: convertTo12HourFormat123(values.CBRT),
         status: values.isClosed.toString(),
       };
 
       if (location?.state?.edit === "single") {
-      
-
         data.gameid = location?.state?.rowData?._id;
       } else if (location?.state?.edit === "multiple") {
         // data.providerId = values.providerId;

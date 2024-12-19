@@ -9,6 +9,8 @@ const PendingBankRequests = () => {
   const token = localStorage.getItem("token");
   const user_details = JSON.parse(localStorage.getItem("userdetails"));
 
+  const [Refresh, setRefresh] = PagesIndex.useState(false);
+
   //all state
   const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
   const [tableData, setTableData] = PagesIndex.useState([]);
@@ -25,37 +27,100 @@ const PendingBankRequests = () => {
     return numberRegexp(value);
   };
 
-  //get list api
-  const getPendingRequestList = async () => {
-    const data = {
-      page: 1,
-      limit: 10,
-      search: SearchInTable,
+  const fetchData = async (page, rowsPerPage, searchQuery = "") => {
+    const payload = {
+      page: page,
+      limit: rowsPerPage,
+      searchQuery,
     };
-    const res = await PagesIndex.admin_services.PENDING_DEBIT_BANK_REQUEST_API(
-      data,
-      token
-    );
 
-    if (res?.status) {
-      setTableData(res?.data);
-    }
+    try {
+      const response =
+        await PagesIndex.admin_services.PENDING_DEBIT_BANK_REQUEST_API(
+          payload,
+          token
+        );
+      const totalRows = response?.totalRecords || 10;
+      let mainRes = response.data;
+      setTableData(mainRes);
+
+      return { mainRes, totalRows };
+    } catch {}
   };
 
-  useEffect(() => {
-    getPendingRequestList();
-  }, []);
+  //actions button
+  const UserFullButtonList = [
+    {
+      id: 0,
+      buttonName: "Request Amount",
+      buttonColor: "",
+      Conditions: (row) => {
+        handleActionBtn(row, 0);
+      },
+      Visiblity: true,
+      type: "button",
+    },
+    {
+      id: 1,
+      buttonName: "Delete",
+      buttonColor: "danger",
+      Conditions: (row) => {
+        handleActionBtn(row, 1);
+      },
+      Visiblity: true,
+      type: "button",
+    },
+    {
+      id: 2,
+      buttonName: "User Profile",
+      buttonColor: "secondary",
+      Conditions: (row) => {
+        handleActionBtn(row, 2);
+      },
+      Visiblity: true,
+      type: "button",
+    },
+  ];
 
   const visibleFields = [
-    "id",
-    "fullname",
-    "username",
-    "mobile",
-    "reqAmount",
-    "reqType",
-    "withdrawalMode",
-    "reqStatus",
-    "createTime",
+    { name: "Name", value: "fullname", sortable: false },
+    { name: "User Name", value: "username", sortable: true },
+    { name: "Mobile", value: "mobile", sortable: true },
+    { name: "Request mount", value: "reqAmount", sortable: true },
+    { name: "Request Type", value: "reqType", sortable: true },
+    { name: "Withdrawal Mode", value: "withdrawalMode", sortable: true },
+    { name: "Status", value: "reqStatus", sortable: true },
+    { name: "Create Time ", value: "reqTime", sortable: true },
+    {
+      // name: "Profile",
+      name: "Request Amount",
+      isButton: true,
+      value: "Request Amount",
+      buttonColor: "success",
+      Conditions: (row) => {
+        handleActionBtn(row, 0);
+      },
+    },
+    {
+      // name: "Profile",
+      name: "Delete",
+      isButton: true,
+      value: "Delete",
+      buttonColor: "danger",
+      Conditions: (row) => {
+        handleActionBtn(row, 1);
+      },
+    },
+    {
+      // name: "Profile",
+      name: "Profile",
+      isButton: true,
+      value: "Profile",
+      buttonColor: "success",
+      Conditions: (row) => {
+        handleActionBtn(row, 2);
+      },
+    },
   ];
 
   const totalAmount = useMemo(
@@ -187,40 +252,6 @@ const PendingBankRequests = () => {
     }
   };
 
-  //actions button
-  const UserFullButtonList = [
-    {
-      id: 0,
-      buttonName: "Request Amount",
-      buttonColor: "",
-      Conditions: (row) => {
-        handleActionBtn(row, 0);
-      },
-      Visiblity: true,
-      type: "button",
-    },
-    {
-      id: 1,
-      buttonName: "Delete",
-      buttonColor: "danger",
-      Conditions: (row) => {
-        handleActionBtn(row, 1);
-      },
-      Visiblity: true,
-      type: "button",
-    },
-    {
-      id: 2,
-      buttonName: "User Profile",
-      buttonColor: "secondary",
-      Conditions: (row) => {
-        handleActionBtn(row, 2);
-      },
-      Visiblity: true,
-      type: "button",
-    },
-  ];
-
   const cardLayouts = [
     {
       size: 12,
@@ -231,7 +262,15 @@ const PendingBankRequests = () => {
               Pending Debit Requests : Bank Account
             </h4>
           </div>
-          <PagesIndex.TableWitCustomPegination
+          <PagesIndex.TableWithCustomPeginationNew
+            fetchData={fetchData}
+            columns={visibleFields}
+            // UserFullButtonList={UserFullButtonList}
+            showIndex={true}
+            Refresh={Refresh}
+          />
+
+          {/* <PagesIndex.TableWitCustomPegination
             data={tableData}
             initialRowsPerPage={5}
             SearchInTable={SearchInTable}
@@ -246,7 +285,7 @@ const PendingBankRequests = () => {
                 className="form-control ms-auto"
               />
             }
-          />
+          /> */}
           <h3 className="ml-3 mb-3 fw-bold">Total Amount {totalAmount}/-</h3>
         </div>
       ),

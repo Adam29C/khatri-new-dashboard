@@ -318,47 +318,80 @@ const AndarBharTotalBids = ({ gameType, report_api, starandjackProvider }) => {
     },
 
     onSubmit: async (values) => {
-      await resss(values);
+      try {
+        const paylaod = {
+          page: UserPagenateData.pageno,
+          limit: UserPagenateData.limit,
+          // searchQuery,
+          startDate: values.StartDate,
+          gameId: values.gameId || "0",
+          search: SearchInTable,
+        };
+
+        const response =
+          await PagesIndex.report_service.JACKPOT_BIDS_REPORT_API(
+            paylaod,
+            token
+          );
+
+        if (response?.status) {
+          setTableData(response.data);
+          setTotalPages(response.totalRecords);
+          setRefresh(!Refresh); // Trigger refresh to update the table
+        } else {
+          setTableData([]);
+          PagesIndex.toast.error(
+            response?.response?.data?.message || "Failed to fetch data"
+          );
+        }
+      } catch (error) {
+        // PagesIndex.toast.error(
+        //   error?.response?.data?.message ||
+        //     "Something went wrong. Please try again."
+        // );
+      }
+
+      // await resss(values);
     },
   });
 
-  const resss = async () => {
-    try {
-      const paylaod = {
-        page: UserPagenateData.pageno,
-        limit: UserPagenateData.limit,
-        // searchQuery,
-        startDate: formik.values.StartDate,
-        gameId: formik.values.gameId || "0",
-        search: SearchInTable,
-      };
+  // const resss = async () => {
+  //   try {
+  //     const paylaod = {
+  //       page: UserPagenateData.pageno,
+  //       limit: UserPagenateData.limit,
+  //       // searchQuery,
+  //       startDate: formik.values.StartDate,
+  //       gameId: formik.values.gameId || "0",
+  //       search: SearchInTable,
+  //     };
 
-      const response = await PagesIndex.report_service.JACKPOT_BIDS_REPORT_API(
-        paylaod,
-        token
-      );
+  //     const response = await PagesIndex.report_service.JACKPOT_BIDS_REPORT_API(
+  //       paylaod,
+  //       token
+  //     );
 
-      if (response?.status) {
-        setTableData(response.data);
-        setTotalPages(response.totalRecords);
-        setRefresh(!Refresh); // Trigger refresh to update the table
-      } else {
-        setTableData([]);
-        PagesIndex.toast.error(
-          response?.response?.data?.message || "Failed to fetch data"
-        );
-      }
-    } catch (error) {
-      // PagesIndex.toast.error(
-      //   error?.response?.data?.message ||
-      //     "Something went wrong. Please try again."
-      // );
-    }
-  };
+  //     if (response?.status) {
+  //       setTableData(response.data);
+  //       setTotalPages(response.totalRecords);
+  //       setRefresh(!Refresh); // Trigger refresh to update the table
+  //     } else {
+  //       setTableData([]);
+  //       PagesIndex.toast.error(
+  //         response?.response?.data?.message || "Failed to fetch data"
+  //       );
+  //     }
+  //   } catch (error) {
+  //     // PagesIndex.toast.error(
+  //     //   error?.response?.data?.message ||
+  //     //     "Something went wrong. Please try again."
+  //     // );
+  //   }
+  // };
 
-  useEffect(() => {
-    resss();
-  }, [UserPagenateData.pageno, UserPagenateData.limit]);
+  // useEffect(() => {
+  //   resss();
+  // }, [UserPagenateData.pageno, UserPagenateData.limit]);
 
   const fields = [
     {

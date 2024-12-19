@@ -14,7 +14,6 @@ export const ADMIN_PROFILE_GET_API = async (id) => {
   }
 };
 
-
 // -------------------------- DASHBOARD_COUNT ------------------------
 
 // GET_DASHBOARD_COUNT
@@ -86,7 +85,6 @@ export const DELETE_USER = async (ID) => {
   }
 };
 
-
 export const GET_USERS_IDEAS = async (id) => {
   try {
     const res = await axios.get(`${Api.USERS_IDEAS}?adminId=${id}`, {
@@ -96,7 +94,7 @@ export const GET_USERS_IDEAS = async (id) => {
   } catch (error) {
     return error;
   }
-  }
+};
 export const GET_DELETED_USERS = async (id) => {
   try {
     const res = await axios.get(`${Api.DELETED_USERS}?adminId=${id}`, {
@@ -111,9 +109,9 @@ export const GET_DELETED_USERS = async (id) => {
 
 // -------------------------- DELETED USERS ------------------------
 
-export const GET_DELETED_USERS_API = async (data,token) => {
+export const GET_DELETED_USERS_API = async (data, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.GET_DELETED_USERS}`,data, {
+    const res = await axios.post(`${BASE_URL}${Api.GET_DELETED_USERS}`, data, {
       headers: header(token),
     });
     return res?.data;
@@ -121,36 +119,37 @@ export const GET_DELETED_USERS_API = async (data,token) => {
     return error;
   }
 };
-
 
 export const DELETED_USERS_GET_TIMEHISTORY_API = async (token) => {
   try {
-    const res = await axios.get(`${BASE_URL}${Api.DELETED_USER_GET_TIMEHISTORY}`, {
-      headers: header(token),
-    });
+    const res = await axios.get(
+      `${BASE_URL}${Api.DELETED_USER_GET_TIMEHISTORY}`,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     return error;
   }
 };
 
-export const DELETED_USERS_TIMEHISTORY_API = async (data,token) => {
+export const DELETED_USERS_TIMEHISTORY_API = async (data, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.DELETED_USER_TIMEHISTORY}`,data, {
-      headers: header(token),
-    });
+    const res = await axios.post(
+      `${BASE_URL}${Api.DELETED_USER_TIMEHISTORY}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     return error;
   }
 };
-
 
 // -------------------------- DELETED USERS ------------------------
-
-
-
-
 
 // --------------------------   USERS CRUD ------------------------
 
@@ -368,7 +367,7 @@ export const GAME_MAIN_WINNER_LIST_API = async (data, token) => {
 
 //HTP LIST START
 export const GET_HTP_LIST_API = async (token) => {
-  console.log(token)
+  console.log(token);
   try {
     const res = await axios.get(`${BASE_URL}${Api.HOW_TO_PLAY_GET_LIST}`, {
       headers: header(token),
@@ -379,7 +378,7 @@ export const GET_HTP_LIST_API = async (token) => {
   }
 };
 
-export const UPDATE_HTP_API = async (data,token) => {
+export const UPDATE_HTP_API = async (data, token) => {
   try {
     const res = await axios.post(`${BASE_URL}${Api.UPDATE_HTP}`, data, {
       headers: header(token),
@@ -404,8 +403,7 @@ export const GET_VERSION_API = async (token) => {
   }
 };
 
-export const UPDATE_VERSION_API = async (formData,token) => {
-
+export const UPDATE_VERSION_API = async (formData, token) => {
   try {
     const res = await axios.post(`${BASE_URL}${Api.UPDATE_VERSION}`, formData, {
       headers: header(token),
@@ -451,29 +449,37 @@ export const GET_WALLET_UPI_API = async (token) => {
   }
 };
 
-export const UPDATE_WALLET_CONTACT_API = async (data,token) => {
+export const UPDATE_WALLET_CONTACT_API = async (data, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.UPDATE_WALLET_CONTACT}`, data, {
-      headers: header(token),
-    });
+    const res = await axios.post(
+      `${BASE_URL}${Api.UPDATE_WALLET_CONTACT}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     return error?.response;
   }
 };
-export const UPDATE_WALLET_HEADLINE_API = async (data,token) => {
+export const UPDATE_WALLET_HEADLINE_API = async (data, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.UPDATE_WALLET_HEADLINE}`, data, {
-      headers: header(token),
-    });
+    const res = await axios.post(
+      `${BASE_URL}${Api.UPDATE_WALLET_HEADLINE}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     return error?.response;
   }
 };
-export const UPDATE_WALLET_UPI_API = async (data,token) => {
+export const UPDATE_WALLET_UPI_API = async (data, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.UPDATE_WALLET_UPI}`,data ,{
+    const res = await axios.post(`${BASE_URL}${Api.UPDATE_WALLET_UPI}`, data, {
       headers: header(token),
     });
     return res?.data;
@@ -496,11 +502,15 @@ export const GET_NOTICE_BOARD_API = async (token) => {
   }
 };
 
-export const UPDATE_NOTICE_BOARD_API = async (data,token) => {
+export const UPDATE_NOTICE_BOARD_API = async (data, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.UPDATE_NOTICE_BOARD}`, data, {
-      headers: header(token),
-    });
+    const res = await axios.post(
+      `${BASE_URL}${Api.UPDATE_NOTICE_BOARD}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     // console.log(error.response)
@@ -521,11 +531,15 @@ export const GET_APP_WITHDRAW_API = async (token) => {
   }
 };
 
-export const UPDATE_APP_WITHDRAW_API = async (data,token) => {
+export const UPDATE_APP_WITHDRAW_API = async (data, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.UPDATE_WITHDRAW_SCREEN}`, data, {
-      headers: header(token),
-    });
+    const res = await axios.post(
+      `${BASE_URL}${Api.UPDATE_WITHDRAW_SCREEN}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     return error;
@@ -534,27 +548,31 @@ export const UPDATE_APP_WITHDRAW_API = async (data,token) => {
 //APP WITHDRAW API END
 
 // PROFILE NOTE GET AND UPDATE API START
-export const GET_PROFILE_NOTE_API = async(token)=>{
+export const GET_PROFILE_NOTE_API = async (token) => {
   try {
     const res = await axios.get(`${BASE_URL}${Api.GET_PROFILE_NOTE}`, {
       headers: header(token),
     });
     return res?.data;
   } catch (error) {
-    return error
+    return error;
   }
-}
+};
 
-export const UPDATE_PROFILE_NOTE_API =async(data,token)=>{
+export const UPDATE_PROFILE_NOTE_API = async (data, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.UPDATE_PROFILE_NOTE}`,data,{
-      headers:header(token)
-    })
+    const res = await axios.post(
+      `${BASE_URL}${Api.UPDATE_PROFILE_NOTE}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     return error?.response;
   }
-}
+};
 // PROFILE NOTE GET AND UPDATE API END
 
 // -------------------------- APP_SETTINGS ------------------------
@@ -572,7 +590,7 @@ export const GET_UPI_LIST_API = async (token) => {
   }
 };
 
-export const BLOCK_UPI_LIST_API = async (data,token) => {
+export const BLOCK_UPI_LIST_API = async (data, token) => {
   try {
     const res = await axios.post(`${BASE_URL}${Api.BLOCK_UPI_LIST}`, data, {
       headers: header(token),
@@ -582,7 +600,7 @@ export const BLOCK_UPI_LIST_API = async (data,token) => {
     return error;
   }
 };
-export const ADD_UPI_LIST_API = async (data,token) => {
+export const ADD_UPI_LIST_API = async (data, token) => {
   try {
     const res = await axios.post(`${BASE_URL}${Api.ADD_UPI_LIST}`, data, {
       headers: header(token),
@@ -592,11 +610,9 @@ export const ADD_UPI_LIST_API = async (data,token) => {
     return error;
   }
 };
-export const DELETE_UPI_LIST_API = async (apidata,token) => {
-
+export const DELETE_UPI_LIST_API = async (apidata, token) => {
   try {
     const res = await axios.post(`${BASE_URL}${Api.DELETE_UPI_LIST}`, apidata, {
-     
       headers: header(token),
     });
     return res?.data;
@@ -619,7 +635,7 @@ export const GET_FUND_MODE_API = async (token) => {
   }
 };
 
-export const ADD_FUND_MODE_API = async (data,token) => {
+export const ADD_FUND_MODE_API = async (data, token) => {
   try {
     const res = await axios.post(`${BASE_URL}${Api.ADD_FUND_MODE}`, data, {
       headers: header(token),
@@ -630,24 +646,30 @@ export const ADD_FUND_MODE_API = async (data,token) => {
   }
 };
 
-export const DELETE_FUND_MODE_API = async (apidata,token) => {
-
+export const DELETE_FUND_MODE_API = async (apidata, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.DELETE_FUND_MODE}`, apidata, {
-     
-      headers: header(token),
-    });
+    const res = await axios.post(
+      `${BASE_URL}${Api.DELETE_FUND_MODE}`,
+      apidata,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     return error;
   }
 };
 // CHANGE_STATUS_FUND_MODE
-export const CHANGE_STATUS_FUND_MODE_API = async (data,token) => {
+export const CHANGE_STATUS_FUND_MODE_API = async (data, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.CHANGE_STATUS_FUND_MODE}`, data, {
-      headers: header(token),
-    });
+    const res = await axios.post(
+      `${BASE_URL}${Api.CHANGE_STATUS_FUND_MODE}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     return error;
@@ -657,28 +679,24 @@ export const CHANGE_STATUS_FUND_MODE_API = async (data,token) => {
 
 // -------------------------- MASTERS ------------------------
 
-
-
-
-
 // --------------------------   Employee Crud ------------------------
 
-
-export const EMPLOYEE_CHANGE_PASSWORD_API = async (data,token) => {
+export const EMPLOYEE_CHANGE_PASSWORD_API = async (data, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.EMPLOYEE_CHANGE_PASSWORD}`, data, {
-      headers: header(token),
-    });
+    const res = await axios.post(
+      `${BASE_URL}${Api.EMPLOYEE_CHANGE_PASSWORD}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     return error;
   }
 };
 
-
-
-
-export const CREATE_EMPLOYEE = async (data,token) => {
+export const CREATE_EMPLOYEE = async (data, token) => {
   try {
     const res = await axios.post(`${BASE_URL}${Api.CREATE_EMPLOYEE}`, data, {
       headers: header(token),
@@ -688,7 +706,7 @@ export const CREATE_EMPLOYEE = async (data,token) => {
     return error;
   }
 };
-export const UPDATE_EMPLOYEE = async (data,token) => {
+export const UPDATE_EMPLOYEE = async (data, token) => {
   try {
     const res = await axios.post(`${BASE_URL}${Api.UPDATE_EMPLOYEE}`, data, {
       headers: header(token),
@@ -699,9 +717,9 @@ export const UPDATE_EMPLOYEE = async (data,token) => {
   }
 };
 
-export const EMPLOYEE_GET_LIST_API = async (data,token) => {
+export const EMPLOYEE_GET_LIST_API = async (data, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.EMPLOYEE_LIST}`,data, {
+    const res = await axios.post(`${BASE_URL}${Api.EMPLOYEE_LIST}`, data, {
       headers: header(token),
     });
     return res?.data;
@@ -710,7 +728,7 @@ export const EMPLOYEE_GET_LIST_API = async (data,token) => {
   }
 };
 
-export const BLOCK_EMPLOYEE_API = async (data,token) => {
+export const BLOCK_EMPLOYEE_API = async (data, token) => {
   try {
     const res = await axios.post(`${BASE_URL}${Api.BLOCK_EMPLOYEE}`, data, {
       headers: header(token),
@@ -721,10 +739,9 @@ export const BLOCK_EMPLOYEE_API = async (data,token) => {
   }
 };
 
-export const DELETE_EMPLOYEE = async (id,token) => {
-
+export const DELETE_EMPLOYEE = async (id, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.DELETE_EMPLOYEE}`,id, {
+    const res = await axios.post(`${BASE_URL}${Api.DELETE_EMPLOYEE}`, id, {
       headers: header(token),
     });
     return res?.data;
@@ -733,13 +750,14 @@ export const DELETE_EMPLOYEE = async (id,token) => {
   }
 };
 
-
-
-export const SINGLE_EMPLOYEE_GET_LIST_API = async (id,token) => {
+export const SINGLE_EMPLOYEE_GET_LIST_API = async (id, token) => {
   try {
-    const res = await axios.get(`${BASE_URL}${Api.SINGLE_EMPLOYEE_LIST}/${id}`, {
-      headers: header(token),
-    });
+    const res = await axios.get(
+      `${BASE_URL}${Api.SINGLE_EMPLOYEE_LIST}/${id}`,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     return error;
@@ -752,24 +770,27 @@ export const SINGLE_EMPLOYEE_GET_LIST_API = async (id,token) => {
 
 export const REQUEST_LIST_API = async (token) => {
   try {
-    const res = await axios.get(`${BASE_URL}${Api.REQUEST_LIST}` ,data, {
-            headers: header(token),
-          });
-          return res?.data;
-        } catch (error) {
-          return error;
-        }
-      }
+    const res = await axios.get(`${BASE_URL}${Api.REQUEST_LIST}`, {
+      headers: header(token),
+    });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
 // --------------------------   Employee Crud ------------------------
-
 
 // --------------------------   GET_CREDIT_REQUEST_UPI ------------------------
 
-export const GET_CREDIT_REQUEST_UPI_API = async (data,token) => {
+export const GET_CREDIT_REQUEST_UPI_API = async (data, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.GET_CREDIT_REQUEST_UPI}`,data, {
-      headers: header(token),
-    });
+    const res = await axios.post(
+      `${BASE_URL}${Api.GET_CREDIT_REQUEST_UPI}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     return error;
@@ -793,8 +814,9 @@ export const REQUEST_LIST_UPDATE_API = async (data, token) => {
 
 export const GET_REQUEST_LIST_API = async (token) => {
   try {
-    const res = await axios.get(`${BASE_URL}${Api.GET_REQUEST_LIST}`, 
-      data,
+    const res = await axios.get(
+      `${BASE_URL}${Api.GET_REQUEST_LIST}`,
+
       {
         headers: header(token),
       }
@@ -806,14 +828,17 @@ export const GET_REQUEST_LIST_API = async (token) => {
 };
 // --------------------------   GET_CREDIT_REQUEST_UPI ------------------------
 
-
 // --------------------------  GET_DECLINED_REQUEST ---------------------------
 
-export const GET_DECLINED_REQUEST_API = async (data,token) => {
+export const GET_DECLINED_REQUEST_API = async (data, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.GET_DECLINED_REQUEST}`,data, {
-      headers: header(token),
-    });
+    const res = await axios.post(
+      `${BASE_URL}${Api.GET_DECLINED_REQUEST}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     return error;
@@ -822,24 +847,26 @@ export const GET_DECLINED_REQUEST_API = async (data,token) => {
 
 export const UPDATE_REQUEST_API = async (data, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.UPDATE_REQUEST}`
-      ,data, {
-        headers: header(token),
-      });
-      return res?.data;
-    } catch (error) {
-      return error;
-    }
-  };
-// --------------------------  GET_DECLINED_REQUEST------------------------
-
-
-// --------------------------APPROVED DEBIT REQUEST------------------------
-export const APPROVED_DEBIT_BANK_API = async (data,token) => {
-  try {
-    const res = await axios.post(`${BASE_URL}${Api.APPROVED_DEBIT_BANK}`,data, {
+    const res = await axios.post(`${BASE_URL}${Api.UPDATE_REQUEST}`, data, {
       headers: header(token),
     });
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+// --------------------------  GET_DECLINED_REQUEST------------------------
+
+// --------------------------APPROVED DEBIT REQUEST------------------------
+export const APPROVED_DEBIT_BANK_API = async (data, token) => {
+  try {
+    const res = await axios.post(
+      `${BASE_URL}${Api.APPROVED_DEBIT_BANK}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     return error;
@@ -861,11 +888,15 @@ export const GET_WALLET_LIST = async (data, token) => {
   }
 };
 
-      export const APPROVED_DEBIT_BANK_MANUAL_API = async (data,token) => {
+export const APPROVED_DEBIT_BANK_MANUAL_API = async (data, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.APPROVED_DEBIT_BANK_MANUAL}`,data, {
-      headers: header(token),
-    });
+    const res = await axios.post(
+      `${BASE_URL}${Api.APPROVED_DEBIT_BANK_MANUAL}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     return error;
@@ -930,28 +961,31 @@ export const WALLET_LIST_UPDATE_WALLET_API = async (data, token) => {
 
 // ----------------- FUND REQUEST -------------------------------
 
-
-export const FUND_REQUEST_LIST_API = async (data,token) => {
-
+export const FUND_REQUEST_LIST_API = async (data, token) => {
   try {
-    const res = await axios.get(`${BASE_URL}${Api.GET_FUND_REQUEST}?status=${data}`, {
-      headers: header(token),
-    });
+    const res = await axios.get(
+      `${BASE_URL}${Api.GET_FUND_REQUEST}?status=${data}`,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     return error;
   }
 };
 
-
 // FUND REQUEST APPROVED_FUND_REQUEST
 
-export const APPROVED_FUND_REQUEST_API = async (data,token) => {
-
+export const APPROVED_FUND_REQUEST_API = async (data, token) => {
   try {
-    const res = await axios.patch(`${BASE_URL}${Api.APPROVED_FUND_REQUEST}`,data, {
-      headers: header(token),
-    });
+    const res = await axios.patch(
+      `${BASE_URL}${Api.APPROVED_FUND_REQUEST}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     return error;
@@ -959,80 +993,114 @@ export const APPROVED_FUND_REQUEST_API = async (data,token) => {
 };
 
 // FUND REQUEST DECLINED_FUND_REQUEST
-export const DECLINED_FUND_REQUEST_API = async (data,token) => {
-
+export const DECLINED_FUND_REQUEST_API = async (data, token) => {
   try {
-    const res = await axios.patch(`${BASE_URL}${Api.DECLINED_FUND_REQUEST}`,data, {
-      headers: header(token),
-    });
+    const res = await axios.patch(
+      `${BASE_URL}${Api.DECLINED_FUND_REQUEST}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     return error;
   }
 };
-
 
 // -----------------  FUND REQUEST -------------------------------
 
-
 // ----------------- WALLET EXPORT DEBIT REPORT -------------------------------
 //GET_EXPORT_DEBIT_REPORT
-export const GET_EXPORT_DEBIT_REPORT_API = async (data,token) => {
+export const GET_EXPORT_DEBIT_REPORT_API = async (data, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.GET_EXPORT_DEBIT_REPORT}`,data, {
-      headers: header(token),
-    });
+    const res = await axios.post(
+      `${BASE_URL}${Api.GET_EXPORT_DEBIT_REPORT}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     return error;
   }
 };
 
-
-export const EXPORT_DEBIT_SEE_TODAY_REPORT_API = async (data,token) => {
+export const EXPORT_DEBIT_SEE_TODAY_REPORT_API = async (data, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.EXPORT_DEBIT_TODAY_APPROVED_REPORT}`,data, {
-      headers: header(token),
-    });
+    const res = await axios.post(
+      `${BASE_URL}${Api.EXPORT_DEBIT_TODAY_APPROVED_REPORT}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     return error;
   }
 };
 
-
-export const EXPORT_DEBIT_GET_REPORT_API = async (data,token,endpoint) => {
-  console.log(data)
+//GET_EXPORT_DEBIT_REPORT
+export const EXPORT_DEBIT_APPROVE_ALL_REQUEST_API = async (data, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.GET_EXPORT_DEBIT_REPORT}/${endpoint}`,data, {
-      headers: header(token),
-    });
+    const res = await axios.post(
+      `${BASE_URL}${Api.APPROVE_EXPORT_DEBIT_REPORT}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     return error;
   }
 };
 
-export const EXPORT_MKXLS_FILE_API = async (data,token) => {
-  console.log(data)
+export const EXPORT_DEBIT_GET_REPORT_API = async (data, token, endpoint) => {
+  console.log(data);
   try {
-    const res = await axios.post(`${BASE_URL}${Api.GET_EXPORT_DEBIT_REPORT}/mkxls`,data, {
-      headers: header(token),
-    });
+    const res = await axios.post(
+      `${BASE_URL}${Api.GET_EXPORT_DEBIT_REPORT}/${endpoint}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     return error;
   }
 };
 
+export const EXPORT_MKXLS_FILE_API = async (data, token) => {
+  console.log(data);
+  try {
+    const res = await axios.post(
+      `${BASE_URL}${Api.GET_EXPORT_DEBIT_REPORT}/mkxls`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
 
 // EXPORT_DEBIT_DECLINE_REPORT
 
-export const EXPORT_DEBIT_DECLINE_REPORT_API = async (data,token) => {
+export const EXPORT_DEBIT_DECLINE_REPORT_API = async (data, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.EXPORT_DEBIT_DECLINE_REPORT}`,data, {
-      headers: header(token),
-    });
+    const res = await axios.post(
+      `${BASE_URL}${Api.EXPORT_DEBIT_DECLINE_REPORT}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     return error;
@@ -1043,175 +1111,183 @@ export const EXPORT_DEBIT_DECLINE_REPORT_API = async (data,token) => {
 
 // ---------------------GET_WALLET_INVOICE_PROFILE_CHANGE-------------------------------
 
-export const GET_WALLET_INVOICE_PROFILE_CHANGE_API = async (data,token) => {
+export const GET_WALLET_INVOICE_PROFILE_CHANGE_API = async (data, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.GET_WALLET_INVOICE_PROFILE_CHANGE}`,data, {
-      headers: header(token),
-    });
+    const res = await axios.post(
+      `${BASE_URL}${Api.GET_WALLET_INVOICE_PROFILE_CHANGE}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     return error;
   }
 };
-
-
-
-
-
 
 // ---------------------GET_WALLET_INVOICE_PROFILE_CHANGE-------------------------------
 
 // ---------------------WALLET_GET_SEARCH_DETAILS-------------------------------
 
-export const WALLET_GET_SEARCH_DETAILS_API = async (data,token) => {
+export const WALLET_GET_SEARCH_DETAILS_API = async (data, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.WALLET_GET_SEARCH_DETAILS}`,data, {
-      headers: header(token),
-    });
+    const res = await axios.post(
+      `${BASE_URL}${Api.WALLET_GET_SEARCH_DETAILS}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     return error;
   }
 };
-
 
 // ---------------------WALLET_GET_SEARCH_DETAILS-------------------------------
 
-
 // ---------------------WALLET_DOWNLOAD_DEBIT_REPORT-------------------------------
 
-export const WALLET_DOWNLOAD_DEBIT_REPORT_API = async (data,token) => {
+export const WALLET_DOWNLOAD_DEBIT_REPORT_API = async (data, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}${Api.WALLET_DOWNLOAD_DEBIT_REPORT}`,data, {
-      headers: header(token),
-    });
+    const res = await axios.post(
+      `${BASE_URL}${Api.WALLET_DOWNLOAD_DEBIT_REPORT}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
     return res?.data;
   } catch (error) {
     return error;
   }
 };
 
-
 // ---------------------WALLET_DOWNLOAD_DEBIT_REPORT-------------------------------
-
-
-
-
-
-
-
-
-
-
 
 // --------------------------APPROVED DEBIT REQUEST------------------------
 
 // --------------------------PENDING_DEBIT_BANK_REQUEST------------------------
 
-
-export const PENDING_DEBIT_BANK_REQUEST_API = async(data,token)=>{
-
+export const PENDING_DEBIT_BANK_REQUEST_API = async (data, token) => {
   try {
-    const res = await dataservice.post(`${BASE_URL}${Api.PENDING_DEBIT_BANK_REQUEST}`,data,{
-      headers: header(token),
-    })
-    return res?.data
+    const res = await dataservice.post(
+      `${BASE_URL}${Api.PENDING_DEBIT_BANK_REQUEST}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
+    return res?.data;
   } catch (error) {
-    return error
+    return error;
   }
-}
+};
 
-export const PENDING_DEBIT_GET_BALANCE_API = async(data,token)=>{
-
+export const PENDING_DEBIT_GET_BALANCE_API = async (data, token) => {
   try {
-    const res = await dataservice.post(`${BASE_URL}${Api.PENDING_DEBIT_GET_BALANCE}`,data,{
-      headers: header(token),
-    })
-    return res?.data
+    const res = await dataservice.post(
+      `${BASE_URL}${Api.PENDING_DEBIT_GET_BALANCE}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
+    return res?.data;
   } catch (error) {
-    return error
+    return error;
   }
-}
+};
 
-export const PENDING_DEBIT_UPDATE_WALLET_API = async(data,token)=>{
-
+export const PENDING_DEBIT_UPDATE_WALLET_API = async (data, token) => {
   try {
-    const res = await dataservice.post(`${BASE_URL}${Api.PENDING_DEBIT_UPDATE_WALLET}`,data,{
-      headers: header(token),
-    })
-    return res?.data
+    const res = await dataservice.post(
+      `${BASE_URL}${Api.PENDING_DEBIT_UPDATE_WALLET}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
+    return res?.data;
   } catch (error) {
-    return error?.response
+    return error?.response;
   }
-}
+};
 
-
-export const PENDING_DEBIT_DECLINE_API = async(data,token)=>{
-
+export const PENDING_DEBIT_DECLINE_API = async (data, token) => {
   try {
-    const res = await dataservice.patch(`${BASE_URL}${Api.PENDING_DEBIT_DECLINE}`,data,{
-      headers: header(token),
-    })
-    return res?.data
+    const res = await dataservice.patch(
+      `${BASE_URL}${Api.PENDING_DEBIT_DECLINE}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
+    return res?.data;
   } catch (error) {
-    return error?.response
+    return error?.response;
   }
-}
+};
 
-
-export const PENDING_DEBIT_GETPROFILE_API = async(id,token)=>{
-
+export const PENDING_DEBIT_GETPROFILE_API = async (id, token) => {
   try {
-    const res = await dataservice.get(`${BASE_URL}${Api.PENDING_DEBIT_GETPROFILE}?userId=${id}`,{
-      headers: header(token),
-    })
-    return res?.data
+    const res = await dataservice.get(
+      `${BASE_URL}${Api.PENDING_DEBIT_GETPROFILE}?userId=${id}`,
+      {
+        headers: header(token),
+      }
+    );
+    return res?.data;
   } catch (error) {
-    return error?.response
+    return error?.response;
   }
-}
-
+};
 
 // --------------------------PENDING_DEBIT_BANK_REQUEST------------------------
 
+// --------------------------USER PROFILE APIS------------------------
+export const UPDATE_USER_PASSWORD_API = async (data, token) => {
+  try {
+    const res = await dataservice.post(
+      `${BASE_URL}${Api.USER_PROFILE_UPDATE_PASSWORD}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const USER_PROFILE_GET_LIST = async (token) => {
+  try {
+    const res = await dataservice.get(
+      `${BASE_URL}${Api.USER_PROFILE_GET_LIST}`,
+      {
+        headers: header(token),
+      }
+    );
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
+export const USER_PROFILE_BLOCK_API = async (data, token) => {
+  try {
+    const res = await dataservice.post(
+      `${BASE_URL}${Api.USER_PROFILE_BLOCK}`,
+      data,
+      {
+        headers: header(token),
+      }
+    );
+    return res?.data;
+  } catch (error) {
+    return error;
+  }
+};
 
 // --------------------------USER PROFILE APIS------------------------
- export const UPDATE_USER_PASSWORD_API = async(data,token)=>{
-  try {
-    const res = await dataservice.post(`${BASE_URL}${Api.USER_PROFILE_UPDATE_PASSWORD}`,data,{
-      headers:header(token)
-    })
-    return res?.data
-  } catch (error) {
-    return error
-  }
- }
-
- export const USER_PROFILE_GET_LIST = async(token)=>{
-  try {
-    const res = await dataservice.get(`${BASE_URL}${Api.USER_PROFILE_GET_LIST}`,{
-      headers:header(token)
-    })
-    return res?.data
-  } catch (error) {
-    return error
-  }
- }
- export const USER_PROFILE_BLOCK_API = async(data,token)=>{
-  try {
-    const res = await dataservice.post(`${BASE_URL}${Api.USER_PROFILE_BLOCK}`,data,{
-      headers:header(token)
-    })
-    return res?.data
-  } catch (error) {
-    return error
-  }
- }
-
-
-// --------------------------USER PROFILE APIS------------------------
-
-
-
-
-

@@ -20,8 +20,8 @@ const WalletMain = ({
   visibleFields1,
   formik1,
   fields1,
+  confirmPayment,
 }) => {
-
   const totalAmount = useMemo(
     () => TableData.reduce((acc, item) => acc + (item?.reqAmount || 0), 0),
     [TableData]
@@ -37,15 +37,20 @@ const WalletMain = ({
             btn_name={"Get Report"}
             button_Size={"w-15"}
             show_submit={true}
+            after_submit_button1={
+              // <div className="report-btn-main mt-3">
+              <button
+                onClick={() => handleBtnStatus("see-report")}
+                className="approve-btn"
+              >
+                See Report
+              </button>
+              // </div>
+            }
           />
-          <div className="report-btn-main mt-3">
-            <button
-              onClick={() => handleBtnStatus("see-report")}
-              className="approve-btn"
-            >
-              See Report
-            </button>
-          </div>
+          {/* <div className="report-btn-main mt-3"> */}
+
+          {/* </div> */}
         </div>
       ),
     },
@@ -53,31 +58,23 @@ const WalletMain = ({
     {
       size: 12,
       body: (
-        <div>
+        <>
           <button
             onClick={() => handleBtnStatus("approve-all")}
             className="approve-btn"
           >
             Approve All
           </button>
-          <PagesIndex.TableWitCustomPegination
+
+          <PagesIndex.TableWithCustomPeginationNew123
             data={TableData}
-            initialRowsPerPage={5}
-            SearchInTable={SearchInTable}
+            initialRowsPerPage={10}
+            SearchInTable={""}
             visibleFields={visibleFields}
-            UserFullButtonList={UserFullButtonList}
-            searchInput={
-              <input
-                type="text"
-                placeholder="Search..."
-                value={SearchInTable}
-                onChange={(e) => setSearchInTable(e.target.value)}
-                className="form-control ms-auto"
-              />
-            }
+            showIndex={true}
           />
           <h3 className="ml-3 mb-3 fw-bold">Total Amount {totalAmount}/-</h3>
-        </div>
+        </>
       ),
     },
   ];
@@ -108,7 +105,12 @@ const WalletMain = ({
                   Are You Sure Want To Confirm Payment?
                 </h1>
                 <div className="d-flex justify-content-end">
-                  <button className="btn btn-dark  mx-2">Confirm</button>
+                  <button
+                    className="btn btn-dark  mx-2"
+                    onClick={() => confirmPayment()}
+                  >
+                    Confirm
+                  </button>
                   <button
                     onClick={() => setModalState(false)}
                     className="btn btn-dark  mx-2"
@@ -118,23 +120,30 @@ const WalletMain = ({
                 </div>
               </div>
             ) : btnStatus === "see-report" ? (
-              <PagesIndex.TableWitCustomPegination
+              <PagesIndex.TableWithCustomPeginationNew123
                 data={todayReportData}
-                UserFullButtonList={UserFullButtonList1}
-                initialRowsPerPage={5}
-                SearchInTable={SearchInTable}
+                initialRowsPerPage={10}
+                SearchInTable={""}
                 visibleFields={visibleFields1}
-                searchInput={
-                  <input
-                    type="text"
-                    placeholder="Search..."
-                    value={SearchInTable}
-                    onChange={(e) => setSearchInTable(e.target.value)}
-                    className="form-control ms-auto"
-                  />
-                }
+                showIndex={true}
               />
-            ) : btnStatus === "decline-report" ? (
+            ) : // <PagesIndex.TableWitCustomPegination
+            //   data={todayReportData}
+            //   UserFullButtonList={UserFullButtonList1}
+            //   initialRowsPerPage={5}
+            //   SearchInTable={SearchInTable}
+            //   visibleFields={visibleFields1}
+            //   searchInput={
+            //     <input
+            //       type="text"
+            //       placeholder="Search..."
+            //       value={SearchInTable}
+            //       onChange={(e) => setSearchInTable(e.target.value)}
+            //       className="form-control ms-auto"
+            //     />
+            //   }
+            // />
+            btnStatus === "decline-report" ? (
               <PagesIndex.Formikform
                 fieldtype={fields1.filter((field) => !field.showWhen)}
                 formik={formik1}

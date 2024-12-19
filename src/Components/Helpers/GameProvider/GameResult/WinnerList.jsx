@@ -45,7 +45,6 @@ const WinnerList = () => {
         apidata,
         token
       );
-      
 
       //   const res = await PagesIndex.admin_services.GAME_MAIN_WINNER_LIST_API(
       //     apidata1,
@@ -164,23 +163,25 @@ const WinnerList = () => {
             visibleFields={visibleFields}
             UserFullButtonList={UserFullButtonList}
             confirm_button={
-              // <ConfirmationModal
-              //   title="Are you sure you want to delete this file?"
-              //   text="This action cannot be undone."
-              //   icon="warning"
-              //   confirmButtonText="Yes, delete it!"
-              //   cancelButtonText="No, cancel!"
-              //   Buttontitle="Confirm"
-              //   onConfirm={ConfirmPayment}
-              // />
+              <>
+                <ConfirmationModal
+                  title="Are you sure you want to delete this file?1212"
+                  text="This action cannot be undone."
+                  icon="warning"
+                  confirmButtonText="Yes, delete it!"
+                  cancelButtonText="No, cancel!"
+                  Buttontitle="Confirm"
+                  onConfirm={ConfirmPayment}
+                />
 
-              //   <button
-              //     className="btn btn-primary"
-              //     onClick={() => ConfirmPayment()}
-              //   >
-              //     confirm
-              //   </button>
-           "" }
+                <button
+                  className="btn btn-primary"
+                  onClick={() => ConfirmPayment()}
+                >
+                  confirm121
+                </button>
+              </>
+            }
             searchInput={
               <>
                 <input
@@ -218,6 +219,7 @@ const WinnerList = () => {
             SearchInTable={SearchInTable}
             visibleFields={visibleFields1}
             UserFullButtonList={UserFullButtonList}
+            
             searchInput={
               <>
                 <input

@@ -10,14 +10,19 @@ import ReusableModal from "../Modal/ModalComponent_main";
 const SplitForm = () => {
   const token = localStorage.getItem("token");
   const dispatch = PagesIndex.useDispatch();
+  const [UserPagenateData, setUserPagenateData] = PagesIndex.useState({
+    pageno: 1,
+    limit: 10,
+  });
 
+  const [TotalPages, setTotalPages] = PagesIndex.useState(1);
   const [TableOne, setTableOne] = PagesIndex.useState([]);
   const [TableTwo, setTableTwo] = PagesIndex.useState([]);
   const [TableThree, setTableThree] = PagesIndex.useState([]);
   const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
   const [ShowBidInfoModal, setShowBidInfoModal] = PagesIndex.useState(false);
   const [ShowBidInfoList, setShowBidInfoList] = PagesIndex.useState([]);
-
+  const [Refresh, setRefresh] = PagesIndex.useState(false);
   const { gameProviders } = PagesIndex.useSelector(
     (state) => state.CommonSlice
   );
@@ -56,13 +61,13 @@ const SplitForm = () => {
     },
     onSubmit: async (values) => {
       const payload = {
-        // gameDate: values.gameDate || today(new Date()),
-        // gameSession: values.gameSession,
-        // providerId: values.providerId,s
+        gameDate: values.gameDate || today(new Date()),
+        gameSession: values.gameSession,
+        providerId: values.providerId,
 
-        gameDate: "12/04/2024",
-        gameSession: "Jodi Digit",
-        providerId: "668d4228211a65d88600f6f0",
+        // gameDate: "12/04/2024",
+        // gameSession: "Jodi Digit",
+        // providerId: "668d4228211a65d88600f6f0",
       };
 
       if (values.gameSession === "Open" || values.gameSession === "Close") {
@@ -271,8 +276,6 @@ const SplitForm = () => {
           jodiArray.sort((a, b) => a._id.localeCompare(b._id));
         });
 
-        console.log("jodiArray", jodiArray);
-
         setTableTwo(jodiArray);
       }
     },
@@ -357,8 +360,6 @@ const SplitForm = () => {
       },
       onClick: (row) => {
         showBidInfor(row);
-
-        console.log(row);
       },
     },
     {
@@ -375,6 +376,8 @@ const SplitForm = () => {
       name: "Profit",
       value: "Profit",
       sortable: true,
+      notheader: true,
+
       style: (row) => ({
         color: "green",
         fontWeight: "bold",
@@ -424,6 +427,8 @@ const SplitForm = () => {
       name: "Profit",
       value: "Profit",
       sortable: true,
+      notheader: true,
+
       style: (row) => ({
         color: "green",
         fontWeight: "bold",
@@ -433,6 +438,8 @@ const SplitForm = () => {
       name: "Loss",
       value: "Loss",
       sortable: true,
+      notheader: true,
+
       style: (row) => ({
         color: "red",
         fontWeight: "bold",
@@ -471,249 +478,25 @@ const SplitForm = () => {
     },
   ];
 
-  const showBidInfor = async () => {
+  const showBidInfor = async (rowdata) => {
     setShowBidInfoModal(!ShowBidInfoModal);
 
-    // const response1 = await PagesIndex.report_service.ALL_GAME_REPORT_API(
-    //   Api.GET_BID_DATA,
-    //   payload,
-    //   token
-    // );
+    const payload = {
+      date: formik.values.gameDate || today(new Date()),
+      id: formik.values.providerId,
+      bidDigit: rowdata._id,
+      gameSession: rowdata.session,
+      page: UserPagenateData.pageno,
+      limit: UserPagenateData.limit,
+    };
+    const response1 = await PagesIndex.report_service.ALL_GAME_REPORT_API(
+      Api.GET_BID_DATA,
+      payload,
+      token
+    );
 
-    const response = [
-      {
-        isPaymentDone: false,
-        _id: "674fec8cc169043ce44bb6cb",
-        userId: "672f382f6ac4cd90feda4e46",
-        providerId: "668d41bc211a65d88600f65f",
-        gameTypeId: "6690701918732c8c3c427b09",
-        providerName: "SRIDEVI",
-        gameTypeName: "Single Digit",
-        gameTypePrice: 10,
-        userName: "ratilal",
-        mobileNumber: "+917567448732",
-        bidDigit: "1",
-        biddingPoints: 20,
-        gameSession: "Open",
-        winStatus: 2,
-        gameWinPoints: 0,
-        gameDate: "12/04/2024",
-        updatedAt: "12/04/2024 11:41:36 AM",
-        createdAt: "12/04/2024 11:15:48",
-        dateStamp: 1733250600,
-        createTime: "2024-12-04T05:45:48.440Z",
-        updatedTime: "2024-12-04T06:11:47.854Z",
-      },
-      {
-        isPaymentDone: false,
-        _id: "674fed10c169043ce44bc558",
-        userId: "674fdefbc169043ce44a9108",
-        providerId: "668d41bc211a65d88600f65f",
-        gameTypeId: "6690701918732c8c3c427b09",
-        providerName: "SRIDEVI",
-        gameTypeName: "Single Digit",
-        gameTypePrice: 10,
-        userName: "hemasingh",
-        mobileNumber: "+918225832474",
-        bidDigit: "1",
-        biddingPoints: 100,
-        gameSession: "Open",
-        winStatus: 2,
-        gameWinPoints: 0,
-        gameDate: "12/04/2024",
-        updatedAt: "12/04/2024 11:41:36 AM",
-        createdAt: "12/04/2024 11:17:58",
-        dateStamp: 1733250600,
-        createTime: "2024-12-04T05:48:00.425Z",
-        updatedTime: "2024-12-04T06:11:47.854Z",
-      },
-      {
-        isPaymentDone: false,
-        _id: "674fc74fc169043ce44985c9",
-        userId: "6729537578467eabf75102eb",
-        providerId: "668d41bc211a65d88600f65f",
-        gameTypeId: "6690701918732c8c3c427b09",
-        providerName: "SRIDEVI",
-        gameTypeName: "Single Digit",
-        gameTypePrice: 10,
-        userName: "kavita",
-        mobileNumber: "+918770959824",
-        bidDigit: "1",
-        biddingPoints: 8,
-        gameSession: "Open",
-        winStatus: 2,
-        gameWinPoints: 0,
-        gameDate: "12/04/2024",
-        updatedAt: "12/04/2024 11:41:36 AM",
-        createdAt: "12/04/2024 08:36:54",
-        dateStamp: 1733250600,
-        createTime: "2024-12-04T03:06:55.058Z",
-        updatedTime: "2024-12-04T06:11:47.854Z",
-      },
-      {
-        isPaymentDone: false,
-        _id: "674fd10cc169043ce449ce4b",
-        userId: "66e8185fdac5e59a8286638e",
-        providerId: "668d41bc211a65d88600f65f",
-        gameTypeId: "6690701918732c8c3c427b09",
-        providerName: "SRIDEVI",
-        gameTypeName: "Single Digit",
-        gameTypePrice: 10,
-        userName: "nayabrao",
-        mobileNumber: "+919834110962",
-        bidDigit: "1",
-        biddingPoints: 50,
-        gameSession: "Open",
-        winStatus: 2,
-        gameWinPoints: 0,
-        gameDate: "12/04/2024",
-        updatedAt: "12/04/2024 11:41:36 AM",
-        createdAt: "12/04/2024 09:18:27",
-        dateStamp: 1733250600,
-        createTime: "2024-12-04T03:48:28.520Z",
-        updatedTime: "2024-12-04T06:11:47.854Z",
-      },
-      {
-        isPaymentDone: false,
-        _id: "674fd63bc169043ce44a0c55",
-        userId: "66df28e35d7410e478cda42b",
-        providerId: "668d41bc211a65d88600f65f",
-        gameTypeId: "6690701918732c8c3c427b09",
-        providerName: "SRIDEVI",
-        gameTypeName: "Single Digit",
-        gameTypePrice: 10,
-        userName: "kundanbhili81",
-        mobileNumber: "+917030376074",
-        bidDigit: "1",
-        biddingPoints: 100,
-        gameSession: "Open",
-        winStatus: 2,
-        gameWinPoints: 0,
-        gameDate: "12/04/2024",
-        updatedAt: "12/04/2024 11:41:36 AM",
-        createdAt: "12/04/2024 09:41:19",
-        dateStamp: 1733250600,
-        createTime: "2024-12-04T04:10:35.353Z",
-        updatedTime: "2024-12-04T06:11:47.854Z",
-      },
-      {
-        isPaymentDone: false,
-        _id: "674fd86bc169043ce44a24fd",
-        userId: "6720748278467eabf7de535b",
-        providerId: "668d41bc211a65d88600f65f",
-        gameTypeId: "6690701918732c8c3c427b09",
-        providerName: "SRIDEVI",
-        gameTypeName: "Single Digit",
-        gameTypePrice: 10,
-        userName: "deepakkharade",
-        mobileNumber: "+918767192311",
-        bidDigit: "1",
-        biddingPoints: 5,
-        gameSession: "Open",
-        winStatus: 2,
-        gameWinPoints: 0,
-        gameDate: "12/04/2024",
-        updatedAt: "12/04/2024 11:41:36 AM",
-        createdAt: "12/04/2024 09:49:54",
-        dateStamp: 1733250600,
-        createTime: "2024-12-04T04:19:55.291Z",
-        updatedTime: "2024-12-04T06:11:47.854Z",
-      },
-      {
-        isPaymentDone: false,
-        _id: "674fddd3c169043ce44a7e49",
-        userId: "6720785278467eabf7df8db1",
-        providerId: "668d41bc211a65d88600f65f",
-        gameTypeId: "6690701918732c8c3c427b09",
-        providerName: "SRIDEVI",
-        gameTypeName: "Single Digit",
-        gameTypePrice: 10,
-        userName: "akashbhil2290@gmail.comn",
-        mobileNumber: "+918956648089",
-        bidDigit: "1",
-        biddingPoints: 1000,
-        gameSession: "Open",
-        winStatus: 2,
-        gameWinPoints: 0,
-        gameDate: "12/04/2024",
-        updatedAt: "12/04/2024 11:41:36 AM",
-        createdAt: "12/04/2024 10:12:57",
-        dateStamp: 1733250600,
-        createTime: "2024-12-04T04:42:59.227Z",
-        updatedTime: "2024-12-04T06:11:47.854Z",
-      },
-      {
-        isPaymentDone: false,
-        _id: "674fdf2dc169043ce44a9615",
-        userId: "674977b755453dc08db43910",
-        providerId: "668d41bc211a65d88600f65f",
-        gameTypeId: "6690701918732c8c3c427b09",
-        providerName: "SRIDEVI",
-        gameTypeName: "Single Digit",
-        gameTypePrice: 10,
-        userName: "manojb",
-        mobileNumber: "+917558279729",
-        bidDigit: "1",
-        biddingPoints: 40,
-        gameSession: "Open",
-        winStatus: 2,
-        gameWinPoints: 0,
-        gameDate: "12/04/2024",
-        updatedAt: "12/04/2024 11:41:36 AM",
-        createdAt: "12/04/2024 10:18:44",
-        dateStamp: 1733250600,
-        createTime: "2024-12-04T04:48:45.497Z",
-        updatedTime: "2024-12-04T06:11:47.854Z",
-      },
-      {
-        isPaymentDone: false,
-        _id: "674fdf8ac169043ce44a9cd4",
-        userId: "6717646889a0170929e1e00f",
-        providerId: "668d41bc211a65d88600f65f",
-        gameTypeId: "6690701918732c8c3c427b09",
-        providerName: "SRIDEVI",
-        gameTypeName: "Single Digit",
-        gameTypePrice: 10,
-        userName: "ved,kumar",
-        mobileNumber: "+919926043264",
-        bidDigit: "1",
-        biddingPoints: 100,
-        gameSession: "Open",
-        winStatus: 2,
-        gameWinPoints: 0,
-        gameDate: "12/04/2024",
-        updatedAt: "12/04/2024 11:41:36 AM",
-        createdAt: "12/04/2024 10:20:19",
-        dateStamp: 1733250600,
-        createTime: "2024-12-04T04:50:18.495Z",
-        updatedTime: "2024-12-04T06:11:47.854Z",
-      },
-      {
-        isPaymentDone: false,
-        _id: "674fdf08c169043ce44a922c",
-        userId: "66d7e2fdf700aa4f56e4057c",
-        providerId: "668d41bc211a65d88600f65f",
-        gameTypeId: "6690701918732c8c3c427b09",
-        providerName: "SRIDEVI",
-        gameTypeName: "Single Digit",
-        gameTypePrice: 10,
-        userName: "abstyle",
-        mobileNumber: "+916353772656",
-        bidDigit: "1",
-        biddingPoints: 10,
-        gameSession: "Open",
-        winStatus: 2,
-        gameWinPoints: 0,
-        gameDate: "12/04/2024",
-        updatedAt: "12/04/2024 11:41:36 AM",
-        createdAt: "12/04/2024 10:18:07",
-        dateStamp: 1733250600,
-        createTime: "2024-12-04T04:48:08.033Z",
-        updatedTime: "2024-12-04T06:11:47.854Z",
-      },
-    ];
-
-    setShowBidInfoList(response);
+    setTotalPages(response1.totalCount);
+    setShowBidInfoList(response1.bidData);
   };
 
   const cardLayouts = [
@@ -780,16 +563,6 @@ const SplitForm = () => {
             initialRowsPerPage={10}
             SearchInTable={SearchInTable}
             visibleFields={visibleFields}
-            // UserFullButtonList={UserFullButtonList}
-            // searchInput={
-            //   <input
-            //     type="text"
-            //     placeholder="Search..."
-            //     value={SearchInTable}
-            //     onChange={(e) => setSearchInTable(e.target.value)}
-            //     className="form-control ms-auto"
-            //   />
-            // }
           />
         </div>
       ),
@@ -804,7 +577,7 @@ const SplitForm = () => {
         formik.values.gameSession === "Open" ||
         formik.values.gameSession === "Close" ? (
           <div>
-            <PagesIndex.TableWithCustomPeginationNew
+            <PagesIndex.TableWithCustomPeginationNew123
               data={(TableThree && TableThree) || []}
               initialRowsPerPage={10}
               SearchInTable={SearchInTable}
@@ -833,11 +606,12 @@ const SplitForm = () => {
         body={
           <>
             <PagesIndex.TableWithCustomPeginationNew
-              data={(ShowBidInfoList && ShowBidInfoList) || []}
-              initialRowsPerPage={10}
-              SearchInTable={SearchInTable}
-              visibleFields={visibleFields2}
+              tableData={ShowBidInfoList && ShowBidInfoList}
+              TotalPagesCount={(TotalPages && TotalPages) || []}
+              columns={visibleFields2}
               showIndex={true}
+              Refresh={Refresh}
+              setUserPagenateData={setUserPagenateData}
             />
           </>
         }

@@ -22,6 +22,10 @@ import GameSettingAdd from "../../Helpers/GameProvider/GameSetting/GameSettingAd
 import CuttingGroup from "../../Pages/Superadmin/CuttingGroup/CuttingGroup";
 import GameResult from "../../Pages/Superadmin/Games/AvailableGames/GameRasult";
 
+// main game
+import MainRevertPayment from "../../Pages/Superadmin/Games/AvailableGames/RevertPayment";
+import MainRefundList from "../../Pages/Superadmin/Games/AvailableGames/RefundList";
+
 // starline game result
 import StarlineGameResult from "../../Pages/Superadmin/Games/Starline/Result/Result";
 import Winnerlist from "../../Helpers/GameProvider/GameResult/WinnerList";
@@ -182,7 +186,14 @@ const adminRoutes = [
         path: "game/results/winners",
         element: <PrivateRoute element={WinnerList} />,
       },
-
+      {
+        path: "game/revertpayment",
+        element: <PrivateRoute element={MainRevertPayment} />,
+      },
+      {
+        path: "game/refundpayment",
+        element: <PrivateRoute element={MainRefundList} />,
+      },
       {
         path: "games/starlineProvider",
         element: <PrivateRoute element={StarLineProvider} />,

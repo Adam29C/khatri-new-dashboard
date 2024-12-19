@@ -1,6 +1,10 @@
 import PagesIndex from "../../../Pages/PagesIndex";
 import { Games_Provider_List } from "../../../Redux/slice/CommonSlice";
 import { useState } from "react";
+import {
+  convertTo12HourFormat,
+  convertTo12HourFormat123,
+} from "../../../Utils/Common_Date";
 
 const GameProvider = ({
   data,
@@ -44,16 +48,6 @@ const GameProvider = ({
   PagesIndex.useEffect(() => {
     getGameProviderList();
   }, []);
-
-
-
-
-
-
-
-
-
-  
 
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm(
@@ -122,14 +116,15 @@ const GameProvider = ({
       return "";
     }
   };
-  // Formik Configuration
 
 
 
   const formik = PagesIndex.useFormik({
     enableReinitialize: true,
     initialValues: {
-      gamename: selectedRow ? selectedRow.providerName : "",
+      gamename: selectedRow
+        ? convertTo12HourFormat(selectedRow.providerName)
+        : "",
       result: selectedRow ? selectedRow.providerResult : "",
       mobile: selectedRow ? selectedRow.mobile : "",
       activeStatus: selectedRow ? selectedRow.activeStatus : null,
@@ -157,7 +152,7 @@ const GameProvider = ({
         let res;
         if (gametype === "StarLine" || gametype === "JackPot") {
           const payload = {
-            gamename: values.gamename,
+            gamename: convertTo12HourFormat123(values.gamename),
             result: values.result,
 
             ...(modalType === "Edit" && { providerId: selectedRow._id }),
@@ -336,10 +331,6 @@ const GameProvider = ({
       ? GetProviderData && GetProviderData
       : gameProviders;
 
-
-
-      console.log("PROVIDERDATA" ,PROVIDERDATA); 
-      
   return (
     <>
       <div>

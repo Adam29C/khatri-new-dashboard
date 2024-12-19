@@ -44,7 +44,7 @@ const ReusableModal = ({
     <>
       <Modal
         open={ModalState}
-        onClose={() => setModalState(false)} // Ensure the modal closes when triggered
+        onClose={() => setModalState(false)} 
         center
         animationDuration={400}
       >

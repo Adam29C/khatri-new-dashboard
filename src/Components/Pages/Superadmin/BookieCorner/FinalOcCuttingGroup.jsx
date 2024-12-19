@@ -95,6 +95,7 @@ const SplitForm = () => {
       gameDate: "",
       gameSession: "",
       providerId: "",
+      devidby: "",
     },
 
     validate: (values) => {
@@ -106,6 +107,9 @@ const SplitForm = () => {
 
       if (!values.providerId) {
         errors.providerId = "Please Select Provider";
+      }
+      if (!values.devidby) {
+        errors.devidby = "Please Enter Value";
       }
 
       return errors;
@@ -121,7 +125,9 @@ const SplitForm = () => {
         // session: "Close",
       };
 
-      let divideBy = 16;
+      // console.log('formik.values.devidby' ,formik.values.devidby);
+
+      let divideBy = formik.values.devidby;
       let pannaArr = [];
       const singleArr = [];
 
@@ -132,17 +138,33 @@ const SplitForm = () => {
           token
         );
 
+        if (!response1.status) {
+          console.log("test");
+          PagesIndex.toast.error(response1.message);
+        }
+
         let singleDigit = response1.dataSum.singleDigit;
         let pana = response1.dataSum.Pana;
         let JodiPrice = response1.price.jodiPrice;
         if (response1.status == 1) {
           setGetTotal(response1.dataSum);
 
+          //   {
+          //     "_id": "17",
+          //     "sumdigit": 335,
+          //     "countBid": 25,
+          //     "date": "12/16/2024",
+          //     "gamePrice": 100
+          // }
+
           let total = 0;
+
+          let aaa = 0;
           let j = 1;
           let arr = [];
           response1.finalData.singleDigitArray.map((key, e) => {
             let amountToPay = key.biddingPoints * JodiPrice;
+
             let loss = 0;
             let FinalLoss = 0;
 
@@ -163,7 +185,10 @@ const SplitForm = () => {
               FinalLoss: FinalLoss,
               total: total,
             });
+            aaa += parseInt(FinalLoss);
           });
+
+          setTotalSingle(aaa);
 
           setTableTwo(arr);
 
@@ -212,7 +237,9 @@ const SplitForm = () => {
               FinalLoss: finalCal,
               total: totalSum,
             });
+            m += parseInt(finalCal);
           });
+          setTotalPana(m);
 
           setTableThree(pannaArr);
         } else {
@@ -359,7 +386,7 @@ const SplitForm = () => {
     },
 
     {
-      name: "gameDate",
+      name: "devidby",
       label: "Divide By",
       type: "text",
       label_size: 12,

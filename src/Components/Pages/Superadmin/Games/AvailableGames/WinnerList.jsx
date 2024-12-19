@@ -2,10 +2,14 @@ import React, { useEffect, useState } from "react";
 import PagesIndex from "../../../PagesIndex";
 import Split_Main_Containt from "../../../../Layout/Main/Split_Main_Content";
 import ReusableModal from "../../../../Helpers/Modal/ReusableModal";
+import { Api } from "../../../../Config/Api";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const WinnerList = () => {
   //get token in localstorage
   const token = localStorage.getItem("token");
+  const { user_id } = JSON.parse(localStorage.getItem("userdetails"));
+  const navigate = useNavigate();
   //get previous page single game result data
   const location = PagesIndex.useLocation();
   //data destructure
@@ -14,10 +18,17 @@ const WinnerList = () => {
   //all state
   const [remainingWinnerData, setRemainingWinnerData] = PagesIndex.useState([]);
   const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
-  const [mainWinnerData, setMainWinnerData] = PagesIndex.useState([]);
+  const [getStatus, setGetStatus] = PagesIndex.useState("0");
   const [ModalState, setModalState] = useState(false);
   const [Refresh, setRefresh] = PagesIndex.useState(false);
+  const [GetResultStatus, setGetResultStatus] = PagesIndex.useState([]);
 
+  const [BtnVisiably, setBtnVisiably] = PagesIndex.useState(false);
+
+  const handleChange = (state) => {
+    setGetStatus(state);
+    setModalState(true);
+  };
   const fetchData = async (page, rowsPerPage, searchQuery = "") => {
     const apidata = {
       providerId: data.providerId,
@@ -44,10 +55,10 @@ const WinnerList = () => {
           }
         });
 
-        const totalRows1 = res1.data.pagination.totalItems || 10;
-        let mainRes1 = nonEmptyCategories1;
-
-        return { mainRes1, totalRows1 };
+        const totalRows = res1.data.pagination.totalItems || 10;
+        let mainRes = nonEmptyCategories1;
+        setRemainingWinnerData(mainRes.length);
+        return { mainRes, totalRows };
       }
     } catch {}
   };
@@ -74,6 +85,7 @@ const WinnerList = () => {
       );
 
       if (res.status) {
+        setGetResultStatus(res.data);
         const nonEmptyCategories = [];
 
         Object.entries(res?.data?.winnerList).forEach(([key, value]) => {
@@ -134,50 +146,57 @@ const WinnerList = () => {
     },
   ];
 
-  //get game winner list api
-  const getGameWinnerListApi = async () => {
-    const apidata = {
-      providerId: data.providerId,
-      date: data.resultDate,
-      session: data.session,
+  const confirmPayment = async (status) => {
+    setBtnVisiably(true);
+
+    const payload = {
+      providerId: GetResultStatus.provider,
+      windigit: GetResultStatus.winDigit,
+      gameDate: GetResultStatus.gameDate,
+      digitFamily: String(GetResultStatus.digitFamily),
+      session: GetResultStatus.session,
+      jodiDigit: GetResultStatus.jodiDigit,
+      halfSangam1: GetResultStatus.halfSangam2,
+      halfSangam2: GetResultStatus.halfSangam1,
+      fullSangam: GetResultStatus.fullSangam,
+      resultId: GetResultStatus.resultId,
+      adminId: user_id,
+      page: 1,
+      limit: 10,
     };
-    const apidata1 = {
-      digit: data.winningDigit,
-      provider: data.providerId,
-      gamedate: data.resultDate,
-      resultId: data._id,
-      resultStatus: String(data.status),
-      digitFamily: String(data.winningDigitFamily),
-      sessionType: data.session,
-      providerName: data.providerName,
-    };
 
-    try {
-      const res = await PagesIndex.admin_services.GAME_MAIN_WINNER_LIST_API(
-        apidata1,
-        token
-      );
 
-      console.log("resres", res);
+    let res = "";
+    if (getStatus && getStatus === "0") {
+      // console.log("main");
 
-      const res1 =
-        await PagesIndex.admin_services.GAME_REMAINING_WINNER_LIST_API(
-          apidata,
+      res =
+        await PagesIndex.game_service.STARLINE_GAME_DISTIBUTE_FUND_WINNERS_API(
+          Api.CONFIRM_PAYMENT_API,
+          payload,
           token
         );
+    } else {
+      // console.log("remain");
 
-      if (res.status) {
-        setMainWinnerData(res?.data?.winnerList["Single Digit"]);
-      }
-      if (res1.status) {
-        setRemainingWinnerData(res1?.data?.winnerList["Single Digit"]);
-      }
-    } catch (error) {}
+      res =
+        await PagesIndex.game_service.STARLINE_GAME_DISTIBUTE_FUND_WINNERS_API(
+          Api.REMENAINING_CONFIRM_PAYMENT_API,
+          payload,
+          token
+        );
+    }
+
+    // console.log("remain" , res);
+
+    if (res.status) {
+      setBtnVisiably(false);
+      PagesIndex.toast.success(res.message);
+      navigate("/admin/game/results");
+    } else {
+      PagesIndex.toast.error(res.response.data.message);
+    }
   };
-
-  useEffect(() => {
-    getGameWinnerListApi();
-  }, []);
 
   const cardLayouts = [
     {
@@ -197,6 +216,20 @@ const WinnerList = () => {
       size: 12,
       body: (
         <div>
+          {GetResultStatus.resultStatus === 0 ? (
+            <div class="d-flex justify-content-end mb-3">
+              <button
+                onClick={() => {
+                  handleChange("0");
+                }}
+                className="btn btn-dark"
+              >
+                M Confirm Payment
+              </button>
+            </div>
+          ) : (
+            ""
+          )}
           <PagesIndex.TableWithCustomPeginationNew
             fetchData={fetchData1}
             columns={visibleFields}
@@ -212,14 +245,22 @@ const WinnerList = () => {
       size: 12,
       body: (
         <div>
-          <div class="d-flex justify-content-end mb-3">
-            <button
-              onClick={() => setModalState(true)}
-              className="btn btn-dark"
-            >
-              Confirm Payment
-            </button>
-          </div>
+          {remainingWinnerData === 0 ? (
+            <div class="d-flex justify-content-end mb-3">
+              <button
+                className={`btn btn-dark  mx-2 ${
+                  BtnVisiably ? "d-none" : "d-block"
+                }`}
+                onClick={() => {
+                  handleChange("1");
+                }}
+              >
+                R Confirm Payment
+              </button>
+            </div>
+          ) : (
+            ""
+          )}
           <PagesIndex.TableWithCustomPeginationNew
             fetchData={fetchData}
             columns={visibleFields}
@@ -231,6 +272,7 @@ const WinnerList = () => {
       ),
     },
   ];
+
   return (
     <>
       <Split_Main_Containt
@@ -248,7 +290,24 @@ const WinnerList = () => {
               Are You Sure Want To Confirm Payment?
             </h1>
             <div className="d-flex justify-content-end">
-              <button className="btn btn-dark  mx-2">Confirm</button>
+              <button
+                className={`btn btn-dark  mx-2 ${
+                  BtnVisiably ? "d-none" : "d-block"
+                }`}
+                onClick={() => confirmPayment(1)}
+              >
+                Confirm
+              </button>
+
+              <button
+                className={`btn btn-dark  mx-2 ${
+                  !BtnVisiably ? "d-none" : "d-block"
+                }`}
+                disabled
+              >
+                Confirm
+              </button>
+
               <button
                 onClick={() => setModalState(false)}
                 className="btn btn-dark  mx-2"
