@@ -23,7 +23,6 @@ const RequestOnOff = () => {
       setTableData(res.reqdata);
     }
 
-    console.log("res", res);
   };
 
   const RequestList1 = async () => {
