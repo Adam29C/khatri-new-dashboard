@@ -271,6 +271,7 @@ const RefundPayment = ({
 
   const ConfirmPayment1 = async (staus) => {
     if (confirm("Are you sure you want to delete this payment method? ")) {
+      setBtnVisiably(true);
       try {
         let apidata = {};
 
@@ -312,6 +313,9 @@ const RefundPayment = ({
     try {
       let apidata = {};
 
+      setBtnVisiably(true);
+
+      
       if (gametype === "maingame") {
         apidata = {
           userid: RowData.userId,
