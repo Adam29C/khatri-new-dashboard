@@ -28,6 +28,13 @@ const Api = {
   MAIN_GAME: "mainGames",
   MAIN_GAME_ADD: "mainGames/insertGame",
 
+  // MAIN GAME RATE
+
+  MAIN_GAME_RATE_LIST: "mainGameRate",
+  MAIN_GAME_RATE_ADD: "mainGameRate/insertGame",
+  MAIN_GAME_RATE_UPDATE: "mainGameRate",
+  MAIN_GAME_RATE_REMOVE: "mainGameRate",
+
   // GAME RESULT
   ADMIN_GAME_RESULT: "mainGameResult",
   ADMIN_GAME_RESULT_DELETE: "mainGameResult/delete",
