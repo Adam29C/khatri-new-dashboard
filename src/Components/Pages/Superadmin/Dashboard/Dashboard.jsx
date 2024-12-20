@@ -16,14 +16,13 @@ const Dashboard_Component = () => {
 
   const [TableData, setTableData] = PagesIndex.useState([]);
 
-
-  
   const { countDlt, data, yesTerday } = (DashboardData && DashboardData) || [];
 
   const getDashboardCount = async () => {
-    
-    const res = await PagesIndex.admin_services.GET_DASHBOARD_COUNT_API(userId , token);
-    console.log("testtt1231" , res);
+    const res = await PagesIndex.admin_services.GET_DASHBOARD_COUNT_API(
+      userId,
+      token
+    );
 
     const res1 =
       await PagesIndex.admin_services.GET_DASHBOARD_COUNT_UPI_PAYMENT_API(
@@ -75,16 +74,21 @@ const Dashboard_Component = () => {
   const TodayRegistedUserBalancefun = () => {
     let totalBalance = 0;
 
-    if (Request === 2 && userFundArr) {
+    if (Request === 1 && userFundArr) {
+      console.log("vvuserFundArr", Request);
       totalBalance = Object.values(userFundArr).reduce(
-        (sum, value) => sum + (value || 0),
+        (sum, item) => sum + item.wallet_balance,
+        // (sum, value) => sum + (value || 0),
+
         0
       );
-    } else if (Request === 1 && TableData) {
+    } else if (Request === 2 && TableData) {
       TableData.forEach((item) => {
         totalBalance += item.wallet_balance || 0;
       });
     }
+
+    console.log("totalBalance", totalBalance);
 
     return totalBalance;
   };
@@ -324,7 +328,7 @@ const Dashboard_Component = () => {
                     initialRowsPerPage={5}
                     SearchInTable={SearchInTable}
                     visibleFields={visibleFields}
-                    additional={`Total Registered Balance123 : ${TodayRegistedUserBalancefun()}`}
+                    additional={`Total Registered Balance : ${TodayRegistedUserBalancefun()}`}
                     searchInput={
                       <input
                         type="text"

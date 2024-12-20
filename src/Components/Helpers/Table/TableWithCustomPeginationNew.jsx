@@ -340,7 +340,7 @@ const CustomTable = ({
 
   useEffect(() => {
     fetchTableData();
-  }, [Refresh1, page, rowsPerPage]);
+  }, [Refresh, page, rowsPerPage]);
 
   let abc = () => {
     if (tableData && tableData != undefined) {
@@ -360,9 +360,7 @@ const CustomTable = ({
 
   useEffect(() => {
     abc();
-  }, [tableData, page, rowsPerPage, Refresh]);
-
-  console.log("tableDatatableData", tableData);
+  }, [tableData, page, rowsPerPage]);
 
   // const handleFetchData = () => {};
 

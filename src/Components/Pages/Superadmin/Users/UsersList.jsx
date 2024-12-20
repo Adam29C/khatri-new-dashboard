@@ -31,6 +31,7 @@ const App = () => {
         payload,
         token
       );
+
       const totalRows = response?.recordsTotal || 5;
       let mainRes = response.data;
 
@@ -211,7 +212,6 @@ const App = () => {
       <PagesIndex.TableWithCustomPeginationNew
         fetchData={fetchData}
         columns={visibleFields}
-        // UserFullButtonList={UserFullButtonList}
         showIndex={true}
         Refresh={Refresh}
       />
