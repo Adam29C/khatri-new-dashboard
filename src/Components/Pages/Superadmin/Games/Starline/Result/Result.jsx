@@ -12,6 +12,7 @@ const Result = () => {
         past_result={Api.STARLINE_GAME_PAST_RESULT}
         winner_list={Api.STARLINE_GAME_WINNER_LIST}
         distribute_fund={Api.STARLINE_GAME_DISTIBUTE_FUND_WINNERS}
+        remove_result={Api.STARLINE_REMOVE_RESULT}
       />
     </div>
   );

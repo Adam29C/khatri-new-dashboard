@@ -57,7 +57,7 @@ export const GAME_PRICE_ERROR = "Please Enter Game Price";
 // -----------------------
 export const GAME_PROVIDER_ERROR = "Please Enter Game Provider";
 export const GAME_SESSION_ERROR = "Please Enter Game Session";
-export const GAME_WINING_DIGIT_ERROR = "Please Enter Game Provider";
+export const GAME_WINING_DIGIT_ERROR = "Please Enter Wining Digit";
 export const PLEASE_ENTER_APK_FILE = "Please Enter Apk File";
 export const APK_FILE_VALID = "Please Enter Valid Apk File";
 export const VERSION_VALIDATION =

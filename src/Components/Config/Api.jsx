@@ -84,13 +84,20 @@ const Api = {
   STARLINE_GAME_PAST_RESULT: "starGameResult/pastResult",
   STARLINE_GAME_WINNER_LIST: "starlineWinner/starLineWinnerList",
   STARLINE_GAME_DISTIBUTE_FUND_WINNERS: "starlineWinner/starWinners",
+  STARLINE_REMOVE_RESULT: "starGameResult/delete",
 
   //  STARLINE REVERT PAYMENT -
+  STARLINE_GAME_PROFIT_LOSS_LIST: "starGameProfitLoss/getResult",
+  STARLINE_GAME_PROFIT_LOSS_BID_DATA: "starGameProfitLoss/getBidData",
+
+  //  STARLINE REVERT PAYMENT -
+
   STARLINE_GAME_REVERT_PAYMENT: "starGameResult/revertPayment",
   STARLINE_GAME_CONFIRM_REVERT_PAYMENT: "starGameResult/paymentRevert",
 
   //  STARLINE REVERT PAYMENT -
-  STARLINE_GAME_REFUND_PAYMENT: "mainGameResult/refundPayment",
+  STARLINE_GAME_REFUND_PAYMENT: "starGameResult/refundList",
+  STARLINE_GAME_CONFIRM_REFUND_PAYMENT_: "starGameResult/refundAll",
 
   // JACKPOT GAME PROVIDER CRUD
   JACKPOT_GAME_PROVIDER_LIST: "abGameSetting",
@@ -111,6 +118,24 @@ const Api = {
   JACKPOT_GAME_RATE_UPDATE: "abGameRate/update",
   JACKPOT_GAME_RATE_REMOVE: "abGameRate",
 
+  JACKPOT_GAME_MAIN_RESULT: "abGameResult",
+  JACKPOT_GAME_MAIN_RESULT_ADD: "abGameResult",
+  JACKPOT_GAME_PAST_RESULT: "abGameResult/pastResult",
+  JACKPOT_GAME_WINNER_LIST: "abWinner/abWinnerList",
+  JACKPOT_GAME_DISTIBUTE_FUND_WINNERS: "abWinner/abWinners",
+  JACKPOT_REMOVE_RESULT: "starGameResult/delete",
+
+  //  JACKPOT PROFIT / LOSS -
+  JACKPOT_GAME_PROFIT_LOSS_LIST: "anderBaharProfitLoss/getResult",
+  JACKPOT_GAME_PROFIT_LOSS_BID_DATA: "anderBaharProfitLoss/getBidData",
+
+  //  JACKPOT REVERT PAYMENT -
+  JACKPOT_GAME_REVERT_PAYMENT: "abGameResult/revertPayment",
+  JACKPOT_GAME_CONFIRM_REVERT_PAYMENT: "abGameResult/paymentRevert",
+
+  //  STARLINE REVERT PAYMENT -
+  JACKPOT_GAME_REFUND_PAYMENT: "abGameResult/refundList",
+  JACKPOT_GAME_CONFIRM_REFUND_PAYMENT_: "abGameResult/refundAll",
   // CUTTING GROUP
 
   CUTTING_GROUP_LIST: "cuttingGroups/getCutting",

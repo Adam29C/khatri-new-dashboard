@@ -163,26 +163,26 @@ export const admin_Sidebar = [
         id: 4,
         title: "Jackpot Profit/Loss",
         permission: "abProftLoss",
-        route: "#",
+        route: "jackpot/profitloss",
       },
       {
         id: 5,
         title: "Jackpot Game Result",
         permission: "abResult",
-        route: "#",
+        route: "jackpot/results",
       },
 
       {
         id: 6,
         title: "Jackpot Revert Result Payment",
         permission: "0",
-        route: "#",
+        route: "jackpot/revertpayment",
       },
       {
         id: 7,
         title: "Refund User Points",
         permission: "0",
-        route: "#",
+        route: "jackpot/refundlist",
       },
     ],
   },
@@ -394,18 +394,18 @@ export const admin_Sidebar = [
         route: "report/newupifundreport",
         permission: "upiReport",
       },
-      {
-        id: 8,
-        title: "Trak Pay Fund Report",
-        route: "report/trakpayreport",
-        permission: "upiReport",
-      },
-      {
-        id: 9,
-        title: "RazorPay Fund Report",
-        route: "report/razorpayreport",
-        permission: "upiReport",
-      },
+      // {
+      //   id: 8,
+      //   title: "Trak Pay Fund Report",
+      //   route: "report/trakpayreport",
+      //   permission: "upiReport",
+      // },
+      // {
+      //   id: 9,
+      //   title: "RazorPay Fund Report",
+      //   route: "report/razorpayreport",
+      //   permission: "upiReport",
+      // },
 
       {
         id: 10,

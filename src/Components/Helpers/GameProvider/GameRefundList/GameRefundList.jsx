@@ -1,128 +1,3 @@
-// import PagesIndex from "../../../Pages/PagesIndex";
-// import { Confirm_box } from "../../Confirm_Box";
-
-// const RefundPayment = ({ refund_list, confirm_revert_payment }) => {
-//   const token = localStorage.getItem("token");
-//   let { user_id, role } = JSON.parse(localStorage.getItem("userdetails"));
-
-//   const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
-//   const [TableData, setTableData] = PagesIndex.useState([]);
-//   const [Refresh, setRefresh] = PagesIndex.useState(false);
-
-//   const visibleFields = [
-//     "id",
-//     "providerName",
-//     "resultDate",
-//     "winningDigit",
-//     "Delete",
-//   ];
-
-//   const getList = async () => {
-//     const payload = {
-//       page: 1,
-//       limit: 10,
-//       searchQuery: SearchInTable,
-//     };
-
-//     const res = await PagesIndex.game_service.ALL_GAME_REFUND_PAYMENT_API(
-//       refund_list,
-//       // payload,
-//       token
-//     );
-//     setTableData(res?.data);
-//   };
-
-//   PagesIndex.useEffect(() => {
-//     getList();
-//   }, [Refresh]);
-
-//   const UserFullButtonList = [
-//     {
-//       id: 0,
-//       buttonName: "Revert Payment",
-//       buttonColor: "",
-//       route: "",
-//       Conditions: (row) => {
-//         ConfirmPayment(row);
-//         // handleActionBtn(row, 1);
-//       },
-//       Visiblity: true,
-//       type: "button",
-//     },
-//   ];
-
-//   const ConfirmPayment = async (row) => {
-//     const apidata = {
-//       resultId: row?._id,
-//       providerId: row?.providerId,
-//       session: row?.session,
-//       digit: row?.winningDigit,
-//       date: row?.resultDate,
-//       family: row?.winningDigitFamily.toString(),
-//     };
-
-//     const res =
-//       await PagesIndex.game_service.STARLINE_GAME_CONFIRM_REVERT_PAYMENT_API(
-//         confirm_revert_payment,
-//         apidata,
-//         token
-//       );
-
-//     try {
-//       if (res.statusCode === 200) {
-//         Confirm_box({
-//           title1: "You won't be able to revert this!",
-//           title2: "Item has been deleted successfully!",
-//         });
-//         getGameResultApi;
-//       }
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-//   return (
-//     <div>
-//       <PagesIndex.Main_Containt
-//         add_button={false}
-//         route="/admin/user/add"
-//         title="Starline Refund Payment List"
-//       >
-//         <PagesIndex.TableWithCustomPeginationButton
-//           data={TableData}
-//           initialRowsPerPage={5}
-//           SearchInTable={SearchInTable}
-//           visibleFields={visibleFields}
-//           UserFullButtonList={UserFullButtonList}
-//           // confirm_button={
-//           //   <ConfirmationModal
-//           //     title="Are you sure you want to delete this file?"
-//           //     text="This action cannot be undone."
-//           //     icon="warning"
-//           //     confirmButtonText="Yes, delete it!"
-//           //     cancelButtonText="No, cancel!"
-//           //     Buttontitle="Confirm"
-//           //     onConfirm={ConfirmPayment}
-//           //   />
-//           // }
-//           searchInput={
-//             <input
-//               type="text"
-//               placeholder="Search..."
-//               value={SearchInTable}
-//               onChange={(e) => setSearchInTable(e.target.value)}
-//               className="form-control ms-auto"
-//             />
-//           }
-//         />
-
-//         <PagesIndex.Toast />
-//       </PagesIndex.Main_Containt>
-//     </div>
-//   );
-// };
-
-// export default RefundPayment;
-
 import React from "react";
 import Split_Main_Containt from "../../../Layout/Main/Split_Main_Content";
 import { useFormik } from "formik";
@@ -135,14 +10,9 @@ const RefundPayment = ({
   provider_list,
   refund_list,
   refund_payment,
+  title,
 }) => {
   const token = localStorage.getItem("token");
-
-  const dispatch = PagesIndex.useDispatch();
-
-  let { user_id, username, role } = JSON.parse(
-    localStorage.getItem("userdetails")
-  );
 
   const [GetProviderData, setGetProviderData] = PagesIndex.useState([]);
   const [tableData, setTableData] = PagesIndex.useState([]);
@@ -150,6 +20,8 @@ const RefundPayment = ({
   const [ModalState, setModalState] = PagesIndex.useState(false);
   const [BtnVisiably, setBtnVisiably] = PagesIndex.useState(false);
   const [RowData, setRowData] = PagesIndex.useState("");
+  const [IsSUbmitted, setIsSUbmitted] = PagesIndex.useState(false);
+
   const [UserPagenateData, setUserPagenateData] = PagesIndex.useState({
     pageno: 1,
     limit: 10,
@@ -158,8 +30,6 @@ const RefundPayment = ({
   const [TotalPages, setTotalPages] = PagesIndex.useState(1);
 
   const getGameProviderList = async () => {
-    console.log("provider_list ", provider_list);
-
     // if (gametype === "StarLine" || gametype === "JackPot") {
     const res =
       await PagesIndex.game_service.STARLINE_AND_JACKPOT_GAME_PROVIDERS_LIST_API(
@@ -175,26 +45,24 @@ const RefundPayment = ({
   PagesIndex.useEffect(() => {
     getGameProviderList();
   }, [Refresh]);
-
+  today(new Date());
   const formik = useFormik({
     initialValues: {
       providerId: "",
-      date: "",
+      date: today(new Date()),
     },
 
     validate: (values) => {
       const errors = {};
 
-      if (!values.date) {
-        errors.date = "Please Select Date";
-      }
-      if (!values.providerId && formik.touched.providerId) {
+      if (!values.providerId) {
         errors.providerId = "Please Select Provide Name";
       }
 
       return errors;
     },
     onSubmit: async (values) => {
+      setIsSUbmitted(true);
       const payload = {
         providerId: values.providerId,
         resultDate: today(values.date),
@@ -209,9 +77,11 @@ const RefundPayment = ({
           token
         );
 
+        console.log("resresres", res);
+
         if (res.status) {
-          setTotalPages(res.pagination.totalCount);
-          setTableData(res.data);
+          setTotalPages(res.pagination.totalCount || res.pagination.totalItems);
+          setTableData(res.data || res.data);
           // PagesIndex.toast.success(res?.data?.message || res?.message);
         } else {
           PagesIndex.toast.error(res.response.data.message);
@@ -225,6 +95,42 @@ const RefundPayment = ({
       }
     },
   });
+
+  const test = async () => {
+    if (IsSUbmitted) {
+      const payload = {
+        providerId: formik.values.providerId,
+        resultDate: today(formik.values.date),
+        page: UserPagenateData.pageno,
+        limit: UserPagenateData.limit,
+      };
+
+      try {
+        const res = await PagesIndex.game_service.ALL_GAME_RESULTS_ADD_API(
+          refund_list,
+          payload,
+          token
+        );
+
+        if (res.status) {
+          setTotalPages(res.pagination.totalCount || res.pagination.totalItems);
+          setTableData(res.data);
+          // PagesIndex.toast.success(res?.data?.message || res?.message);
+        } else {
+          PagesIndex.toast.error(res.response.data.message);
+        }
+      } catch (error) {
+        console.log(error);
+        const errorMessage =
+          error.response?.data?.message ||
+          "Something went wrong. Please try again.";
+        PagesIndex.toast.error(errorMessage);
+      }
+    }
+  };
+  PagesIndex.useEffect(() => {
+    test();
+  }, [UserPagenateData.pageno, UserPagenateData.limit]);
 
   const fields = [
     {
@@ -275,19 +181,18 @@ const RefundPayment = ({
       try {
         let apidata = {};
 
-        if (gametype === "maingame") {
-          const abc =
-            GetProviderData?.filter(
-              (i) => i._id === formik.values.providerId
-            ) || [];
+        // if (gametype === "maingame") {
+        const abc =
+          GetProviderData?.filter((i) => i._id === formik.values.providerId) ||
+          [];
 
-          apidata = {
-            providerId: abc[0]?._id,
-            resultDate: formik.values.date,
-            type: staus,
-            providerName: abc[0]?.providerName,
-          };
-        }
+        apidata = {
+          providerId: abc[0]?._id,
+          resultDate: formik.values.date,
+          type: staus,
+          providerName: abc[0]?.providerName,
+        };
+
         const res =
           await PagesIndex.game_service.STARLINE_GAME_CONFIRM_REVERT_PAYMENT_API(
             refund_payment,
@@ -315,10 +220,18 @@ const RefundPayment = ({
 
       setBtnVisiably(true);
 
-      
       if (gametype === "maingame") {
         apidata = {
           userid: RowData.userId,
+          biddingPoints: RowData.biddingPoints,
+          providerId: RowData.providerId,
+          resultDate: RowData.gameDate,
+          type: staus,
+          providerName: RowData.providerName,
+        };
+      } else if (gametype === "Jackpot") {
+        apidata = {
+          userId: RowData.userId,
           biddingPoints: RowData.biddingPoints,
           providerId: RowData.providerId,
           resultDate: RowData.gameDate,
@@ -366,6 +279,7 @@ const RefundPayment = ({
         <div>
           <button
             className="btn btn-primary primary-color"
+            disabled={tableData.length === 0}
             onClick={() => {
               ConfirmPayment1(2);
             }}
@@ -373,14 +287,13 @@ const RefundPayment = ({
             Refund All
           </button>
           <PagesIndex.TableWithCustomPeginationNew
-            // fetchData={handleFetchDataManually}
-            // handleFetchDataManually={handleFetchDataManually}
             tableData={tableData && tableData}
             TotalPagesCount={(TotalPages && TotalPages) || []}
             columns={visibleFields}
             showIndex={true}
             Refresh={Refresh}
             setUserPagenateData={setUserPagenateData}
+            UserPagenateData={UserPagenateData}
           />
         </div>
       ),
@@ -389,7 +302,7 @@ const RefundPayment = ({
   return (
     <div>
       <Split_Main_Containt
-        title="Game Results"
+        title={title}
         add_button={false}
         btnTitle="Add"
         route="/add"
@@ -425,7 +338,10 @@ const RefundPayment = ({
               </button>
 
               <button
-                onClick={() => setModalState(false)}
+                onClick={() => {
+                  setBtnVisiably(false);
+                  setModalState(false);
+                }}
                 className="btn btn-dark  mx-2"
               >
                 Close

@@ -76,6 +76,19 @@ import ApproveReportBank from "../../Pages/Superadmin/ApproveDebitRequest/Approv
 import ApproveReportBankManual from "../../Pages/Superadmin/ApproveDebitRequest/ApproveReportBankManual";
 import PendingBankRequests from "../../Pages/Superadmin/PendingBankRequests/PendingBankRequests";
 
+// jackpot
+
+// starline game result
+import JackpotGameResult from "../../Pages/Superadmin/Games/Jackpot/Result/Result";
+import JackpotProfitLoss from "../../Pages/Superadmin/Games/Jackpot/ProfitLoss/ProfitLoss";
+
+// Revert Payment
+import JackPotRevertPayment from "../../Pages/Superadmin/Games/Jackpot/RevertPayment/RevertPayment";
+
+// Starline Refund List
+import JackpotRefundList from "../../Pages/Superadmin/Games/Jackpot/RefundList/RefundList";
+// import Winnerlist from "../../Helpers/GameProvider/GameResult/WinnerList";
+
 // WALLET SECTION
 
 import RequestOnOff from "../../Pages/Superadmin/Wallet/RequestOnOff";
@@ -249,10 +262,10 @@ const adminRoutes = [
         path: "starline/winnerlist/:id",
         element: <PrivateRoute element={Winnerlist} />,
       },
-      {
-        path: "starline/revertpayment",
-        element: <PrivateRoute element={RevertPayment} />,
-      },
+      // {
+      //   path: "starline/revertpayment",
+      //   element: <PrivateRoute element={RevertPayment} />,
+      // },
       {
         path: "starline/profitloss",
         element: <PrivateRoute element={ProfitLoss} />,
@@ -272,6 +285,26 @@ const adminRoutes = [
       {
         path: "games/jackpotRates",
         element: <PrivateRoute element={JackPotRates} />,
+      },
+      {
+        path: "jackpot/results",
+        element: <PrivateRoute element={JackpotGameResult} />,
+      },
+      {
+        path: "jackpot/profitloss",
+        element: <PrivateRoute element={JackpotProfitLoss} />,
+      },
+      {
+        path: "jackpot/winnerlist/:id",
+        element: <PrivateRoute element={Winnerlist} />,
+      },
+      {
+        path: "jackpot/revertpayment",
+        element: <PrivateRoute element={JackPotRevertPayment} />,
+      },
+      {
+        path: "jackpot/refundlist",
+        element: <PrivateRoute element={JackpotRefundList} />,
       },
       // {
       //   path: "games/jackpotRates/add",

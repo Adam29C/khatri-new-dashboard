@@ -13,6 +13,8 @@ const ExamplePage = ({
   past_result,
   winner_list,
   distribute_fund,
+
+  remove_result,
 }) => {
   //get token in local storage
   const token = localStorage.getItem("token");
@@ -26,6 +28,8 @@ const ExamplePage = ({
   //all state
   const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
   const [tableData, setTableData] = useState([]);
+  console.log("tableDatatableData" ,tableData);
+  
   const [GetProvider, setGetProvider] = useState([]);
 
   //get game result function
@@ -36,10 +40,13 @@ const ExamplePage = ({
       main_result,
       token
     );
-    if (res.status) {
-      setTableData(res?.data?.result || res?.data?.results);
-      setGetProvider(res?.data?.provider || res?.data?.providers);
-    }
+
+    console.log("res?.data?.result" ,res);
+    
+    // if (res.status) {
+      setTableData(res?.data?.result || res?.data?.results || res.result );
+      setGetProvider(res?.data?.provider || res?.data?.providers || res?.data );
+    // }
   };
 
   //get game provider data
@@ -93,18 +100,6 @@ const ExamplePage = ({
         winningDigit: values.winningDigit,
       };
 
-      //   console.log("payload", payload);
-
-      //   return;
-
-      //   const req = {
-      //     winningDigit: values.winningDigit,
-      //     resultDate: today(values.resultDate),
-      //     session: values.session,
-      //     providerId: values.providerId,
-      //     providerName: values.providerName,
-      //   };
-
       try {
         const res = await PagesIndex.game_service.ALL_GAME_RESULTS_ADD_API(
           main_result_add,
@@ -112,8 +107,6 @@ const ExamplePage = ({
           token
         );
 
-        // const res = await PagesIndex.admin_services.ADD_GAME_RESULT(req, token);
-        // console.log(res);
         if (res.status) {
           PagesIndex.toast.success(res?.data?.message || res?.message);
           getGameResultApi();
@@ -143,6 +136,9 @@ const ExamplePage = ({
     onSubmit: async (values) => {
       const apidata = values.date;
       try {
+
+        // console.log('past_resultpast_result' ,past_result);
+        
         const res = await PagesIndex.game_service.ALL_GAME_PAST_RESULTS(
           past_result,
           apidata,
@@ -231,14 +227,21 @@ const ExamplePage = ({
     if (!confirmDelete) return;
 
     try {
-      const res = await PagesIndex.admin_services.GAME_RESULT_DELETE(
-        apidata,
-        token
-      );
+      let res = "";
+      if (gameType === "StarLine" || gameType === "JackPot") {
+        res = await PagesIndex.game_service.REMOVE_WINNER_LIST(
+          remove_result,
+          apidata,
+          token
+        );
+      }
+      res = await PagesIndex.admin_services.GAME_RESULT_DELETE(apidata, token);
 
-      if (res.statusCode === 200) {
+      if (res.statusCode === 200 || res.status) {
         alert(res?.message);
         getGameResultApi;
+      } else {
+        PagesIndex.toast.error(res.response.data.message);
       }
     } catch (error) {
       console.log(error);
@@ -247,7 +250,6 @@ const ExamplePage = ({
 
   //handle actions button function
   const handleActionBtn = (row, buttonStatus) => {
-    // console.log("row", row.providerId);
     var locationData = {
       row: row,
       route: winner_list,
@@ -260,7 +262,7 @@ const ExamplePage = ({
           state: locationData,
         });
       } else if (gameType === "JackPot") {
-        navigate(`/admin/starline/winnerlist/providerId=${row.providerId}`, {
+        navigate(`/admin/jackpot/winnerlist/providerId=${row.providerId}`, {
           state: locationData,
         });
       } else {
@@ -304,32 +306,52 @@ const ExamplePage = ({
     //   value: "winningDigit",
     //   sortable: true,
     // },
-  ];
-
-  const UserFullButtonList = [
     {
-      id: 0,
-      buttonName: "Get Winners List",
-      buttonColor: "",
-      route: "",
+      name: "Get Winners List",
+      value: "Get Winners List",
+      buttonColor: "success",
+      isButton: true,
+      sortable: true,
       Conditions: (row) => {
         handleActionBtn(row, 1);
       },
-      Visiblity: true,
-      type: "button",
     },
     {
-      id: 1,
-      buttonName: "Delete Result",
+      name: "Delete Result",
+      value: "Delete Result",
       buttonColor: "danger",
-      route: "test",
+      isButton: true,
+      sortable: true,
       Conditions: (row) => {
         handleActionBtn(row, 2);
       },
-      Visiblity: false,
-      type: "button",
     },
   ];
+
+  // const UserFullButtonList = [
+  //   {
+  //     id: 0,
+  //     buttonName: "Get Winners List",
+  //     buttonColor: "",
+  //     route: "",
+  //     Conditions: (row) => {
+  //       handleActionBtn(row, 1);
+  //     },
+  //     Visiblity: true,
+  //     type: "button",
+  //   },
+  //   {
+  //     id: 1,
+  //     buttonName: "Delete Result",
+  //     buttonColor: "danger",
+  //     route: "test",
+  //     Conditions: (row) => {
+  //       handleActionBtn(row, 2);
+  //     },
+  //     Visiblity: false,
+  //     type: "button",
+  //   },
+  // ];
   const cardLayouts = [
     {
       size: 9,
@@ -368,16 +390,16 @@ const ExamplePage = ({
             initialRowsPerPage={5}
             SearchInTable={SearchInTable}
             visibleFields={visibleFields}
-            UserFullButtonList={UserFullButtonList}
-            searchInput={
-              <input
-                type="text"
-                placeholder="Search..."
-                value={SearchInTable}
-                onChange={(e) => setSearchInTable(e.target.value)}
-                className="form-control ms-auto"
-              />
-            }
+            // UserFullButtonList={UserFullButtonList}
+            // searchInput={
+            //   <input
+            //     type="text"
+            //     placeholder="Search..."
+            //     value={SearchInTable}
+            //     onChange={(e) => setSearchInTable(e.target.value)}
+            //     className="form-control ms-auto"
+            //   />
+            // }
           />
         </div>
       ),
