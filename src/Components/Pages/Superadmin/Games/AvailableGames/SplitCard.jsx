@@ -220,9 +220,12 @@ const ExamplePage = () => {
         token
       );
 
+      console.log("resresres", res);
       if (res.statusCode === 200) {
         alert(res?.message);
         getGameResultApi;
+      } else {
+        PagesIndex.toast.error(res.response.data.message);
       }
     } catch (error) {
       console.log(error);
@@ -280,6 +283,9 @@ const ExamplePage = () => {
     {
       name: "Delete Result",
       value: "Delete Result",
+      className: (row) => {
+        return row.status === 1 ? "d-none" : "";
+      },
       buttonColor: "danger",
       isButton: true,
       Conditions: (row) => {

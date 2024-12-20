@@ -459,6 +459,11 @@ const WinnerList = () => {
       sortable: false,
     },
     {
+      name: "Bidding Amount",
+      value: "biddingPoints",
+      sortable: false,
+    },
+    {
       name: "Total Amount",
       value: "gameWinPoints",
       sortable: false,
@@ -571,7 +576,7 @@ const WinnerList = () => {
               }}
               className="btn btn-dark"
             >
-              12Confirm Payment
+              Confirm Payment
             </button>
           </div>
           {/* ) : (
@@ -625,7 +630,7 @@ const WinnerList = () => {
   return (
     <>
       <Split_Main_Containt
-        title="Game Winners121212"
+        title="Game Winners"
         add_button={false}
         cardLayouts={cardLayouts}
       />

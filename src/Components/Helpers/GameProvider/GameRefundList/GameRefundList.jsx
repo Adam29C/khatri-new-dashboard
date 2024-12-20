@@ -77,12 +77,10 @@ const RefundPayment = ({
           token
         );
 
-        console.log("resresres", res);
-
         if (res.status) {
           setTotalPages(res.pagination.totalCount || res.pagination.totalItems);
           setTableData(res.data || res.data);
-          // PagesIndex.toast.success(res?.data?.message || res?.message);
+          res.data.length === 0 ? PagesIndex.toast.error("No Data Found") : "";
         } else {
           PagesIndex.toast.error(res.response.data.message);
         }

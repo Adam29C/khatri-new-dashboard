@@ -37,25 +37,25 @@ const Header = () => {
   };
 
   const handleLogout = () => {
-    // localStorage.removeItem("token");
-    // localStorage.removeItem("userdetails");
+    localStorage.removeItem("token");
+    localStorage.removeItem("userdetails");
     PagesIndex.toast.success("Logged Out Successfully");
-    // setTimeout(() => {
-    //   navigate("/");
-    // }, 2000);
+    setTimeout(() => {
+      navigate("/");
+    }, 2000);
   };
 
-  // const abcd = () => {
-  //   // const checkTokenExpiry = () => {
-  // //  GetExpired(token, navigate);
-  //   // };
-  //   // const interval = setInterval(checkTokenExpiry, 5000);
-  //   // return () => clearInterval(interval);
-  // };
+  const abcd = () => {
+    const checkTokenExpiry = () => {
+      GetExpired(token, navigate);
+    };
+    const interval = setInterval(checkTokenExpiry, 5000);
+    return () => clearInterval(interval);
+  };
 
-  // PagesIndex.useEffect(() => {
-  //   abcd();
-  // }, []);
+  PagesIndex.useEffect(() => {
+    abcd();
+  }, []);
 
   return (
     <div className="header">

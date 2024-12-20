@@ -237,6 +237,9 @@ const ExamplePage = ({
       }
       res = await PagesIndex.admin_services.GAME_RESULT_DELETE(apidata, token);
 
+
+
+      
       if (res.statusCode === 200 || res.status) {
         alert(res?.message);
         getGameResultApi;

@@ -237,7 +237,7 @@ const SplitForm = ({
               bidCount: e.countBid, // Keeping the bid count
               sumDigit: e.sumdigit,
               amountToPay: pl,
-              profit: profit,
+              Profit: profit,
               Loss: loss,
             });
           }
@@ -267,7 +267,7 @@ const SplitForm = ({
               bidCount: 0,
               sumDigit: 0,
               amountToPay: 0,
-              profit: panaAm,
+              Profit: panaAm,
               Loss: 0,
             });
           }
@@ -336,8 +336,9 @@ const SplitForm = ({
       value: "countBid",
       sortable: true,
       transform: (item, row) => {
-        return `View Bids Info (${row.bidCount})`;
-        // showBidInfor(row);
+        return `${
+          parseInt(row.bidCount) > 0 ? `View Bids Info (${row.bidCount})` : "No Bids"
+        }`;
       },
       onClick: (row) => {
         showBidInfor(row);
@@ -457,7 +458,7 @@ const SplitForm = ({
   ];
 
   const showBidInfor = async (rowdata) => {
-    console.log("rowdata", rowdata);
+
 
     setShowBidInfoModal(true);
     const payload = {
@@ -475,10 +476,10 @@ const SplitForm = ({
       token
     );
 
-    console.log("response1response1response1", response1);
+    // console.log("response1response1response1", response1);
 
     setTotalPages(
-      response1.pagination.totalItems || response1.pagination.totalItems
+      response1?.pagination?.totalItems || response1?.pagination?.totalItems
     );
     setShowBidInfoList(response1.bidData || response1.data);
     setRefresh(!Refresh);

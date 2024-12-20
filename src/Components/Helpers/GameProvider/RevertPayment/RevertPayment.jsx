@@ -182,7 +182,10 @@ const RevertPayment = ({ main_result, confirm_revert_payment, gameType }) => {
                 </button>
 
                 <button
-                  onClick={() => setModalState(false)}
+                  onClick={() => {
+                    setBtnVisiably(false);
+                    setModalState(false);
+                  }}
                   className="btn btn-dark  mx-2"
                 >
                   Close

@@ -135,6 +135,11 @@ const WinnerList = () => {
       sortable: false,
     },
     {
+      name: "Bidding Amount",
+      value: "biddingPoints",
+      sortable: false,
+    },
+    {
       name: "Rate",
       value: "gameTypePrice",
       sortable: false,
@@ -164,7 +169,6 @@ const WinnerList = () => {
       page: 1,
       limit: 10,
     };
-
 
     let res = "";
     if (getStatus && getStatus === "0") {
@@ -224,7 +228,7 @@ const WinnerList = () => {
                 }}
                 className="btn btn-dark"
               >
-                M Confirm Payment
+                Confirm Payment
               </button>
             </div>
           ) : (
@@ -255,7 +259,7 @@ const WinnerList = () => {
                   handleChange("1");
                 }}
               >
-                R Confirm Payment
+                Confirm Payment
               </button>
             </div>
           ) : (

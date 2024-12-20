@@ -49,13 +49,13 @@ const SplitForm = () => {
     validate: (values) => {
       const errors = {};
 
-      // if (!values.gameSession) {
-      //   errors.gameSession = "Please Select Game Session";
-      // }
+      if (!values.gameSession) {
+        errors.gameSession = "Please Select Game Session";
+      }
 
-      // if (!values.providerId) {
-      //   errors.providerId = "Please Select Provider";
-      // }
+      if (!values.providerId) {
+        errors.providerId = "Please Select Provider";
+      }
 
       return errors;
     },
@@ -64,10 +64,6 @@ const SplitForm = () => {
         gameDate: values.gameDate || today(new Date()),
         gameSession: values.gameSession,
         providerId: values.providerId,
-
-        // gameDate: "12/04/2024",
-        // gameSession: "Jodi Digit",
-        // providerId: "668d4228211a65d88600f6f0",
       };
 
       if (values.gameSession === "Open" || values.gameSession === "Close") {
@@ -76,6 +72,11 @@ const SplitForm = () => {
           payload,
           token
         );
+
+        if (!response1.status) {
+          PagesIndex.toast.error(response1.message);
+          return;
+        }
 
         // ----------------------
 
@@ -356,7 +357,7 @@ const SplitForm = () => {
       value: "countBid",
       sortable: false,
       transform: (item, row) => {
-        return `View Bids Info (${item})`;
+        return `${parseInt(item) > 0 ? `View Bids Info (${item})` : "No Bids"}`;
       },
       onClick: (row) => {
         showBidInfor(row);
@@ -410,7 +411,7 @@ const SplitForm = () => {
       value: "countBid",
       sortable: false,
       transform: (item, row) => {
-        return `View Bids Info (${item})`;
+        return `${parseInt(item) > 0 ? `View Bids Info (${item})` : "No Bids"}`;
       },
     },
     {
