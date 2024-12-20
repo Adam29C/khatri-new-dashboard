@@ -28,6 +28,8 @@ const ExamplePage = ({
   //all state
   const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
   const [tableData, setTableData] = useState([]);
+  console.log("tableDatatableData" ,tableData);
+  
   const [GetProvider, setGetProvider] = useState([]);
 
   //get game result function
@@ -39,10 +41,12 @@ const ExamplePage = ({
       token
     );
 
-    if (res.status) {
-      setTableData(res?.data?.result || res?.data?.results);
-      setGetProvider(res?.data?.provider || res?.data?.providers);
-    }
+    console.log("res?.data?.result" ,res);
+    
+    // if (res.status) {
+      setTableData(res?.data?.result || res?.data?.results || res.result );
+      setGetProvider(res?.data?.provider || res?.data?.providers || res?.data );
+    // }
   };
 
   //get game provider data
@@ -132,6 +136,9 @@ const ExamplePage = ({
     onSubmit: async (values) => {
       const apidata = values.date;
       try {
+
+        // console.log('past_resultpast_result' ,past_result);
+        
         const res = await PagesIndex.game_service.ALL_GAME_PAST_RESULTS(
           past_result,
           apidata,
@@ -255,7 +262,7 @@ const ExamplePage = ({
           state: locationData,
         });
       } else if (gameType === "JackPot") {
-        navigate(`/admin/starline/winnerlist/providerId=${row.providerId}`, {
+        navigate(`/admin/jackpot/winnerlist/providerId=${row.providerId}`, {
           state: locationData,
         });
       } else {

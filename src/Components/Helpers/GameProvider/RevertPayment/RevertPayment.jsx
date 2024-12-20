@@ -57,7 +57,10 @@ const RevertPayment = ({ main_result, confirm_revert_payment, gameType }) => {
       // payload,
       token
     );
-    setTableData(res?.data);
+
+    console.log("resresres", res);
+
+    setTableData(res?.data || res?.result);
   };
 
   PagesIndex.useEffect(() => {
@@ -84,10 +87,15 @@ const RevertPayment = ({ main_result, confirm_revert_payment, gameType }) => {
         apidata = {
           resultId: RowData?._id,
           providerId: RowData?.providerId,
-          session: RowData?.session,
+
           digit: RowData?.winningDigit,
           date: RowData?.resultDate,
-          family: RowData?.winningDigitFamily.toString(),
+          ...(gameType === "StarLine"
+            ? {
+                family: RowData?.winningDigitFamily.toString(),
+                session: RowData?.session,
+              }
+            : {}),
         };
       }
 

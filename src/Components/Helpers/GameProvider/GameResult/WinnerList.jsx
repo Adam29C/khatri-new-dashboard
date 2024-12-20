@@ -297,10 +297,6 @@ const WinnerList = () => {
   const gameType = location.state.gameType;
   const distribute_fund_Api = location.state.distribute_fund;
 
-  // console.log("api_Route", api_Route);
-  // console.log("gameType", gameType);
-  // console.log("distribute_fund_Api", distribute_fund_Api);
-
   //all state
   const [remainingWinnerData, setRemainingWinnerData] = PagesIndex.useState([]);
   const [SearchInTable, setSearchInTable] = PagesIndex.useState("");
@@ -308,6 +304,9 @@ const WinnerList = () => {
   const [ModalState, setModalState] = useState(false);
   const [Refresh, setRefresh] = PagesIndex.useState(false);
   const [GetResultStatus, setGetResultStatus] = PagesIndex.useState([]);
+  const [JackportData, setJackportData] = PagesIndex.useState("");
+
+  console.log("JackportData", JackportData);
 
   const [BtnVisiably, setBtnVisiably] = PagesIndex.useState(false);
 
@@ -316,33 +315,35 @@ const WinnerList = () => {
     setModalState(true);
   };
   const fetchData = async (page, rowsPerPage, searchQuery = "") => {
-    const apidata = {
-      providerId: data.providerId,
-      date: data.resultDate,
-      session: data.session,
-      page: page,
-      limit: rowsPerPage,
-      searchQuery,
-    };
-    try {
-      const res1 =
-        await PagesIndex.admin_services.GAME_REMAINING_WINNER_LIST_API(
-          apidata,
-          token
-        );
-      if (res1.status) {
-        const nonEmptyCategories1 = [];
-        Object.entries(res1?.data?.winnerList).forEach(([key, value]) => {
-          if (value.length > 0) {
-            nonEmptyCategories1.push(...value);
-          }
-        });
-        const totalRows = res1.data.pagination.totalItems || 10;
-        let mainRes = nonEmptyCategories1;
-        setRemainingWinnerData(mainRes.length);
-        return { mainRes, totalRows };
-      }
-    } catch {}
+    if (gameType != "StarLine" || gameType != "JackPot") {
+      const apidata = {
+        providerId: data.providerId,
+        date: data.resultDate,
+        session: data.session,
+        page: page,
+        limit: rowsPerPage,
+        searchQuery,
+      };
+      try {
+        const res1 =
+          await PagesIndex.admin_services.GAME_REMAINING_WINNER_LIST_API(
+            apidata,
+            token
+          );
+        if (res1.status) {
+          const nonEmptyCategories1 = [];
+          Object.entries(res1?.data?.winnerList).forEach(([key, value]) => {
+            if (value.length > 0) {
+              nonEmptyCategories1.push(...value);
+            }
+          });
+          const totalRows = res1.data.pagination.totalItems || 10;
+          let mainRes = nonEmptyCategories1;
+          setRemainingWinnerData(mainRes.length);
+          return { mainRes, totalRows };
+        }
+      } catch {}
+    }
   };
 
   const fetchData1 = async (page, rowsPerPage, searchQuery = "") => {
@@ -384,15 +385,20 @@ const WinnerList = () => {
         );
       }
 
+      // console.log("resres", res.data.dispData);
+
       if (res.status) {
-        setGetResultStatus(res.data);
+        setGetResultStatus(res.data || res.data.dispData);
+        setJackportData(res.data.dispData);
         const nonEmptyCategories = [];
 
-        Object.entries(res?.data?.winnerList).forEach(([key, value]) => {
-          if (value.length > 0) {
-            nonEmptyCategories.push(...value);
-          }
-        });
+        // if (gameType ) {
+        //   Object.entries(res?.data?.winnerList).forEach(([key, value]) => {
+        //     if (value.length > 0) {
+        //       nonEmptyCategories.push(...value);
+        //     }
+        //   });
+        // }
 
         const totalRows =
           res?.data?.pagination?.totalItems ??
@@ -402,9 +408,13 @@ const WinnerList = () => {
         let mainRes = [];
 
         mainRes =
-          gameType === "StarLine" || gameType === "JackPot"
+          gameType === "StarLine"
             ? (mainRes = res?.data?.winnerList)
+            : gameType === "JackPot"
+            ? res.resultData
             : nonEmptyCategories;
+
+        console.log("mainRes", mainRes);
 
         return { mainRes, totalRows };
       }
@@ -456,7 +466,7 @@ const WinnerList = () => {
   ];
 
   const confirmPayment = async (status) => {
-    setBtnVisiably(true);
+    setBtnVisiably(false);
 
     const payload = {
       providerId: GetResultStatus.provider,
@@ -478,13 +488,25 @@ const WinnerList = () => {
 
     if (getStatus && getStatus === "0") {
       if (gameType === "StarLine" || gameType === "JackPot") {
-        const payload = {
-          providerId: GetResultStatus.provider,
-          windigit: GetResultStatus.winDigit,
-          gameDate: GetResultStatus.gameDate,
-          digitFamily: String(GetResultStatus.digitFamily),
-          resultId: GetResultStatus.resultId,
-        };
+        let payload;
+        if (gameType === "StarLine") {
+          payload = {
+            providerId: GetResultStatus.provider,
+            windigit: GetResultStatus.winDigit,
+            gameDate: GetResultStatus.gameDate,
+            digitFamily: String(GetResultStatus.digitFamily),
+            resultId: GetResultStatus.resultId,
+          };
+        } else if (gameType === "JackPot") {
+          payload = {
+            providerId: GetResultStatus.dispData._id,
+            windigit: GetResultStatus.dispData.providerResult,
+            gameDate: GetResultStatus.dispData.modifiedAt,
+            gamePrice: GetResultStatus.gametype[0].gamePrice,
+            resultId: GetResultStatus.gametype[0]._id,
+          };
+        }
+
         res =
           await PagesIndex.game_service.STARLINE_GAME_DISTIBUTE_FUND_WINNERS_API(
             distribute_fund_Api,
@@ -515,7 +537,7 @@ const WinnerList = () => {
       gameType === "StarLine"
         ? navigate("/admin/starline/results")
         : gameType === "JackPot"
-        ? navigate("/admin/starline/results")
+        ? navigate("/admin/jackpot/results")
         : navigate("/admin/game/results");
       // navigate("/admin/game/results");
     } else {
@@ -541,20 +563,20 @@ const WinnerList = () => {
       size: 12,
       body: (
         <div>
-          {GetResultStatus.resultStatus === 0 ? (
-            <div class="d-flex justify-content-end mb-3">
-              <button
-                onClick={() => {
-                  handleChange("0");
-                }}
-                className="btn btn-dark"
-              >
-                Confirm Payment
-              </button>
-            </div>
-          ) : (
+          {/* {GetResultStatus.resultStatus === 0 ? ( */}
+          <div class="d-flex justify-content-end mb-3">
+            <button
+              onClick={() => {
+                handleChange("0");
+              }}
+              className="btn btn-dark"
+            >
+              12Confirm Payment
+            </button>
+          </div>
+          {/* ) : (
             ""
-          )}
+          )} */}
           <PagesIndex.TableWithCustomPeginationNew
             fetchData={fetchData1}
             columns={visibleFields}
@@ -603,7 +625,7 @@ const WinnerList = () => {
   return (
     <>
       <Split_Main_Containt
-        title="Game Winners"
+        title="Game Winners121212"
         add_button={false}
         cardLayouts={cardLayouts}
       />
